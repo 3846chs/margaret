@@ -104,7 +104,7 @@ class _MainPageState extends State<MainPage> {
             onTap: null,
           ),
           ListTile(
-            title: Text('아이템 1'),
+            title: Text('아이템 2'),
             onTap: null,
           ),
         ],
