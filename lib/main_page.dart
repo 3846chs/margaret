@@ -76,15 +76,8 @@ class _MainPageState extends State<MainPage> {
       _selectedIndex = index;
     });
   }
-}
 
-class _buildDrawer extends StatelessWidget {
-  const _buildDrawer({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
+  Drawer _buildDrawer() {
     return Drawer(
       // Add a ListView to the drawer. This ensures the user can scroll
       // through the options in the drawer if there isn't enough vertical
@@ -108,10 +101,6 @@ class _buildDrawer extends StatelessWidget {
           ),
           ListTile(
             title: Text('로그아웃'),
-            onTap: null,
-          ),
-          ListTile(
-            title: Text('아이템 2121212ddhdhgg1'),
             onTap: null,
           ),
         ],
