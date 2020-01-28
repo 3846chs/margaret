@@ -103,21 +103,11 @@ class _MainPageState extends State<MainPage> {
             title: Text('로그아웃'),
             onTap: null,
           ),
-          ListTile(
-            title: Text('로그아웃'),
-            onTap: null,
-          ),
-          ListTile(
-            title: Text('로그아웃'),
-            onTap: null,
-          ),
         ],
       ),
     );
   }
 }
-
-
 
 // git add .
 // git commit -m "mdfdf"
