@@ -46,13 +46,9 @@ class SendCard extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(common_gap),
-              child: SizedBox(
-                width: 64,
-                height: 64,
-                child: FlatButton(
-                  child: const Icon(Icons.check),
-                  onPressed: () {},
-                ),
+              child: IconButton(
+                icon: const Icon(Icons.check),
+                onPressed: () {},
               ),
             ),
           ],
