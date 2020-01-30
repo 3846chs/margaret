@@ -1,4 +1,5 @@
 import 'package:dating_app/constants/size.dart';
+import 'package:dating_app/widgets/user_avatar.dart';
 import 'package:flutter/material.dart';
 
 class SendCard extends StatelessWidget {
@@ -11,10 +12,7 @@ class SendCard extends StatelessWidget {
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.all(common_gap),
-              child: CircleAvatar(
-                radius: avatar_radius,
-                backgroundColor: Colors.primaries[0],
-              ),
+              child: UserAvatar(),
             ),
             Expanded(
               child: Padding(

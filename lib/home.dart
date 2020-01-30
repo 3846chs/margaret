@@ -22,6 +22,7 @@ class _DatingHomeState extends State<DatingHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: IndexedStack(
         index: _selectedIndex,
         children: _widgetOptions,
