@@ -32,10 +32,7 @@ class SendCard extends StatelessWidget {
                         children: <Widget>[
                           Expanded(child: const Text('나이')),
                           Expanded(
-                            child: const Text(
-                              '지역',
-                              textAlign: TextAlign.right,
-                            ),
+                            child: const Text('지역'),
                           ),
                         ],
                       ),
