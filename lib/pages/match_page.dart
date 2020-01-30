@@ -28,7 +28,10 @@ class _MatchPageState extends State<MatchPage> {
               padding: const EdgeInsets.all(common_l_gap),
               child: const Text(
                 '오늘의 질문\n',
-                style: TextStyle(fontSize: 40),
+                style: TextStyle(
+                  fontSize: 40,
+                  color: Colors.white70,
+                ),
               ),
             ),
             Padding(
@@ -45,13 +48,13 @@ class _MatchPageState extends State<MatchPage> {
               child: FlatButton(
                 child: const Text(
                   '제출하기',
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: Colors.black87),
                 ),
                 onPressed: () {
                   final answer = _answerController.text;
                   print(answer);
                 },
-                color: Colors.blue,
+                color: Colors.white70,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(6),
                 ),
@@ -68,13 +71,17 @@ class _MatchPageState extends State<MatchPage> {
     return Text(
       question,
       textAlign: TextAlign.center,
-      style: TextStyle(fontSize: 20),
+      style: TextStyle(
+        fontSize: 20,
+        color: Colors.white60,
+      ),
     );
   }
 
   Widget _buildAnswer() {
     return TextField(
       controller: _answerController,
+      style: TextStyle(color: Colors.white),
       decoration: _buildInputDecoration('답변'),
       maxLength: 100,
       maxLines: 5,
@@ -86,19 +93,19 @@ class _MatchPageState extends State<MatchPage> {
       hintText: hint,
       enabledBorder: OutlineInputBorder(
         borderSide: BorderSide(
-          color: Colors.grey[300],
+          color: Colors.lightBlue[300],
           width: 1,
         ),
         borderRadius: BorderRadius.circular(12),
       ),
       focusedBorder: OutlineInputBorder(
         borderSide: BorderSide(
-          color: Colors.grey[300],
+          color: Colors.lightBlue[300],
           width: 1,
         ),
         borderRadius: BorderRadius.circular(12),
       ),
-      fillColor: Colors.grey[100],
+      fillColor: Colors.white60,
       filled: true,
     );
   }

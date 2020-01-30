@@ -11,8 +11,13 @@ class _SendPageState extends State<SendPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
-        title: const Text('보낸 요청'),
+        title: const Text(
+          '보낸 요청',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.lightBlue[300],
       ),
       body: Padding(
         padding: const EdgeInsets.all(common_l_gap),
