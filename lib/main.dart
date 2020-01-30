@@ -1,3 +1,4 @@
+import 'package:dating_app/constants/material_white_color.dart';
 import 'package:dating_app/home.dart';
 import 'package:flutter/material.dart';
 
@@ -9,7 +10,7 @@ class DatingApp extends StatelessWidget {
     return MaterialApp(
       title: 'Dating',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: white,
       ),
       home: DatingHome(),
     );
