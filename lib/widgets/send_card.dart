@@ -23,7 +23,10 @@ class SendCard extends StatelessWidget {
                     padding: const EdgeInsets.all(common_s_gap),
                     child: const Text(
                       '닉네임',
-                      style: TextStyle(color: Colors.white70),
+                      style: TextStyle(
+                        color: Colors.white70,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                   Padding(
