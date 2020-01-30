@@ -17,40 +17,49 @@ class _MatchPageState extends State<MatchPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(common_l_gap),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(common_l_gap),
-            child:
-                _buildQuestion('연애할 때 상대방을 위해 얼마나 포기할 수 있나요? 전부를 희생할 수 있나요?'),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(common_l_gap),
-            child: _buildAnswer(),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(common_l_gap),
-            child: FlatButton(
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.all(common_gap),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(common_l_gap),
               child: const Text(
-                '제출하기',
-                style: TextStyle(color: Colors.white),
+                '오늘의 질문\n',
+                style: TextStyle(fontSize: 40),
               ),
-              onPressed: () {
-                final answer = _answerController.text;
-                print(answer);
-              },
-              color: Colors.blue,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(6),
-              ),
-              disabledColor: Colors.blue[100],
             ),
-          )
-        ],
+            Padding(
+              padding: const EdgeInsets.all(common_l_gap),
+              child:
+                  _buildQuestion('연애할 때 상대방을 위해 얼마나 포기할 수 있나요? 전부를 희생할 수 있나요?'),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(common_l_gap),
+              child: _buildAnswer(),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(common_l_gap),
+              child: FlatButton(
+                child: const Text(
+                  '제출하기',
+                  style: TextStyle(color: Colors.white),
+                ),
+                onPressed: () {
+                  final answer = _answerController.text;
+                  print(answer);
+                },
+                color: Colors.blue,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                disabledColor: Colors.blue[100],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

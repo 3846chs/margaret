@@ -10,10 +10,15 @@ class ReceivePage extends StatefulWidget {
 class _ReceivePageState extends State<ReceivePage> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(common_l_gap),
-      child: ListView(
-        children: List.generate(15, (index) => ReceiveCard()),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('받은 요청'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(common_l_gap),
+        child: ListView(
+          children: List.generate(15, (index) => ReceiveCard()),
+        ),
       ),
     );
   }

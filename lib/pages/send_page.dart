@@ -10,10 +10,15 @@ class SendPage extends StatefulWidget {
 class _SendPageState extends State<SendPage> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(common_l_gap),
-      child: ListView(
-        children: List.generate(15, (index) => SendCard()),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('보낸 요청'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(common_l_gap),
+        child: ListView(
+          children: List.generate(15, (index) => SendCard()),
+        ),
       ),
     );
   }

@@ -10,10 +10,15 @@ class ChatPage extends StatefulWidget {
 class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(common_l_gap),
-      child: ListView(
-        children: List.generate(15, (index) => ChatCard()),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('채팅하기'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(common_l_gap),
+        child: ListView(
+          children: List.generate(15, (index) => ChatCard()),
+        ),
       ),
     );
   }

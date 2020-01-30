@@ -22,46 +22,33 @@ class _DatingHomeState extends State<DatingHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Dating'),
-      ),
       body: IndexedStack(
         index: _selectedIndex,
         children: _widgetOptions,
       ),
       drawer: _buildDrawer(),
       bottomNavigationBar: BottomNavigationBar(
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
         selectedItemColor: Colors.black,
         unselectedItemColor: Colors.grey,
         type: BottomNavigationBarType.fixed,
         backgroundColor: Color.fromRGBO(249, 249, 249, 1),
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.group,
-              size: 30,
-            ),
+            icon: Icon(Icons.group),
             title: Text(''),
           ),
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.call_made,
-              size: 30,
-            ),
+            icon: Icon(Icons.call_made),
             title: Text(''),
           ),
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.call_received,
-              size: 30,
-            ),
+            icon: Icon(Icons.call_received),
             title: Text(''),
           ),
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.chat,
-              size: 30,
-            ),
+            icon: Icon(Icons.chat),
             title: Text(''),
           ),
         ],
