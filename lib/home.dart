@@ -30,7 +30,7 @@ class _DatingHomeState extends State<DatingHome> {
             end: Alignment.bottomCenter,
             colors: [
               Colors.lightBlue[200],
-              Colors.lightBlue[600],
+              Colors.lightBlue[500],
             ],
           ),
         ),

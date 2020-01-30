@@ -1,4 +1,3 @@
-import 'package:dating_app/constants/size.dart';
 import 'package:dating_app/widgets/chat_card.dart';
 import 'package:flutter/material.dart';
 
@@ -15,15 +14,24 @@ class _ChatPageState extends State<ChatPage> {
       appBar: AppBar(
         title: const Text(
           '채팅하기',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(
+            color: Colors.white70,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         backgroundColor: Colors.lightBlue[300],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(common_l_gap),
-        child: ListView(
-          children: List.generate(15, (index) => ChatCard()),
-        ),
+      body: ListView.separated(
+        itemCount: 10,
+        itemBuilder: (context, index) {
+          return InkWell(
+            child: ChatCard(),
+            onTap: () {},
+          );
+        },
+        separatorBuilder: (context, index) {
+          return const Divider(height: 1);
+        },
       ),
     );
   }

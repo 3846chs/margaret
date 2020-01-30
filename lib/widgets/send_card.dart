@@ -5,49 +5,58 @@ import 'package:flutter/material.dart';
 class SendCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(common_gap),
-        child: Row(
-          children: <Widget>[
-            Padding(
+    return Padding(
+      padding: const EdgeInsets.all(common_gap),
+      child: Row(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(common_gap),
+            child: UserAvatar(),
+          ),
+          Expanded(
+            child: Padding(
               padding: const EdgeInsets.all(common_gap),
-              child: UserAvatar(),
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(common_gap),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(common_s_gap),
-                      child: const Text('닉네임'),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(common_s_gap),
+                    child: const Text(
+                      '닉네임',
+                      style: TextStyle(color: Colors.white70),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(common_s_gap),
-                      child: Row(
-                        children: <Widget>[
-                          Expanded(child: const Text('나이')),
-                          Expanded(
-                            child: const Text('지역'),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(common_s_gap),
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                            child: const Text(
+                          '나이',
+                          style: TextStyle(color: Colors.white70),
+                        )),
+                        Expanded(
+                          child: const Text(
+                            '지역',
+                            style: TextStyle(color: Colors.white70),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(common_gap),
-              child: IconButton(
-                icon: const Icon(Icons.check),
-                onPressed: () {},
-              ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(common_gap),
+            child: IconButton(
+              icon: const Icon(Icons.check),
+              color: Colors.white70,
+              onPressed: () {},
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
