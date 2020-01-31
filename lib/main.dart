@@ -18,7 +18,6 @@ class OurApp extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.waiting){
             return LoadingPage();
           } else {
-            // 연결되었고, 데이터가 있다면
             if(snapshot.hasData){
               return Home();
             }

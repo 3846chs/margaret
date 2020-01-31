@@ -29,8 +29,6 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  // 구글 로그인을 수행하고 FirebaseUser 를 반환
-
   Future<FirebaseUser> _handleSignIn() async {
     GoogleSignInAccount googleUser = await _googleSignIn.signIn();
     GoogleSignInAuthentication googleAuth = await googleUser.authentication;
