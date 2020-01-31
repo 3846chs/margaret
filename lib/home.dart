@@ -6,12 +6,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-class DatingHome extends StatefulWidget {
+class Home extends StatefulWidget {
   @override
-  _DatingHomeState createState() => _DatingHomeState();
+  _HomeState createState() => _HomeState();
 }
 
-class _DatingHomeState extends State<DatingHome> {
+class _HomeState extends State<Home> {
   int _selectedIndex = 0;
 
   static List<Widget> _widgetOptions = <Widget>[

@@ -14,7 +14,6 @@ class LoginPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-
             Container(
               margin: EdgeInsets.all(50.0),
             ),
@@ -37,9 +36,9 @@ class LoginPage extends StatelessWidget {
     GoogleSignInAuthentication googleAuth = await googleUser.authentication;
 
     FirebaseUser user = (await _auth.signInWithCredential(
-        GoogleAuthProvider.getCredential(
-            idToken: googleAuth.idToken,
-            accessToken: googleAuth.accessToken)))
+            GoogleAuthProvider.getCredential(
+                idToken: googleAuth.idToken,
+                accessToken: googleAuth.accessToken)))
         .user;
 
     print("signed in " + user.displayName);

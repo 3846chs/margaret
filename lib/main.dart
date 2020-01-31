@@ -1,25 +1,31 @@
-import 'package:dating_app/constants/material_white_color.dart';
 import 'package:dating_app/home.dart';
 import 'package:dating_app/login.dart';
-import 'package:dating_app/root.dart';
+import 'package:dating_app/widgets/loading.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'home.dart';
 
-void main() => runApp(DatingApp());
+void main() => runApp(OurApp());
 
-class DatingApp extends StatelessWidget {
+class OurApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primaryColor: Colors.white,
-        accentColor: Colors.black,
+      home: StreamBuilder(
+        stream: FirebaseAuth.instance.onAuthStateChanged,
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting){
+            return LoadingPage();
+          } else {
+            // 연결되었고, 데이터가 있다면
+            if(snapshot.hasData){
+              return Home();
+            }
+            return LoginPage();
+          }
+        },
       ),
-      home: RootPage(),
     );
   }
 }
