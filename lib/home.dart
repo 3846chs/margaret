@@ -2,7 +2,9 @@ import 'package:dating_app/pages/chat_page.dart';
 import 'package:dating_app/pages/match_page.dart';
 import 'package:dating_app/pages/receive_page.dart';
 import 'package:dating_app/pages/send_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class DatingHome extends StatefulWidget {
   @override
@@ -94,8 +96,13 @@ class _DatingHomeState extends State<DatingHome> {
             onTap: null,
           ),
           ListTile(
-            title: Text('로그아웃 123 456'),
-            onTap: null,
+            title: Text('로그아웃'),
+            onTap: () {
+              Navigator.pop(context); // 없으면 에러
+              FirebaseAuth.instance
+                  .signOut();
+              GoogleSignIn().signOut();
+            },
           ),
         ],
       ),
