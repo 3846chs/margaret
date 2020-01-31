@@ -94,7 +94,7 @@ class _DatingHomeState extends State<DatingHome> {
             onTap: null,
           ),
           ListTile(
-            title: Text('로그아웃 123'),
+            title: Text('로그아웃 123 456'),
             onTap: null,
           ),
         ],
