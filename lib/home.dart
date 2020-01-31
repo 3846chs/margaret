@@ -94,17 +94,18 @@ class _DatingHomeState extends State<DatingHome> {
             onTap: null,
           ),
           ListTile(
-            title: Text('로그아웃 1'),
+            title: Text('테스트 1'),
             onTap: null,
           ),
           ListTile(
-            title: Text('로그아웃 2'),
+            title: Text('테스트 2'),
             onTap: null,
           ),
           ListTile(
-            title: Text('로그아웃 3'),
+            title: Text('테스트 3'),
             onTap: null,
           ),
+
         ],
       ),
     );
