@@ -30,7 +30,7 @@ class _MatchPageState extends State<MatchPage> {
                 '오늘의 질문\n',
                 style: TextStyle(
                   fontSize: 40,
-                  color: Colors.white70,
+                  color: Colors.black,
                 ),
               ),
             ),
@@ -48,13 +48,13 @@ class _MatchPageState extends State<MatchPage> {
               child: FlatButton(
                 child: const Text(
                   '제출하기',
-                  style: TextStyle(color: Colors.black87),
+                  style: TextStyle(color: Colors.black),
                 ),
                 onPressed: () {
                   final answer = _answerController.text;
                   print(answer);
                 },
-                color: Colors.white70,
+                color: Colors.blue[50],
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(6),
                 ),
@@ -73,7 +73,7 @@ class _MatchPageState extends State<MatchPage> {
       textAlign: TextAlign.center,
       style: TextStyle(
         fontSize: 20,
-        color: Colors.white60,
+        color: Colors.black,
       ),
     );
   }
@@ -81,7 +81,7 @@ class _MatchPageState extends State<MatchPage> {
   Widget _buildAnswer() {
     return TextField(
       controller: _answerController,
-      style: TextStyle(color: Colors.white),
+      style: TextStyle(color: Colors.black),
       decoration: _buildInputDecoration('답변'),
       maxLength: 100,
       maxLines: 5,

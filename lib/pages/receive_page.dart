@@ -15,11 +15,11 @@ class _ReceivePageState extends State<ReceivePage> {
         title: const Text(
           '받은 요청',
           style: TextStyle(
-            color: Colors.white70,
+            color: Colors.black,
             fontWeight: FontWeight.bold,
           ),
         ),
-        backgroundColor: Colors.lightBlue[300],
+        backgroundColor: Colors.white,
       ),
       body: ListView.separated(
         itemCount: 10,

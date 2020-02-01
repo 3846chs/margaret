@@ -31,8 +31,8 @@ class _HomeState extends State<Home> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Colors.lightBlue[200],
-              Colors.lightBlue[500],
+              Colors.white,
+              Colors.white,
             ],
           ),
         ),
@@ -45,10 +45,10 @@ class _HomeState extends State<Home> {
       bottomNavigationBar: BottomNavigationBar(
         showSelectedLabels: false,
         showUnselectedLabels: false,
-        selectedItemColor: Colors.black54,
-        unselectedItemColor: Colors.white70,
+        selectedItemColor: Colors.black,
+        unselectedItemColor: Colors.grey,
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.lightBlue[600],
+        backgroundColor: Colors.white,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.group),
@@ -85,7 +85,7 @@ class _HomeState extends State<Home> {
         children: <Widget>[
           DrawerHeader(
             child: CircleAvatar(),
-            decoration: BoxDecoration(color: Colors.blue),
+            decoration: BoxDecoration(color: Colors.blueAccent),
           ),
           ListTile(
             title: Text('공지사항'),

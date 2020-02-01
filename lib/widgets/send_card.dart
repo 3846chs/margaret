@@ -24,7 +24,7 @@ class SendCard extends StatelessWidget {
                     child: const Text(
                       '닉네임',
                       style: TextStyle(
-                        color: Colors.white70,
+                        color: Colors.black,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -36,12 +36,12 @@ class SendCard extends StatelessWidget {
                         Expanded(
                             child: const Text(
                           '나이',
-                          style: TextStyle(color: Colors.white70),
+                          style: TextStyle(color: Colors.black),
                         )),
                         Expanded(
                           child: const Text(
                             '지역',
-                            style: TextStyle(color: Colors.white70),
+                            style: TextStyle(color: Colors.black),
                           ),
                         ),
                       ],
@@ -55,7 +55,7 @@ class SendCard extends StatelessWidget {
             padding: const EdgeInsets.all(common_gap),
             child: IconButton(
               icon: const Icon(Icons.check),
-              color: Colors.white70,
+              color: Colors.black,
               onPressed: () {},
             ),
           ),

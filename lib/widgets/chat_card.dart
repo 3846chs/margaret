@@ -23,7 +23,7 @@ class ChatCard extends StatelessWidget {
                   child: const Text(
                     '닉네임',
                     style: TextStyle(
-                      color: Colors.white70,
+                      color: Colors.black,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -32,7 +32,7 @@ class ChatCard extends StatelessWidget {
                   padding: const EdgeInsets.all(common_s_gap),
                   child: const Text(
                     '그럼 8시에 만나는 거 어때요?',
-                    style: TextStyle(color: Colors.white70),
+                    style: TextStyle(color: Colors.black),
                   ),
                 ),
               ],

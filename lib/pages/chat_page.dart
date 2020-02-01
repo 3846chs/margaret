@@ -15,11 +15,11 @@ class _ChatPageState extends State<ChatPage> {
         title: const Text(
           '채팅하기',
           style: TextStyle(
-            color: Colors.white70,
+            color: Colors.black,
             fontWeight: FontWeight.bold,
           ),
         ),
-        backgroundColor: Colors.lightBlue[300],
+        backgroundColor: Colors.white,
       ),
       body: ListView.separated(
         itemCount: 10,

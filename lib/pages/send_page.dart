@@ -15,11 +15,11 @@ class _SendPageState extends State<SendPage> {
         title: const Text(
           '보낸 요청',
           style: TextStyle(
-            color: Colors.white70,
+            color: Colors.black,
             fontWeight: FontWeight.bold,
           ),
         ),
-        backgroundColor: Colors.lightBlue[300],
+        backgroundColor: Colors.white,
       ),
       body: ListView.separated(
         itemCount: 10,

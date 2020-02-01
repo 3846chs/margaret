@@ -17,7 +17,7 @@ class ReceiveCard extends StatelessWidget {
                   child: const Text(
                     '연애할 때 상대방을 위해 얼마나 포기할 수 있나요? 전부를 희생할 수 있나요?',
                     textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.white70),
+                    style: TextStyle(color: Colors.black),
                   ),
                 ),
                 Padding(
@@ -25,7 +25,7 @@ class ReceiveCard extends StatelessWidget {
                   child: const Text(
                     '어쩌고 저쩌고 Blah Blah',
                     textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.white70),
+                    style: TextStyle(color: Colors.black),
                   ),
                 ),
               ],
