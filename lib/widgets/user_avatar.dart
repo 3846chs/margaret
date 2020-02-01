@@ -5,7 +5,7 @@ class UserAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
-      radius: avatar_radius,
+      radius: thumbnail_avatar_radius,
       backgroundColor: Colors.primaries[0],
     );
   }
