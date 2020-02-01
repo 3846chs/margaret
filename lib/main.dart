@@ -23,7 +23,7 @@ class OurApp extends StatelessWidget {
             if(snapshot.hasData){
               return Home();
             }
-            return UserProfile();
+            return LoginPage();
             // test
           }
         },
