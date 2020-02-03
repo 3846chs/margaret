@@ -1,6 +1,6 @@
 # dating_app
 
-A dating application.
+A new Flutter application.
 
 ## Getting Started
 

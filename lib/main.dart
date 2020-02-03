@@ -1,7 +1,6 @@
 import 'package:dating_app/home.dart';
 import 'package:dating_app/login.dart';
 import 'package:dating_app/widgets/loading.dart';
-import 'package:dating_app/widgets/user_profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
