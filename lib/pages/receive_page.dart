@@ -1,4 +1,4 @@
-import 'package:dating_app/widgets/receive_card.dart';
+import 'package:datingapp/widgets/receive_card.dart';
 import 'package:flutter/material.dart';
 
 class ReceivePage extends StatefulWidget {

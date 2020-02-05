@@ -1,4 +1,4 @@
-import 'package:dating_app/widgets/send_card.dart';
+import 'package:datingapp/widgets/send_card.dart';
 import 'package:flutter/material.dart';
 
 class SendPage extends StatefulWidget {

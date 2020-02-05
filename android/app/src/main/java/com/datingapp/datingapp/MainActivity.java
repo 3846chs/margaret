@@ -1,4 +1,4 @@
-package com.datingapp.dating_app;
+package com.datingapp.datingapp;
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity;

@@ -1,10 +1,12 @@
-import 'package:dating_app/pages/chat_page.dart';
-import 'package:dating_app/pages/match_page.dart';
-import 'package:dating_app/pages/receive_page.dart';
-import 'package:dating_app/pages/send_page.dart';
+import 'package:datingapp/data/provider/my_user_data.dart';
+import 'package:datingapp/pages/chat_page.dart';
+import 'package:datingapp/pages/match_page.dart';
+import 'package:datingapp/pages/receive_page.dart';
+import 'package:datingapp/pages/send_page.dart';
+import 'package:datingapp/widgets/user_profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -13,6 +15,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int _selectedIndex = 0;
+  int _today = -1;
 
   static List<Widget> _widgetOptions = <Widget>[
     MatchPage(),
@@ -75,6 +78,14 @@ class _HomeState extends State<Home> {
 
   void _onItemTapped(int index) {
     setState(() {
+      if (index == 0) {
+        if (_today == DateTime.now().day) {
+          print(2);
+        } else {
+          _today = DateTime.now().day;
+          print(3);
+        }
+      }
       _selectedIndex = index;
     });
   }
@@ -84,7 +95,16 @@ class _HomeState extends State<Home> {
       child: ListView(
         children: <Widget>[
           DrawerHeader(
-            child: CircleAvatar(),
+            child: GestureDetector(
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => UserProfile()));
+                },
+                child: CircleAvatar(
+                  child: Consumer<MyUserData>(builder: (context, value, child) {
+                    return Text(value.data.nickname);
+                  }),
+                )),
             decoration: BoxDecoration(color: Colors.blueAccent),
           ),
           ListTile(
@@ -99,9 +119,8 @@ class _HomeState extends State<Home> {
             title: Text('로그아웃'),
             onTap: () {
               Navigator.pop(context); // 없으면 에러
-              FirebaseAuth.instance
-                  .signOut();
-              GoogleSignIn().signOut();
+              Provider.of<MyUserData>(context, listen: false).clearUser();
+              FirebaseAuth.instance.signOut();
             },
           ),
         ],

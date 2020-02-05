@@ -1,4 +1,4 @@
-import 'package:dating_app/widgets/chat_card.dart';
+import 'package:datingapp/widgets/chat_card.dart';
 import 'package:flutter/material.dart';
 
 class ChatPage extends StatefulWidget {

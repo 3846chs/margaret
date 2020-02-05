@@ -1,7 +1,8 @@
-import 'package:dating_app/constants/size.dart';
+import 'package:datingapp/constants/size.dart';
 import 'package:flutter/material.dart';
 
 class MatchPage extends StatefulWidget {
+
   @override
   _MatchPageState createState() => _MatchPageState();
 }

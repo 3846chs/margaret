@@ -1,4 +1,5 @@
-import 'package:dating_app/constants/size.dart';
+
+import 'package:datingapp/constants/size.dart';
 import 'package:flutter/material.dart';
 
 class ReceiveCard extends StatelessWidget {
