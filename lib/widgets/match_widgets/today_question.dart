@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class TodayQuestion extends StatefulWidget {
-
   @override
   _TodayQuestionState createState() => _TodayQuestionState();
 }
@@ -13,7 +12,6 @@ class TodayQuestion extends StatefulWidget {
 class _TodayQuestionState extends State<TodayQuestion> {
   final _answerController = TextEditingController();
   String _selected;
-
 
   @override
   void dispose() {
@@ -23,7 +21,6 @@ class _TodayQuestionState extends State<TodayQuestion> {
 
   @override
   Widget build(BuildContext context) {
-
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.all(common_gap),
@@ -44,15 +41,17 @@ class _TodayQuestionState extends State<TodayQuestion> {
             Padding(
               padding: const EdgeInsets.all(common_l_gap),
               child:
-              _buildQuestion('연애할 때 상대방을 위해 얼마나 포기할 수 있나요? 전부를 희생할 수 있나요?'),
+                  _buildQuestion('연애할 때 상대방을 위해 얼마나 포기할 수 있나요? 전부를 희생할 수 있나요?'),
             ),
             DropdownButtonFormField<String>(
               decoration: InputDecoration(hintText: '답변을 선택하세요'),
               value: _selected,
-              items: ['전부 희생할 수 있다', '전부 희생할 수는 없다'].map((label) => DropdownMenuItem(
-                child: Text(label),
-                value: label,
-              )).toList(),
+              items: ['전부 희생할 수 있다', '전부 희생할 수는 없다']
+                  .map((label) => DropdownMenuItem(
+                        child: Text(label),
+                        value: label,
+                      ))
+                  .toList(),
               onChanged: (value) {
                 setState(() {
                   _selected = value;
@@ -73,13 +72,14 @@ class _TodayQuestionState extends State<TodayQuestion> {
                 onPressed: () {
                   final answer = _answerController.text;
                   print(answer);
-                  var tmp = Provider.of<MyUserData>(context, listen: false).data.recentMatchState[0];
                   Firestore.instance
                       .collection('Users')
-                      .document(Provider.of<MyUserData>(context, listen: false).data.userKey)
-                      .updateData(
-                      {'recentMatchState': [tmp, true, false]});
-
+                      .document(Provider.of<MyUserData>(context, listen: false)
+                          .data
+                          .userKey)
+                      .updateData({
+                    'recentMatchState': [DateTime.now(), true, false]
+                  });
                 },
                 color: Colors.blue[50],
                 shape: RoundedRectangleBorder(
@@ -137,5 +137,3 @@ class _TodayQuestionState extends State<TodayQuestion> {
     );
   }
 }
-
-
