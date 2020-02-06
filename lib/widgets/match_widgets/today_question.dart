@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:datingapp/constants/firebase_keys.dart';
 import 'package:datingapp/constants/size.dart';
 import 'package:datingapp/data/provider/my_user_data.dart';
 import 'package:flutter/material.dart';
@@ -73,7 +74,7 @@ class _TodayQuestionState extends State<TodayQuestion> {
                   final answer = _answerController.text;
                   print(answer);
                   Firestore.instance
-                      .collection('Users')
+                      .collection(COLLECTION_USERS)
                       .document(Provider.of<MyUserData>(context, listen: false)
                           .data
                           .userKey)
