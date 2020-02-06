@@ -11,6 +11,7 @@ class User {
   final String region;
   final String job;
   final int height;
+  final List<dynamic> recentMatchState;
   final DocumentReference reference;
 
   User.fromMap(Map<String, dynamic> map, this.userKey, {this.reference})
@@ -20,7 +21,8 @@ class User {
         birthYear = map[KEY_BIRTHYEAR],
         region = map[KEY_REGION],
         job = map[KEY_JOB],
-        height = map[KEY_HEIGHT];
+        height = map[KEY_HEIGHT],
+        recentMatchState = map[KEY_RECENTMATCHSTATE];
 
   User.fromSnapshot(DocumentSnapshot snapshot)
       : this.fromMap(
@@ -40,6 +42,7 @@ class User {
     map[KEY_REGION] = '대전';
     map[KEY_JOB] = '회사원';
     map[KEY_HEIGHT] = 170;
+    map[KEY_RECENTMATCHSTATE] = [DateTime.now(), false, false];
 
     return map;
   }

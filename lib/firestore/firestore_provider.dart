@@ -14,6 +14,7 @@ class FirestoreProvider with Transformer {
       DocumentSnapshot snapshot = await tx.get(userRef);
       if (snapshot.exists) {
         await tx.update(userRef, snapshot.data);
+        print('tx update completed');
       } else {
         await tx.set(userRef, User.getMapForCreateUser(email));
         print('tx set completed');
