@@ -5,6 +5,8 @@ import 'package:datingapp/data/provider/my_user_data.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:intl/intl.dart';
+
 class TodayQuestion extends StatefulWidget {
   @override
   _TodayQuestionState createState() => _TodayQuestionState();
@@ -63,32 +65,42 @@ class _TodayQuestionState extends State<TodayQuestion> {
               padding: const EdgeInsets.all(common_l_gap),
               child: _buildAnswer(),
             ),
-            Padding(
-              padding: const EdgeInsets.all(common_gap),
-              child: FlatButton(
-                child: const Text(
-                  '제출하기',
-                  style: TextStyle(color: Colors.black),
+            Consumer<MyUserData>(builder: (context, value, child) {
+              return Padding(
+                padding: const EdgeInsets.all(common_gap),
+                child: FlatButton(
+                  child: const Text(
+                    '제출하기',
+                    style: TextStyle(color: Colors.black),
+                  ),
+                  onPressed: () {
+                    final answer = _answerController.text;
+                    print(_selected);
+                    print(answer);
+                    DocumentReference userRef = Firestore.instance
+                        .collection(COLLECTION_USERS)
+                        .document(value.data.userKey);
+
+                    var now = DateTime.now();
+                    var formatter = DateFormat('yyyy-MM-dd');
+                    String formattedDate = formatter.format(now);
+
+                    userRef
+                        .collection('TodayQuestions')
+                        .document(formattedDate)
+                        .setData({'choice': _selected, 'answer': answer});
+                    userRef.updateData({
+                      'recentMatchState': [DateTime.now(), 1]
+                    });
+                  },
+                  color: Colors.blue[50],
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  disabledColor: Colors.blue[100],
                 ),
-                onPressed: () {
-                  final answer = _answerController.text;
-                  print(answer);
-                  Firestore.instance
-                      .collection(COLLECTION_USERS)
-                      .document(Provider.of<MyUserData>(context, listen: false)
-                          .data
-                          .userKey)
-                      .updateData({
-                    'recentMatchState': [DateTime.now(), 1]
-                  });
-                },
-                color: Colors.blue[50],
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(6),
-                ),
-                disabledColor: Colors.blue[100],
-              ),
-            ),
+              );
+            }),
           ],
         ),
       ),
