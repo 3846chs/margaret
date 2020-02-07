@@ -79,7 +79,7 @@ class _TodayQuestionState extends State<TodayQuestion> {
                           .data
                           .userKey)
                       .updateData({
-                    'recentMatchState': [DateTime.now(), true, false]
+                    'recentMatchState': [DateTime.now(), 2]
                   });
                 },
                 color: Colors.blue[50],
