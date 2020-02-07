@@ -18,7 +18,7 @@ class _MatchPageState extends State<MatchPage> {
     return StreamBuilder<DocumentSnapshot>(
         stream: myStream(),
         builder: (context, snapshot) {
-          // snapshot.data.data['recentMatchState']; ???
+          // snapshot.data.data['recentMatchState'][1] == 1
           var _recentMatchState =
               Provider.of<MyUserData>(context, listen: false)
                   .data
@@ -26,13 +26,12 @@ class _MatchPageState extends State<MatchPage> {
 
           // 일단 날짜에 따른 질문 업데이트는 빼고 구현
 
-          if (_recentMatchState[1] == true && _recentMatchState[2] == true)
-            return TodayFinished();
-          else if (_recentMatchState[1] == true &&
-              _recentMatchState[2] == false)
-            return TodayPeople();
-          else // _recentMatchState[1] == false && _recentMatchState[2] == false
+          if (_recentMatchState[1] == 0)
             return TodayQuestion();
+          else if (_recentMatchState[1] == 1)
+            return TodayPeople();
+          else // _recentMatchState[1] == 2
+            return TodayFinished();
         });
   }
 
