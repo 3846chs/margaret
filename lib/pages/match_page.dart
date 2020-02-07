@@ -18,6 +18,7 @@ class _MatchPageState extends State<MatchPage> {
     return StreamBuilder<DocumentSnapshot>(
         stream: myStream(),
         builder: (context, snapshot) {
+          // snapshot.data.data['recentMatchState']; ???
           var _recentMatchState =
               Provider.of<MyUserData>(context, listen: false)
                   .data
