@@ -42,7 +42,7 @@ class User {
     map[KEY_REGION] = '대전';
     map[KEY_JOB] = '회사원';
     map[KEY_HEIGHT] = 170;
-    map[KEY_RECENTMATCHSTATE] = [DateTime.now(), 1];
+    map[KEY_RECENTMATCHSTATE] = [DateTime.now(), 0];
 
     return map;
   }

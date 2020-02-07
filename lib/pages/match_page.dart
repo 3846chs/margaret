@@ -25,12 +25,12 @@ class _MatchPageState extends State<MatchPage> {
 
           // 일단 날짜에 따른 질문 업데이트는 빼고 구현
 
-          if (_recentMatchState[1] == 3)
-            return TodayFinished();
-          else if (_recentMatchState[1] == 2)
-            return TodayPeople();
-          else // _recentMatchState[1] == 1
+          if (_recentMatchState[1] == 0)
             return TodayQuestion();
+          else if (_recentMatchState[1] == 1)
+            return TodayPeople();
+          else // _recentMatchState[1] == 2
+            return TodayFinished();
         });
   }
 
