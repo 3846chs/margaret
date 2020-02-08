@@ -90,7 +90,7 @@ class _TodayQuestionState extends State<TodayQuestion> {
                           .document(formattedDate)
                           .setData({'choice': _selected, 'answer': answer});
                       userRef.updateData({
-                        'recentMatchState': [DateTime.now(), 1]
+                        'recentMatchState': [DateTime.now(), 1] // 1번 선택했으면 1 저장, 2번 선택했으면 2 저장
                       });
                     },
                     color: Colors.blue[50],

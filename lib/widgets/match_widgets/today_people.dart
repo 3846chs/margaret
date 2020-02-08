@@ -1,7 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:datingapp/data/user.dart';
 import 'package:datingapp/widgets/loading.dart';
 import 'package:datingapp/widgets/match_widgets/today_people_card.dart';
 import 'package:flutter/material.dart';
+import 'package:datingapp/data/provider/my_user_data.dart';
+import 'package:provider/provider.dart';
 
 class TodayPeople extends StatelessWidget {
   @override
@@ -16,9 +19,11 @@ class TodayPeople extends StatelessWidget {
         if (snapshot.data == null)
           return LoadingPage();
         else if (!snapshot.hasData)
-          return _buildNotPeopleAnswer();
-        else
-          return _buildPeopleAnswer(snapshot.data.documents);
+          return LoadingPage();
+        else {
+          User myUser = Provider.of<MyUserData>(context, listen: false).data;
+          return _buildPeopleAnswer(snapshot.data.documents, myUser);
+        }
       },
     ));
   }
@@ -34,22 +39,20 @@ class TodayPeople extends StatelessWidget {
     );
   }
 
-  Widget _buildPeopleAnswer(List<DocumentSnapshot> documents) {
+  Widget _buildPeopleAnswer(List<DocumentSnapshot> documents, User myUser) {
     final recommendedPeople = documents
-        .where((doc) => (doc['gender'] == '여성' &&
-            doc['recentMatchState'][1] != 0 &&
+        .where((doc) => (doc['gender'] != myUser.gender &&
+            doc['recentMatchState'][1] == myUser.recentMatchState[1] &&
             doc['recentMatchState'][0].toDate().year == DateTime.now().year &&
             doc['recentMatchState'][0].toDate().month == DateTime.now().month &&
             doc['recentMatchState'][0].toDate().day == DateTime.now().day))
         .take(3) // 이후에 최신순 3명으로 변경해야 함
         .toList();
-
-    return ListView(
-      children: recommendedPeople.map((doc) => TodayPeopleCard(doc)).toList(),
-    );
-  }
-
-  Widget _buildNotPeopleAnswer() {
-    return Text('해당 선택지를 고른 사람들이 충분히 모이지 않았습니다.');
+    if (recommendedPeople.length < 3)
+      return Text('아직 해당 선택지를 고른 사람이 없습니다. 기다려주세요.');
+    else
+      return ListView(
+        children: recommendedPeople.map((doc) => TodayPeopleCard(doc)).toList(),
+      );
   }
 }

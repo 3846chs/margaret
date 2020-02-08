@@ -30,10 +30,10 @@ class _MatchPageState extends State<MatchPage> {
           else {
             if (snapshot.data.data['recentMatchState'][1] == 0)
               return TodayQuestion();
-            else if (snapshot.data.data['recentMatchState'][1] == 1)
-              return TodayPeople();
-            else // snapshot.data.data['recentMatchState'][1] == 2
+            else if (snapshot.data.data['recentMatchState'][1] == -1)
               return TodayFinished();
+            else // snapshot.data.data['recentMatchState'][1] == 1 or 2
+              return TodayPeople();
           }
         });
   }
