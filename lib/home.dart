@@ -15,7 +15,6 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int _selectedIndex = 0;
-  int _today = -1;
 
   static List<Widget> _widgetOptions = <Widget>[
     MatchPage(),
@@ -78,14 +77,6 @@ class _HomeState extends State<Home> {
 
   void _onItemTapped(int index) {
     setState(() {
-      if (index == 0) {
-        if (_today == DateTime.now().day) {
-          print(2);
-        } else {
-          _today = DateTime.now().day;
-          print(3);
-        }
-      }
       _selectedIndex = index;
     });
   }
@@ -95,16 +86,14 @@ class _HomeState extends State<Home> {
       child: ListView(
         children: <Widget>[
           DrawerHeader(
-            child: GestureDetector(
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => UserProfile()));
-                },
-                child: CircleAvatar(
-                  child: Consumer<MyUserData>(builder: (context, value, child) {
-                    return Text(value.data.nickname);
-                  }),
-                )),
+            child: GestureDetector(onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => UserProfile()));
+            }, child: CircleAvatar(
+              child: Consumer<MyUserData>(builder: (context, value, child) {
+                return Text(value.data.nickname);
+              }),
+            )),
             decoration: BoxDecoration(color: Colors.blueAccent),
           ),
           ListTile(

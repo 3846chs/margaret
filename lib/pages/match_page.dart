@@ -18,7 +18,7 @@ class _MatchPageState extends State<MatchPage> {
     return StreamBuilder<DocumentSnapshot>(
         stream: myStream(),
         builder: (context, snapshot) {
-          // snapshot.data.data['recentMatchState'][1] == 1
+          // snapshot.data.data['recentMatchState'][1] == 1 로 해볼까? -> 나중에
           var _recentMatchState =
               Provider.of<MyUserData>(context, listen: false)
                   .data
