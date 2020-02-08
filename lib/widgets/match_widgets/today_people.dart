@@ -13,7 +13,7 @@ class TodayPeople extends StatelessWidget {
           //.where('gender', isEqualTo: '여성')
           .snapshots(),
       builder: (context, snapshot) {
-        if (snapshot.data == null)
+        if (snapshot.data == null) // 없으면 에러
           return LoadingPage();
         else if (!snapshot.hasData) return _buildNotPeopleAnswer();
 
