@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:datingapp/data/provider/my_user_data.dart';
+import 'package:datingapp/widgets/loading.dart';
 import 'package:datingapp/widgets/match_widgets/today_finished.dart';
 
 import 'package:datingapp/widgets/match_widgets/today_people.dart';
@@ -18,20 +19,22 @@ class _MatchPageState extends State<MatchPage> {
     return StreamBuilder<DocumentSnapshot>(
         stream: myStream(),
         builder: (context, snapshot) {
-          // snapshot.data.data['recentMatchState'][1] == 1 로 해볼까? -> 나중에
-          var _recentMatchState =
-              Provider.of<MyUserData>(context, listen: false)
-                  .data
-                  .recentMatchState;
+//          print('************************************************************');
 
           // 일단 날짜에 따른 질문 업데이트는 빼고 구현
 
-          if (_recentMatchState[1] == 0)
-            return TodayQuestion();
-          else if (_recentMatchState[1] == 1)
-            return TodayPeople();
-          else // _recentMatchState[1] == 2
-            return TodayFinished();
+          if (snapshot.data == null)
+            return LoadingPage();
+          else if (!snapshot.hasData)
+            return LoadingPage();
+          else {
+            if (snapshot.data.data['recentMatchState'][1] == 0)
+              return TodayQuestion();
+            else if (snapshot.data.data['recentMatchState'][1] == 1)
+              return TodayPeople();
+            else // snapshot.data.data['recentMatchState'][1] == 2
+              return TodayFinished();
+          }
         });
   }
 
