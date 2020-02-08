@@ -46,7 +46,7 @@ class _TodayPeopleCardState extends State<TodayPeopleCard> {
         .collection('Users')
         .document(widget.document.documentID)
         .collection('TodayQuestions')
-        .document('2020-02-07') // 테스트용이고 추후에는 formattedDate 로 바꿔줘야 함.
+        .document(formattedDate) // 테스트용이고 추후에는 formattedDate 로 바꿔줘야 함.
         .snapshots();
   }
 }
