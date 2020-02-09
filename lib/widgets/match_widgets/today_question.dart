@@ -100,20 +100,8 @@ class _TodayQuestionState extends State<TodayQuestion> {
                               var formatter = DateFormat('yyyy-MM-dd');
 
                               // 23시 59분 59초에 유저가 답변을 제출하면, 시간 지연으로 인해 다음 날 답변으로 기록되는 현상 발생 -> 아래와 같이 해결
-                              if (now.hour == 23 && now.minute > 50) {
-                                userRef
-                                    .collection('TodayQuestions')
-                                    .document(formatter.format(
-                                        value.data.recentMatchTime.toDate()))
-                                    .setData({
-                                  'choice': _selected,
-                                  'answer': answer
-                                }); // 기존 유저 recentMatchTime 을 이용하여 유저 답변 DB 에 저장
-                                // 답변한 시각은 업데이트 하지 않는다.(밤 12시 근처라 어차피 무의미)
-                                userRef.updateData({
-                                  'recentMatchState': _selectedIndex + 1
-                                }); // 1번 선택했으면 1 저장, 2번 선택했으면 2 저장
-                              } else {
+                              if (now.day ==
+                                  value.data.recentMatchTime.toDate().day) {
                                 userRef
                                     .collection('TodayQuestions')
                                     .document(formatter.format(now))
@@ -126,6 +114,17 @@ class _TodayQuestionState extends State<TodayQuestion> {
                                 userRef.updateData({
                                   'recentMatchState': _selectedIndex + 1
                                 }); // 1번 선택했으면 1 저장, 2번 선택했으면 2 저장
+                              } else {
+                                print('시간 지연 발생');
+                                userRef
+                                    .collection('TodayQuestions')
+                                    .document(formatter.format(
+                                        value.data.recentMatchTime.toDate()))
+                                    .setData({
+                                  'choice': _selected,
+                                  'answer': answer
+                                });
+                                // recentMatchTime 을 이용하여 유저 답변만 DB 에 저장하고 끝
                               }
                             },
                             color: Colors.blue[50],

@@ -92,7 +92,6 @@ class _TodayPeopleCardState extends State<TodayPeopleCard> {
     var now = DateTime.now();
     var formatter = DateFormat('yyyy-MM-dd');
     String formattedDate = formatter.format(now);
-    print(formattedDate);
     return Firestore.instance
         .collection('Users')
         .document(widget.document.documentID)
