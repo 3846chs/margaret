@@ -23,6 +23,11 @@ class _TodayQuestionState extends State<TodayQuestion> {
 
   @override
   Widget build(BuildContext context) {
+
+    // 오늘 날짜에 해당하는 질문을 가져와야 함.
+    // 만약 유저가 오늘 날짜에 처음 이 페이지를 봤다면, 오늘 날짜로 recentMatchState 업데이트 -> MatchPage 다시 호출됨
+    // 그렇지 않다면(오늘 본 적이 있다면) 그냥 오늘 날짜 질문으로 처리
+
     return SafeArea(
       child: SingleChildScrollView(
         child: Padding(
