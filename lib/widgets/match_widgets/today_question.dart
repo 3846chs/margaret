@@ -96,7 +96,7 @@ class _TodayQuestionState extends State<TodayQuestion> {
                           .setData({'choice': _selected, 'answer': answer});
                       userRef.updateData({
                         'recentMatchState': [DateTime.now(), 1] // 1번 선택했으면 1 저장, 2번 선택했으면 2 저장
-                      });
+                      }); // 사실 recentMatchState[1] 만 변경해야 함.
                     },
                     color: Colors.blue[50],
                     shape: RoundedRectangleBorder(

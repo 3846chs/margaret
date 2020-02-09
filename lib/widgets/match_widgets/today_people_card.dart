@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:datingapp/constants/firebase_keys.dart';
 import 'package:datingapp/data/provider/my_user_data.dart';
 import 'package:datingapp/widgets/loading.dart';
+import 'package:datingapp/widgets/match_widgets/match_person_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -54,9 +55,20 @@ class _TodayPeopleCardState extends State<TodayPeopleCard> {
                               onPressed: () {
                                 Navigator.pop(context);
                                 print(widget.document.data['nickname']);
-                                // 누르고 나면 Send List 에 보내고, 상대는 Receive List 에 보내고.
-                                // 그리고 recentMatchState 변경
-
+                                // recentMatchState 변경
+//                                Firestore.instance
+//                                    .collection(COLLECTION_USERS)
+//                                    .document(value.data.userKey)
+//                                    .updateData({
+//                                  'recentMatchState': [DateTime.now(), -1]
+//                                  // 사실 recentMatchState[1] 만 변경해야 함.
+//                                });
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            MatchPersonProfile(
+                                                widget.document)));
 
 //                                Firestore.instance
 //                                    .collection(COLLECTION_USERS)
@@ -72,7 +84,6 @@ class _TodayPeopleCardState extends State<TodayPeopleCard> {
 //                                  "Receives": FieldValue.arrayUnion(
 //                                      [value.data.userKey])
 //                                });
-
                               },
                             ),
                             MaterialButton(
