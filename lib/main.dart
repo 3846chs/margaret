@@ -1,8 +1,6 @@
 import 'package:datingapp/data/provider/my_user_data.dart';
 import 'package:datingapp/firestore/firestore_provider.dart';
 import 'package:datingapp/home.dart';
-import 'package:datingapp/login/sign_in.dart';
-import 'package:datingapp/login/sign_up.dart';
 import 'package:datingapp/pages/auth_page.dart';
 import 'package:datingapp/widgets/loading.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -28,9 +26,9 @@ class OurApp extends StatelessWidget {
                   print(firebaseUser.uid);
                   firestoreProvider
                       .connectMyUserData(firebaseUser.uid)
-                      .listen((user) async {
+                      .listen((user) {
                     print('listen called');
-                    await myUserData.setUserData(user);
+                    myUserData.setUserData(user);
                   });
                 }
               });

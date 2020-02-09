@@ -46,7 +46,9 @@ class MatchPersonProfile extends StatelessWidget {
                 ),
                 ProfileBasicInfo(
                     '나이',
-                    (DateTime.now().year - yourDocumentSnapshot.data['birthYear'] + 1)
+                    (DateTime.now().year -
+                            yourDocumentSnapshot.data['birthYear'] +
+                            1)
                         .toString()),
                 ProfileBasicInfo('지역', yourDocumentSnapshot.data['region']),
                 ProfileBasicInfo('직업', yourDocumentSnapshot.data['region']),

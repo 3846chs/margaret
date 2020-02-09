@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:datingapp/constants/size.dart';
 import 'package:datingapp/data/user.dart';
 import 'package:datingapp/widgets/loading.dart';
 import 'package:datingapp/widgets/match_widgets/today_people_card.dart';
@@ -28,7 +27,6 @@ class TodayPeople extends StatelessWidget {
       },
     ));
   }
-
 
   Widget _buildTodayPeople(List<DocumentSnapshot> documents, User myUser) {
     final recommendedPeople = documents

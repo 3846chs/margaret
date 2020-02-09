@@ -12,7 +12,7 @@ class User {
   final String job;
   final int height;
   final int recentMatchState;
-  final Timestamp recentMatchTime; // TimeStamp?
+  final Timestamp recentMatchTime;
   final DocumentReference reference;
 
   User(
