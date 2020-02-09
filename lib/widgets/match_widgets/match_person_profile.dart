@@ -40,7 +40,7 @@ class MatchPersonProfile extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(common_gap),
                   child: Text(
-                    value.data.nickname,
+                    yourDocumentSnapshot.data['nickname'],
                     style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -52,8 +52,6 @@ class MatchPersonProfile extends StatelessWidget {
                 ProfileBasicInfo('직업', yourDocumentSnapshot.data['region']),
                 ProfileBasicInfo(
                     '키', yourDocumentSnapshot.data['height'].toString()),
-
-                //_builTest(),
                 Padding(
                   padding: const EdgeInsets.all(common_l_gap),
                   child: Center(

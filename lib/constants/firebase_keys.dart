@@ -9,3 +9,4 @@ const KEY_REGION = 'region';
 const KEY_JOB = 'job';
 const KEY_HEIGHT = 'height';
 const KEY_RECENTMATCHSTATE = 'recentMatchState';
+const KEY_RECENTMATCHTIME = 'recentMatchTime';

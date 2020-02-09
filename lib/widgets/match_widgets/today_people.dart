@@ -33,10 +33,10 @@ class TodayPeople extends StatelessWidget {
   Widget _buildTodayPeople(List<DocumentSnapshot> documents, User myUser) {
     final recommendedPeople = documents
         .where((doc) => (doc['gender'] != myUser.gender &&
-            doc['recentMatchState'][1] == myUser.recentMatchState[1] &&
-            doc['recentMatchState'][0].toDate().year == DateTime.now().year &&
-            doc['recentMatchState'][0].toDate().month == DateTime.now().month &&
-            doc['recentMatchState'][0].toDate().day == DateTime.now().day))
+            doc['recentMatchState'] == myUser.recentMatchState &&
+            doc['recentMatchTime'].toDate().year == DateTime.now().year &&
+            doc['recentMatchTime'].toDate().month == DateTime.now().month &&
+            doc['recentMatchTime'].toDate().day == DateTime.now().day))
         .take(3) // 이후에 최신순 3명으로 변경해야 함
         .toList();
     if (recommendedPeople.length < 3)
