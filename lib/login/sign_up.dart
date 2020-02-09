@@ -1,5 +1,6 @@
 import 'package:datingapp/constants/size.dart';
 import 'package:datingapp/data/provider/my_user_data.dart';
+import 'package:datingapp/data/user.dart';
 import 'package:datingapp/firestore/firestore_provider.dart';
 import 'package:datingapp/utils/simple_snack_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -39,7 +40,6 @@ class _SignUpFormState extends State<SignUpForm> {
                 SizedBox(
                   height: common_s_gap,
                 ),
-
                 SizedBox(
                   height: common_l_gap,
                 ),
@@ -87,9 +87,7 @@ class _SignUpFormState extends State<SignUpForm> {
                 FlatButton(
                   onPressed: () {
                     if (_formKey.currentState.validate()) {
-
                       _register;
-
                     }
                   },
                   child: Text(
@@ -130,7 +128,6 @@ class _SignUpFormState extends State<SignUpForm> {
                 SizedBox(
                   height: common_l_gap,
                 ),
-
                 SizedBox(
                   height: common_l_gap,
                 ),
@@ -145,7 +142,7 @@ class _SignUpFormState extends State<SignUpForm> {
 
   get _register async {
     final AuthResult result =
-    await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
       email: _emailConstroller.text,
       password: _pwConstroller.text,
     );
@@ -155,8 +152,10 @@ class _SignUpFormState extends State<SignUpForm> {
     if (user == null) {
       simpleSnackbar(context, 'Please try again later!');
     } else {
-      await firestoreProvider.attemptCreateUser(
-          userKey: user.uid, email: user.email);
+      await firestoreProvider.attemptCreateUser(User(
+        userKey: user.uid,
+        email: user.email,
+      ));
       Provider.of<MyUserData>(context, listen: false)
           .setNewStatus(MyUserDataStatus.progress);
     }

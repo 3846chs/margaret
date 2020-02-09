@@ -15,6 +15,19 @@ class User {
   final Timestamp recentMatchTime; // TimeStamp?
   final DocumentReference reference;
 
+  User(
+      {this.userKey,
+      this.email,
+      this.nickname,
+      this.gender,
+      this.birthYear,
+      this.region,
+      this.job,
+      this.height,
+      this.recentMatchState,
+      this.recentMatchTime,
+      this.reference});
+
   User.fromMap(Map<String, dynamic> map, this.userKey, {this.reference})
       : email = map[KEY_EMAIL],
         nickname = map[KEY_NICKNAME],
@@ -33,21 +46,15 @@ class User {
           reference: snapshot.reference,
         );
 
-  static Map<String, dynamic> getMapForCreateUser(String email) {
-    Map<String, dynamic> map = Map();
-    map[KEY_EMAIL] = email;
-
-    // 아래의 프로필 정보는 default 로 다음과 같이 임시로 설정하였음. 가입 단계에서 이 함수(getMapForCreateUser) 를 변형하여 사용하면 됨
-    map[KEY_NICKNAME] = email.split("@")[0];
-    map[KEY_GENDER] = '남성';
-    map[KEY_BIRTHYEAR] = 1998;
-    map[KEY_REGION] = '대전';
-    map[KEY_JOB] = '회사원';
-    map[KEY_HEIGHT] = 170;
-    map[KEY_RECENTMATCHSTATE] = 0;
-    map[KEY_RECENTMATCHTIME] = DateTime.now();
-
-
-    return map;
-  }
+  Map<String, dynamic> toMap() => {
+        KEY_EMAIL: email,
+        KEY_NICKNAME: nickname,
+        KEY_GENDER: gender,
+        KEY_BIRTHYEAR: birthYear,
+        KEY_REGION: region,
+        KEY_JOB: job,
+        KEY_HEIGHT: height,
+        KEY_RECENTMATCHSTATE: recentMatchState,
+        KEY_RECENTMATCHTIME: recentMatchTime,
+      };
 }
