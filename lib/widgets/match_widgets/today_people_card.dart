@@ -1,11 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:datingapp/constants/firebase_keys.dart';
+import 'package:datingapp/data/provider/my_user_data.dart';
 import 'package:datingapp/widgets/loading.dart';
+import 'package:datingapp/widgets/match_widgets/match_person_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class TodayPeopleCard extends StatefulWidget {
   final DocumentSnapshot document;
-  String ans = "";
 
   TodayPeopleCard(this.document);
 
@@ -28,9 +31,75 @@ class _TodayPeopleCardState extends State<TodayPeopleCard> {
           );
         else {
           print(snapshot.data.data['answer']);
-          return ListTile(
-            leading: CircleAvatar(),
-            title: Text(snapshot.data.data['answer']),
+          return Center(
+            child: GestureDetector(
+              child: Container(
+                margin: EdgeInsets.all(10),
+                color: Colors.grey[200],
+                width: 300,
+                height: 100,
+                child: Text(snapshot.data.data['answer']),
+              ),
+              onTap: () {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return Consumer<MyUserData>(
+                          builder: (context, value, child) {
+                        return AlertDialog(
+                          content: Text('이 답변을 선택하시겠습니까?'),
+                          actions: <Widget>[
+                            MaterialButton(
+                              elevation: 5,
+                              child: Text('선택'),
+                              onPressed: () {
+                                Navigator.pop(context);
+                                print(widget.document.data['nickname']);
+                                // recentMatchState 변경
+//                                Firestore.instance
+//                                    .collection(COLLECTION_USERS)
+//                                    .document(value.data.userKey)
+//                                    .updateData({
+//                                  'recentMatchState': [DateTime.now(), -1]
+//                                  // 사실 recentMatchState[1] 만 변경해야 함.
+//                                });
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            MatchPersonProfile(
+                                                widget.document)));
+
+//                                Firestore.instance
+//                                    .collection(COLLECTION_USERS)
+//                                    .document(value.data.userKey)
+//                                    .updateData({
+//                                  "Sends": FieldValue.arrayUnion(
+//                                      [widget.document.documentID])
+//                                });
+//                                Firestore.instance
+//                                    .collection(COLLECTION_USERS)
+//                                    .document(widget.document.documentID)
+//                                    .updateData({
+//                                  "Receives": FieldValue.arrayUnion(
+//                                      [value.data.userKey])
+//                                });
+                              },
+                            ),
+                            MaterialButton(
+                              elevation: 5,
+                              child: Text('취소'),
+                              onPressed: () {
+                                Navigator.pop(context);
+                                print('취소함');
+                              },
+                            ),
+                          ],
+                        );
+                      });
+                    });
+              },
+            ),
           );
         }
       },
@@ -46,7 +115,7 @@ class _TodayPeopleCardState extends State<TodayPeopleCard> {
         .collection('Users')
         .document(widget.document.documentID)
         .collection('TodayQuestions')
-        .document(formattedDate) // 테스트용이고 추후에는 formattedDate 로 바꿔줘야 함.
+        .document(formattedDate)
         .snapshots();
   }
 }
