@@ -106,6 +106,7 @@ class _TodayQuestionState extends State<TodayQuestion> {
                                     .collection('TodayQuestions')
                                     .document(formatter.format(now))
                                     .setData({
+                                  'question' : snapshot.data.data['question'],
                                   'choice': _selected,
                                   'answer': answer
                                 }); // 유저 답변 DB 에 저장

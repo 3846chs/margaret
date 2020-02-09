@@ -4,6 +4,7 @@ import 'package:datingapp/widgets/loading.dart';
 import 'package:datingapp/widgets/match_widgets/today_people_card.dart';
 import 'package:flutter/material.dart';
 import 'package:datingapp/data/provider/my_user_data.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class TodayPeople extends StatelessWidget {
@@ -65,37 +66,58 @@ class ShowPeople extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        SizedBox(
-          height: 50,
-        ),
-        Text(
-          '연애할 때 상대방을 위해 얼마나 포기할 수 있나요? 전부를 희생할 수 있나요?',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 20,
-            color: Colors.black,
-          ),
-        ),
-        SizedBox(
-          height: 30,
-        ),
-        Text(
-          '전부 희생할 수 있다',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 15,
-            color: Colors.blueAccent,
-          ),
-        ),
-        SizedBox(
-          height: 30,
-        ),
-        TodayPeopleCard(recommendedPeople[0]),
-        TodayPeopleCard(recommendedPeople[1]),
-        TodayPeopleCard(recommendedPeople[2]),
-      ],
-    );
+    return StreamBuilder<DocumentSnapshot>(
+        stream: myStream(),
+        builder: (context, snapshot) {
+          if (snapshot.data == null)
+            return LoadingPage();
+          else if (!snapshot.hasData)
+            return LoadingPage();
+          else
+            return Column(
+              children: <Widget>[
+                SizedBox(
+                  height: 50,
+                ),
+                Text(
+                  snapshot.data.data['question'],
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.black,
+                  ),
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+                Text(
+                  snapshot.data.data['choice'],
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: Colors.blueAccent,
+                  ),
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+                TodayPeopleCard(recommendedPeople[0]),
+                TodayPeopleCard(recommendedPeople[1]),
+                TodayPeopleCard(recommendedPeople[2]),
+              ],
+            );
+        });
+  }
+
+  Stream<DocumentSnapshot> myStream() {
+    var now = DateTime.now();
+    var formatter = DateFormat('yyyy-MM-dd');
+    String formattedDate = formatter.format(now);
+    return Firestore.instance
+        .collection('Users')
+        .document(recommendedPeople[0].documentID) // 같은 선택지를 고른 사람끼리 모았음
+        .collection('TodayQuestions')
+        .document(formattedDate)
+        .snapshots();
   }
 }
