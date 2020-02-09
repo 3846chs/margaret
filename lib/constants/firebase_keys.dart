@@ -1,4 +1,5 @@
 const COLLECTION_USERS = 'Users';
+const TODAYQUESTIONS = 'TodayQuestions';
 
 const KEY_USERKEY = 'user_key';
 const KEY_EMAIL = 'email';

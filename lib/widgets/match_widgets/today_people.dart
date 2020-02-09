@@ -41,20 +41,6 @@ class TodayPeople extends StatelessWidget {
       return NotShowPeople();
     else
       return ShowPeople(recommendedPeople: recommendedPeople);
-
-//    print('eeeee');
-//    print(recommendedPeople[0].data['nickname']);
-//    print('eeeee');
-//    recommendedPeople.forEach((ds) {
-//      print(ds.data['nickname']);
-//    });
-//    if (recommendedPeople.length < 3)
-//      return Text('아직 해당 선택지를 고른 사람이 없습니다. 기다려주세요.');
-//    else
-//      return
-//      return ListView(
-//        children: recommendedPeople.map((doc) => TodayPeopleCard(doc)).toList(),
-//      );
   }
 }
 
