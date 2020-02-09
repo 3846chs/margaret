@@ -56,34 +56,16 @@ class _TodayPeopleCardState extends State<TodayPeopleCard> {
                                 Navigator.pop(context);
                                 print(widget.document.data['nickname']);
                                 // recentMatchState 변경
-//                                Firestore.instance
-//                                    .collection(COLLECTION_USERS)
-//                                    .document(value.data.userKey)
-//                                    .updateData({
-//                                  'recentMatchState': [DateTime.now(), -1]
-//                                  // 사실 recentMatchState[1] 만 변경해야 함.
-//                                });
+                                Firestore.instance
+                                    .collection(COLLECTION_USERS)
+                                    .document(value.data.userKey)
+                                    .updateData({'recentMatchState': -1}); // 완료
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
                                             MatchPersonProfile(
                                                 widget.document)));
-
-//                                Firestore.instance
-//                                    .collection(COLLECTION_USERS)
-//                                    .document(value.data.userKey)
-//                                    .updateData({
-//                                  "Sends": FieldValue.arrayUnion(
-//                                      [widget.document.documentID])
-//                                });
-//                                Firestore.instance
-//                                    .collection(COLLECTION_USERS)
-//                                    .document(widget.document.documentID)
-//                                    .updateData({
-//                                  "Receives": FieldValue.arrayUnion(
-//                                      [value.data.userKey])
-//                                });
                               },
                             ),
                             MaterialButton(

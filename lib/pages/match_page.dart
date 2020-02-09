@@ -19,9 +19,7 @@ class _MatchPageState extends State<MatchPage> {
     return StreamBuilder<DocumentSnapshot>(
         stream: myStream(),
         builder: (context, snapshot) {
-//          print('************************************************************');
-
-          // 일단 날짜에 따른 질문 업데이트는 빼고 구현
+          // 날짜에 따른 질문 업데이트 + Send/Receive/Chat에 속하거나 차단한 이성은 다시 매칭하지 않기 => 나중에
 
           if (snapshot.data == null)
             return LoadingPage();

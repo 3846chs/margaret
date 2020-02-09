@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:datingapp/constants/firebase_keys.dart';
 import 'package:datingapp/constants/size.dart';
 import 'package:datingapp/data/provider/my_user_data.dart';
 import 'package:datingapp/widgets/profile_widgets/profile_basic_info.dart';
@@ -46,7 +47,9 @@ class MatchPersonProfile extends StatelessWidget {
                 ),
                 ProfileBasicInfo(
                     '나이',
-                    (DateTime.now().year - yourDocumentSnapshot.data['birthYear'] + 1)
+                    (DateTime.now().year -
+                            yourDocumentSnapshot.data['birthYear'] +
+                            1)
                         .toString()),
                 ProfileBasicInfo('지역', yourDocumentSnapshot.data['region']),
                 ProfileBasicInfo('직업', yourDocumentSnapshot.data['region']),
@@ -62,7 +65,25 @@ class MatchPersonProfile extends StatelessWidget {
                           color: Colors.black,
                         ),
                       ),
-                      onPressed: null,
+                      onPressed: () {
+                        // 먼저 지금 상대방이 나한테 Receive 를 보냈는지 확인해야 함 => 나중에
+
+                        Firestore.instance
+                            .collection(COLLECTION_USERS)
+                            .document(value.data.userKey)
+                            .updateData({
+                          "Sends": FieldValue.arrayUnion(
+                              [yourDocumentSnapshot.documentID])
+                        });
+                        Firestore.instance
+                            .collection(COLLECTION_USERS)
+                            .document(yourDocumentSnapshot.documentID)
+                            .updateData({
+                          "Receives":
+                              FieldValue.arrayUnion([value.data.userKey])
+                        });
+                        Navigator.pop(context);
+                      },
                       color: Colors.blue[50],
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(6),
