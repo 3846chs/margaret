@@ -6,9 +6,9 @@ import 'package:datingapp/firestore/transformer.dart';
 class FirestoreProvider with Transformer {
   final Firestore _firestore = Firestore.instance;
 
-  Future<void> attemptCreateUser({String userKey, String email}) {
+  Future<void> attemptCreateUser(User user) {
     final DocumentReference userRef =
-        _firestore.collection(COLLECTION_USERS).document(userKey);
+        _firestore.collection(COLLECTION_USERS).document(user.userKey);
     print(userRef.path);
     return _firestore.runTransaction((Transaction tx) async {
       DocumentSnapshot snapshot = await tx.get(userRef);
@@ -16,7 +16,7 @@ class FirestoreProvider with Transformer {
         await tx.update(userRef, snapshot.data);
         print('tx update completed');
       } else {
-        await tx.set(userRef, User.getMapForCreateUser(email));
+        await tx.set(userRef, user.toMap());
         print('tx set completed');
       }
     });
