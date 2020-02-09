@@ -33,7 +33,6 @@ class _SignInFormState extends State<SignInForm> {
             child: ListView(
               shrinkWrap: true,
               children: <Widget>[
-
                 SizedBox(
                   height: common_l_gap,
                 ),
@@ -114,7 +113,6 @@ class _SignInFormState extends State<SignInForm> {
                 SizedBox(
                   height: common_l_gap,
                 ),
-
                 SizedBox(
                   height: common_l_gap,
                 ),
@@ -129,7 +127,7 @@ class _SignInFormState extends State<SignInForm> {
 
   get _login async {
     final AuthResult result =
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
+        await FirebaseAuth.instance.signInWithEmailAndPassword(
       email: _emailConstroller.text,
       password: _pwConstroller.text,
     );
@@ -143,7 +141,6 @@ class _SignInFormState extends State<SignInForm> {
           .setNewStatus(MyUserDataStatus.progress);
     }
   }
-
 
   InputDecoration getTextFieldDecor(String hint) {
     return InputDecoration(

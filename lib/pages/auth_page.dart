@@ -45,14 +45,10 @@ class _AuthPageState extends State<AuthPage> {
         child: RichText(
           textAlign: TextAlign.center,
           text: TextSpan(
-            style: const TextStyle(
-              color: Colors.black
-            ),
+            style: const TextStyle(color: Colors.black),
             children: <TextSpan>[
               TextSpan(
-                text: (currentWidget is SignInForm)
-                    ? "계정 만들기"
-                    : "로그인 하기",
+                text: (currentWidget is SignInForm) ? "계정 만들기" : "로그인 하기",
               ),
               TextSpan(
                   text:

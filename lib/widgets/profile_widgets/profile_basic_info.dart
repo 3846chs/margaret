@@ -1,4 +1,3 @@
-
 import 'package:datingapp/constants/size.dart';
 import 'package:flutter/material.dart';
 

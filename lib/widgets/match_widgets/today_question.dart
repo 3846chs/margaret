@@ -23,7 +23,6 @@ class _TodayQuestionState extends State<TodayQuestion> {
 
   @override
   Widget build(BuildContext context) {
-
     // 오늘 날짜에 해당하는 질문을 가져와야 함.
     // 만약 유저가 오늘 날짜에 처음 이 페이지를 봤다면, 오늘 날짜로 recentMatchTime 업데이트 -> MatchPage 다시 호출됨
     // 그렇지 않다면(오늘 본 적이 있다면) 그냥 오늘 날짜 질문으로 처리
@@ -48,8 +47,8 @@ class _TodayQuestionState extends State<TodayQuestion> {
               ),
               Padding(
                 padding: const EdgeInsets.all(common_l_gap),
-                child:
-                    _buildQuestion('연애할 때 상대방을 위해 얼마나 포기할 수 있나요? 전부를 희생할 수 있나요?'),
+                child: _buildQuestion(
+                    '연애할 때 상대방을 위해 얼마나 포기할 수 있나요? 전부를 희생할 수 있나요?'),
               ),
               DropdownButtonFormField<String>(
                 decoration: InputDecoration(hintText: '답변을 선택하세요'),
