@@ -100,7 +100,7 @@ class _TodayQuestionState extends State<TodayQuestion> {
                               var formatter = DateFormat('yyyy-MM-dd');
 
                               // 23시 59분 59초에 유저가 답변을 제출하면, 시간 지연으로 인해 다음 날 답변으로 기록되는 현상 발생 -> 아래와 같이 해결
-                              if (now.hour == 23 && now.minute < 59) {
+                              if (now.hour < 23 && now.minute < 59) {
                                 userRef
                                     .collection('TodayQuestions')
                                     .document(formatter.format(now))
