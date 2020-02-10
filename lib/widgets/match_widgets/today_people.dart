@@ -14,6 +14,7 @@ class TodayPeople extends StatelessWidget {
         child: StreamBuilder<QuerySnapshot>(
       stream: Firestore.instance
           .collection('Users')
+          .orderBy('recentMatchTime', descending: true)
           //.where('gender', isEqualTo: '여성')
           .snapshots(),
       builder: (context, snapshot) {
@@ -35,9 +36,11 @@ class TodayPeople extends StatelessWidget {
             doc['recentMatchState'] == myUser.recentMatchState &&
             doc['recentMatchTime'].toDate().year == DateTime.now().year &&
             doc['recentMatchTime'].toDate().month == DateTime.now().month &&
-            doc['recentMatchTime'].toDate().day == DateTime.now().day))
-        .take(3) // 이후에 최신순 3명으로 변경해야 함
+            doc['recentMatchTime'].toDate().day == DateTime.now().day) &&
+            myUser.recentMatchTime.toDate().isAfter(doc['recentMatchTime'].toDate()))
+        //.take(3)
         .toList();
+
     if (recommendedPeople.length < 3)
       return NotShowPeople();
     else
