@@ -27,6 +27,8 @@ class OurApp extends StatelessWidget {
                   firestoreProvider
                       .connectMyUserData(firebaseUser.uid)
                       .listen((user) {
+                    if (myUserData.data != null &&
+                        myUserData.data.userKey != user.userKey) return;
                     print('listen called');
                     myUserData.setUserData(user);
                   });
