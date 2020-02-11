@@ -127,9 +127,6 @@ class _TodayQuestionState extends State<TodayQuestion> {
                                   'answer': answer
                                 });
                                 // recentMatchTime 을 이용하여 유저 답변만 DB 에 저장
-                                userRef.updateData(
-                                    {'recentMatchTime': now}); // 접속 기록 업데이트
-                              }
                             },
                             color: Colors.blue[50],
                             shape: RoundedRectangleBorder(
