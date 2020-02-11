@@ -122,10 +122,13 @@ class _TodayQuestionState extends State<TodayQuestion> {
                                     .document(formatter.format(
                                         value.data.recentMatchTime.toDate()))
                                     .setData({
+                                  'question' : snapshot.data.data['question'],
                                   'choice': _selected,
                                   'answer': answer
                                 });
-                                // recentMatchTime 을 이용하여 유저 답변만 DB 에 저장하고 끝
+                                // recentMatchTime 을 이용하여 유저 답변만 DB 에 저장
+                                userRef.updateData(
+                                    {'recentMatchTime': now}); // 접속 기록 업데이트
                               }
                             },
                             color: Colors.blue[50],

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:datingapp/constants/firebase_keys.dart';
 import 'package:datingapp/data/user.dart';
 import 'package:datingapp/widgets/loading.dart';
 import 'package:datingapp/widgets/match_widgets/today_people_card.dart';
@@ -31,20 +32,24 @@ class TodayPeople extends StatelessWidget {
   }
 
   Widget _buildTodayPeople(List<DocumentSnapshot> documents, User myUser) {
+    var now = DateTime.now();
     final recommendedPeople = documents
-        .where((doc) => (doc['gender'] != myUser.gender &&
-            doc['recentMatchState'] == myUser.recentMatchState &&
-            doc['recentMatchTime'].toDate().year == DateTime.now().year &&
-            doc['recentMatchTime'].toDate().month == DateTime.now().month &&
-            doc['recentMatchTime'].toDate().day == DateTime.now().day) &&
+        .where((doc) =>
+            (doc['gender'] != myUser.gender &&
+                doc['recentMatchState'] == myUser.recentMatchState &&
+                doc['recentMatchTime'].toDate().year == now.year &&
+                doc['recentMatchTime'].toDate().month == now.month &&
+                doc['recentMatchTime'].toDate().day == now.day) &&
             myUser.recentMatchTime.toDate().isAfter(doc['recentMatchTime'].toDate()))
         //.take(3)
         .toList();
 
-    if (recommendedPeople.length < 3)
-      return NotShowPeople();
-    else
-      return ShowPeople(recommendedPeople: recommendedPeople);
+    if (recommendedPeople.length < 3){
+      print('NotShowPeople');
+      return NotShowPeople();}
+    else{
+      print('ShowPeople');
+      return ShowPeople(recommendedPeople: recommendedPeople);}
   }
 }
 
