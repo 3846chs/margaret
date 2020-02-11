@@ -41,7 +41,7 @@ class TodayPeople extends StatelessWidget {
                 doc['recentMatchTime'].toDate().month == now.month &&
                 doc['recentMatchTime'].toDate().day == now.day) &&
             myUser.recentMatchTime.toDate().isAfter(doc['recentMatchTime'].toDate()))
-        //.take(3)
+        .take(3)
         .toList();
 
     if (recommendedPeople.length < 3){
