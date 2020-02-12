@@ -180,9 +180,10 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
         );
 
         await firestoreProvider.attemptCreateUser(user);
+        Navigator.pop(context);
         Provider.of<MyUserData>(context, listen: false)
             .setNewStatus(MyUserDataStatus.progress);
-        Navigator.pop(context);
+
       }
     } on PlatformException catch (exception) {
       simpleSnackbar(context, exception.message);

@@ -132,8 +132,10 @@ class _SignInFormState extends State<SignInForm> {
       if (user == null) {
         simpleSnackbar(context, '존재하지 않는 계정입니다');
       } else {
+        Navigator.pop(context);
         Provider.of<MyUserData>(context, listen: false)
             .setNewStatus(MyUserDataStatus.progress);
+
       }
     } catch (e) {
       print(e.toString());

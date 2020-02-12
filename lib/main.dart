@@ -1,13 +1,13 @@
 import 'package:datingapp/data/provider/my_user_data.dart';
 import 'package:datingapp/firestore/firestore_provider.dart';
 import 'package:datingapp/home.dart';
-import 'package:datingapp/pages/auth_page.dart';
+import 'package:datingapp/auth/email/email_auth.dart';
 import 'package:datingapp/widgets/loading.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'auth/auth_main.dart';
+import 'auth/auth.dart';
 
 void main() => runApp(ChangeNotifierProvider<MyUserData>(
     create: (context) => MyUserData(), child: OurApp()));
@@ -40,7 +40,7 @@ class OurApp extends StatelessWidget {
             case MyUserDataStatus.exist:
               return Home();
             default:
-              return AuthMain();
+              return Auth();
           }
         },
       ),

@@ -1,14 +1,14 @@
 
-import 'package:datingapp/auth/sign_in.dart';
-import 'package:datingapp/auth/sign_up.dart';
+import 'package:datingapp/auth/email/sign_in.dart';
+import 'package:datingapp/auth/email/sign_up.dart';
 import 'package:flutter/material.dart';
 
-class AuthPage extends StatefulWidget {
+class EmailAuth extends StatefulWidget {
   @override
-  _AuthPageState createState() => _AuthPageState();
+  _EmailAuthState createState() => _EmailAuthState();
 }
 
-class _AuthPageState extends State<AuthPage> {
+class _EmailAuthState extends State<EmailAuth> {
   Widget currentWidget = SignInForm();
 
   @override

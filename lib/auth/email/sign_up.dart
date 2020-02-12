@@ -1,5 +1,5 @@
 import 'package:datingapp/constants/size.dart';
-import 'package:datingapp/pages/profile_input_page.dart';
+import 'package:datingapp/auth/email/profile_input_page.dart';
 import 'package:flutter/material.dart';
 
 class SignUpForm extends StatefulWidget {
@@ -81,7 +81,7 @@ class _SignUpFormState extends State<SignUpForm> {
               FlatButton(
                 onPressed: () {
                   if (_formKey.currentState.validate()) {
-                    Navigator.push(
+                    Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                             builder: (context) => ProfileInputPage(
