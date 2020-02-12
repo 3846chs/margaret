@@ -58,7 +58,7 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                 ),
                 TextFormField(
                   controller: _nicknameController,
-                  decoration: getTextFieldDecor('Nickname'),
+                  decoration: getTextFieldDecor('닉네임'),
                   validator: (value) {
                     if (value.isEmpty) return 'Please enter your nickname!';
                     return null;
@@ -69,8 +69,8 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                 ),
                 ToggleButtons(
                   children: const [
-                    Text('Male'),
-                    Text('Female'),
+                    Text('남성'),
+                    Text('여성'),
                   ],
                   onPressed: (index) {
                     setState(() {
@@ -93,7 +93,7 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                 ),
                 TextFormField(
                   controller: _birthYearController,
-                  decoration: getTextFieldDecor('Birth Year'),
+                  decoration: getTextFieldDecor('출생 연도'),
                   inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
                   keyboardType: TextInputType.number,
                   validator: (value) {
@@ -106,7 +106,7 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                 ),
                 TextFormField(
                   controller: _regionController,
-                  decoration: getTextFieldDecor('Region'),
+                  decoration: getTextFieldDecor('지역'),
                   validator: (value) {
                     if (value.isEmpty) return 'Please enter your region!';
                     return null;
@@ -117,7 +117,7 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                 ),
                 TextFormField(
                   controller: _jobController,
-                  decoration: getTextFieldDecor('Job'),
+                  decoration: getTextFieldDecor('직업'),
                   validator: (value) {
                     if (value.isEmpty) return 'Please enter your job!';
                     return null;
@@ -128,7 +128,7 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                 ),
                 TextFormField(
                   controller: _heightController,
-                  decoration: getTextFieldDecor('Height'),
+                  decoration: getTextFieldDecor('키'),
                   inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
                   keyboardType: TextInputType.number,
                   validator: (value) {
@@ -144,7 +144,7 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                     onPressed: () {
                       if (_formKey.currentState.validate()) _register(context);
                     },
-                    child: Text("Join", style: TextStyle(color: Colors.white)),
+                    child: Text("가입하기", style: TextStyle(color: Colors.white)),
                     color: Colors.blue,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(6),
@@ -154,38 +154,6 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                 ),
                 SizedBox(
                   height: common_l_gap,
-                ),
-                Stack(
-                  alignment: Alignment.center,
-                  children: <Widget>[
-                    Positioned(
-                        left: 0,
-                        right: 0,
-                        height: 1,
-                        child: Container(
-                          color: Colors.grey[300],
-                          height: 1,
-                        )),
-                    Container(
-                      height: 3,
-                      width: 50,
-                      color: Colors.grey[50],
-                    ),
-                    Text(
-                      'OR',
-                      style: TextStyle(
-                          color: Colors.grey, fontWeight: FontWeight.bold),
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: common_l_gap,
-                ),
-                SizedBox(
-                  height: common_l_gap,
-                ),
-                SizedBox(
-                  height: common_s_gap,
                 ),
               ],
             )),

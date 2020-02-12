@@ -40,7 +40,7 @@ class _SignUpFormState extends State<SignUpForm> {
               ),
               TextFormField(
                 controller: _emailConstroller,
-                decoration: getTextFieldDecor('Email'),
+                decoration: getTextFieldDecor('이메일'),
                 validator: (String value) {
                   if (value.isEmpty || !value.contains("@")) {
                     return 'Please enter your email address!';
@@ -54,7 +54,7 @@ class _SignUpFormState extends State<SignUpForm> {
               TextFormField(
                 obscureText: true,
                 controller: _pwConstroller,
-                decoration: getTextFieldDecor('Password'),
+                decoration: getTextFieldDecor('비밀번호'),
                 validator: (String value) {
                   if (value.isEmpty) return 'Please enter any password!';
                   if (value.length < 6)
@@ -68,7 +68,7 @@ class _SignUpFormState extends State<SignUpForm> {
               TextFormField(
                 obscureText: true,
                 controller: _cpwConstroller,
-                decoration: getTextFieldDecor('Confirm Password'),
+                decoration: getTextFieldDecor('비밀번호 확인'),
                 validator: (String value) {
                   if (value.isEmpty || value != _pwConstroller.text) {
                     return 'Password does not match!';
@@ -97,41 +97,6 @@ class _SignUpFormState extends State<SignUpForm> {
                   borderRadius: BorderRadius.circular(6),
                 ),
                 disabledColor: Colors.blue[100],
-              ),
-              SizedBox(
-                height: common_l_gap,
-              ),
-              Stack(
-                alignment: Alignment.center,
-                children: <Widget>[
-                  Positioned(
-                      left: 0,
-                      right: 0,
-                      height: 1,
-                      child: Container(
-                        color: Colors.grey[300],
-                        height: 1,
-                      )),
-                  Container(
-                    height: 3,
-                    width: 50,
-                    color: Colors.grey[50],
-                  ),
-                  Text(
-                    'OR',
-                    style: TextStyle(
-                        color: Colors.grey, fontWeight: FontWeight.bold),
-                  )
-                ],
-              ),
-              SizedBox(
-                height: common_l_gap,
-              ),
-              SizedBox(
-                height: common_l_gap,
-              ),
-              SizedBox(
-                height: common_s_gap,
               ),
             ],
           ),

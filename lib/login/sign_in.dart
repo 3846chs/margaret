@@ -41,10 +41,10 @@ class _SignInFormState extends State<SignInForm> {
                 ),
                 TextFormField(
                   controller: _emailConstroller,
-                  decoration: getTextFieldDecor('Email'),
+                  decoration: getTextFieldDecor('이메일'),
                   validator: (String value) {
                     if (value.isEmpty || !value.contains("@")) {
-                      return 'Please enter your email address!';
+                      return '올바른 이메일 주소를 입력해주세요!';
                     }
                     return null;
                   },
@@ -55,10 +55,10 @@ class _SignInFormState extends State<SignInForm> {
                 TextFormField(
                   obscureText: true,
                   controller: _pwConstroller,
-                  decoration: getTextFieldDecor('Password'),
+                  decoration: getTextFieldDecor('비밀번호'),
                   validator: (String value) {
                     if (value.isEmpty) {
-                      return 'Please enter any password!';
+                      return '비밀번호를 입력해주세요!';
                     }
                     return null;
                   },
@@ -76,7 +76,7 @@ class _SignInFormState extends State<SignInForm> {
                     }
                   },
                   child: Text(
-                    "Log in",
+                    "로그인",
                     style: TextStyle(color: Colors.white),
                   ),
                   color: Colors.blue,
@@ -126,19 +126,27 @@ class _SignInFormState extends State<SignInForm> {
   }
 
   get _login async {
-    final AuthResult result =
-        await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: _emailConstroller.text,
-      password: _pwConstroller.text,
-    );
+    try {
+      final AuthResult result =
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: _emailConstroller.text,
+        password: _pwConstroller.text,
+      );
+      final FirebaseUser user = result.user;
 
-    final FirebaseUser user = result.user;
-
-    if (user == null) {
-      simpleSnackbar(context, 'Please try again later!');
-    } else {
-      Provider.of<MyUserData>(context, listen: false)
-          .setNewStatus(MyUserDataStatus.progress);
+      if (user == null) {
+        simpleSnackbar(context, '존재하지 않는 계정입니다');
+      } else {
+        Provider.of<MyUserData>(context, listen: false)
+            .setNewStatus(MyUserDataStatus.progress);
+      }
+    } catch (e) {
+      print(e.toString());
+      simpleSnackbar(context, '존재하지 않는 계정입니다');
+      setState(() {
+        _emailConstroller.text = '';
+        _pwConstroller.text = '';
+      });
     }
   }
 
