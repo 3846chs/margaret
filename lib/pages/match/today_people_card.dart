@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:datingapp/constants/firebase_keys.dart';
 import 'package:datingapp/data/provider/my_user_data.dart';
 import 'package:datingapp/widgets/loading.dart';
-import 'package:datingapp/widgets/match_widgets/match_person_profile.dart';
+import 'package:datingapp/pages/match/selected_person_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -27,7 +27,7 @@ class _TodayPeopleCardState extends State<TodayPeopleCard> {
         else if (!snapshot.hasData) // 해당 날짜에 응답한 유저를 가져왔기 때문에 호출되지 않는게 정상
           return ListTile(
             leading: CircleAvatar(),
-            title: Text('답변이 없습니다.'),
+            title: Text('등록된 답변이 없습니다.'),
           );
         else {
           print(snapshot.data.data['answer']);
@@ -64,7 +64,7 @@ class _TodayPeopleCardState extends State<TodayPeopleCard> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            MatchPersonProfile(
+                                            SelectedPersonProfile(
                                                 widget.document)));
                               },
                             ),

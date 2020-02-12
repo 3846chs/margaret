@@ -2,19 +2,19 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:datingapp/constants/firebase_keys.dart';
 import 'package:datingapp/data/provider/my_user_data.dart';
 import 'package:datingapp/widgets/loading.dart';
-import 'package:datingapp/widgets/match_widgets/today_finished.dart';
+import 'package:datingapp/pages/match/today_finished.dart';
 
-import 'package:datingapp/widgets/match_widgets/today_people.dart';
-import 'package:datingapp/widgets/match_widgets/today_question.dart';
+import 'package:datingapp/pages/match/today_people.dart';
+import 'package:datingapp/pages/match/today_question.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class MatchPage extends StatefulWidget {
+class MatchMain extends StatefulWidget {
   @override
-  _MatchPageState createState() => _MatchPageState();
+  _MatchMainState createState() => _MatchMainState();
 }
 
-class _MatchPageState extends State<MatchPage> {
+class _MatchMainState extends State<MatchMain> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<DocumentSnapshot>(

@@ -1,6 +1,6 @@
 import 'package:datingapp/data/provider/my_user_data.dart';
 import 'package:datingapp/pages/chat_page.dart';
-import 'package:datingapp/pages/match_page.dart';
+import 'package:datingapp/pages/match/match_main.dart';
 import 'package:datingapp/pages/receive_page.dart';
 import 'package:datingapp/pages/send_page.dart';
 import 'package:datingapp/widgets/user_profile.dart';
@@ -17,7 +17,7 @@ class _HomeState extends State<Home> {
   int _selectedIndex = 0;
 
   static List<Widget> _widgetOptions = <Widget>[
-    MatchPage(),
+    MatchMain(),
     SendPage(),
     ReceivePage(),
     ChatPage(),

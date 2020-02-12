@@ -6,10 +6,10 @@ import 'package:datingapp/widgets/profile_widgets/profile_basic_info.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class MatchPersonProfile extends StatelessWidget {
+class SelectedPersonProfile extends StatelessWidget {
   final DocumentSnapshot yourDocumentSnapshot;
 
-  MatchPersonProfile(this.yourDocumentSnapshot);
+  SelectedPersonProfile(this.yourDocumentSnapshot);
 
   @override
   Widget build(BuildContext context) {
