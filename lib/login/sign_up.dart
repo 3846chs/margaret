@@ -43,7 +43,7 @@ class _SignUpFormState extends State<SignUpForm> {
                 decoration: getTextFieldDecor('이메일'),
                 validator: (String value) {
                   if (value.isEmpty || !value.contains("@")) {
-                    return 'Please enter your email address!';
+                    return '올바른 이메일 주소를 입력해주세요!';
                   }
                   return null;
                 },
@@ -56,9 +56,8 @@ class _SignUpFormState extends State<SignUpForm> {
                 controller: _pwConstroller,
                 decoration: getTextFieldDecor('비밀번호'),
                 validator: (String value) {
-                  if (value.isEmpty) return 'Please enter any password!';
-                  if (value.length < 6)
-                    return 'Password should be at least 6 characters!';
+                  if (value.isEmpty) return '비밀번호를 입력해주세요!';
+                  if (value.length < 6) return '비밀번호는 6자리 이상이어야 합니다!';
                   return null;
                 },
               ),
@@ -71,7 +70,7 @@ class _SignUpFormState extends State<SignUpForm> {
                 decoration: getTextFieldDecor('비밀번호 확인'),
                 validator: (String value) {
                   if (value.isEmpty || value != _pwConstroller.text) {
-                    return 'Password does not match!';
+                    return '비밀번호를 다시 확인해주세요!';
                   }
                   return null;
                 },

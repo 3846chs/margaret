@@ -60,7 +60,7 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                   controller: _nicknameController,
                   decoration: getTextFieldDecor('닉네임'),
                   validator: (value) {
-                    if (value.isEmpty) return 'Please enter your nickname!';
+                    if (value.isEmpty) return '닉네임을 입력해주세요!';
                     return null;
                   },
                 ),
@@ -97,7 +97,7 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                   inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
                   keyboardType: TextInputType.number,
                   validator: (value) {
-                    if (value.isEmpty) return 'Please enter your birth year!';
+                    if (value.isEmpty) return '출생 연도 4자리를 입력해주세요!';
                     return null;
                   },
                 ),
@@ -108,7 +108,7 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                   controller: _regionController,
                   decoration: getTextFieldDecor('지역'),
                   validator: (value) {
-                    if (value.isEmpty) return 'Please enter your region!';
+                    if (value.isEmpty) return '사는 지역을 입력해주세요!';
                     return null;
                   },
                 ),
@@ -119,7 +119,7 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                   controller: _jobController,
                   decoration: getTextFieldDecor('직업'),
                   validator: (value) {
-                    if (value.isEmpty) return 'Please enter your job!';
+                    if (value.isEmpty) return '직업을 입력해주세요!';
                     return null;
                   },
                 ),
@@ -132,7 +132,7 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                   inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
                   keyboardType: TextInputType.number,
                   validator: (value) {
-                    if (value.isEmpty) return 'Please enter your height!';
+                    if (value.isEmpty) return '키를 입력해주세요!';
                     return null;
                   },
                 ),
