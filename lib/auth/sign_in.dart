@@ -3,6 +3,7 @@ import 'package:datingapp/data/provider/my_user_data.dart';
 import 'package:datingapp/utils/simple_snack_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:provider/provider.dart';
 
 class SignInForm extends StatefulWidget {
@@ -12,13 +13,13 @@ class SignInForm extends StatefulWidget {
 
 class _SignInFormState extends State<SignInForm> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  TextEditingController _emailConstroller = TextEditingController();
-  TextEditingController _pwConstroller = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _pwController = TextEditingController();
 
   @override
   void dispose() {
-    _emailConstroller.dispose();
-    _pwConstroller.dispose();
+    _emailController.dispose();
+    _pwController.dispose();
     super.dispose();
   }
 
@@ -40,7 +41,7 @@ class _SignInFormState extends State<SignInForm> {
                   height: common_l_gap,
                 ),
                 TextFormField(
-                  controller: _emailConstroller,
+                  controller: _emailController,
                   decoration: getTextFieldDecor('이메일'),
                   validator: (String value) {
                     if (value.isEmpty || !value.contains("@")) {
@@ -54,7 +55,7 @@ class _SignInFormState extends State<SignInForm> {
                 ),
                 TextFormField(
                   obscureText: true,
-                  controller: _pwConstroller,
+                  controller: _pwController,
                   decoration: getTextFieldDecor('비밀번호'),
                   validator: (String value) {
                     if (value.isEmpty) {
@@ -113,12 +114,6 @@ class _SignInFormState extends State<SignInForm> {
                 SizedBox(
                   height: common_l_gap,
                 ),
-                SizedBox(
-                  height: common_l_gap,
-                ),
-                SizedBox(
-                  height: common_s_gap,
-                ),
               ],
             )),
       ),
@@ -129,8 +124,8 @@ class _SignInFormState extends State<SignInForm> {
     try {
       final AuthResult result =
           await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: _emailConstroller.text,
-        password: _pwConstroller.text,
+        email: _emailController.text,
+        password: _pwController.text,
       );
       final FirebaseUser user = result.user;
 
@@ -144,8 +139,8 @@ class _SignInFormState extends State<SignInForm> {
       print(e.toString());
       simpleSnackbar(context, '존재하지 않는 계정입니다');
       setState(() {
-        _emailConstroller.text = '';
-        _pwConstroller.text = '';
+        _emailController.text = '';
+        _pwController.text = '';
       });
     }
   }

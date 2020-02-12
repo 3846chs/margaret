@@ -9,15 +9,15 @@ class SignUpForm extends StatefulWidget {
 
 class _SignUpFormState extends State<SignUpForm> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  TextEditingController _emailConstroller = TextEditingController();
-  TextEditingController _pwConstroller = TextEditingController();
-  TextEditingController _cpwConstroller = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _pwController = TextEditingController();
+  TextEditingController _cpwController = TextEditingController();
 
   @override
   void dispose() {
-    _emailConstroller.dispose();
-    _pwConstroller.dispose();
-    _cpwConstroller.dispose();
+    _emailController.dispose();
+    _pwController.dispose();
+    _cpwController.dispose();
     super.dispose();
   }
 
@@ -39,7 +39,7 @@ class _SignUpFormState extends State<SignUpForm> {
                 height: common_l_gap,
               ),
               TextFormField(
-                controller: _emailConstroller,
+                controller: _emailController,
                 decoration: getTextFieldDecor('이메일'),
                 validator: (String value) {
                   if (value.isEmpty || !value.contains("@")) {
@@ -53,7 +53,7 @@ class _SignUpFormState extends State<SignUpForm> {
               ),
               TextFormField(
                 obscureText: true,
-                controller: _pwConstroller,
+                controller: _pwController,
                 decoration: getTextFieldDecor('비밀번호'),
                 validator: (String value) {
                   if (value.isEmpty) return '비밀번호를 입력해주세요!';
@@ -66,10 +66,10 @@ class _SignUpFormState extends State<SignUpForm> {
               ),
               TextFormField(
                 obscureText: true,
-                controller: _cpwConstroller,
+                controller: _cpwController,
                 decoration: getTextFieldDecor('비밀번호 확인'),
                 validator: (String value) {
-                  if (value.isEmpty || value != _pwConstroller.text) {
+                  if (value.isEmpty || value != _pwController.text) {
                     return '비밀번호를 다시 확인해주세요!';
                   }
                   return null;
@@ -85,8 +85,8 @@ class _SignUpFormState extends State<SignUpForm> {
                         context,
                         MaterialPageRoute(
                             builder: (context) => ProfileInputPage(
-                                  email: _emailConstroller.text,
-                                  password: _pwConstroller.text,
+                                  email: _emailController.text,
+                                  password: _pwController.text,
                                 )));
                   }
                 },

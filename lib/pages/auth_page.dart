@@ -1,5 +1,6 @@
-import 'package:datingapp/login/sign_in.dart';
-import 'package:datingapp/login/sign_up.dart';
+
+import 'package:datingapp/auth/sign_in.dart';
+import 'package:datingapp/auth/sign_up.dart';
 import 'package:flutter/material.dart';
 
 class AuthPage extends StatefulWidget {

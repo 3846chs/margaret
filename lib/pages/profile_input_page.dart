@@ -51,9 +51,6 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
               shrinkWrap: true,
               children: <Widget>[
                 SizedBox(
-                  height: common_s_gap,
-                ),
-                SizedBox(
                   height: common_l_gap,
                 ),
                 TextFormField(
