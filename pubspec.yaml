@@ -30,6 +30,8 @@ dependencies:
   provider: ^4.0.1
   firebase_storage: ^3.0.8
   intl: ^0.16.1
+  google_fonts: ^0.3.8
+
 
 
 dev_dependencies:

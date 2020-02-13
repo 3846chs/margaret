@@ -6,6 +6,7 @@ import 'package:datingapp/pages/send_page.dart';
 import 'package:datingapp/widgets/user_profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
@@ -26,18 +27,23 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Colors.white,
-              Colors.white,
-            ],
-          ),
+      appBar: AppBar(
+        title: Text(
+          'Margaret',
+          style: GoogleFonts.pacifico(),
         ),
+      ),
+      body: Container(
+//        decoration: BoxDecoration(
+//          gradient: LinearGradient(
+//            begin: Alignment.topCenter,
+//            end: Alignment.bottomCenter,
+//            colors: [
+//              Colors.white,
+//              Colors.white,
+//            ],
+//          ),
+//        ),
         child: IndexedStack(
           index: _selectedIndex,
           children: _widgetOptions,
@@ -94,7 +100,7 @@ class _HomeState extends State<Home> {
                 return Text(value.data.nickname);
               }),
             )),
-            decoration: BoxDecoration(color: Colors.blueAccent),
+            decoration: BoxDecoration(color: Colors.yellow[100]),
           ),
           ListTile(
             title: Text('공지사항'),
