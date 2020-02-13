@@ -10,6 +10,7 @@ import 'package:datingapp/utils/simple_snack_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
@@ -38,8 +39,17 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
   Future<void> _getProfile() async {
     if (_profiles.length >= 2) return;
 
-    final image = await ImagePicker.pickImage(
-      source: ImageSource.gallery,
+    File image = await ImagePicker.pickImage(source: ImageSource.gallery);
+
+    if (image == null) return;
+
+    image = await ImageCropper.cropImage(
+      sourcePath: image.path,
+      aspectRatio: const CropAspectRatio(
+        ratioX: 1.0,
+        ratioY: 1.0,
+      ),
+      maxWidth: 300,
       maxHeight: 300,
     );
 
@@ -212,7 +222,7 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
             .toList();
         final user = User(
           userKey: result.user.uid,
-          profiles: profiles,
+          profiles: profiles.map((image) => image.substring(9)).toList(),
           email: result.user.email,
           nickname: _nicknameController.text,
           gender: _genderSelected[0] ? '남성' : '여성',

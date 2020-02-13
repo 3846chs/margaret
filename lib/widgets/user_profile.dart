@@ -29,7 +29,8 @@ class UserProfile extends StatelessWidget {
                   child: Row(
                     children: value.userData.profiles
                         .map((path) => FutureBuilder<String>(
-                            future: storageProvider.getImageUri(path),
+                            future:
+                                storageProvider.getImageUri("profiles/$path"),
                             builder: (context, snapshot) {
                               if (snapshot.connectionState ==
                                   ConnectionState.done) {
@@ -37,6 +38,7 @@ class UserProfile extends StatelessWidget {
                                   padding: const EdgeInsets.all(common_gap),
                                   child: Image.network(
                                     snapshot.data,
+                                    width: 300,
                                     height: 300,
                                     fit: BoxFit.cover,
                                   ),
