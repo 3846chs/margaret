@@ -88,9 +88,7 @@ class _TodayQuestionState extends State<TodayQuestion> {
                             ),
                             onPressed: () {
                               final answer = _answerController.text;
-//<<<<<<< HEAD
 
-//=======
                               if (_selectedIndex == -1) {
                                 simpleSnackbar(context, '선택지를 골라주세요');
                                 return;
@@ -101,12 +99,11 @@ class _TodayQuestionState extends State<TodayQuestion> {
                                 DocumentReference userRef = Firestore.instance
                                     .collection(COLLECTION_USERS)
                                     .document(value.userData.userKey);
-//>>>>>>> 3846chs
 
                                 var now = DateTime.now();
                                 var formatter = DateFormat('yyyy-MM-dd');
 
-//<<<<<<< HEAD
+
                                 // 23시 59분 59초에 유저가 답변을 제출하면, 시간 지연으로 인해 다음 날 답변으로 기록되는 현상 발생 -> 아래와 같이 해결
                                 if (now.day ==
                                     value.userData.recentMatchTime
@@ -138,9 +135,7 @@ class _TodayQuestionState extends State<TodayQuestion> {
                                     'answer': answer
                                   });
                                   // recentMatchTime 을 이용하여 유저 답변만 DB 에 저장
-//=======
                                 }
-//>>>>>>> 3846chs
                               }
                             },
                           );
