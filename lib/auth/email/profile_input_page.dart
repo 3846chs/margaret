@@ -1,12 +1,16 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:datingapp/constants/size.dart';
 import 'package:datingapp/data/provider/my_user_data.dart';
 import 'package:datingapp/data/user.dart';
 import 'package:datingapp/firebase/firestore_provider.dart';
+import 'package:datingapp/firebase/storage_provider.dart';
 import 'package:datingapp/utils/simple_snack_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class ProfileInputPage extends StatefulWidget {
@@ -27,7 +31,24 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
   final _jobController = TextEditingController();
   final _heightController = TextEditingController();
 
+  List<File> _profiles = [];
+
   List<bool> _genderSelected = [true, false];
+
+  Future<void> _getProfile() async {
+    if (_profiles.length >= 2) return;
+
+    final image = await ImagePicker.pickImage(
+      source: ImageSource.gallery,
+      maxHeight: 300,
+    );
+
+    if (image != null) {
+      setState(() {
+        _profiles.add(image);
+      });
+    }
+  }
 
   @override
   void dispose() {
@@ -50,9 +71,41 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
             child: ListView(
               shrinkWrap: true,
               children: <Widget>[
-                SizedBox(
-                  height: common_l_gap,
+                const SizedBox(height: common_l_gap),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.all(common_gap),
+                        child: _profiles.length < 1
+                            ? SizedBox(
+                                width: 300,
+                                height: 300,
+                                child: RaisedButton(
+                                  child: const Icon(Icons.add_a_photo),
+                                  onPressed: _getProfile,
+                                ),
+                              )
+                            : Image.file(_profiles[0]),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(common_gap),
+                        child: _profiles.length < 2
+                            ? SizedBox(
+                                width: 300,
+                                height: 300,
+                                child: RaisedButton(
+                                  child: const Icon(Icons.add_a_photo),
+                                  onPressed: _getProfile,
+                                ),
+                              )
+                            : Image.file(_profiles[1]),
+                      ),
+                    ],
+                  ),
                 ),
+                const SizedBox(height: common_l_gap),
                 TextFormField(
                   controller: _nicknameController,
                   decoration: getTextFieldDecor('닉네임'),
@@ -61,9 +114,7 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                     return null;
                   },
                 ),
-                SizedBox(
-                  height: common_l_gap,
-                ),
+                const SizedBox(height: common_l_gap),
                 ToggleButtons(
                   children: const [
                     Text('남성'),
@@ -85,9 +136,7 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                   },
                   isSelected: _genderSelected,
                 ),
-                SizedBox(
-                  height: common_l_gap,
-                ),
+                const SizedBox(height: common_l_gap),
                 TextFormField(
                   controller: _birthYearController,
                   decoration: getTextFieldDecor('출생 연도'),
@@ -98,9 +147,7 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                     return null;
                   },
                 ),
-                SizedBox(
-                  height: common_l_gap,
-                ),
+                const SizedBox(height: common_l_gap),
                 TextFormField(
                   controller: _regionController,
                   decoration: getTextFieldDecor('지역'),
@@ -109,9 +156,7 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                     return null;
                   },
                 ),
-                SizedBox(
-                  height: common_l_gap,
-                ),
+                const SizedBox(height: common_l_gap),
                 TextFormField(
                   controller: _jobController,
                   decoration: getTextFieldDecor('직업'),
@@ -120,9 +165,7 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                     return null;
                   },
                 ),
-                SizedBox(
-                  height: common_l_gap,
-                ),
+                const SizedBox(height: common_l_gap),
                 TextFormField(
                   controller: _heightController,
                   decoration: getTextFieldDecor('키'),
@@ -133,13 +176,12 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                     return null;
                   },
                 ),
-                SizedBox(
-                  height: common_l_gap,
-                ),
+                const SizedBox(height: common_l_gap),
                 Builder(
                   builder: (context) => FlatButton(
                     onPressed: () {
-                      if (_formKey.currentState.validate()) _register(context);
+                      if (_formKey.currentState.validate() &&
+                          _profiles.length > 0) _register(context);
                     },
                     child: Text("가입하기", style: TextStyle(color: Colors.white)),
                     color: Colors.blue,
@@ -149,9 +191,7 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                     disabledColor: Colors.blue[100],
                   ),
                 ),
-                SizedBox(
-                  height: common_l_gap,
-                ),
+                const SizedBox(height: common_l_gap),
               ],
             )),
       ),
@@ -166,8 +206,13 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
       if (result.user == null) {
         simpleSnackbar(context, 'Please try again later!');
       } else {
+        final profiles = await Stream.fromIterable(_profiles)
+            .asyncMap((image) => storageProvider.uploadImg(image,
+                "profiles/${DateTime.now().millisecondsSinceEpoch}_${result.user.uid}"))
+            .toList();
         final user = User(
           userKey: result.user.uid,
+          profiles: profiles,
           email: result.user.email,
           nickname: _nicknameController.text,
           gender: _genderSelected[0] ? '남성' : '여성',

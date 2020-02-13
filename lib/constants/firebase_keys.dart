@@ -2,6 +2,7 @@ const COLLECTION_USERS = 'Users';
 const TODAYQUESTIONS = 'TodayQuestions';
 
 const KEY_USERKEY = 'user_key';
+const KEY_PROFILES = 'profiles';
 const KEY_EMAIL = 'email';
 const KEY_GENDER = 'gender';
 const KEY_NICKNAME = 'nickname';

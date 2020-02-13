@@ -1,5 +1,6 @@
 import 'package:datingapp/constants/size.dart';
 import 'package:datingapp/data/provider/my_user_data.dart';
+import 'package:datingapp/firebase/storage_provider.dart';
 import 'package:datingapp/widgets/profile_widgets/profile_basic_info.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -22,13 +23,28 @@ class UserProfile extends StatelessWidget {
                     size: 40,
                   ),
                 ),
-                Padding(
+                SingleChildScrollView(
                   padding: const EdgeInsets.all(common_l_gap),
-                  child: Image.network(
-                    "https://www.rnx.kr/news/photo/201805/67765_53720_457.jpg", // 방탄 지민 사진을 임시로 사용하였음. value.data.photoUrl 같은걸로 사용자 사진 가져와야 함.
-                    height: 300,
-                    width: 300,
-                    fit: BoxFit.cover,
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: value.userData.profiles
+                        .map((path) => FutureBuilder<String>(
+                            future: storageProvider.getImageUri(path),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.done) {
+                                return Padding(
+                                  padding: const EdgeInsets.all(common_gap),
+                                  child: Image.network(
+                                    snapshot.data,
+                                    height: 300,
+                                    fit: BoxFit.cover,
+                                  ),
+                                );
+                              }
+                              return const CircularProgressIndicator();
+                            }))
+                        .toList(),
                   ),
                 ),
                 Padding(
