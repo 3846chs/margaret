@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:datingapp/constants/size.dart';
 import 'package:datingapp/data/provider/my_user_data.dart';
 import 'package:datingapp/data/user.dart';
-import 'package:datingapp/firestore/firestore_provider.dart';
+import 'package:datingapp/firebase/firestore_provider.dart';
 import 'package:datingapp/utils/simple_snack_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -184,7 +184,6 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
         Provider.of<MyUserData>(context, listen: false)
             .setNewStatus(MyUserDataStatus.progress);
         Navigator.pop(context);
-
       }
     } on PlatformException catch (exception) {
       simpleSnackbar(context, exception.message);

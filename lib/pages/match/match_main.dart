@@ -58,7 +58,8 @@ class _MatchMainState extends State<MatchMain> {
   Stream<DocumentSnapshot> myStream() {
     return Firestore.instance
         .collection('Users')
-        .document(Provider.of<MyUserData>(context, listen: false).data.userKey)
+        .document(
+            Provider.of<MyUserData>(context, listen: false).userData.userKey)
         .snapshots();
   }
 }

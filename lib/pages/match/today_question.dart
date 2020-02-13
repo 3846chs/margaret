@@ -94,14 +94,14 @@ class _TodayQuestionState extends State<TodayQuestion> {
                               print(answer);
                               DocumentReference userRef = Firestore.instance
                                   .collection(COLLECTION_USERS)
-                                  .document(value.data.userKey);
+                                  .document(value.userData.userKey);
 
                               var now = DateTime.now();
                               var formatter = DateFormat('yyyy-MM-dd');
 
                               // 23시 59분 59초에 유저가 답변을 제출하면, 시간 지연으로 인해 다음 날 답변으로 기록되는 현상 발생 -> 아래와 같이 해결
                               if (now.day ==
-                                  value.data.recentMatchTime.toDate().day) {
+                                  value.userData.recentMatchTime.toDate().day) {
                                 userRef
                                     .collection('TodayQuestions')
                                     .document(formatter.format(now))
@@ -119,8 +119,9 @@ class _TodayQuestionState extends State<TodayQuestion> {
                                 print('시간 지연 발생');
                                 userRef
                                     .collection('TodayQuestions')
-                                    .document(formatter.format(
-                                        value.data.recentMatchTime.toDate()))
+                                    .document(formatter.format(value
+                                        .userData.recentMatchTime
+                                        .toDate()))
                                     .setData({
                                   'question': snapshot.data.data['question'],
                                   'choice': _selected,

@@ -24,7 +24,8 @@ class TodayPeople extends StatelessWidget {
         else if (!snapshot.hasData)
           return LoadingPage();
         else {
-          User myUser = Provider.of<MyUserData>(context, listen: false).data;
+          User myUser =
+              Provider.of<MyUserData>(context, listen: false).userData;
           return _buildTodayPeople(snapshot.data.documents, myUser);
         }
       },
@@ -40,16 +41,19 @@ class TodayPeople extends StatelessWidget {
                 doc['recentMatchTime'].toDate().year == now.year &&
                 doc['recentMatchTime'].toDate().month == now.month &&
                 doc['recentMatchTime'].toDate().day == now.day) &&
-            myUser.recentMatchTime.toDate().isAfter(doc['recentMatchTime'].toDate()))
+            myUser.recentMatchTime
+                .toDate()
+                .isAfter(doc['recentMatchTime'].toDate()))
         .take(3)
         .toList();
 
-    if (recommendedPeople.length < 3){
+    if (recommendedPeople.length < 3) {
       print('NotShowPeople');
-      return NotShowPeople();}
-    else{
+      return NotShowPeople();
+    } else {
       print('ShowPeople');
-      return ShowPeople(recommendedPeople: recommendedPeople);}
+      return ShowPeople(recommendedPeople: recommendedPeople);
+    }
   }
 }
 

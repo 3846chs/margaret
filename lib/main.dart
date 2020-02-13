@@ -1,5 +1,4 @@
 import 'package:datingapp/data/provider/my_user_data.dart';
-import 'package:datingapp/firebase/firestore_provider.dart';
 import 'package:datingapp/home.dart';
 import 'package:datingapp/widgets/loading.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -25,14 +24,7 @@ class OurApp extends StatelessWidget {
                   myUserData.setNewStatus(MyUserDataStatus.none);
                 else {
                   print(firebaseUser.uid);
-                  firestoreProvider
-                      .connectMyUserData(firebaseUser.uid)
-                      .listen((user) {
-                    if (myUserData.data != null &&
-                        myUserData.data.userKey != user.userKey) return;
-                    print('listen called');
-                    myUserData.setUserData(user);
-                  });
+                  myUserData.setUserData(firebaseUser.uid);
                 }
               });
               return LoadingPage();

@@ -70,7 +70,7 @@ class SelectedPersonProfile extends StatelessWidget {
 
                         Firestore.instance
                             .collection(COLLECTION_USERS)
-                            .document(value.data.userKey)
+                            .document(value.userData.userKey)
                             .updateData({
                           "Sends": FieldValue.arrayUnion(
                               [yourDocumentSnapshot.documentID])
@@ -80,7 +80,7 @@ class SelectedPersonProfile extends StatelessWidget {
                             .document(yourDocumentSnapshot.documentID)
                             .updateData({
                           "Receives":
-                              FieldValue.arrayUnion([value.data.userKey])
+                              FieldValue.arrayUnion([value.userData.userKey])
                         });
                         Navigator.pop(context);
                       },

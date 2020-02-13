@@ -91,7 +91,7 @@ class _HomeState extends State<Home> {
                   MaterialPageRoute(builder: (context) => UserProfile()));
             }, child: CircleAvatar(
               child: Consumer<MyUserData>(builder: (context, value, child) {
-                return Text(value.data.nickname);
+                return Text(value.userData.nickname);
               }),
             )),
             decoration: BoxDecoration(color: Colors.blueAccent),

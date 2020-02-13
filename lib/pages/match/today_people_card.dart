@@ -58,7 +58,7 @@ class _TodayPeopleCardState extends State<TodayPeopleCard> {
                                 // recentMatchState 변경
                                 Firestore.instance
                                     .collection(COLLECTION_USERS)
-                                    .document(value.data.userKey)
+                                    .document(value.userData.userKey)
                                     .updateData({'recentMatchState': -1}); // 완료
                                 Navigator.push(
                                     context,

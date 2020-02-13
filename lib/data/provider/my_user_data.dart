@@ -1,10 +1,14 @@
+import 'dart:async';
+
 import 'package:datingapp/data/user.dart';
+import 'package:datingapp/firebase/firestore_provider.dart';
 import 'package:flutter/foundation.dart';
 
 class MyUserData extends ChangeNotifier {
-  User _myUserData;
+  StreamSubscription<User> _userStreamsubscription;
 
-  User get data => _myUserData;
+  User _userData;
+  User get userData => _userData;
 
   MyUserDataStatus _myUserDataStatus = MyUserDataStatus.progress;
   MyUserDataStatus get status => _myUserDataStatus;
@@ -14,16 +18,22 @@ class MyUserData extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setUserData(User user) {
-    _myUserData = user;
-    _myUserDataStatus = MyUserDataStatus.exist;
-    print('setUserData completed.');
-    notifyListeners();
+  void setUserData(String uid) {
+    _userStreamsubscription?.cancel();
+    _userStreamsubscription =
+        firestoreProvider.connectMyUserData(uid).listen((user) {
+      print('listen called');
+      _userData = user;
+      _myUserDataStatus = MyUserDataStatus.exist;
+      print('setUserData completed.');
+      notifyListeners();
+    });
   }
 
   void clearUser() {
-    _myUserData = null;
+    _userData = null;
     _myUserDataStatus = MyUserDataStatus.none;
+    _userStreamsubscription?.cancel();
     notifyListeners();
   }
 }

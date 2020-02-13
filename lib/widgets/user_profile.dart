@@ -34,17 +34,17 @@ class UserProfile extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(common_gap),
                   child: Text(
-                    value.data.nickname,
+                    value.userData.nickname,
                     style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                   ),
                 ),
                 ProfileBasicInfo(
                     '나이',
-                    (DateTime.now().year - value.data.birthYear + 1)
+                    (DateTime.now().year - value.userData.birthYear + 1)
                         .toString()),
-                ProfileBasicInfo('지역', value.data.region),
-                ProfileBasicInfo('직업', value.data.job),
-                ProfileBasicInfo('키', value.data.height.toString()),
+                ProfileBasicInfo('지역', value.userData.region),
+                ProfileBasicInfo('직업', value.userData.job),
+                ProfileBasicInfo('키', value.userData.height.toString()),
 
                 //_builTest(),
                 Padding(
