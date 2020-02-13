@@ -11,16 +11,7 @@ class _ReceivePageState extends State<ReceivePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
-      appBar: AppBar(
-        title: const Text(
-          '받은 요청',
-          style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        backgroundColor: Colors.white,
-      ),
+
       body: ListView.separated(
         itemCount: 10,
         itemBuilder: (context, index) {

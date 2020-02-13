@@ -11,16 +11,6 @@ class _SendPageState extends State<SendPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
-      appBar: AppBar(
-        title: const Text(
-          '보낸 요청',
-          style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        backgroundColor: Colors.white,
-      ),
       body: ListView.separated(
         itemCount: 10,
         itemBuilder: (context, index) {

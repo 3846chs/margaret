@@ -1,3 +1,4 @@
+import 'package:datingapp/constants/material_white_color.dart';
 import 'package:datingapp/data/provider/my_user_data.dart';
 import 'package:datingapp/home.dart';
 import 'package:datingapp/widgets/loading.dart';
@@ -35,6 +36,7 @@ class OurApp extends StatelessWidget {
           }
         },
       ),
+      theme: ThemeData(primarySwatch: white),
     );
   }
 }
