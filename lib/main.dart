@@ -1,7 +1,6 @@
 import 'package:datingapp/data/provider/my_user_data.dart';
-import 'package:datingapp/firestore/firestore_provider.dart';
+import 'package:datingapp/firebase/firestore_provider.dart';
 import 'package:datingapp/home.dart';
-import 'package:datingapp/auth/email/email_auth.dart';
 import 'package:datingapp/widgets/loading.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

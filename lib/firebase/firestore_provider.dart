@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:datingapp/constants/firebase_keys.dart';
 import 'package:datingapp/data/user.dart';
-import 'package:datingapp/firestore/transformer.dart';
+import 'package:datingapp/firebase/transformer.dart';
 
 class FirestoreProvider with Transformer {
   final Firestore _firestore = Firestore.instance;
