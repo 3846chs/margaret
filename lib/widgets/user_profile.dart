@@ -14,6 +14,7 @@ class UserProfile extends StatelessWidget {
           child: Consumer<MyUserData>(builder: (context, value, child) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 GestureDetector(
                   onTap: () => Navigator.pop(context),
@@ -34,6 +35,7 @@ class UserProfile extends StatelessWidget {
                             builder: (context, snapshot) {
                               if (snapshot.connectionState ==
                                   ConnectionState.done) {
+                                print(path);
                                 return Padding(
                                   padding: const EdgeInsets.all(common_gap),
                                   child: Image.network(

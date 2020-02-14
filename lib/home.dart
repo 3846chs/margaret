@@ -1,4 +1,6 @@
+import 'package:datingapp/constants/size.dart';
 import 'package:datingapp/data/provider/my_user_data.dart';
+import 'package:datingapp/firebase/storage_provider.dart';
 import 'package:datingapp/pages/chat_page.dart';
 import 'package:datingapp/pages/match/match_main.dart';
 import 'package:datingapp/pages/receive_page.dart';
@@ -30,7 +32,7 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         title: Text(
           'Margaret',
-          style: GoogleFonts.pacifico(),
+          style: GoogleFonts.handlee(fontWeight: FontWeight.bold),
         ),
       ),
       body: Container(
@@ -92,14 +94,32 @@ class _HomeState extends State<Home> {
       child: ListView(
         children: <Widget>[
           DrawerHeader(
-            child: GestureDetector(onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => UserProfile()));
-            }, child: CircleAvatar(
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => UserProfile()));
+              },
               child: Consumer<MyUserData>(builder: (context, value, child) {
-                return Text(value.userData.nickname);
+                return FutureBuilder<String>(
+                  future: storageProvider
+                      .getImageUri("profiles/" + value.userData.profiles[0]),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      return CircleAvatar(
+                        child: ClipOval(
+                          child: Image.network(
+                            snapshot.data,
+                          ),
+                        ),
+                      );
+                    }
+                    return CircleAvatar(
+                        child:
+                            ClipOval(child: const CircularProgressIndicator()));
+                  },
+                );
               }),
-            )),
+            ),
             decoration: BoxDecoration(color: Colors.yellow[100]),
           ),
           ListTile(

@@ -13,18 +13,21 @@ class ProfileBasicInfo extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(common_gap),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           Expanded(
-            child: Text(
-              title,
-              style: TextStyle(fontSize: 20),
+            child: Center(
+              child: Text(
+                title,
+                style: TextStyle(fontSize: 15),
+              ),
             ),
           ),
           Expanded(
-            child: Text(
-              content,
-              style: TextStyle(fontSize: 20),
+            child: Center(
+              child: Text(
+                content,
+                style: TextStyle(fontSize: 15),
+              ),
             ),
           ),
         ],
