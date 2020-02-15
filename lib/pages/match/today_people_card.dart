@@ -23,7 +23,7 @@ class _TodayPeopleCardState extends State<TodayPeopleCard> {
       stream: myStream(),
       builder: (context, snapshot) {
         if (snapshot.data == null)
-          return LoadingPage();
+          return CircularProgressIndicator();
         else if (!snapshot.hasData) // 해당 날짜에 응답한 유저를 가져왔기 때문에 호출되지 않는게 정상
           return ListTile(
             leading: CircleAvatar(),
@@ -37,7 +37,7 @@ class _TodayPeopleCardState extends State<TodayPeopleCard> {
                 margin: EdgeInsets.all(10),
                 color: Colors.grey[200],
                 width: 300,
-                height: 100,
+                height: 75,
                 child: Text(snapshot.data.data['answer']),
               ),
               onTap: () {
