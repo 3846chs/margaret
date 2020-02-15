@@ -89,7 +89,7 @@ class ShowPeople extends StatelessWidget {
             return Column(
               children: <Widget>[
                 SizedBox(
-                  height: 20,
+                  height: 50,
                 ),
                 Text(
                   snapshot.data.data['question'],

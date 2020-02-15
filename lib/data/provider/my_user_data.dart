@@ -8,9 +8,11 @@ class MyUserData extends ChangeNotifier {
   StreamSubscription<User> _userStreamsubscription;
 
   User _userData;
+
   User get userData => _userData;
 
   MyUserDataStatus _myUserDataStatus = MyUserDataStatus.progress;
+
   MyUserDataStatus get status => _myUserDataStatus;
 
   void setNewStatus(MyUserDataStatus status) {

@@ -8,6 +8,7 @@ import 'package:datingapp/pages/send_page.dart';
 import 'package:datingapp/widgets/user_profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -61,19 +62,19 @@ class _HomeState extends State<Home> {
         backgroundColor: Colors.white,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.group),
+            icon: Icon(FontAwesomeIcons.streetView),
             title: Text(''),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.call_made),
+            icon: Icon(FontAwesomeIcons.paperPlane), //icon: Icon(Icons.call_made),
             title: Text(''),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.call_received),
+            icon: Icon(FontAwesomeIcons.solidHeart), //icon: Icon(Icons.call_received),
             title: Text(''),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.chat),
+            icon: Icon(FontAwesomeIcons.solidCommentDots),
             title: Text(''),
           ),
 
