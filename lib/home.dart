@@ -76,12 +76,28 @@ class _HomeState extends State<Home> {
             icon: Icon(Icons.chat),
             title: Text(''),
           ),
+
+//          buildBottomNavigationBarItem(
+//              activeIconPath: "assets/profile_selected.png",
+//              iconPath: "assets/profile.png"),
         ],
         currentIndex: _selectedIndex,
         onTap: (index) => _onItemTapped(index),
       ),
     );
   }
+
+  BottomNavigationBarItem buildBottomNavigationBarItem(
+      {String activeIconPath, String iconPath}) {
+    return BottomNavigationBarItem(
+      activeIcon:
+      activeIconPath == null ? null : ImageIcon(AssetImage(activeIconPath)),
+      icon: ImageIcon(AssetImage(iconPath)),
+      title: Text(''),
+    );
+  }
+
+
 
   void _onItemTapped(int index) {
     setState(() {
