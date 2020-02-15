@@ -3,16 +3,24 @@ import 'package:datingapp/constants/size.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class ProfileBasicInfo extends StatelessWidget {
+class ProfileBasicInfo extends StatefulWidget {
   final String title;
-  final String content;
-  var icon;
+  String content;
 
   ProfileBasicInfo(this.title, this.content);
 
   @override
+  _ProfileBasicInfoState createState() => _ProfileBasicInfoState();
+}
+
+class _ProfileBasicInfoState extends State<ProfileBasicInfo> {
+  final _textEditingController = TextEditingController();
+
+  var icon;
+
+  @override
   Widget build(BuildContext context) {
-    switch (title) {
+    switch (widget.title) {
       case "성별":
         icon = FontAwesomeIcons.venusMars;
         break;
@@ -50,7 +58,7 @@ class ProfileBasicInfo extends StatelessWidget {
           ),
           Center(
             child: Text(
-              title,
+              widget.title,
               style: TextStyle(fontSize: 15),
             ),
           ),
@@ -59,7 +67,7 @@ class ProfileBasicInfo extends StatelessWidget {
             child: Center(
               child: GestureDetector(
                 child: Text(
-                  content,
+                  widget.content,
                   style: TextStyle(fontSize: 15),
                 ),
                 onTap: () {
@@ -67,14 +75,18 @@ class ProfileBasicInfo extends StatelessWidget {
                     context: context,
                     builder: (context) {
                       return AlertDialog(
-                        content: TextFormField(),
+                        content: TextFormField(
+                          controller: _textEditingController,
+                        ),
                         actions: <Widget>[
                           MaterialButton(
                             elevation: 5,
                             child: Text('수정'),
                             onPressed: () {
                               Navigator.pop(context);
-                              // recentMatchState 변경
+                              setState(() {
+                                widget.content = _textEditingController.text;
+                              });
                             },
                           ),
                           MaterialButton(
@@ -82,6 +94,9 @@ class ProfileBasicInfo extends StatelessWidget {
                             child: Text('취소'),
                             onPressed: () {
                               Navigator.pop(context);
+                              setState(() {
+                                _textEditingController.text = widget.content;
+                              });
                             },
                           ),
                         ],
