@@ -89,8 +89,8 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                         padding: const EdgeInsets.all(common_gap),
                         child: _profiles.length < 1
                             ? SizedBox(
-                                width: 300,
-                                height: 300,
+                                width: 150,
+                                height: 150,
                                 child: RaisedButton(
                                   child: const Icon(Icons.add_a_photo),
                                   onPressed: _getProfile,
@@ -102,8 +102,8 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                         padding: const EdgeInsets.all(common_gap),
                         child: _profiles.length < 2
                             ? SizedBox(
-                                width: 300,
-                                height: 300,
+                                width: 150,
+                                height: 150,
                                 child: RaisedButton(
                                   child: const Icon(Icons.add_a_photo),
                                   onPressed: _getProfile,

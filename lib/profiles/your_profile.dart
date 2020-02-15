@@ -2,14 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:datingapp/constants/firebase_keys.dart';
 import 'package:datingapp/constants/size.dart';
 import 'package:datingapp/data/provider/my_user_data.dart';
-import 'package:datingapp/widgets/profile_widgets/profile_basic_info.dart';
+import 'package:datingapp/profiles/profile_basic_info.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class SelectedPersonProfile extends StatelessWidget {
+class YourProfile extends StatelessWidget {
   final DocumentSnapshot yourDocumentSnapshot;
 
-  SelectedPersonProfile(this.yourDocumentSnapshot);
+  YourProfile(this.yourDocumentSnapshot);
 
   @override
   Widget build(BuildContext context) {

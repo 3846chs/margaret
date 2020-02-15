@@ -1,7 +1,7 @@
 import 'package:datingapp/constants/material_white_color.dart';
 import 'package:datingapp/data/provider/my_user_data.dart';
 import 'package:datingapp/home.dart';
-import 'package:datingapp/widgets/loading.dart';
+import 'package:datingapp/widgets/loading_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

@@ -1,17 +1,17 @@
 import 'package:datingapp/constants/size.dart';
 import 'package:datingapp/data/provider/my_user_data.dart';
 import 'package:datingapp/firebase/storage_provider.dart';
-import 'package:datingapp/widgets/profile_widgets/profile_basic_info.dart';
+import 'package:datingapp/profiles/profile_basic_info.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class UserProfile extends StatefulWidget {
+class MyProfile extends StatefulWidget {
   @override
-  _UserProfileState createState() => _UserProfileState();
+  _MyProfileState createState() => _MyProfileState();
 }
 
-class _UserProfileState extends State<UserProfile> {
+class _MyProfileState extends State<MyProfile> {
   List<DropdownMenuItem<int>> listDrop = <int>[170, 171, 172].map((int value) {
     return DropdownMenuItem<int>(
       value: value,

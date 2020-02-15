@@ -5,7 +5,7 @@ import 'package:datingapp/pages/chat_page.dart';
 import 'package:datingapp/pages/match/match_main.dart';
 import 'package:datingapp/pages/receive_page.dart';
 import 'package:datingapp/pages/send_page.dart';
-import 'package:datingapp/widgets/user_profile.dart';
+import 'package:datingapp/profiles/my_profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -57,7 +57,7 @@ class _HomeState extends State<Home> {
         showSelectedLabels: false,
         showUnselectedLabels: false,
         selectedItemColor: Colors.black,
-        unselectedItemColor: Colors.grey,
+        unselectedItemColor: Colors.grey[400],
         type: BottomNavigationBarType.fixed,
         backgroundColor: Colors.white,
         items: const <BottomNavigationBarItem>[
@@ -66,15 +66,15 @@ class _HomeState extends State<Home> {
             title: Text(''),
           ),
           BottomNavigationBarItem(
-            icon: Icon(FontAwesomeIcons.paperPlane), //icon: Icon(Icons.call_made),
+            icon: Icon(FontAwesomeIcons.paperPlane),
             title: Text(''),
           ),
           BottomNavigationBarItem(
-            icon: Icon(FontAwesomeIcons.solidHeart), //icon: Icon(Icons.call_received),
+            icon: Icon(FontAwesomeIcons.solidHeart),
             title: Text(''),
           ),
           BottomNavigationBarItem(
-            icon: Icon(FontAwesomeIcons.solidCommentDots),
+            icon: Icon(FontAwesomeIcons.commentDots),
             title: Text(''),
           ),
 
@@ -114,7 +114,7 @@ class _HomeState extends State<Home> {
             child: GestureDetector(
               onTap: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => UserProfile()));
+                    MaterialPageRoute(builder: (context) => MyProfile()));
               },
               child: Consumer<MyUserData>(builder: (context, value, child) {
                 return FutureBuilder<String>(

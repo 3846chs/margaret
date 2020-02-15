@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:datingapp/constants/firebase_keys.dart';
 import 'package:datingapp/data/provider/my_user_data.dart';
-import 'package:datingapp/widgets/loading.dart';
+import 'package:datingapp/widgets/loading_page.dart';
 import 'package:datingapp/pages/match/today_finished.dart';
 
 import 'package:datingapp/pages/match/today_people.dart';
