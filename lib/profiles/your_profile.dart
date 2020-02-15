@@ -18,24 +18,14 @@ class YourProfile extends StatelessWidget {
         child: SingleChildScrollView(
           child: Consumer<MyUserData>(builder: (context, value, child) {
             return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                GestureDetector(
-                  onTap: () => Navigator.pop(context),
-                  child: Icon(
-                    Icons.arrow_back_ios,
-                    color: Colors.redAccent,
-                    size: 40,
-                  ),
-                ),
                 Padding(
                   padding: const EdgeInsets.all(common_l_gap),
-                  child: Image.network(
-                    "https://pbs.twimg.com/profile_images/1216073149390807040/d7xwgJnI_400x400.jpg",
-                    // 아이유 사진을 임시로 사용함.
-                    height: 300,
-                    width: 300,
-                    fit: BoxFit.cover,
+                  child: CircleAvatar(
+                    radius: 60,
+                    backgroundImage: NetworkImage(
+                        "https://www.topstarnews.net/news/photo/201803/380832_25485_2752.jpg"),
                   ),
                 ),
                 Padding(
