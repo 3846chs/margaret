@@ -86,6 +86,7 @@ class _ProfileBasicInfoState extends State<ProfileBasicInfo> {
                               Navigator.pop(context);
                               setState(() {
                                 widget.content = _textEditingController.text;
+                                _textEditingController.text = '';
                               });
                             },
                           ),
@@ -95,7 +96,7 @@ class _ProfileBasicInfoState extends State<ProfileBasicInfo> {
                             onPressed: () {
                               Navigator.pop(context);
                               setState(() {
-                                _textEditingController.text = widget.content;
+                                _textEditingController.text = '';
                               });
                             },
                           ),
