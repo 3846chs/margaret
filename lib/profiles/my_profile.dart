@@ -31,11 +31,11 @@ class _MyProfileState extends State<MyProfile> {
               '내 프로필',
               style: GoogleFonts.notoSans(fontSize: 17),
             ),
-//            Spacer(),
-//            Text(
-//              '완료',
-//              style: GoogleFonts.notoSans(fontSize: 17),
-//            ),
+            Spacer(),
+            Text(
+              '완료',
+              style: GoogleFonts.notoSans(fontSize: 17),
+            ),
           ],
         ),
       ),
