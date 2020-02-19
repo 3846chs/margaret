@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:datingapp/constants/size.dart';
 import 'package:datingapp/data/provider/my_user_data.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class ChatDetailPage extends StatelessWidget {
@@ -102,7 +103,7 @@ class ChatDetailPage extends StatelessWidget {
             padding: const EdgeInsets.all(common_gap),
             reverse: true,
             children: messages
-                .map((message) => _buildSendBubble(myKey, message))
+                .map((message) => _buildBubble(myKey, message))
                 .toList(),
           );
         },
@@ -110,35 +111,47 @@ class ChatDetailPage extends StatelessWidget {
     );
   }
 
-  Widget _buildSendBubble(String myKey, DocumentSnapshot document) {
-    bool isSent = myKey == document['idFrom'];
-
-    final card = Card(
-      color: isSent ? Colors.blue : Colors.grey,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8.0),
+  Widget _buildBubble(String myKey, DocumentSnapshot document) {
+    final isSent = myKey == document['idFrom'];
+    final dateTime =
+        DateTime.fromMillisecondsSinceEpoch(int.parse(document['timestamp']));
+    final bubble = Container(
+      padding: const EdgeInsets.all(common_gap),
+      constraints: const BoxConstraints(maxWidth: 200.0),
+      decoration: BoxDecoration(
+        color: isSent ? Colors.blue : Colors.grey,
+        borderRadius: BorderRadius.circular(12.0),
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(common_gap),
-        child: Text(
-          document['content'],
-          style: TextStyle(color: Colors.white),
-        ),
+      margin: const EdgeInsets.all(common_gap),
+      child: Text(
+        document['content'],
+        style: TextStyle(color: Colors.white),
+      ),
+    );
+    final time = Padding(
+      padding: const EdgeInsets.only(bottom: common_gap),
+      child: Text(
+        DateFormat.jm().format(dateTime),
+        style: TextStyle(fontSize: 10.0),
       ),
     );
 
     if (isSent) {
       return Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
-          Spacer(),
-          card,
+          const Spacer(),
+          time,
+          bubble,
         ],
       );
     }
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: <Widget>[
-        card,
-        Spacer(),
+        bubble,
+        time,
+        const Spacer(),
       ],
     );
   }
