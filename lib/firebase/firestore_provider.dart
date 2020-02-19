@@ -6,6 +6,13 @@ import 'package:datingapp/firebase/transformer.dart';
 class FirestoreProvider with Transformer {
   final Firestore _firestore = Firestore.instance;
 
+  Future<void> updatePushToken(String userKey, String token) {
+    return _firestore
+        .collection(COLLECTION_USERS)
+        .document(userKey)
+        .updateData({KEY_PUSHTOKEN: token});
+  }
+
   Future<void> attemptCreateUser(User user) {
     final DocumentReference userRef =
         _firestore.collection(COLLECTION_USERS).document(user.userKey);

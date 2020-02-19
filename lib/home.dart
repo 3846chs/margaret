@@ -21,6 +21,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  bool _isInitialized = false;
   int _selectedIndex = 0;
 
   static List<Widget> _widgetOptions = <Widget>[
@@ -33,14 +34,7 @@ class _HomeState extends State<Home> {
   final firebaseMessaging = FirebaseMessaging();
   final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
-  @override
-  void initState() {
-    super.initState();
-    registerNotification();
-    configLocalNotification();
-  }
-
-  void registerNotification() {
+  void registerNotification(MyUserData myUserData) {
     firebaseMessaging.requestNotificationPermissions();
 
     firebaseMessaging.configure(onMessage: (Map<String, dynamic> message) {
@@ -57,7 +51,7 @@ class _HomeState extends State<Home> {
 
     firebaseMessaging.getToken().then((token) {
       print('token: $token');
-      // Firestore.instance.collection('Users').document(currentUserId).updateData({'pushToken': token});
+      myUserData.setPushToken(token);
     }).catchError((err) {
       print(err.message);
     });
@@ -92,6 +86,14 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    final myUserData = Provider.of<MyUserData>(context, listen: false);
+
+    if (!_isInitialized) {
+      registerNotification(myUserData);
+      configLocalNotification();
+      _isInitialized = true;
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -115,7 +117,7 @@ class _HomeState extends State<Home> {
           children: _widgetOptions,
         ),
       ),
-      drawer: _buildDrawer(),
+      drawer: _buildDrawer(myUserData),
       bottomNavigationBar: BottomNavigationBar(
         showSelectedLabels: false,
         showUnselectedLabels: false,
@@ -167,7 +169,7 @@ class _HomeState extends State<Home> {
     });
   }
 
-  Drawer _buildDrawer() {
+  Drawer _buildDrawer(MyUserData myUserData) {
     return Drawer(
       child: ListView(
         children: <Widget>[
@@ -212,7 +214,7 @@ class _HomeState extends State<Home> {
             title: Text('로그아웃'),
             onTap: () {
               Navigator.pop(context); // 없으면 에러
-              Provider.of<MyUserData>(context, listen: false).clearUser();
+              myUserData.clearUser();
               FirebaseAuth.instance.signOut();
             },
           ),

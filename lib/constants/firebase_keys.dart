@@ -13,3 +13,4 @@ const KEY_HEIGHT = 'height';
 const KEY_RECENTMATCHSTATE = 'recentMatchState';
 const KEY_RECENTMATCHTIME = 'recentMatchTime';
 const KEY_CHATS = 'chats';
+const KEY_PUSHTOKEN = 'pushToken';

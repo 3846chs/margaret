@@ -15,6 +15,10 @@ class MyUserData extends ChangeNotifier {
 
   MyUserDataStatus get status => _myUserDataStatus;
 
+  void setPushToken(String token) {
+    firestoreProvider.updatePushToken(_userData.userKey, token);
+  }
+
   void setNewStatus(MyUserDataStatus status) {
     _myUserDataStatus = status;
     notifyListeners();

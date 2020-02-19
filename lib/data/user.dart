@@ -15,6 +15,7 @@ class User {
   int recentMatchState;
   Timestamp recentMatchTime;
   List<String> chats;
+  String pushToken;
   DocumentReference reference;
 
   User(
@@ -30,6 +31,7 @@ class User {
       this.recentMatchState,
       this.recentMatchTime,
       this.chats,
+      this.pushToken,
       this.reference});
 
   User.fromMap(Map<String, dynamic> map, this.userKey, {this.reference}) {
@@ -45,6 +47,7 @@ class User {
     job = map[KEY_JOB];
     height = map[KEY_HEIGHT];
     chats = <String>[];
+    pushToken = map[KEY_PUSHTOKEN];
     map[KEY_CHATS].forEach((v) {
       chats.add(v.toString());
     });
@@ -71,5 +74,6 @@ class User {
         KEY_RECENTMATCHSTATE: recentMatchState,
         KEY_RECENTMATCHTIME: recentMatchTime,
         KEY_CHATS: chats,
+        KEY_PUSHTOKEN: pushToken,
       };
 }
