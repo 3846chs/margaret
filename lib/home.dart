@@ -1,4 +1,5 @@
-import 'package:datingapp/constants/size.dart';
+import 'dart:convert';
+
 import 'package:datingapp/data/provider/my_user_data.dart';
 import 'package:datingapp/firebase/storage_provider.dart';
 import 'package:datingapp/pages/chat_page.dart';
@@ -7,7 +8,9 @@ import 'package:datingapp/pages/receive_page.dart';
 import 'package:datingapp/pages/send_page.dart';
 import 'package:datingapp/profiles/my_profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -26,6 +29,66 @@ class _HomeState extends State<Home> {
     ReceivePage(),
     ChatPage(),
   ];
+
+  final firebaseMessaging = FirebaseMessaging();
+  final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+
+  @override
+  void initState() {
+    super.initState();
+    registerNotification();
+    configLocalNotification();
+  }
+
+  void registerNotification() {
+    firebaseMessaging.requestNotificationPermissions();
+
+    firebaseMessaging.configure(onMessage: (Map<String, dynamic> message) {
+      print('onMessage: $message');
+      showNotification(message['notification']);
+      return;
+    }, onResume: (Map<String, dynamic> message) {
+      print('onResume: $message');
+      return;
+    }, onLaunch: (Map<String, dynamic> message) {
+      print('onLaunch: $message');
+      return;
+    });
+
+    firebaseMessaging.getToken().then((token) {
+      print('token: $token');
+      // Firestore.instance.collection('Users').document(currentUserId).updateData({'pushToken': token});
+    }).catchError((err) {
+      print(err.message);
+    });
+  }
+
+  void configLocalNotification() {
+    final initializationSettingsAndroid =
+        AndroidInitializationSettings('app_icon');
+    final initializationSettingsIOS = IOSInitializationSettings();
+    final initializationSettings = InitializationSettings(
+        initializationSettingsAndroid, initializationSettingsIOS);
+    flutterLocalNotificationsPlugin.initialize(initializationSettings);
+  }
+
+  void showNotification(message) async {
+    final androidPlatformChannelSpecifics = AndroidNotificationDetails(
+      'com.datingapp.datingapp',
+      'Margaret',
+      'your channel description',
+      playSound: true,
+      enableVibration: true,
+      importance: Importance.Max,
+      priority: Priority.High,
+    );
+    final iOSPlatformChannelSpecifics = IOSNotificationDetails();
+    final platformChannelSpecifics = new NotificationDetails(
+        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+    await flutterLocalNotificationsPlugin.show(0, message['title'].toString(),
+        message['body'].toString(), platformChannelSpecifics,
+        payload: json.encode(message));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,13 +155,11 @@ class _HomeState extends State<Home> {
       {String activeIconPath, String iconPath}) {
     return BottomNavigationBarItem(
       activeIcon:
-      activeIconPath == null ? null : ImageIcon(AssetImage(activeIconPath)),
+          activeIconPath == null ? null : ImageIcon(AssetImage(activeIconPath)),
       icon: ImageIcon(AssetImage(iconPath)),
       title: Text(''),
     );
   }
-
-
 
   void _onItemTapped(int index) {
     setState(() {
