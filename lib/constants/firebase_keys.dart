@@ -12,3 +12,4 @@ const KEY_JOB = 'job';
 const KEY_HEIGHT = 'height';
 const KEY_RECENTMATCHSTATE = 'recentMatchState';
 const KEY_RECENTMATCHTIME = 'recentMatchTime';
+const KEY_CHATS = 'chats';
