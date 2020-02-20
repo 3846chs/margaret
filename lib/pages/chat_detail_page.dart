@@ -91,7 +91,11 @@ class ChatDetailPage extends StatelessWidget {
             final date2 = DateTime.fromMillisecondsSinceEpoch(
                 int.parse(messages[i].timestamp));
 
-            children.add(ChatBubble(myKey: myKey, message: messages[i]));
+            children.add(ChatBubble(
+              message: messages[i],
+              isSent: myKey == messages[i].idFrom,
+              onRead: (key) => firestoreProvider.setMessageRead(chatKey, key),
+            ));
 
             if (i == messages.length - 1) {
               children.add(_buildDate(date2));

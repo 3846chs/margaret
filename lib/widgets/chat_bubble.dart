@@ -4,15 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class ChatBubble extends StatelessWidget {
-  final String myKey;
   final Message message;
   final bool isSent;
-  final DateTime dateTime;
+  final Function(String) onRead;
 
-  ChatBubble({@required this.myKey, @required this.message})
-      : isSent = myKey == message.idFrom,
-        dateTime =
-            DateTime.fromMillisecondsSinceEpoch(int.parse(message.timestamp));
+  ChatBubble(
+      {@required this.message, @required this.isSent, @required this.onRead});
 
   @override
   Widget build(BuildContext context) {
@@ -21,11 +18,16 @@ class ChatBubble extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
           const Spacer(),
+          message.isRead ? const SizedBox.shrink() : _buildHeart(),
           _buildTime(),
           _buildBubble(),
         ],
       );
     }
+
+    if (!message.isRead && ModalRoute.of(context).isCurrent)
+      onRead(message.timestamp);
+
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: <Widget>[
@@ -36,11 +38,23 @@ class ChatBubble extends StatelessWidget {
     );
   }
 
+  Widget _buildHeart() {
+    return Padding(
+      padding: const EdgeInsets.all(common_gap),
+      child: const Icon(
+        Icons.favorite,
+        color: Colors.red,
+        size: 16.0,
+      ),
+    );
+  }
+
   Widget _buildTime() {
     return Padding(
       padding: const EdgeInsets.only(bottom: common_gap),
       child: Text(
-        DateFormat.jm().format(dateTime),
+        DateFormat.jm().format(
+            DateTime.fromMillisecondsSinceEpoch(int.parse(message.timestamp))),
         style: const TextStyle(fontSize: 10.0),
       ),
     );

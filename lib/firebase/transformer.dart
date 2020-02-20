@@ -26,7 +26,9 @@ class Transformer {
 
   final toLastMessage = StreamTransformer<QuerySnapshot, Message>.fromHandlers(
       handleData: (snapshot, sink) async {
-    sink.add(Message.fromSnapshot(snapshot.documents.first));
+    sink.add(snapshot.documents.length > 0
+        ? Message.fromSnapshot(snapshot.documents.first)
+        : null);
   });
 
   final toMessages =

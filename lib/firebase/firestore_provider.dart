@@ -46,6 +46,15 @@ class FirestoreProvider with Transformer {
         .transform(toUsers);
   }
 
+  Future<void> setMessageRead(String chatKey, String messageKey) {
+    return Firestore.instance
+        .collection(COLLECTION_CHATS)
+        .document(chatKey)
+        .collection(chatKey)
+        .document(messageKey)
+        .updateData({MessageKeys.KEY_ISREAD: true});
+  }
+
   Future<void> createMessage(String chatKey, Message message) {
     final messageRef = _firestore
         .collection(COLLECTION_CHATS)
@@ -54,12 +63,7 @@ class FirestoreProvider with Transformer {
         .document(message.timestamp);
 
     return _firestore.runTransaction((tx) async {
-      await tx.set(messageRef, {
-        'idFrom': message.idFrom,
-        'idTo': message.idTo,
-        'timestamp': message.timestamp,
-        'content': message.content,
-      });
+      await tx.set(messageRef, message.toMap());
     });
   }
 

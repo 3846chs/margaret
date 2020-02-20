@@ -40,11 +40,10 @@ class _ChatPageState extends State<ChatPage> {
                 child: StreamBuilder<Message>(
                     stream: firestoreProvider.connectLastMessage(chatKey),
                     builder: (context, snapshot) {
-                      if (!snapshot.hasData)
-                        return const CircularProgressIndicator();
                       return ChatCard(
                         peer: peer,
-                        lastMessage: snapshot.data.content,
+                        lastMessage:
+                            snapshot.hasData ? snapshot.data.content : '',
                       );
                     }),
                 onTap: () {
