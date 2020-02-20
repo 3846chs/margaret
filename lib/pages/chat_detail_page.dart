@@ -2,8 +2,8 @@ import 'package:datingapp/constants/size.dart';
 import 'package:datingapp/data/message.dart';
 import 'package:datingapp/data/provider/my_user_data.dart';
 import 'package:datingapp/firebase/firestore_provider.dart';
+import 'package:datingapp/widgets/chat_bubble.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class ChatDetailPage extends StatelessWidget {
@@ -17,16 +17,15 @@ class ChatDetailPage extends StatelessWidget {
     if (content.trim().isNotEmpty) {
       _messageController.clear();
 
-      firestoreProvider.createMessage(
-          chatKey,
-          Message(
-            idFrom: myKey,
-            idTo: peerKey,
-            content: content,
-            timestamp: DateTime.now().millisecondsSinceEpoch.toString(),
-            isRead: false,
-          ));
+      final message = Message(
+        idFrom: myKey,
+        idTo: peerKey,
+        content: content,
+        timestamp: DateTime.now().millisecondsSinceEpoch.toString(),
+        isRead: false,
+      );
 
+      firestoreProvider.createMessage(chatKey, message);
       _scrollController.animateTo(0.0,
           duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
     }
@@ -68,9 +67,8 @@ class ChatDetailPage extends StatelessWidget {
           padding: const EdgeInsets.all(common_s_gap),
           child: IconButton(
             icon: const Icon(Icons.send),
-            onPressed: () {
-              _sendMessage(chatKey, myKey, _messageController.text);
-            },
+            onPressed: () =>
+                _sendMessage(chatKey, myKey, _messageController.text),
           ),
         ),
       ],
@@ -93,56 +91,11 @@ class ChatDetailPage extends StatelessWidget {
             padding: const EdgeInsets.all(common_gap),
             reverse: true,
             children: snapshot.data
-                .map((message) => _buildBubble(myKey, message))
+                .map((message) => ChatBubble(myKey: myKey, message: message))
                 .toList(),
           );
         },
       ),
-    );
-  }
-
-  Widget _buildBubble(String myKey, Message message) {
-    final isSent = myKey == message.idFrom;
-    final dateTime =
-        DateTime.fromMillisecondsSinceEpoch(int.parse(message.timestamp));
-    final bubble = Container(
-      padding: const EdgeInsets.all(common_gap),
-      constraints: const BoxConstraints(maxWidth: 200.0),
-      decoration: BoxDecoration(
-        color: isSent ? Colors.blue : Colors.grey,
-        borderRadius: BorderRadius.circular(12.0),
-      ),
-      margin: const EdgeInsets.all(common_gap),
-      child: Text(
-        message.content,
-        style: TextStyle(color: Colors.white),
-      ),
-    );
-    final time = Padding(
-      padding: const EdgeInsets.only(bottom: common_gap),
-      child: Text(
-        DateFormat.jm().format(dateTime),
-        style: TextStyle(fontSize: 10.0),
-      ),
-    );
-
-    if (isSent) {
-      return Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: <Widget>[
-          const Spacer(),
-          time,
-          bubble,
-        ],
-      );
-    }
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: <Widget>[
-        bubble,
-        time,
-        const Spacer(),
-      ],
     );
   }
 
