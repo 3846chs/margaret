@@ -1,8 +1,14 @@
 import 'package:datingapp/constants/size.dart';
+import 'package:datingapp/data/user.dart';
 import 'package:datingapp/widgets/user_avatar.dart';
 import 'package:flutter/material.dart';
 
 class ChatCard extends StatelessWidget {
+  final User peer;
+  final String lastMessage;
+
+  ChatCard({@required this.peer, @required this.lastMessage});
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -11,7 +17,7 @@ class ChatCard extends StatelessWidget {
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.all(common_gap),
-            child: UserAvatar(),
+            child: UserAvatar(user: peer),
           ),
           Padding(
             padding: const EdgeInsets.all(common_gap),
@@ -20,8 +26,8 @@ class ChatCard extends StatelessWidget {
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.all(common_s_gap),
-                  child: const Text(
-                    '닉네임',
+                  child: Text(
+                    peer.nickname,
                     style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
@@ -30,9 +36,9 @@ class ChatCard extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(common_s_gap),
-                  child: const Text(
-                    '그럼 8시에 만나는 거 어때요?',
-                    style: TextStyle(color: Colors.black),
+                  child: Text(
+                    lastMessage,
+                    style: const TextStyle(color: Colors.black),
                   ),
                 ),
               ],

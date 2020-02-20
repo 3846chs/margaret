@@ -73,6 +73,17 @@ class FirestoreProvider with Transformer {
         .transform(toMessage);
   }
 
+  Stream<Message> connectLastMessage(String chatKey) {
+    return _firestore
+        .collection(COLLECTION_CHATS)
+        .document(chatKey)
+        .collection(chatKey)
+        .orderBy(MessageKeys.KEY_TIMESTAMP, descending: true)
+        .limit(1)
+        .snapshots()
+        .transform(toLastMessage);
+  }
+
   Stream<List<Message>> fetchAllMessages(String chatKey) {
     return _firestore
         .collection(COLLECTION_CHATS)

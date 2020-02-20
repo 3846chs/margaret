@@ -1,17 +1,19 @@
 import 'package:datingapp/constants/size.dart';
 import 'package:datingapp/data/message.dart';
-import 'package:datingapp/data/provider/my_user_data.dart';
+import 'package:datingapp/data/user.dart';
 import 'package:datingapp/firebase/firestore_provider.dart';
 import 'package:datingapp/widgets/chat_bubble.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class ChatDetailPage extends StatelessWidget {
-  final String peerKey;
+  final String chatKey;
+  final String myKey;
+  final User peer;
   final _messageController = TextEditingController();
   final _scrollController = ScrollController();
 
-  ChatDetailPage({@required this.peerKey});
+  ChatDetailPage(
+      {@required this.chatKey, @required this.myKey, @required this.peer});
 
   void _sendMessage(String chatKey, String myKey, String content) {
     if (content.trim().isNotEmpty) {
@@ -19,7 +21,7 @@ class ChatDetailPage extends StatelessWidget {
 
       final message = Message(
         idFrom: myKey,
-        idTo: peerKey,
+        idTo: peer.userKey,
         content: content,
         timestamp: DateTime.now().millisecondsSinceEpoch.toString(),
         isRead: false,
@@ -33,15 +35,10 @@ class ChatDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final myUserData = Provider.of<MyUserData>(context, listen: false);
-    final myKey = myUserData.userData.userKey;
-
-    final chatKey = myKey.hashCode <= peerKey.hashCode
-        ? '$myKey-$peerKey'
-        : '$peerKey-$myKey';
-
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text(peer.nickname),
+      ),
       body: Column(
         children: <Widget>[
           _buildBubbleList(chatKey, myKey),
