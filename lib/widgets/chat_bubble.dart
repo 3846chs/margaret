@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:datingapp/constants/size.dart';
 import 'package:datingapp/data/message.dart';
 import 'package:datingapp/firebase/storage_provider.dart';
@@ -82,7 +83,12 @@ class ChatBubble extends StatelessWidget {
                   return Center(
                     child: const CircularProgressIndicator(),
                   );
-                return Image.network(snapshot.data);
+                return CachedNetworkImage(
+                  imageUrl: snapshot.data,
+                  placeholder: (context, url) =>
+                      const CircularProgressIndicator(),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                );
               },
             ),
     );

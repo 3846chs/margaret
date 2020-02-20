@@ -39,6 +39,7 @@ dependencies:
   firebase_messaging: ^6.0.9
   cloud_functions: ^0.4.2
   flutter_local_notifications: ^1.1.6
+  cached_network_image: ^2.0.0
 
 
 dev_dependencies:
