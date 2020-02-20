@@ -1,5 +1,6 @@
 import 'package:datingapp/constants/size.dart';
 import 'package:datingapp/data/message.dart';
+import 'package:datingapp/firebase/storage_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -69,10 +70,21 @@ class ChatBubble extends StatelessWidget {
         borderRadius: BorderRadius.circular(12.0),
       ),
       margin: const EdgeInsets.all(common_gap),
-      child: Text(
-        message.content,
-        style: const TextStyle(color: Colors.white),
-      ),
+      child: message.type == MessageType.text
+          ? Text(
+              message.content,
+              style: const TextStyle(color: Colors.white),
+            )
+          : FutureBuilder<String>(
+              future: storageProvider.getImageUri(message.content),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData)
+                  return Center(
+                    child: const CircularProgressIndicator(),
+                  );
+                return Image.network(snapshot.data);
+              },
+            ),
     );
   }
 }

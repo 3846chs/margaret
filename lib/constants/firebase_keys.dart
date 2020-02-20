@@ -23,5 +23,6 @@ class MessageKeys {
   static const KEY_IDTO = 'idTo';
   static const KEY_CONTENT = 'content';
   static const KEY_TIMESTAMP = 'timestamp';
+  static const KEY_TYPE = 'type';
   static const KEY_ISREAD = 'isRead';
 }

@@ -42,8 +42,11 @@ class _ChatPageState extends State<ChatPage> {
                     builder: (context, snapshot) {
                       return ChatCard(
                         peer: peer,
-                        lastMessage:
-                            snapshot.hasData ? snapshot.data.content : '',
+                        lastMessage: snapshot.hasData
+                            ? (snapshot.data.type == MessageType.text
+                                ? snapshot.data.content
+                                : '사진을 보냈습니다.')
+                            : '',
                       );
                     }),
                 onTap: () {

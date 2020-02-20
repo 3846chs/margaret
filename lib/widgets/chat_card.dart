@@ -19,29 +19,33 @@ class ChatCard extends StatelessWidget {
             padding: const EdgeInsets.all(common_gap),
             child: UserAvatar(user: peer),
           ),
-          Padding(
-            padding: const EdgeInsets.all(common_gap),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(common_s_gap),
-                  child: Text(
-                    peer.nickname,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(common_gap),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(common_s_gap),
+                    child: Text(
+                      peer.nickname,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(common_s_gap),
-                  child: Text(
-                    lastMessage,
-                    style: const TextStyle(color: Colors.black),
+                  Padding(
+                    padding: const EdgeInsets.all(common_s_gap),
+                    child: Text(
+                      lastMessage,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(color: Colors.black),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           )
         ],

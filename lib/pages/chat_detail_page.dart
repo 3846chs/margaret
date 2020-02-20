@@ -2,8 +2,10 @@ import 'package:datingapp/constants/size.dart';
 import 'package:datingapp/data/message.dart';
 import 'package:datingapp/data/user.dart';
 import 'package:datingapp/firebase/firestore_provider.dart';
+import 'package:datingapp/firebase/storage_provider.dart';
 import 'package:datingapp/widgets/chat_bubble.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
 class ChatDetailPage extends StatelessWidget {
@@ -16,7 +18,7 @@ class ChatDetailPage extends StatelessWidget {
   ChatDetailPage(
       {@required this.chatKey, @required this.myKey, @required this.peer});
 
-  void _sendMessage(String chatKey, String myKey, String content) {
+  void _sendMessage(String content, MessageType type) {
     if (content.trim().isNotEmpty) {
       _messageController.clear();
 
@@ -25,6 +27,7 @@ class ChatDetailPage extends StatelessWidget {
         idTo: peer.userKey,
         content: content,
         timestamp: DateTime.now().millisecondsSinceEpoch.toString(),
+        type: type,
         isRead: false,
       );
 
@@ -42,16 +45,32 @@ class ChatDetailPage extends StatelessWidget {
       ),
       body: Column(
         children: <Widget>[
-          _buildBubbleList(chatKey, myKey),
-          _buildInput(chatKey, myKey),
+          _buildBubbleList(),
+          _buildInput(),
         ],
       ),
     );
   }
 
-  Widget _buildInput(String chatKey, String myKey) {
+  Widget _buildInput() {
     return Row(
       children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(common_s_gap),
+          child: IconButton(
+            icon: const Icon(Icons.image),
+            onPressed: () async {
+              final image =
+                  await ImagePicker.pickImage(source: ImageSource.gallery);
+
+              if (image != null) {
+                final url = await storageProvider.uploadImg(image,
+                    'chats/${DateTime.now().millisecondsSinceEpoch}_$myKey');
+                _sendMessage(url, MessageType.image);
+              }
+            },
+          ),
+        ),
         Expanded(
           child: Padding(
             padding: const EdgeInsets.all(common_s_gap),
@@ -66,14 +85,14 @@ class ChatDetailPage extends StatelessWidget {
           child: IconButton(
             icon: const Icon(Icons.send),
             onPressed: () =>
-                _sendMessage(chatKey, myKey, _messageController.text),
+                _sendMessage(_messageController.text, MessageType.text),
           ),
         ),
       ],
     );
   }
 
-  Widget _buildBubbleList(String chatKey, String myKey) {
+  Widget _buildBubbleList() {
     return Expanded(
       child: StreamBuilder<List<Message>>(
         stream: firestoreProvider.fetchAllMessages(chatKey),

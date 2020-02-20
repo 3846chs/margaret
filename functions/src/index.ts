@@ -13,7 +13,8 @@ export const sendNotification = functions.firestore
 
         const idFrom = doc.idFrom;
         const idTo = doc.idTo;
-        const contentMessage = doc.content;
+        const contentMessage =
+            doc.type === 0 ? doc.content : "사진을 보냈습니다.";
 
         // Get push token user to (receive)
         const userToDoc = await admin
