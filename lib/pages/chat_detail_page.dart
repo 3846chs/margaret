@@ -1,6 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:datingapp/constants/size.dart';
+import 'package:datingapp/data/message.dart';
 import 'package:datingapp/data/provider/my_user_data.dart';
+import 'package:datingapp/firebase/firestore_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -16,19 +17,15 @@ class ChatDetailPage extends StatelessWidget {
     if (content.trim().isNotEmpty) {
       _messageController.clear();
 
-      final reference = Firestore.instance
-          .collection('Chats')
-          .document(chatKey)
-          .collection(chatKey)
-          .document(DateTime.now().millisecondsSinceEpoch.toString());
-      Firestore.instance.runTransaction((transaction) async {
-        await transaction.set(reference, {
-          'idFrom': myKey,
-          'idTo': peerKey,
-          'timestamp': DateTime.now().millisecondsSinceEpoch.toString(),
-          'content': content,
-        });
-      });
+      firestoreProvider.createMessage(
+          chatKey,
+          Message(
+            idFrom: myKey,
+            idTo: peerKey,
+            content: content,
+            timestamp: DateTime.now().millisecondsSinceEpoch.toString(),
+            isRead: false,
+          ));
 
       _scrollController.animateTo(0.0,
           duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
@@ -82,13 +79,8 @@ class ChatDetailPage extends StatelessWidget {
 
   Widget _buildBubbleList(String chatKey, String myKey) {
     return Expanded(
-      child: StreamBuilder<QuerySnapshot>(
-        stream: Firestore.instance
-            .collection('Chats')
-            .document(chatKey)
-            .collection(chatKey)
-            .orderBy('timestamp', descending: true)
-            .snapshots(),
+      child: StreamBuilder<List<Message>>(
+        stream: firestoreProvider.fetchAllMessages(chatKey),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return Center(
@@ -96,13 +88,11 @@ class ChatDetailPage extends StatelessWidget {
             );
           }
 
-          final messages = snapshot.data.documents;
-
           return ListView(
             controller: _scrollController,
             padding: const EdgeInsets.all(common_gap),
             reverse: true,
-            children: messages
+            children: snapshot.data
                 .map((message) => _buildBubble(myKey, message))
                 .toList(),
           );
@@ -111,10 +101,10 @@ class ChatDetailPage extends StatelessWidget {
     );
   }
 
-  Widget _buildBubble(String myKey, DocumentSnapshot document) {
-    final isSent = myKey == document['idFrom'];
+  Widget _buildBubble(String myKey, Message message) {
+    final isSent = myKey == message.idFrom;
     final dateTime =
-        DateTime.fromMillisecondsSinceEpoch(int.parse(document['timestamp']));
+        DateTime.fromMillisecondsSinceEpoch(int.parse(message.timestamp));
     final bubble = Container(
       padding: const EdgeInsets.all(common_gap),
       constraints: const BoxConstraints(maxWidth: 200.0),
@@ -124,7 +114,7 @@ class ChatDetailPage extends StatelessWidget {
       ),
       margin: const EdgeInsets.all(common_gap),
       child: Text(
-        document['content'],
+        message.content,
         style: TextStyle(color: Colors.white),
       ),
     );

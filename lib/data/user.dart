@@ -35,45 +35,42 @@ class User {
       this.reference});
 
   User.fromMap(Map<String, dynamic> map, this.userKey, {this.reference}) {
-    email = map[KEY_EMAIL];
+    email = map[UserKeys.KEY_EMAIL];
     profiles = <String>[];
-    map[KEY_PROFILES].forEach((v) {
+    map[UserKeys.KEY_PROFILES].forEach((v) {
       profiles.add(v.toString());
     });
-    nickname = map[KEY_NICKNAME];
-    gender = map[KEY_GENDER];
-    birthYear = map[KEY_BIRTHYEAR];
-    region = map[KEY_REGION];
-    job = map[KEY_JOB];
-    height = map[KEY_HEIGHT];
+    nickname = map[UserKeys.KEY_NICKNAME];
+    gender = map[UserKeys.KEY_GENDER];
+    birthYear = map[UserKeys.KEY_BIRTHYEAR];
+    region = map[UserKeys.KEY_REGION];
+    job = map[UserKeys.KEY_JOB];
+    height = map[UserKeys.KEY_HEIGHT];
     chats = <String>[];
-    pushToken = map[KEY_PUSHTOKEN];
-    map[KEY_CHATS].forEach((v) {
+    pushToken = map[UserKeys.KEY_PUSHTOKEN];
+    map[UserKeys.KEY_CHATS].forEach((v) {
       chats.add(v.toString());
     });
-    recentMatchState = map[KEY_RECENTMATCHSTATE];
-    recentMatchTime = map[KEY_RECENTMATCHTIME];
+    recentMatchState = map[UserKeys.KEY_RECENTMATCHSTATE];
+    recentMatchTime = map[UserKeys.KEY_RECENTMATCHTIME];
   }
 
   User.fromSnapshot(DocumentSnapshot snapshot)
-      : this.fromMap(
-          snapshot.data,
-          snapshot.documentID,
-          reference: snapshot.reference,
-        );
+      : this.fromMap(snapshot.data, snapshot.documentID,
+            reference: snapshot.reference);
 
   Map<String, dynamic> toMap() => {
-        KEY_EMAIL: email,
-        KEY_PROFILES: profiles,
-        KEY_NICKNAME: nickname,
-        KEY_GENDER: gender,
-        KEY_BIRTHYEAR: birthYear,
-        KEY_REGION: region,
-        KEY_JOB: job,
-        KEY_HEIGHT: height,
-        KEY_RECENTMATCHSTATE: recentMatchState,
-        KEY_RECENTMATCHTIME: recentMatchTime,
-        KEY_CHATS: chats,
-        KEY_PUSHTOKEN: pushToken,
+        UserKeys.KEY_EMAIL: email,
+        UserKeys.KEY_PROFILES: profiles,
+        UserKeys.KEY_NICKNAME: nickname,
+        UserKeys.KEY_GENDER: gender,
+        UserKeys.KEY_BIRTHYEAR: birthYear,
+        UserKeys.KEY_REGION: region,
+        UserKeys.KEY_JOB: job,
+        UserKeys.KEY_HEIGHT: height,
+        UserKeys.KEY_RECENTMATCHSTATE: recentMatchState,
+        UserKeys.KEY_RECENTMATCHTIME: recentMatchTime,
+        UserKeys.KEY_CHATS: chats,
+        UserKeys.KEY_PUSHTOKEN: pushToken,
       };
 }

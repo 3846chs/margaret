@@ -38,7 +38,8 @@ export const sendNotification = functions.firestore
                 title: `You have a message from "${userFrom.nickname}"`,
                 body: contentMessage,
                 badge: "1",
-                sound: "default"
+                sound: "default",
+                tag: idFrom
             }
         };
         // Let push to the target device

@@ -49,7 +49,6 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
         ratioX: 1.0,
         ratioY: 1.0,
       ),
-
     );
 
     if (image != null) {
@@ -96,7 +95,11 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                                   onPressed: _getProfile,
                                 ),
                               )
-                            : Image.file(_profiles[0], height: 300, width: 300,),
+                            : Image.file(
+                                _profiles[0],
+                                height: 300,
+                                width: 300,
+                              ),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(common_gap),
@@ -109,7 +112,11 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                                   onPressed: _getProfile,
                                 ),
                               )
-                            : Image.file(_profiles[1], height: 300, width: 300,),
+                            : Image.file(
+                                _profiles[1],
+                                height: 300,
+                                width: 300,
+                              ),
                       ),
                     ],
                   ),
@@ -231,6 +238,7 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
           height: int.parse(_heightController.text),
           recentMatchTime: Timestamp.now(),
           recentMatchState: 0,
+          chats: [],
         );
 
         await firestoreProvider.attemptCreateUser(user);

@@ -77,7 +77,7 @@ class _HomeState extends State<Home> {
       priority: Priority.High,
     );
     final iOSPlatformChannelSpecifics = IOSNotificationDetails();
-    final platformChannelSpecifics = new NotificationDetails(
+    final platformChannelSpecifics = NotificationDetails(
         androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
     await flutterLocalNotificationsPlugin.show(0, message['title'].toString(),
         message['body'].toString(), platformChannelSpecifics,
