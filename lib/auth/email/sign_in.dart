@@ -3,7 +3,6 @@ import 'package:datingapp/data/provider/my_user_data.dart';
 import 'package:datingapp/utils/simple_snack_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:provider/provider.dart';
 
 class SignInForm extends StatefulWidget {
@@ -88,32 +87,6 @@ class _SignInFormState extends State<SignInForm> {
                 SizedBox(
                   height: common_l_gap,
                 ),
-                Stack(
-                  alignment: Alignment.center,
-                  children: <Widget>[
-                    Positioned(
-                        left: 0,
-                        right: 0,
-                        height: 1,
-                        child: Container(
-                          color: Colors.grey[300],
-                          height: 1,
-                        )),
-                    Container(
-                      height: 3,
-                      width: 50,
-                      color: Colors.grey[50],
-                    ),
-                    Text(
-                      'OR',
-                      style: TextStyle(
-                          color: Colors.grey, fontWeight: FontWeight.bold),
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: common_l_gap,
-                ),
               ],
             )),
       ),
@@ -135,11 +108,10 @@ class _SignInFormState extends State<SignInForm> {
         Navigator.pop(context);
         Provider.of<MyUserData>(context, listen: false)
             .setNewStatus(MyUserDataStatus.progress);
-
       }
     } catch (e) {
       print(e.toString());
-      simpleSnackbar(context, '존재하지 않는 계정입니다');
+      simpleSnackbar(context, '이메일 또는 비밀번호가 올바르지 않습니다');
       setState(() {
         _emailController.text = '';
         _pwController.text = '';
