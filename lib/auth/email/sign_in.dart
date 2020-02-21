@@ -1,8 +1,11 @@
+import 'package:datingapp/constants/colors.dart';
 import 'package:datingapp/constants/size.dart';
 import 'package:datingapp/data/provider/my_user_data.dart';
+import 'package:datingapp/utils/base_height.dart';
 import 'package:datingapp/utils/simple_snack_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class SignInForm extends StatefulWidget {
@@ -34,10 +37,13 @@ class _SignInFormState extends State<SignInForm> {
               shrinkWrap: true,
               children: <Widget>[
                 SizedBox(
-                  height: common_l_gap,
+                  height: screenAwareSize(150, context),
                 ),
-                SizedBox(
-                  height: common_l_gap,
+                Center(
+                  child: Text(
+                    '마  가  렛',
+                    style: GoogleFonts.jua(fontSize: 50, color: pastel_purple),
+                  ),
                 ),
                 TextFormField(
                   controller: _emailController,
@@ -79,13 +85,9 @@ class _SignInFormState extends State<SignInForm> {
                     "로그인",
                     style: TextStyle(color: Colors.white),
                   ),
-                  color: Colors.blue,
+                  color: pastel_purple,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(6)),
-                  disabledColor: Colors.blue[100],
-                ),
-                SizedBox(
-                  height: common_l_gap,
                 ),
               ],
             )),

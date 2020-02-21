@@ -1,6 +1,9 @@
+import 'package:datingapp/constants/colors.dart';
 import 'package:datingapp/constants/size.dart';
 import 'package:datingapp/auth/email/profile_input_page.dart';
+import 'package:datingapp/utils/base_height.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class SignUpForm extends StatefulWidget {
   @override
@@ -33,10 +36,13 @@ class _SignUpFormState extends State<SignUpForm> {
             shrinkWrap: true,
             children: <Widget>[
               SizedBox(
-                height: common_s_gap,
+                height: screenAwareSize(150, context),
               ),
-              SizedBox(
-                height: common_l_gap,
+              Center(
+                child: Text(
+                  '마  가  렛',
+                  style: GoogleFonts.jua(fontSize: 50, color: pastel_purple),
+                ),
               ),
               TextFormField(
                 controller: _emailController,
@@ -90,12 +96,11 @@ class _SignUpFormState extends State<SignUpForm> {
                                 )));
                   }
                 },
-                child: Text('Next', style: TextStyle(color: Colors.white)),
-                color: Colors.blue,
+                child: Text('다음', style: TextStyle(color: Colors.white)),
+                color: pastel_purple,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(6),
                 ),
-                disabledColor: Colors.blue[100],
               ),
             ],
           ),

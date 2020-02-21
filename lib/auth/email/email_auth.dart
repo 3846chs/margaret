@@ -1,6 +1,7 @@
 
 import 'package:datingapp/auth/email/sign_in.dart';
 import 'package:datingapp/auth/email/sign_up.dart';
+import 'package:datingapp/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 class EmailAuth extends StatefulWidget {
@@ -55,7 +56,7 @@ class _EmailAuthState extends State<EmailAuth> {
                   text:
                       (currentWidget is SignInForm) ? '  Sign Up' : '  Sign In',
                   style: TextStyle(
-                      fontWeight: FontWeight.bold, color: Colors.blue[600])),
+                      fontWeight: FontWeight.bold, color: pastel_purple)),
             ],
           ),
         ),

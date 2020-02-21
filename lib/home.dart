@@ -205,7 +205,11 @@ class _HomeState extends State<Home> {
             onTap: null,
           ),
           ListTile(
-            title: Text('설정'),
+            title: Text('오늘의 질문 제보'),
+            onTap: null,
+          ),
+          ListTile(
+            title: Text('알림 설정'),
             onTap: null,
           ),
           ListTile(
