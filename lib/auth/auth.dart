@@ -119,7 +119,6 @@ class Auth extends StatelessWidget {
       if (user == null) {
         simpleSnackbar(context, '존재하지 않는 계정입니다');
       } else {
-        Navigator.pop(context);
         Provider.of<MyUserData>(context, listen: false)
             .setNewStatus(MyUserDataStatus.progress);
       }

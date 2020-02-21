@@ -233,6 +233,7 @@ class _TempProfileInputState extends State<TempProfileInput> {
           height: int.parse(_heightController.text),
           recentMatchTime: Timestamp.now(),
           recentMatchState: 0,
+          chats: [],
         );
 
         await firestoreProvider.attemptCreateUser(user);
