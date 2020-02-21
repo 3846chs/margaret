@@ -17,6 +17,7 @@ class _SignInFormState extends State<SignInForm> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController _emailController = TextEditingController();
   TextEditingController _pwController = TextEditingController();
+  TextEditingController _emailPwResetController = TextEditingController();
 
   @override
   void dispose() {
@@ -88,6 +89,51 @@ class _SignInFormState extends State<SignInForm> {
                   color: pastel_purple,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(6)),
+                ),
+                SizedBox(
+                  height: common_s_gap,
+                ),
+                InkWell(
+                  onTap: () {
+                    return showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                              title: Text(
+                                '비밀번호 재설정 이메일을 보내드립니다',
+                                style: TextStyle(fontSize: 14),
+                              ),
+                              content: TextFormField(
+                                controller: _emailPwResetController,
+                              ),
+                              actions: <Widget>[
+                                MaterialButton(
+                                  child: Text('보내기'),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                    setState(() {
+                                      _emailPwResetController.text = '';
+                                    });
+                                  },
+                                ),
+                                MaterialButton(
+                                  child: Text('취소'),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                    setState(() {
+                                      _emailPwResetController.text = '';
+                                    });
+                                  },
+                                ),
+                              ],
+                              shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20.0))),
+                            ));
+                  },
+                  child: Center(
+                      child: Text(
+                    "비밀번호 찾기",
+                  )),
                 ),
               ],
             )),

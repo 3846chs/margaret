@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:datingapp/constants/colors.dart';
 import 'package:datingapp/constants/size.dart';
 import 'package:datingapp/data/provider/my_user_data.dart';
 import 'package:datingapp/data/user.dart';
@@ -198,11 +199,10 @@ class _TempProfileInputState extends State<TempProfileInput> {
                           _profiles.length > 0) _register(context);
                     },
                     child: Text("가입하기", style: TextStyle(color: Colors.white)),
-                    color: Colors.blue,
+                    color: pastel_purple,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(6),
                     ),
-                    disabledColor: Colors.blue[100],
                   ),
                 ),
                 const SizedBox(height: common_l_gap),

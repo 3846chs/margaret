@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:datingapp/constants/material_white_color.dart';
 import 'package:datingapp/data/provider/my_user_data.dart';
 import 'package:datingapp/home.dart';
@@ -20,12 +21,22 @@ class OurApp extends StatelessWidget {
         builder: (context, myUserData, child) {
           switch (myUserData.status) {
             case MyUserDataStatus.progress:
-              FirebaseAuth.instance.currentUser().then((firebaseUser) {
+              FirebaseAuth.instance.currentUser().then((firebaseUser) async {
                 if (firebaseUser == null)
                   myUserData.setNewStatus(MyUserDataStatus.none);
                 else {
                   print(firebaseUser.uid);
-                  myUserData.setUserData(firebaseUser.uid);
+                  final snapShot = await Firestore.instance
+                      .collection('Users')
+                      .document(firebaseUser.uid)
+                      .get();
+                  if (snapShot == null || !snapShot.exists) {
+                    // 해당 snapshot 이 존재하지 않을 때
+                    print('Not yet Registered - Auth Page');
+                    myUserData.setNewStatus(MyUserDataStatus.none);
+                  } else {
+                    myUserData.setUserData(firebaseUser.uid);
+                  }
                 }
               });
               return LoadingPage();

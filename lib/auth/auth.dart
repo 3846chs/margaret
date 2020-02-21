@@ -11,6 +11,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/services.dart';
 
 class Auth extends StatelessWidget {
   final GoogleSignIn _googleSignIn = GoogleSignIn(); // 구글 로그인을 위한 객체
@@ -89,41 +90,49 @@ class Auth extends StatelessWidget {
   }
 
   Future<FirebaseUser> _handleGoogleSignIn(BuildContext context) async {
-    GoogleSignInAccount googleUser = await _googleSignIn.signIn();
-    GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+    print('ddd');
+    try {
+      GoogleSignInAccount googleUser = await _googleSignIn.signIn();
+      GoogleSignInAuthentication googleAuth = await googleUser.authentication;
 
-    AuthResult authResult = (await _auth.signInWithCredential(
-        GoogleAuthProvider.getCredential(
-            idToken: googleAuth.idToken, accessToken: googleAuth.accessToken)));
-
+      print(1);
+      AuthResult authResult = (await _auth.signInWithCredential(
+          GoogleAuthProvider.getCredential(
+              idToken: googleAuth.idToken,
+              accessToken: googleAuth.accessToken)));
+      print(2);
 //    if (authResult.additionalUserInfo.isNewUser) {
 //      print('new user');
 //    } else {
 //      print('old user');
 //    }
-    FirebaseUser user = authResult.user;
-    print("signed in " + user.displayName);
-    final snapShot =
-        await Firestore.instance.collection('Users').document(user.uid).get();
+      FirebaseUser user = authResult.user;
+      print("signed in " + user.displayName);
+      final snapShot =
+          await Firestore.instance.collection('Users').document(user.uid).get();
 
-    if (snapShot == null || !snapShot.exists) {
-      // Document with id == docId doesn't exist.
-      print('account not exist');
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => TempProfileInput(
-                    authResult: authResult,
-                  )));
-    } else {
-      if (user == null) {
-        simpleSnackbar(context, '존재하지 않는 계정입니다');
+      if (snapShot == null || !snapShot.exists) {
+        // 해당 snapshot 이 존재하지 않을 때
+        print('Not yet Registered - Profile Input Page');
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => TempProfileInput(
+                      authResult: authResult,
+                    )));
       } else {
-        Provider.of<MyUserData>(context, listen: false)
-            .setNewStatus(MyUserDataStatus.progress);
+        if (user == null) {
+          simpleSnackbar(context, '존재하지 않는 계정입니다');
+        } else {
+          Provider.of<MyUserData>(context, listen: false)
+              .setNewStatus(MyUserDataStatus.progress);
+        }
       }
-    }
 
-    return user;
+      return user;
+    } on PlatformException catch (exception) {
+      print(exception.code);
+      simpleSnackbar(context, exception.message);
+    }
   }
 }

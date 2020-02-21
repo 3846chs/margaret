@@ -13,15 +13,6 @@ class MyProfile extends StatefulWidget {
 }
 
 class _MyProfileState extends State<MyProfile> {
-  List<DropdownMenuItem<int>> listDrop = <int>[170, 171, 172].map((int value) {
-    return DropdownMenuItem<int>(
-      value: value,
-      child: Text(value.toString()),
-    );
-  }).toList();
-
-  int _value = 170; // 디폴트 값
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
