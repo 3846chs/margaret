@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:datingapp/constants/size.dart';
 import 'package:datingapp/data/provider/my_user_data.dart';
@@ -14,17 +13,16 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
-class ProfileInputPage extends StatefulWidget {
-  final String email;
-  final String password;
+class TempProfileInput extends StatefulWidget {
+  final AuthResult authResult;
 
-  ProfileInputPage({@required this.email, @required this.password});
+  TempProfileInput({@required this.authResult});
 
   @override
-  _ProfileInputPageState createState() => _ProfileInputPageState();
+  _TempProfileInputState createState() => _TempProfileInputState();
 }
 
-class _ProfileInputPageState extends State<ProfileInputPage> {
+class _TempProfileInputState extends State<TempProfileInput> {
   final _formKey = GlobalKey<FormState>();
   final _nicknameController = TextEditingController();
   final _birthYearController = TextEditingController();
@@ -216,20 +214,17 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
 
   Future<void> _register(BuildContext context) async {
     try {
-      final result = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: widget.email, password: widget.password);
-
-      if (result.user == null) {
+      if (widget.authResult.user == null) {
         simpleSnackbar(context, 'Please try again later!');
       } else {
         final profiles = await Stream.fromIterable(_profiles)
             .asyncMap((image) => storageProvider.uploadImg(image,
-                "profiles/${DateTime.now().millisecondsSinceEpoch}_${result.user.uid}"))
+                "profiles/${DateTime.now().millisecondsSinceEpoch}_${widget.authResult.user.uid}"))
             .toList();
         final user = User(
-          userKey: result.user.uid,
+          userKey: widget.authResult.user.uid,
           profiles: profiles.map((image) => image.substring(9)).toList(),
-          email: result.user.email,
+          email: widget.authResult.user.email,
           nickname: _nicknameController.text,
           gender: _genderSelected[0] ? '남성' : '여성',
           birthYear: int.parse(_birthYearController.text),
@@ -247,10 +242,7 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
         Navigator.pop(context);
       }
     } on PlatformException catch (exception) {
-      if (exception.code == 'ERROR_EMAIL_ALREADY_IN_USE')
-        simpleSnackbar(context, '이미 가입된 이메일 주소입니다');
-      else
-        simpleSnackbar(context, exception.message);
+      simpleSnackbar(context, exception.message);
     }
   }
 

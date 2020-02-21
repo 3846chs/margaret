@@ -100,18 +100,15 @@ class _HomeState extends State<Home> {
           'Margaret',
           style: GoogleFonts.handlee(fontWeight: FontWeight.bold),
         ),
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: <Color>[Color(0xFFCCDDFF), Color(0xFFFFEEFF)])),
+        ),
       ),
       body: Container(
-//        decoration: BoxDecoration(
-//          gradient: LinearGradient(
-//            begin: Alignment.topCenter,
-//            end: Alignment.bottomCenter,
-//            colors: [
-//              Colors.white,
-//              Colors.white,
-//            ],
-//          ),
-//        ),
         child: IndexedStack(
           index: _selectedIndex,
           children: _widgetOptions,
@@ -142,10 +139,6 @@ class _HomeState extends State<Home> {
             icon: Icon(FontAwesomeIcons.commentDots),
             title: Text(''),
           ),
-
-//          buildBottomNavigationBarItem(
-//              activeIconPath: "assets/profile_selected.png",
-//              iconPath: "assets/profile.png"),
         ],
         currentIndex: _selectedIndex,
         onTap: (index) => _onItemTapped(index),
@@ -200,7 +193,7 @@ class _HomeState extends State<Home> {
                 );
               }),
             ),
-            decoration: BoxDecoration(color: Colors.yellow[100]),
+            decoration: BoxDecoration(color: Color(0xFFDCD3FF)),
           ),
           ListTile(
             title: Text('공지사항'),

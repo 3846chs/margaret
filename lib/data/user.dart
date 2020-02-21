@@ -47,10 +47,12 @@ class User {
     job = map[KEY_JOB];
     height = map[KEY_HEIGHT];
     chats = <String>[];
-    pushToken = map[KEY_PUSHTOKEN];
-    map[KEY_CHATS].forEach((v) {
-      chats.add(v.toString());
-    });
+    if (chats.length > 0) {
+      map[KEY_CHATS].forEach((v) {
+        chats.add(v.toString());
+      });
+    }
+    pushToken = map[KEY_PUSHTOKEN ?? ''];
     recentMatchState = map[KEY_RECENTMATCHSTATE];
     recentMatchTime = map[KEY_RECENTMATCHTIME];
   }
@@ -73,7 +75,7 @@ class User {
         KEY_HEIGHT: height,
         KEY_RECENTMATCHSTATE: recentMatchState,
         KEY_RECENTMATCHTIME: recentMatchTime,
-        KEY_CHATS: chats,
-        KEY_PUSHTOKEN: pushToken,
+        KEY_CHATS: chats ?? [],
+        KEY_PUSHTOKEN: pushToken ?? '',
       };
 }
