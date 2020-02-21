@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:datingapp/data/provider/my_user_data.dart';
 import 'package:datingapp/firebase/storage_provider.dart';
 import 'package:datingapp/pages/chat_page.dart';
@@ -180,8 +181,12 @@ class _HomeState extends State<Home> {
                     if (snapshot.connectionState == ConnectionState.done) {
                       return CircleAvatar(
                         child: ClipOval(
-                          child: Image.network(
-                            snapshot.data,
+                          child: CachedNetworkImage(
+                            imageUrl: snapshot.data,
+                            placeholder: (context, url) =>
+                                const CircularProgressIndicator(),
+                            errorWidget: (context, url, error) =>
+                                const Icon(Icons.account_circle),
                           ),
                         ),
                       );
