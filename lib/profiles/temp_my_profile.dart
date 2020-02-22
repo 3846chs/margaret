@@ -31,22 +31,9 @@ class _TempMyProfileState extends State<TempMyProfile> {
               style: GoogleFonts.notoSans(fontSize: 17),
             ),
             Spacer(),
-            InkWell(
-              onTap: () {
-                print(widget.user.job);
-                var userkey = Provider.of<MyUserData>(context, listen: false)
-                    .userData
-                    .userKey;
-                Firestore.instance
-                    .collection(COLLECTION_USERS)
-                    .document(userkey)
-                    .updateData({'job': widget.user.job}); // 완료
-                Navigator.pop(context);
-              },
-              child: Text(
-                '완료',
-                style: GoogleFonts.notoSans(fontSize: 17),
-              ),
+            Text(
+              '완료',
+              style: GoogleFonts.notoSans(fontSize: 17),
             ),
           ],
         ),
@@ -120,108 +107,50 @@ class _TempMyProfileState extends State<TempMyProfile> {
                   SizedBox(
                     height: 5,
                   ),
-                  _buildCareer(widget: widget)
+                  Padding(
+                    padding: const EdgeInsets.all(common_gap),
+                    child: Row(
+                      children: <Widget>[
+                        SizedBox(
+                          width: 40,
+                        ),
+                        Icon(
+                          FontAwesomeIcons.suitcase,
+                          color: Color.fromRGBO(222, 222, 255, 1),
+                          size: 15,
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Center(
+                          child: Text(
+                            '직업',
+                            style: TextStyle(fontSize: 15),
+                          ),
+                        ),
+                        Spacer(),
+                        Expanded(
+                          child: Center(
+                            child: GestureDetector(
+                                child: Text(
+                                  widget.user.job,
+                                  style: TextStyle(fontSize: 15),
+                                ),
+                                onTap: () {}),
+                            // 클릭하면 팝업창 띄워서 수정하는 디자인으로 갈 예정
+                          ),
+                        ),
+                        SizedBox(
+                          width: 40,
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               );
             }),
           ),
         ),
-      ),
-    );
-  }
-}
-
-class _buildCareer extends StatefulWidget {
-  const _buildCareer({
-    Key key,
-    @required this.widget,
-  }) : super(key: key);
-
-  final TempMyProfile widget;
-
-  @override
-  __buildCareerState createState() => __buildCareerState();
-}
-
-class __buildCareerState extends State<_buildCareer> {
-  final _textEditingController = TextEditingController();
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(common_gap),
-      child: Row(
-        children: <Widget>[
-          SizedBox(
-            width: 40,
-          ),
-          Icon(
-            FontAwesomeIcons.suitcase,
-            color: Color.fromRGBO(222, 222, 255, 1),
-            size: 15,
-          ),
-          SizedBox(
-            width: 10,
-          ),
-          Center(
-            child: Text(
-              '직업',
-              style: TextStyle(fontSize: 15),
-            ),
-          ),
-          Spacer(),
-          Expanded(
-            child: Center(
-              child: GestureDetector(
-                child: Text(
-                  widget.widget.user.job,
-                  style: TextStyle(fontSize: 15),
-                ),
-                onTap: () {
-                  // SimpleDialog 사용해야 함
-                  return showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        content: TextFormField(
-                          controller: _textEditingController,
-                        ),
-                        actions: <Widget>[
-                          MaterialButton(
-                            elevation: 5,
-                            child: Text('수정'),
-                            onPressed: () {
-                              Navigator.pop(context);
-                              setState(() {
-                                widget.widget.user.job =
-                                    _textEditingController.text;
-                                _textEditingController.text = '';
-                              });
-                            },
-                          ),
-                          MaterialButton(
-                            elevation: 5,
-                            child: Text('취소'),
-                            onPressed: () {
-                              Navigator.pop(context);
-                              setState(() {
-                                _textEditingController.text = '';
-                              });
-                            },
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                },
-              ),
-              // 클릭하면 팝업창 띄워서 수정하는 디자인으로 갈 예정
-            ),
-          ),
-          SizedBox(
-            width: 40,
-          ),
-        ],
       ),
     );
   }
