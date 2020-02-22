@@ -1,16 +1,16 @@
 import 'package:datingapp/constants/colors.dart';
 import 'package:datingapp/constants/size.dart';
-import 'package:datingapp/auth/email/profile_input_page.dart';
+import 'package:datingapp/auth/profile_input_page.dart';
 import 'package:datingapp/utils/base_height.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class SignUpForm extends StatefulWidget {
+class EmailSignUpForm extends StatefulWidget {
   @override
-  _SignUpFormState createState() => _SignUpFormState();
+  _EmailSignUpFormState createState() => _EmailSignUpFormState();
 }
 
-class _SignUpFormState extends State<SignUpForm> {
+class _EmailSignUpFormState extends State<EmailSignUpForm> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController _emailController = TextEditingController();
   TextEditingController _pwController = TextEditingController();

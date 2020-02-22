@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:datingapp/auth/email/email_auth.dart';
+import 'package:datingapp/auth/profile_input_page.dart';
 import 'package:datingapp/auth/login_button.dart';
-import 'package:datingapp/auth/temp_profile_input.dart';
 import 'package:datingapp/data/provider/my_user_data.dart';
 import 'package:datingapp/utils/base_height.dart';
 import 'package:datingapp/utils/simple_snack_bar.dart';
@@ -13,7 +13,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 
-class Auth extends StatelessWidget {
+class AuthMain extends StatelessWidget {
   final GoogleSignIn _googleSignIn = GoogleSignIn(); // 구글 로그인을 위한 객체
   final FirebaseAuth _auth = FirebaseAuth.instance; // 파이어베이스 인증 정보를 가지는 객체
 
@@ -23,25 +23,17 @@ class Auth extends StatelessWidget {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/temp7.jpg"),
+            image: AssetImage("assets/temp12.png"),
             fit: BoxFit.cover,
           ),
         ),
         child: Center(
           child: SafeArea(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
-//              Container(
-//                width: screenAwareSize(180.0, context),
-//                height: screenAwareSize(180.0, context),
-//                decoration: BoxDecoration(
-//                  image: new DecorationImage(
-//                    fit: BoxFit.fill,
-//                    image: ExactAssetImage('assets/margaret_logo1.jpeg'),
-//                  ),
-//                ),
-//              ),
+                SizedBox(
+                  height: screenAwareSize(100, context),
+                ),
                 Text(
                   'Margaret',
                   style: GoogleFonts.handlee(
@@ -54,7 +46,7 @@ class Auth extends StatelessWidget {
                       fontSize: 17,
                       color: Colors.pinkAccent),
                 ),
-                SizedBox(height: screenAwareSize(200, context)),
+                SizedBox(height: screenAwareSize(130, context)),
                 LoginButton(
                   text: "Google  로그인",
                   icon: FontAwesomeIcons.google,
@@ -72,6 +64,13 @@ class Auth extends StatelessWidget {
                 ),
                 SizedBox(height: screenAwareSize(5.0, context)),
                 LoginButton(
+                  text: "Kakao  로그인",
+                  icon: IconData(75),
+                  color: Colors.yellow[700],
+                  onPressed: () => null,
+                ),
+                SizedBox(height: screenAwareSize(5.0, context)),
+                LoginButton(
                   text: "E-mail  로그인",
                   icon: FontAwesomeIcons.solidEnvelope,
                   color: Colors.grey[300],
@@ -80,7 +79,7 @@ class Auth extends StatelessWidget {
                         MaterialPageRoute(builder: (context) => EmailAuth()));
                   },
                 ),
-                SizedBox(height: screenAwareSize(100.0, context)),
+
               ],
             ),
           ),
@@ -90,17 +89,15 @@ class Auth extends StatelessWidget {
   }
 
   Future<FirebaseUser> _handleGoogleSignIn(BuildContext context) async {
-    print('ddd');
     try {
       GoogleSignInAccount googleUser = await _googleSignIn.signIn();
       GoogleSignInAuthentication googleAuth = await googleUser.authentication;
 
-      print(1);
       AuthResult authResult = (await _auth.signInWithCredential(
           GoogleAuthProvider.getCredential(
               idToken: googleAuth.idToken,
               accessToken: googleAuth.accessToken)));
-      print(2);
+
 //    if (authResult.additionalUserInfo.isNewUser) {
 //      print('new user');
 //    } else {
@@ -117,7 +114,7 @@ class Auth extends StatelessWidget {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => TempProfileInput(
+                builder: (context) => ProfileInputPage(
                       authResult: authResult,
                     )));
       } else {

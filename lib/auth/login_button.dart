@@ -32,23 +32,23 @@ class LoginButton extends StatelessWidget {
               overflow: Overflow.visible,
               alignment: Alignment.center,
               children: <Widget>[
-                Positioned(
-                  left: 0.0,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white,
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.all(screenAwareSize(5.0, context)),
-                      child: Icon(
-                        icon,
-                        color: iconColor ?? color,
-                        size: screenAwareSize(14.0, context),
-                      ),
-                    ),
-                  ),
-                ),
+//                Positioned(
+//                  left: 0.0,
+//                  child: Container(
+//                    decoration: BoxDecoration(
+//                      shape: BoxShape.circle,
+//                      color: Colors.white,
+//                    ),
+//                    child: Padding(
+//                      padding: EdgeInsets.all(screenAwareSize(5.0, context)),
+//                      child: Icon(
+//                        icon,
+//                        color: iconColor ?? color,
+//                        size: screenAwareSize(15.0, context),
+//                      ),
+//                    ),
+//                  ),
+//                ),
                 Text(
                   text,
                   style: TextStyle(

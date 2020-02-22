@@ -8,12 +8,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class SignInForm extends StatefulWidget {
+class EmailSignInForm extends StatefulWidget {
   @override
-  _SignInFormState createState() => _SignInFormState();
+  _EmailSignInFormState createState() => _EmailSignInFormState();
 }
 
-class _SignInFormState extends State<SignInForm> {
+class _EmailSignInFormState extends State<EmailSignInForm> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController _emailController = TextEditingController();
   TextEditingController _pwController = TextEditingController();

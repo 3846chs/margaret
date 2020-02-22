@@ -18,8 +18,9 @@ import 'package:provider/provider.dart';
 class ProfileInputPage extends StatefulWidget {
   final String email;
   final String password;
+  AuthResult authResult;
 
-  ProfileInputPage({@required this.email, @required this.password});
+  ProfileInputPage({this.authResult, this.email, this.password});
 
   @override
   _ProfileInputPageState createState() => _ProfileInputPageState();
@@ -205,7 +206,6 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(6),
                     ),
-
                   ),
                 ),
                 const SizedBox(height: common_l_gap),
@@ -216,21 +216,25 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
   }
 
   Future<void> _register(BuildContext context) async {
-    try {
-      final result = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: widget.email, password: widget.password);
+    if (widget.authResult == null) {
+      print('이메일 가입'); //  이메일 가입일 경우, createUserWithEmailAndPassword 을 통해 AuthResult 를 만든다.
+      widget.authResult = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+              email: widget.email, password: widget.password);
+    }
 
-      if (result.user == null) {
+    try {
+      if (widget.authResult.user == null) {
         simpleSnackbar(context, 'Please try again later!');
       } else {
         final profiles = await Stream.fromIterable(_profiles)
             .asyncMap((image) => storageProvider.uploadImg(image,
-                "profiles/${DateTime.now().millisecondsSinceEpoch}_${result.user.uid}"))
+                "profiles/${DateTime.now().millisecondsSinceEpoch}_${widget.authResult.user.uid}"))
             .toList();
         final user = User(
-          userKey: result.user.uid,
+          userKey: widget.authResult.user.uid,
           profiles: profiles.map((image) => image.substring(9)).toList(),
-          email: result.user.email,
+          email: widget.authResult.user.email,
           nickname: _nicknameController.text,
           gender: _genderSelected[0] ? '남성' : '여성',
           birthYear: int.parse(_birthYearController.text),

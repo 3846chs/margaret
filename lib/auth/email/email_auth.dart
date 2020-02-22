@@ -1,6 +1,6 @@
 
-import 'package:datingapp/auth/email/sign_in.dart';
-import 'package:datingapp/auth/email/sign_up.dart';
+import 'package:datingapp/auth/email/email_sign_in.dart';
+import 'package:datingapp/auth/email/email_sign_up.dart';
 import 'package:datingapp/constants/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -10,7 +10,7 @@ class EmailAuth extends StatefulWidget {
 }
 
 class _EmailAuthState extends State<EmailAuth> {
-  Widget currentWidget = SignInForm();
+  Widget currentWidget = EmailSignInForm();
 
   @override
   Widget build(BuildContext context) {
@@ -37,10 +37,10 @@ class _EmailAuthState extends State<EmailAuth> {
         shape: Border(top: BorderSide(color: Colors.grey[300])),
         onPressed: () {
           setState(() {
-            if (currentWidget is SignInForm) {
-              currentWidget = SignUpForm();
+            if (currentWidget is EmailSignInForm) {
+              currentWidget = EmailSignUpForm();
             } else {
-              currentWidget = SignInForm();
+              currentWidget = EmailSignInForm();
             }
           });
         },
@@ -50,11 +50,11 @@ class _EmailAuthState extends State<EmailAuth> {
             style: const TextStyle(color: Colors.black),
             children: <TextSpan>[
               TextSpan(
-                text: (currentWidget is SignInForm) ? "계정 만들기" : "로그인 하기",
+                text: (currentWidget is EmailSignInForm) ? "계정 만들기" : "로그인 하기",
               ),
               TextSpan(
                   text:
-                      (currentWidget is SignInForm) ? '  Sign Up' : '  Sign In',
+                      (currentWidget is EmailSignInForm) ? '  Sign Up' : '  Sign In',
                   style: TextStyle(
                       fontWeight: FontWeight.bold, color: pastel_purple)),
             ],
