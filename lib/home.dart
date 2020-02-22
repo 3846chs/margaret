@@ -8,6 +8,7 @@ import 'package:datingapp/pages/match/match_main.dart';
 import 'package:datingapp/pages/receive_page.dart';
 import 'package:datingapp/pages/send_page.dart';
 import 'package:datingapp/profiles/my_profile.dart';
+import 'package:datingapp/profiles/temp_my_profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -170,8 +171,9 @@ class _HomeState extends State<Home> {
           DrawerHeader(
             child: GestureDetector(
               onTap: () {
+                var user = Provider.of<MyUserData>(context, listen: false).userData;
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => MyProfile()));
+                    MaterialPageRoute(builder: (context) => TempMyProfile(user: user,)));
               },
               child: Consumer<MyUserData>(builder: (context, value, child) {
                 return FutureBuilder<String>(
