@@ -31,6 +31,7 @@ class _TodayPeopleCardState extends State<TodayPeopleCard> {
           );
         else {
           print(snapshot.data.data['answer']);
+
           return Center(
             child: GestureDetector(
               child: Container(
@@ -64,8 +65,7 @@ class _TodayPeopleCardState extends State<TodayPeopleCard> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            YourProfile(
-                                                widget.document)));
+                                            YourProfile(widget.document)));
                               },
                             ),
                             MaterialButton(

@@ -71,6 +71,7 @@ class _ProfileBasicInfoState extends State<ProfileBasicInfo> {
                   style: TextStyle(fontSize: 15),
                 ),
                 onTap: () {
+                  // SimpleDialog 사용해야 함
                   return showDialog(
                     context: context,
                     builder: (context) {
