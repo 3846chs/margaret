@@ -7,7 +7,6 @@ import 'package:datingapp/pages/chat_page.dart';
 import 'package:datingapp/pages/match/match_main.dart';
 import 'package:datingapp/pages/receive_page.dart';
 import 'package:datingapp/pages/send_page.dart';
-import 'package:datingapp/profiles/my_profile.dart';
 import 'package:datingapp/profiles/temp_my_profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -103,65 +102,60 @@ class _HomeState extends State<Home> {
           style: GoogleFonts.handlee(fontWeight: FontWeight.bold),
         ),
         flexibleSpace: Container(
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: <Color>[Color(0xFFCCDDFF), Color(0xFFFFEEFF)])),
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: <Color>[
+                Color(0xFFCCDDFF),
+                Color(0xFFFFEEFF),
+              ],
+            ),
+          ),
         ),
       ),
-      body: Container(
-        child: IndexedStack(
-          index: _selectedIndex,
-          children: _widgetOptions,
-        ),
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: _widgetOptions,
       ),
       drawer: _buildDrawer(myUserData),
-      bottomNavigationBar: BottomNavigationBar(
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        selectedItemColor: Colors.black,
-        unselectedItemColor: Colors.grey[400],
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.white,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(FontAwesomeIcons.streetView),
-            title: Text(''),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(FontAwesomeIcons.paperPlane),
-            title: Text(''),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(FontAwesomeIcons.solidHeart),
-            title: Text(''),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(FontAwesomeIcons.commentDots),
-            title: Text(''),
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        onTap: (index) => _onItemTapped(index),
-      ),
+      bottomNavigationBar: _buildBottomNavigationBar(),
     );
   }
 
-  BottomNavigationBarItem buildBottomNavigationBarItem(
-      {String activeIconPath, String iconPath}) {
-    return BottomNavigationBarItem(
-      activeIcon:
-          activeIconPath == null ? null : ImageIcon(AssetImage(activeIconPath)),
-      icon: ImageIcon(AssetImage(iconPath)),
-      title: Text(''),
+  BottomNavigationBar _buildBottomNavigationBar() {
+    return BottomNavigationBar(
+      currentIndex: _selectedIndex,
+      onTap: (index) {
+        setState(() {
+          _selectedIndex = index;
+        });
+      },
+      showSelectedLabels: false,
+      showUnselectedLabels: false,
+      selectedItemColor: Colors.black,
+      unselectedItemColor: Colors.grey[400],
+      type: BottomNavigationBarType.fixed,
+      backgroundColor: Colors.white,
+      items: const <BottomNavigationBarItem>[
+        BottomNavigationBarItem(
+          icon: Icon(FontAwesomeIcons.streetView),
+          title: Text(''),
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(FontAwesomeIcons.paperPlane),
+          title: Text(''),
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(FontAwesomeIcons.solidHeart),
+          title: Text(''),
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(FontAwesomeIcons.commentDots),
+          title: Text(''),
+        ),
+      ],
     );
-  }
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
   }
 
   Drawer _buildDrawer(MyUserData myUserData) {
@@ -169,39 +163,41 @@ class _HomeState extends State<Home> {
       child: ListView(
         children: <Widget>[
           DrawerHeader(
-            child: GestureDetector(
+            child: InkWell(
               onTap: () {
-
-                var user = Provider.of<MyUserData>(context, listen: false).userData;
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => TempMyProfile(user: user,)));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            TempMyProfile(user: myUserData.userData)));
               },
-              child: Consumer<MyUserData>(builder: (context, value, child) {
-                return FutureBuilder<String>(
-                  future: storageProvider
-                      .getImageUri("profiles/" + value.userData.profiles[0]),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done) {
-                      return CircleAvatar(
-                        child: ClipOval(
-                          child: CachedNetworkImage(
-                            imageUrl: snapshot.data,
-                            placeholder: (context, url) =>
-                                const CircularProgressIndicator(),
-                            errorWidget: (context, url, error) =>
-                                const Icon(Icons.account_circle),
-                          ),
-                        ),
+              child: CircleAvatar(
+                child: ClipOval(
+                  child: Consumer<MyUserData>(
+                    builder: (context, value, child) {
+                      return FutureBuilder<String>(
+                        future: storageProvider.getImageUri(
+                            "profiles/${value.userData.profiles[0]}"),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.done) {
+                            return CachedNetworkImage(
+                              imageUrl: snapshot.data,
+                              placeholder: (context, url) =>
+                                  const CircularProgressIndicator(),
+                              errorWidget: (context, url, error) =>
+                                  const Icon(Icons.account_circle),
+                            );
+                          }
+                          return const CircularProgressIndicator();
+                        },
                       );
-                    }
-                    return CircleAvatar(
-                        child:
-                            ClipOval(child: const CircularProgressIndicator()));
-                  },
-                );
-              }),
+                    },
+                  ),
+                ),
+              ),
             ),
-            decoration: BoxDecoration(color: Color(0xFFDCD3FF)),
+            decoration: const BoxDecoration(color: Color(0xFFDCD3FF)),
           ),
           ListTile(
             title: Text('공지사항'),
