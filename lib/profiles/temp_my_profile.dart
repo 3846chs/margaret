@@ -34,8 +34,12 @@ class _TempMyProfileState extends State<TempMyProfile> {
             ),
             Spacer(),
             InkWell(
-              onTap: (){
-                Firestore.instance.collection("Users").document(widget.user.userKey).updateData({'job': widget.job});
+              onTap: () {
+                Firestore.instance
+                    .collection("Users")
+                    .document(widget.user.userKey)
+                    .updateData({'job': widget.job});
+
                 Navigator.pop(context);
               },
               child: Text(
@@ -173,34 +177,35 @@ class __buildCareerState extends State<_buildCareer> {
                     style: TextStyle(fontSize: 15),
                   ),
                   onTap: () {
-                    return showDialog(context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        content: TextFormField(
-                          controller: _textEditingController,
-                        ),
-                        actions: <Widget>[
-                          MaterialButton(
-                              child: Text('수정'),
-                              onPressed: () {
-                                Navigator.pop(context);
-                                setState(() {
-                                  widget.widget.job = _textEditingController.text;
-                                  _textEditingController.text = '';
-                                });
-                              }),
-                          MaterialButton(
-                              child: Text('취소'),
-                              onPressed: () {
-                                Navigator.pop(context);
-                                setState(() {
-                                  _textEditingController.text = '';
-                                });
-                              }),
-                        ],
-
-                      );
-                    });
+                    return showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            content: TextFormField(
+                              controller: _textEditingController,
+                            ),
+                            actions: <Widget>[
+                              MaterialButton(
+                                  child: Text('수정'),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                    setState(() {
+                                      widget.widget.job =
+                                          _textEditingController.text;
+                                      _textEditingController.text = '';
+                                    });
+                                  }),
+                              MaterialButton(
+                                  child: Text('취소'),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                    setState(() {
+                                      _textEditingController.text = '';
+                                    });
+                                  }),
+                            ],
+                          );
+                        });
                   }),
               // 클릭하면 팝업창 띄워서 수정하는 디자인으로 갈 예정
             ),
