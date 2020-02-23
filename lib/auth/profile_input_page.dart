@@ -217,7 +217,8 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
 
   Future<void> _register(BuildContext context) async {
     if (widget.authResult == null) {
-      print('이메일 가입'); //  이메일 가입일 경우, createUserWithEmailAndPassword 을 통해 AuthResult 를 만든다.
+      //  이메일 가입일 경우, createUserWithEmailAndPassword 을 통해 AuthResult 를 만든다.
+      print('이메일 가입');
       widget.authResult = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
               email: widget.email, password: widget.password);
@@ -242,7 +243,7 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
           job: _jobController.text,
           height: int.parse(_heightController.text),
           recentMatchTime: Timestamp.now(),
-          recentMatchState: 0,
+          recentMatchState: MatchState.QUESTION,
           chats: [],
         );
 

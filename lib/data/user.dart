@@ -12,7 +12,7 @@ class User {
   String region;
   String job;
   int height;
-  int recentMatchState;
+  MatchState recentMatchState;
   Timestamp recentMatchTime;
   List<String> chats;
   String pushToken;
@@ -51,7 +51,7 @@ class User {
     map[UserKeys.KEY_CHATS].forEach((v) {
       chats.add(v.toString());
     });
-    recentMatchState = map[UserKeys.KEY_RECENTMATCHSTATE];
+    recentMatchState = MatchState.fromInt(map[UserKeys.KEY_RECENTMATCHSTATE]);
     recentMatchTime = map[UserKeys.KEY_RECENTMATCHTIME];
   }
 
@@ -68,9 +68,35 @@ class User {
         UserKeys.KEY_REGION: region,
         UserKeys.KEY_JOB: job,
         UserKeys.KEY_HEIGHT: height,
-        UserKeys.KEY_RECENTMATCHSTATE: recentMatchState,
+        UserKeys.KEY_RECENTMATCHSTATE: recentMatchState.value,
         UserKeys.KEY_RECENTMATCHTIME: recentMatchTime,
         UserKeys.KEY_CHATS: chats,
         UserKeys.KEY_PUSHTOKEN: pushToken,
       };
+}
+
+class MatchState {
+  final int value;
+
+  const MatchState._fromInt(this.value);
+
+  static MatchState fromInt(int value) {
+    switch (value) {
+      case 0:
+        return QUESTION;
+      case -1:
+        return FINISHED;
+      case 1:
+        return ANSWER_ONE;
+      case 2:
+        return ANSWER_TWO;
+      default:
+        return null;
+    }
+  }
+
+  static const QUESTION = MatchState._fromInt(0);
+  static const FINISHED = MatchState._fromInt(-1);
+  static const ANSWER_ONE = MatchState._fromInt(1);
+  static const ANSWER_TWO = MatchState._fromInt(2);
 }
