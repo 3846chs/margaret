@@ -12,7 +12,7 @@ import 'package:provider/provider.dart';
 
 class TempMyProfile extends StatefulWidget {
   User user;
-
+  String job;
   TempMyProfile({@required this.user});
 
   @override
@@ -22,6 +22,8 @@ class TempMyProfile extends StatefulWidget {
 class _TempMyProfileState extends State<TempMyProfile> {
   @override
   Widget build(BuildContext context) {
+
+    widget.job = widget.user.job;
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -31,9 +33,20 @@ class _TempMyProfileState extends State<TempMyProfile> {
               style: GoogleFonts.notoSans(fontSize: 17),
             ),
             Spacer(),
-            Text(
-              '완료',
-              style: GoogleFonts.notoSans(fontSize: 17),
+            InkWell(
+              onTap: (){
+                Firestore.instance
+                    .collection(COLLECTION_USERS)
+                    .document(widget.user.userKey)
+                    .updateData({'job': widget.job}); // 완료
+
+                Navigator.pop(context);
+              },
+              child: Text(
+                '완료',
+                style: GoogleFonts.notoSans(fontSize: 17),
+              ),
+
             ),
           ],
         ),
@@ -107,50 +120,101 @@ class _TempMyProfileState extends State<TempMyProfile> {
                   SizedBox(
                     height: 5,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(common_gap),
-                    child: Row(
-                      children: <Widget>[
-                        SizedBox(
-                          width: 40,
-                        ),
-                        Icon(
-                          FontAwesomeIcons.suitcase,
-                          color: Color.fromRGBO(222, 222, 255, 1),
-                          size: 15,
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Center(
-                          child: Text(
-                            '직업',
-                            style: TextStyle(fontSize: 15),
-                          ),
-                        ),
-                        Spacer(),
-                        Expanded(
-                          child: Center(
-                            child: GestureDetector(
-                                child: Text(
-                                  widget.user.job,
-                                  style: TextStyle(fontSize: 15),
-                                ),
-                                onTap: () {}),
-                            // 클릭하면 팝업창 띄워서 수정하는 디자인으로 갈 예정
-                          ),
-                        ),
-                        SizedBox(
-                          width: 40,
-                        ),
-                      ],
-                    ),
-                  ),
+                  _buildCareer(widget: widget),
                 ],
               );
             }),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _buildCareer extends StatefulWidget {
+  const _buildCareer({
+    Key key,
+    @required this.widget,
+  }) : super(key: key);
+
+  final TempMyProfile widget;
+
+  @override
+  __buildCareerState createState() => __buildCareerState();
+}
+
+class __buildCareerState extends State<_buildCareer> {
+  final _textEditingController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(common_gap),
+      child: Row(
+        children: <Widget>[
+          SizedBox(
+            width: 40,
+          ),
+          Icon(
+            FontAwesomeIcons.suitcase,
+            color: Color.fromRGBO(222, 222, 255, 1),
+            size: 15,
+          ),
+          SizedBox(
+            width: 10,
+          ),
+          Center(
+            child: Text(
+              '직업',
+              style: TextStyle(fontSize: 15),
+            ),
+          ),
+          Spacer(),
+          Expanded(
+            child: Center(
+              child: GestureDetector(
+                  child: Text(
+                    widget.widget.job,
+                    style: TextStyle(fontSize: 15),
+                  ),
+                  onTap: () {
+                    return showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            content: TextFormField(
+                              controller: _textEditingController,
+                            ),
+                            actions: <Widget>[
+                              MaterialButton(
+                                child: Text('수정'),
+                                onPressed: () {
+                                  Navigator.pop(context);
+
+                                  setState(() {
+                                    widget.widget.job = _textEditingController.text;
+                                    _textEditingController.text = '';
+
+                                  });
+                                },
+                              ),
+                              MaterialButton(
+                                child: Text('취소'),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
+                            ],
+                          );
+                        });
+                  }),
+              // 클릭하면 팝업창 띄워서 수정하는 디자인으로 갈 예정
+            ),
+          ),
+          SizedBox(
+            width: 40,
+          ),
+        ],
       ),
     );
   }

@@ -171,6 +171,7 @@ class _HomeState extends State<Home> {
           DrawerHeader(
             child: GestureDetector(
               onTap: () {
+
                 var user = Provider.of<MyUserData>(context, listen: false).userData;
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => TempMyProfile(user: user,)));
