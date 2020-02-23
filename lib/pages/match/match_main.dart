@@ -37,7 +37,7 @@ class MatchMain extends StatelessWidget {
         }
 
         firestoreProvider.updateUser(userData.userKey, {
-          UserKeys.KEY_RECENTMATCHSTATE: 0,
+          UserKeys.KEY_RECENTMATCHSTATE: MatchState.QUESTION.value,
           UserKeys.KEY_RECENTMATCHTIME: now,
         });
 

@@ -79,7 +79,6 @@ class AuthMain extends StatelessWidget {
                         MaterialPageRoute(builder: (context) => EmailAuth()));
                   },
                 ),
-
               ],
             ),
           ),
@@ -88,7 +87,7 @@ class AuthMain extends StatelessWidget {
     );
   }
 
-  Future<FirebaseUser> _handleGoogleSignIn(BuildContext context) async {
+  Future<void> _handleGoogleSignIn(BuildContext context) async {
     try {
       GoogleSignInAccount googleUser = await _googleSignIn.signIn();
       GoogleSignInAuthentication googleAuth = await googleUser.authentication;

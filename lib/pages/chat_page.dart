@@ -10,53 +10,60 @@ import 'package:provider/provider.dart';
 class ChatPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final myUserData = Provider.of<MyUserData>(context);
-    final chats = myUserData.userData.chats
-        .map((userKey) => firestoreProvider.connectUser(userKey))
-        .toList();
-
     return Scaffold(
       backgroundColor: Colors.transparent,
-      body: ListView.separated(
-        itemCount: chats.length,
-        itemBuilder: (context, index) {
-          return StreamBuilder<User>(
-            stream: chats[index],
-            builder: (context, snapshot) {
-              if (!snapshot.hasData) return const CircularProgressIndicator();
+      body: Consumer<MyUserData>(
+        builder: (context, value, child) {
+          final chats = value.userData.chats
+              .map((userKey) => firestoreProvider.connectUser(userKey))
+              .toList();
 
-              final peer = snapshot.data;
-              final myKey = myUserData.userData.userKey;
-              final chatKey = myKey.hashCode <= peer.userKey.hashCode
-                  ? '$myKey-${peer.userKey}'
-                  : '${peer.userKey}-$myKey';
+          return ListView.separated(
+            itemCount: chats.length,
+            itemBuilder: (context, index) {
+              return StreamBuilder<User>(
+                stream: chats[index],
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData)
+                    return const CircularProgressIndicator();
 
-              return InkWell(
-                child: StreamBuilder<Message>(
-                    stream: firestoreProvider.connectMessage(chatKey),
-                    builder: (context, snapshot) {
-                      return ChatCard(
-                        peer: peer,
-                        lastMessage: snapshot.hasData
-                            ? (snapshot.data.type == MessageType.text
-                                ? snapshot.data.content
-                                : '사진을 보냈습니다.')
-                            : '',
-                      );
-                    }),
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ChatDetailPage(
-                              chatKey: chatKey, myKey: myKey, peer: peer)));
+                  final peer = snapshot.data;
+                  final myKey = value.userData.userKey;
+                  final chatKey = myKey.hashCode <= peer.userKey.hashCode
+                      ? '$myKey-${peer.userKey}'
+                      : '${peer.userKey}-$myKey';
+
+                  return InkWell(
+                    child: StreamBuilder<Message>(
+                        stream: firestoreProvider.connectMessage(chatKey),
+                        builder: (context, snapshot) {
+                          return ChatCard(
+                            peer: peer,
+                            lastMessage: snapshot.hasData
+                                ? (snapshot.data.type == MessageType.text
+                                    ? snapshot.data.content
+                                    : '사진을 보냈습니다.')
+                                : '',
+                          );
+                        }),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ChatDetailPage(
+                                    chatKey: chatKey,
+                                    myKey: myKey,
+                                    peer: peer,
+                                  )));
+                    },
+                  );
                 },
               );
             },
+            separatorBuilder: (context, index) {
+              return const Divider(height: 1);
+            },
           );
-        },
-        separatorBuilder: (context, index) {
-          return const Divider(height: 1);
         },
       ),
     );

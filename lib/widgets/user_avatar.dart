@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:datingapp/constants/size.dart';
 import 'package:datingapp/data/user.dart';
 import 'package:datingapp/firebase/storage_provider.dart';
@@ -17,7 +18,7 @@ class UserAvatar extends StatelessWidget {
           if (!snapshot.hasData) return const CircularProgressIndicator();
           return CircleAvatar(
             radius: thumbnail_avatar_radius,
-            backgroundImage: NetworkImage(snapshot.data),
+            backgroundImage: CachedNetworkImageProvider(snapshot.data),
           );
         },
       );

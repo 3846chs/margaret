@@ -35,7 +35,7 @@ class _TodayQuestionState extends State<TodayQuestion> {
           else if (!snapshot.hasData)
             return LoadingPage(); // 질문 리스트가 준비돼있지 않을 경우
           else {
-            List<String> choice_list = [
+            List<String> choiceList = [
               snapshot.data.data['choice1'].toString(),
               snapshot.data.data['choice2'].toString()
             ];
@@ -60,7 +60,7 @@ class _TodayQuestionState extends State<TodayQuestion> {
                           child: DropdownButtonFormField<String>(
                             decoration: InputDecoration(hintText: '답변을 선택하세요'),
                             value: _selected,
-                            items: choice_list
+                            items: choiceList
                                 .map((label) => DropdownMenuItem(
                                       child: Text(label),
                                       value: label,
@@ -69,7 +69,7 @@ class _TodayQuestionState extends State<TodayQuestion> {
                             onChanged: (value) {
                               setState(() {
                                 _selected = value;
-                                _selectedIndex = choice_list.indexOf(value);
+                                _selectedIndex = choiceList.indexOf(value);
                                 print(_selectedIndex);
                               });
                             },
@@ -102,7 +102,6 @@ class _TodayQuestionState extends State<TodayQuestion> {
 
                                 var now = DateTime.now();
                                 var formatter = DateFormat('yyyy-MM-dd');
-
 
                                 // 23시 59분 59초에 유저가 답변을 제출하면, 시간 지연으로 인해 다음 날 답변으로 기록되는 현상 발생 -> 아래와 같이 해결
                                 if (now.day ==

@@ -1,11 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:datingapp/constants/size.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ProfileBasicInfo extends StatefulWidget {
   final String title;
-  String content;
+  final String content;
 
   ProfileBasicInfo(this.title, this.content);
 
@@ -15,8 +14,15 @@ class ProfileBasicInfo extends StatefulWidget {
 
 class _ProfileBasicInfoState extends State<ProfileBasicInfo> {
   final _textEditingController = TextEditingController();
+  String content;
 
-  var icon;
+  IconData icon;
+
+  @override
+  void initState() {
+    super.initState();
+    content = widget.content;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +73,7 @@ class _ProfileBasicInfoState extends State<ProfileBasicInfo> {
             child: Center(
               child: GestureDetector(
                 child: Text(
-                  widget.content,
+                  content,
                   style: TextStyle(fontSize: 15),
                 ),
                 onTap: () {
@@ -86,7 +92,7 @@ class _ProfileBasicInfoState extends State<ProfileBasicInfo> {
                             onPressed: () {
                               Navigator.pop(context);
                               setState(() {
-                                widget.content = _textEditingController.text;
+                                content = _textEditingController.text;
                                 _textEditingController.text = '';
                               });
                             },

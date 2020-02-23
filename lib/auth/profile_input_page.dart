@@ -18,7 +18,7 @@ import 'package:provider/provider.dart';
 class ProfileInputPage extends StatefulWidget {
   final String email;
   final String password;
-  AuthResult authResult;
+  final AuthResult authResult;
 
   ProfileInputPage({this.authResult, this.email, this.password});
 
@@ -216,26 +216,29 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
   }
 
   Future<void> _register(BuildContext context) async {
+    AuthResult authResult;
+
     if (widget.authResult == null) {
       //  이메일 가입일 경우, createUserWithEmailAndPassword 을 통해 AuthResult 를 만든다.
       print('이메일 가입');
-      widget.authResult = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(
-              email: widget.email, password: widget.password);
+      authResult = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: widget.email, password: widget.password);
+    } else {
+      authResult = widget.authResult;
     }
 
     try {
-      if (widget.authResult.user == null) {
+      if (authResult.user == null) {
         simpleSnackbar(context, 'Please try again later!');
       } else {
         final profiles = await Stream.fromIterable(_profiles)
             .asyncMap((image) => storageProvider.uploadImg(image,
-                "profiles/${DateTime.now().millisecondsSinceEpoch}_${widget.authResult.user.uid}"))
+                "profiles/${DateTime.now().millisecondsSinceEpoch}_${authResult.user.uid}"))
             .toList();
         final user = User(
-          userKey: widget.authResult.user.uid,
+          userKey: authResult.user.uid,
           profiles: profiles.map((image) => image.substring(9)).toList(),
-          email: widget.authResult.user.email,
+          email: authResult.user.email,
           nickname: _nicknameController.text,
           gender: _genderSelected[0] ? '남성' : '여성',
           birthYear: int.parse(_birthYearController.text),
