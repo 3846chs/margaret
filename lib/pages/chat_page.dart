@@ -7,12 +7,7 @@ import 'package:datingapp/widgets/chat_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class ChatPage extends StatefulWidget {
-  @override
-  _ChatPageState createState() => _ChatPageState();
-}
-
-class _ChatPageState extends State<ChatPage> {
+class ChatPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final myUserData = Provider.of<MyUserData>(context);
