@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:datingapp/constants/firebase_keys.dart';
 import 'package:datingapp/data/user.dart';
 import 'package:datingapp/firebase/firestore_provider.dart';
 import 'package:flutter/foundation.dart';
@@ -16,7 +17,9 @@ class MyUserData extends ChangeNotifier {
   MyUserDataStatus get status => _myUserDataStatus;
 
   void setPushToken(String token) {
-    firestoreProvider.updatePushToken(_userData.userKey, token);
+    firestoreProvider.updateUser(_userData.userKey, {
+      UserKeys.KEY_PUSHTOKEN: token,
+    });
   }
 
   void setNewStatus(MyUserDataStatus status) {
@@ -26,8 +29,7 @@ class MyUserData extends ChangeNotifier {
 
   void setUserData(String uid) {
     _userStreamsubscription?.cancel();
-    _userStreamsubscription =
-        firestoreProvider.connectMyUserData(uid).listen((user) {
+    _userStreamsubscription = firestoreProvider.connectUser(uid).listen((user) {
       print('listen called');
       _userData = user;
       _myUserDataStatus = MyUserDataStatus.exist;

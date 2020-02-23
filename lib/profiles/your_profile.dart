@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:datingapp/constants/firebase_keys.dart';
 import 'package:datingapp/constants/size.dart';
 import 'package:datingapp/data/provider/my_user_data.dart';
+import 'package:datingapp/firebase/firestore_provider.dart';
 import 'package:datingapp/profiles/profile_basic_info.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -58,19 +58,14 @@ class YourProfile extends StatelessWidget {
                       onPressed: () {
                         // 먼저 지금 상대방이 나한테 Receive 를 보냈는지 확인해야 함 => 나중에
 
-                        Firestore.instance
-                            .collection(COLLECTION_USERS)
-                            .document(value.userData.userKey)
-                            .updateData({
+                        firestoreProvider.updateUser(value.userData.userKey, {
                           "Sends": FieldValue.arrayUnion(
-                              [yourDocumentSnapshot.documentID])
+                              [yourDocumentSnapshot.documentID]),
                         });
-                        Firestore.instance
-                            .collection(COLLECTION_USERS)
-                            .document(yourDocumentSnapshot.documentID)
-                            .updateData({
+                        firestoreProvider
+                            .updateUser(yourDocumentSnapshot.documentID, {
                           "Receives":
-                              FieldValue.arrayUnion([value.userData.userKey])
+                              FieldValue.arrayUnion([value.userData.userKey]),
                         });
                         Navigator.pop(context);
                       },

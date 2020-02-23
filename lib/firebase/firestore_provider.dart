@@ -7,13 +7,6 @@ import 'package:datingapp/firebase/transformer.dart';
 class FirestoreProvider with Transformer {
   final Firestore _firestore = Firestore.instance;
 
-  Future<void> updatePushToken(String userKey, String token) {
-    return _firestore
-        .collection(COLLECTION_USERS)
-        .document(userKey)
-        .updateData({UserKeys.KEY_PUSHTOKEN: token});
-  }
-
   Future<void> attemptCreateUser(User user) {
     final userRef =
         _firestore.collection(COLLECTION_USERS).document(user.userKey);
@@ -30,7 +23,14 @@ class FirestoreProvider with Transformer {
     });
   }
 
-  Stream<User> connectMyUserData(String userKey) {
+  Future<void> updateUser(String userKey, Map<String, dynamic> data) {
+    return _firestore
+        .collection(COLLECTION_USERS)
+        .document(userKey)
+        .updateData(data);
+  }
+
+  Stream<User> connectUser(String userKey) {
     print('connect called');
     return _firestore
         .collection(COLLECTION_USERS)
@@ -46,15 +46,6 @@ class FirestoreProvider with Transformer {
         .transform(toUsers);
   }
 
-  Future<void> setMessageRead(String chatKey, String messageKey) {
-    return Firestore.instance
-        .collection(COLLECTION_CHATS)
-        .document(chatKey)
-        .collection(chatKey)
-        .document(messageKey)
-        .updateData({MessageKeys.KEY_ISREAD: true});
-  }
-
   Future<void> createMessage(String chatKey, Message message) {
     final messageRef = _firestore
         .collection(COLLECTION_CHATS)
@@ -67,7 +58,28 @@ class FirestoreProvider with Transformer {
     });
   }
 
-  Stream<Message> connectMessage(String chatKey, String timestamp) {
+  Future<void> updateMessage(
+      String chatKey, String messageKey, Map<String, dynamic> data) {
+    return _firestore
+        .collection(COLLECTION_CHATS)
+        .document(chatKey)
+        .collection(chatKey)
+        .document(messageKey)
+        .updateData(data);
+  }
+
+  Stream<Message> connectMessage(String chatKey, [String timestamp]) {
+    if (timestamp == null) {
+      return _firestore
+          .collection(COLLECTION_CHATS)
+          .document(chatKey)
+          .collection(chatKey)
+          .orderBy(MessageKeys.KEY_TIMESTAMP, descending: true)
+          .limit(1)
+          .snapshots()
+          .transform(toLastMessage);
+    }
+
     return _firestore
         .collection(COLLECTION_CHATS)
         .document(chatKey)
@@ -75,17 +87,6 @@ class FirestoreProvider with Transformer {
         .document(timestamp)
         .snapshots()
         .transform(toMessage);
-  }
-
-  Stream<Message> connectLastMessage(String chatKey) {
-    return _firestore
-        .collection(COLLECTION_CHATS)
-        .document(chatKey)
-        .collection(chatKey)
-        .orderBy(MessageKeys.KEY_TIMESTAMP, descending: true)
-        .limit(1)
-        .snapshots()
-        .transform(toLastMessage);
   }
 
   Stream<List<Message>> fetchAllMessages(String chatKey) {

@@ -1,3 +1,4 @@
+import 'package:datingapp/constants/firebase_keys.dart';
 import 'package:datingapp/constants/size.dart';
 import 'package:datingapp/data/message.dart';
 import 'package:datingapp/data/user.dart';
@@ -113,7 +114,11 @@ class ChatDetailPage extends StatelessWidget {
             children.add(ChatBubble(
               message: messages[i],
               isSent: myKey == messages[i].idFrom,
-              onRead: (key) => firestoreProvider.setMessageRead(chatKey, key),
+              onRead: (key) {
+                firestoreProvider.updateMessage(chatKey, key, {
+                  MessageKeys.KEY_ISREAD: true,
+                });
+              },
             ));
 
             if (i == messages.length - 1) {

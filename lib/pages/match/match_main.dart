@@ -1,7 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:datingapp/constants/firebase_keys.dart';
 import 'package:datingapp/data/provider/my_user_data.dart';
 import 'package:datingapp/data/user.dart';
+import 'package:datingapp/firebase/firestore_provider.dart';
 import 'package:datingapp/widgets/loading_page.dart';
 import 'package:datingapp/pages/match/today_finished.dart';
 
@@ -36,11 +36,10 @@ class MatchMain extends StatelessWidget {
           }
         }
 
-        Firestore.instance
-            .collection(COLLECTION_USERS)
-            .document(userData.userKey)
-              ..updateData({UserKeys.KEY_RECENTMATCHSTATE: 0})
-              ..updateData({UserKeys.KEY_RECENTMATCHTIME: now});
+        firestoreProvider.updateUser(userData.userKey, {
+          UserKeys.KEY_RECENTMATCHSTATE: 0,
+          UserKeys.KEY_RECENTMATCHTIME: now,
+        });
 
         return LoadingPage();
       },

@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:datingapp/constants/firebase_keys.dart';
 import 'package:datingapp/constants/size.dart';
 import 'package:datingapp/data/provider/my_user_data.dart';
 import 'package:datingapp/data/user.dart';
+import 'package:datingapp/firebase/firestore_provider.dart';
 import 'package:datingapp/firebase/storage_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -11,8 +11,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class TempMyProfile extends StatefulWidget {
-  User user;
-  String job;
+  final User user;
 
   TempMyProfile({@required this.user});
 
@@ -21,9 +20,18 @@ class TempMyProfile extends StatefulWidget {
 }
 
 class _TempMyProfileState extends State<TempMyProfile> {
+  final _textEditingController = TextEditingController();
+
+  String job;
+
+  @override
+  void initState() {
+    super.initState();
+    job = widget.user.job;
+  }
+
   @override
   Widget build(BuildContext context) {
-    widget.job = widget.user.job;
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -35,10 +43,9 @@ class _TempMyProfileState extends State<TempMyProfile> {
             Spacer(),
             InkWell(
               onTap: () {
-                Firestore.instance
-                    .collection("Users")
-                    .document(widget.user.userKey)
-                    .updateData({'job': widget.job});
+                firestoreProvider.updateUser(widget.user.userKey, {
+                  UserKeys.KEY_JOB: job,
+                });
 
                 Navigator.pop(context);
               },
@@ -119,7 +126,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
                   SizedBox(
                     height: 5,
                   ),
-                  _buildCareer(widget: widget),
+                  _buildCareer(),
                 ],
               );
             }),
@@ -128,25 +135,8 @@ class _TempMyProfileState extends State<TempMyProfile> {
       ),
     );
   }
-}
 
-class _buildCareer extends StatefulWidget {
-  const _buildCareer({
-    Key key,
-    @required this.widget,
-  }) : super(key: key);
-
-  final TempMyProfile widget;
-
-  @override
-  __buildCareerState createState() => __buildCareerState();
-}
-
-class __buildCareerState extends State<_buildCareer> {
-  final _textEditingController = TextEditingController();
-
-  @override
-  Widget build(BuildContext context) {
+  Widget _buildCareer() {
     return Padding(
       padding: const EdgeInsets.all(common_gap),
       child: Row(
@@ -171,50 +161,51 @@ class __buildCareerState extends State<_buildCareer> {
           Spacer(),
           Expanded(
             child: Center(
-              child: GestureDetector(
+              child: InkWell(
                   child: Text(
-                    widget.widget.job,
+                    job,
                     style: TextStyle(fontSize: 15),
                   ),
                   onTap: () {
                     return showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
-                            content: TextFormField(
-                              controller: _textEditingController,
-                            ),
-                            actions: <Widget>[
-                              MaterialButton(
-                                  child: Text('수정'),
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                    setState(() {
-                                      widget.widget.job =
-                                          _textEditingController.text;
-                                      _textEditingController.text = '';
-                                    });
-                                  }),
-                              MaterialButton(
-                                  child: Text('취소'),
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                    setState(() {
-                                      _textEditingController.text = '';
-                                    });
-                                  }),
-                            ],
-                          );
-                        });
+                      context: context,
+                      builder: (context) => _buildJobDialog(context),
+                    );
                   }),
               // 클릭하면 팝업창 띄워서 수정하는 디자인으로 갈 예정
             ),
           ),
-          SizedBox(
-            width: 40,
-          ),
+          const SizedBox(width: 40),
         ],
       ),
+    );
+  }
+
+  AlertDialog _buildJobDialog(BuildContext context) {
+    return AlertDialog(
+      content: TextFormField(
+        controller: _textEditingController,
+      ),
+      actions: <Widget>[
+        MaterialButton(
+          child: Text('수정'),
+          onPressed: () {
+            Navigator.pop(context);
+            setState(() {
+              job = _textEditingController.text;
+              _textEditingController.clear();
+            });
+          },
+        ),
+        MaterialButton(
+            child: Text('취소'),
+            onPressed: () {
+              Navigator.pop(context);
+              setState(() {
+                _textEditingController.clear();
+              });
+            }),
+      ],
     );
   }
 }

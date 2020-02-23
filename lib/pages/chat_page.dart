@@ -12,7 +12,7 @@ class ChatPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final myUserData = Provider.of<MyUserData>(context);
     final chats = myUserData.userData.chats
-        .map((userKey) => firestoreProvider.connectMyUserData(userKey))
+        .map((userKey) => firestoreProvider.connectUser(userKey))
         .toList();
 
     return Scaffold(
@@ -33,7 +33,7 @@ class ChatPage extends StatelessWidget {
 
               return InkWell(
                 child: StreamBuilder<Message>(
-                    stream: firestoreProvider.connectLastMessage(chatKey),
+                    stream: firestoreProvider.connectMessage(chatKey),
                     builder: (context, snapshot) {
                       return ChatCard(
                         peer: peer,
