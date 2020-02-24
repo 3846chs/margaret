@@ -1,3 +1,4 @@
+import 'package:datingapp/auth/email/email_pw_reset.dart';
 import 'package:datingapp/constants/colors.dart';
 import 'package:datingapp/constants/size.dart';
 import 'package:datingapp/data/provider/my_user_data.dart';
@@ -90,50 +91,20 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(6)),
                 ),
-                SizedBox(
-                  height: common_s_gap,
-                ),
                 InkWell(
                   onTap: () {
-                    return showDialog(
-                        context: context,
-                        builder: (context) => AlertDialog(
-                              title: Text(
-                                '비밀번호 재설정 이메일을 보내드립니다',
-                                style: TextStyle(fontSize: 14),
-                              ),
-                              content: TextFormField(
-                                controller: _emailPwResetController,
-                              ),
-                              actions: <Widget>[
-                                MaterialButton(
-                                  child: Text('보내기'),
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                    setState(() {
-                                      _emailPwResetController.text = '';
-                                    });
-                                  },
-                                ),
-                                MaterialButton(
-                                  child: Text('취소'),
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                    setState(() {
-                                      _emailPwResetController.text = '';
-                                    });
-                                  },
-                                ),
-                              ],
-                              shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20.0))),
-                            ));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => EmailPwReset()));
                   },
-                  child: Center(
-                      child: Text(
-                    "비밀번호 찾기",
-                  )),
+                  child: Container(
+                    height: 30,
+                    child: Center(
+                        child: Text(
+                      "비밀번호 재설정",
+                    )),
+                  ),
                 ),
               ],
             )),
