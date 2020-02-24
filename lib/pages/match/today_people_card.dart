@@ -9,9 +9,9 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class TodayPeopleCard extends StatefulWidget {
-  final DocumentSnapshot document;
+  final User user;
 
-  TodayPeopleCard(this.document);
+  TodayPeopleCard(this.user);
 
   @override
   _TodayPeopleCardState createState() => _TodayPeopleCardState();
@@ -54,7 +54,7 @@ class _TodayPeopleCardState extends State<TodayPeopleCard> {
                             child: Text('선택'),
                             onPressed: () {
                               Navigator.pop(context);
-                              print(widget.document.data['nickname']);
+                              print(widget.user.nickname);
                               // recentMatchState 변경
                               firestoreProvider
                                   .updateUser(value.userData.userKey, {
@@ -65,7 +65,7 @@ class _TodayPeopleCardState extends State<TodayPeopleCard> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          YourProfile(widget.document)));
+                                          YourProfile(widget.user)));
                             },
                           ),
                           MaterialButton(
@@ -92,9 +92,9 @@ class _TodayPeopleCardState extends State<TodayPeopleCard> {
     final formatter = DateFormat('yyyy-MM-dd');
     String formattedDate = formatter.format(now);
     return Firestore.instance
-        .collection('Users')
-        .document(widget.document.documentID)
-        .collection('TodayQuestions')
+        .collection(COLLECTION_USERS)
+        .document(widget.user.userKey)
+        .collection(TODAYQUESTIONS)
         .document(formattedDate)
         .snapshots();
   }

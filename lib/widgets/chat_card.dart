@@ -6,8 +6,10 @@ import 'package:flutter/material.dart';
 class ChatCard extends StatelessWidget {
   final User peer;
   final String lastMessage;
+  final VoidCallback onProfileTap;
 
-  ChatCard({@required this.peer, @required this.lastMessage});
+  ChatCard(
+      {@required this.peer, @required this.lastMessage, this.onProfileTap});
 
   @override
   Widget build(BuildContext context) {
@@ -15,9 +17,12 @@ class ChatCard extends StatelessWidget {
       padding: const EdgeInsets.all(common_gap),
       child: Row(
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(common_gap),
-            child: UserAvatar(user: peer),
+          InkWell(
+            onTap: onProfileTap,
+            child: Padding(
+              padding: const EdgeInsets.all(common_gap),
+              child: UserAvatar(user: peer),
+            ),
           ),
           Expanded(
             child: Padding(

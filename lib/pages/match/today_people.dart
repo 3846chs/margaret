@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:datingapp/constants/firebase_keys.dart';
 import 'package:datingapp/data/user.dart';
+import 'package:datingapp/firebase/transformer.dart';
 import 'package:datingapp/widgets/loading_page.dart';
 import 'package:datingapp/pages/match/today_people_card.dart';
 import 'package:flutter/material.dart';
@@ -7,42 +9,37 @@ import 'package:datingapp/data/provider/my_user_data.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-class TodayPeople extends StatelessWidget {
+class TodayPeople extends StatelessWidget with Transformer {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: StreamBuilder<QuerySnapshot>(
+        child: StreamBuilder<List<User>>(
       stream: Firestore.instance
-          .collection('Users')
-          .orderBy('recentMatchTime', descending: true)
+          .collection(COLLECTION_USERS)
+          .orderBy(UserKeys.KEY_RECENTMATCHTIME, descending: true)
           //.where('gender', isEqualTo: '여성')
-          .snapshots(),
+          .snapshots()
+          .transform(toUsers),
       builder: (context, snapshot) {
-        if (snapshot.data == null)
-          return LoadingPage();
-        else if (!snapshot.hasData)
-          return LoadingPage();
-        else {
-          User myUser =
-              Provider.of<MyUserData>(context, listen: false).userData;
-          return _buildTodayPeople(snapshot.data.documents, myUser);
-        }
+        if (snapshot.data == null || !snapshot.hasData) return LoadingPage();
+        User myUser = Provider.of<MyUserData>(context, listen: false).userData;
+        return _buildTodayPeople(snapshot.data, myUser);
       },
     ));
   }
 
-  Widget _buildTodayPeople(List<DocumentSnapshot> documents, User myUser) {
-    var now = DateTime.now();
-    final recommendedPeople = documents
-        .where((doc) =>
-            (doc['gender'] != myUser.gender &&
-                doc['recentMatchState'] == myUser.recentMatchState &&
-                doc['recentMatchTime'].toDate().year == now.year &&
-                doc['recentMatchTime'].toDate().month == now.month &&
-                doc['recentMatchTime'].toDate().day == now.day) &&
-            myUser.recentMatchTime
-                .toDate()
-                .isAfter(doc['recentMatchTime'].toDate()))
+  Widget _buildTodayPeople(List<User> users, User myUser) {
+    final now = DateTime.now();
+    final recommendedPeople = users
+        .where((user) {
+          final recentMatchTime = user.recentMatchTime.toDate();
+          return (user.gender != myUser.gender &&
+                  user.recentMatchState == myUser.recentMatchState &&
+                  recentMatchTime.year == now.year &&
+                  recentMatchTime.month == now.month &&
+                  recentMatchTime.day == now.day) &&
+              myUser.recentMatchTime.toDate().isAfter(recentMatchTime);
+        })
         .take(3)
         .toList();
 
@@ -73,7 +70,7 @@ class ShowPeople extends StatelessWidget {
     @required this.recommendedPeople,
   }) : super(key: key);
 
-  final List<DocumentSnapshot> recommendedPeople;
+  final List<User> recommendedPeople;
 
   @override
   Widget build(BuildContext context) {
@@ -125,9 +122,9 @@ class ShowPeople extends StatelessWidget {
     var formatter = DateFormat('yyyy-MM-dd');
     String formattedDate = formatter.format(now);
     return Firestore.instance
-        .collection('Users')
-        .document(recommendedPeople[0].documentID) // 같은 선택지를 고른 사람끼리 모았음
-        .collection('TodayQuestions')
+        .collection(COLLECTION_USERS)
+        .document(recommendedPeople[0].userKey) // 같은 선택지를 고른 사람끼리 모았음
+        .collection(TODAYQUESTIONS)
         .document(formattedDate)
         .snapshots();
   }

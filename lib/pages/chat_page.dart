@@ -3,6 +3,7 @@ import 'package:datingapp/data/provider/my_user_data.dart';
 import 'package:datingapp/data/user.dart';
 import 'package:datingapp/firebase/firestore_provider.dart';
 import 'package:datingapp/pages/chat_detail_page.dart';
+import 'package:datingapp/profiles/your_profile.dart';
 import 'package:datingapp/widgets/chat_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -39,6 +40,12 @@ class ChatPage extends StatelessWidget {
                         builder: (context, snapshot) {
                           return ChatCard(
                             peer: peer,
+                            onProfileTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => YourProfile(peer)));
+                            },
                             lastMessage: snapshot.hasData
                                 ? (snapshot.data.type == MessageType.text
                                     ? snapshot.data.content
