@@ -64,7 +64,9 @@ class ChatBubble extends StatelessWidget {
 
   Widget _buildBubble() {
     return Container(
-      padding: const EdgeInsets.all(common_gap),
+      padding: message.type == MessageType.text
+          ? const EdgeInsets.all(common_gap)
+          : null,
       constraints: const BoxConstraints(maxWidth: 200.0),
       decoration: BoxDecoration(
         color: isSent ? Colors.blue : Colors.grey,
@@ -83,11 +85,15 @@ class ChatBubble extends StatelessWidget {
                   return Center(
                     child: const CircularProgressIndicator(),
                   );
-                return CachedNetworkImage(
-                  imageUrl: snapshot.data,
-                  placeholder: (context, url) =>
-                      const CircularProgressIndicator(),
-                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                return ClipRRect(
+                  borderRadius: BorderRadius.circular(12.0),
+                  child: CachedNetworkImage(
+                    imageUrl: snapshot.data,
+                    placeholder: (context, url) =>
+                        const CircularProgressIndicator(),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
+                  ),
                 );
               },
             ),
