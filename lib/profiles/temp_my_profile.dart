@@ -23,11 +23,13 @@ class _TempMyProfileState extends State<TempMyProfile> {
   final _textEditingController = TextEditingController();
 
   String job;
+  int height;
 
   @override
   void initState() {
     super.initState();
     job = widget.user.job;
+    height = widget.user.height;
   }
 
   @override
@@ -45,6 +47,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
               onTap: () {
                 firestoreProvider.updateUser(widget.user.userKey, {
                   UserKeys.KEY_JOB: job,
+                  UserKeys.KEY_HEIGHT: height,
                 });
 
                 Navigator.pop(context);
@@ -127,6 +130,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
                     height: 5,
                   ),
                   _buildCareer(),
+                  _buildHeight(),
                 ],
               );
             }),
@@ -134,6 +138,114 @@ class _TempMyProfileState extends State<TempMyProfile> {
         ),
       ),
     );
+  }
+
+  Widget _buildHeight() {
+    return Padding(
+                  padding: const EdgeInsets.all(common_gap),
+                  child: Row(
+                    children: <Widget>[
+                      SizedBox(
+                        width: 40,
+                      ),
+                      Icon(
+                        FontAwesomeIcons.child,
+                        color: Color.fromRGBO(222, 222, 255, 1),
+                        size: 15,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Center(
+                        child: Text(
+                          '키',
+                          style: TextStyle(fontSize: 15),
+                        ),
+                      ),
+                      Spacer(),
+                      Expanded(
+                        child: Center(
+                          child: InkWell(
+                            child: Text(
+                              '$height',
+                               style: TextStyle(fontSize: 15),
+                            ),
+                            onTap: () {
+                              return showDialog(
+                                context: context,
+                                builder: (context) => Center(
+                                  child: Container(
+                                    height: 600,
+                                      child: _buildHeightDialog(context)),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 40,)
+                    ],
+                  ),
+                );
+  }
+
+  SimpleDialog _buildHeightDialog(BuildContext context) {
+    return SimpleDialog(
+      children: <Widget>[
+        _simpleDialogOption_height(context, 150),
+        _simpleDialogOption_height(context, 151),
+        _simpleDialogOption_height(context, 152),
+        _simpleDialogOption_height(context, 153),
+        _simpleDialogOption_height(context, 154),
+        _simpleDialogOption_height(context, 155),
+        _simpleDialogOption_height(context, 156),
+        _simpleDialogOption_height(context, 157),
+        _simpleDialogOption_height(context, 158),
+        _simpleDialogOption_height(context, 159),
+        _simpleDialogOption_height(context, 160),
+        _simpleDialogOption_height(context, 161),
+        _simpleDialogOption_height(context, 162),
+        _simpleDialogOption_height(context, 163),
+        _simpleDialogOption_height(context, 164),
+        _simpleDialogOption_height(context, 165),
+        _simpleDialogOption_height(context, 166),
+        _simpleDialogOption_height(context, 167),
+        _simpleDialogOption_height(context, 168),
+        _simpleDialogOption_height(context, 169),
+        _simpleDialogOption_height(context, 170),
+        _simpleDialogOption_height(context, 171),
+        _simpleDialogOption_height(context, 172),
+        _simpleDialogOption_height(context, 173),
+        _simpleDialogOption_height(context, 174),
+        _simpleDialogOption_height(context, 175),
+        _simpleDialogOption_height(context, 176),
+        _simpleDialogOption_height(context, 177),
+        _simpleDialogOption_height(context, 178),
+        _simpleDialogOption_height(context, 179),
+        _simpleDialogOption_height(context, 180),
+        _simpleDialogOption_height(context, 181),
+        _simpleDialogOption_height(context, 182),
+        _simpleDialogOption_height(context, 183),
+        _simpleDialogOption_height(context, 184),
+        _simpleDialogOption_height(context, 185),
+        _simpleDialogOption_height(context, 186),
+        _simpleDialogOption_height(context, 187),
+        _simpleDialogOption_height(context, 188),
+        _simpleDialogOption_height(context, 189),
+      ],
+    );
+  }
+
+  SimpleDialogOption _simpleDialogOption_height(BuildContext context, int height_input) {
+    return SimpleDialogOption(
+        onPressed: () {
+          Navigator.pop(context);
+          setState(() {
+            height = height_input;
+          });
+        },
+        child: Center(child: Text('$height_input')),
+      );
   }
 
   Widget _buildCareer() {
