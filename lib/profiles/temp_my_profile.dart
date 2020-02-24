@@ -22,12 +22,22 @@ class TempMyProfile extends StatefulWidget {
 class _TempMyProfileState extends State<TempMyProfile> {
   final _textEditingController = TextEditingController();
 
+  String nickname;
+  String gender;
+  int birthYear;
+  String email;
+  String region;
   String job;
   int height;
 
   @override
   void initState() {
     super.initState();
+    nickname = widget.user.nickname;
+    gender = widget.user.gender;
+    birthYear = widget.user.birthYear;
+    email = widget.user.email;
+    region = widget.user.region;
     job = widget.user.job;
     height = widget.user.height;
   }
@@ -129,6 +139,11 @@ class _TempMyProfileState extends State<TempMyProfile> {
                   SizedBox(
                     height: 5,
                   ),
+                  _buildNickname(),
+                  _buildGender(),
+                  _buildBirthYear(),
+                  _buildEmail(),
+                  _buildRegion(),
                   _buildCareer(),
                   _buildHeight(),
                 ],
@@ -138,6 +153,183 @@ class _TempMyProfileState extends State<TempMyProfile> {
         ),
       ),
     );
+  }
+
+  Padding _buildNickname() {
+    return Padding(
+                  padding: const EdgeInsets.all(common_gap),
+                    child: Row(
+                      children: <Widget>[
+                        SizedBox(
+                          width: 40,
+                        ),
+                        Icon(
+                          FontAwesomeIcons.user,
+                          color: Color.fromRGBO(222, 222, 255, 1),
+                          size: 15,
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Center(
+                          child: Text(
+                            '닉네임',
+                            style: TextStyle(fontSize: 15),
+                          ),
+                        ),
+                        Spacer(),
+                        Expanded(
+                          child: Center(
+                            child: Text(
+                              '$nickname',
+                              style: TextStyle(fontSize: 15),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 40,),
+                      ],
+                ));
+  }
+
+  Padding _buildGender() {
+    return Padding(
+                  padding: const EdgeInsets.all(common_gap),
+                    child: Row(
+                      children: <Widget>[
+                        SizedBox(
+                          width: 40,
+                        ),
+                        Icon(
+                          FontAwesomeIcons.venusMars,
+                          color: Color.fromRGBO(222, 222, 255, 1),
+                          size: 15,
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Center(
+                          child: Text(
+                            '성별',
+                            style: TextStyle(fontSize: 15),
+                          ),
+                        ),
+                        Spacer(),
+                        Expanded(
+                          child: Center(
+                            child: Text(
+                              '$gender',
+                              style: TextStyle(fontSize: 15),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 40,),
+                      ],
+                ));
+  }
+  Padding _buildBirthYear() {
+    return Padding(
+                  padding: const EdgeInsets.all(common_gap),
+                    child: Row(
+                      children: <Widget>[
+                        SizedBox(
+                          width: 40,
+                        ),
+                        Icon(
+                          FontAwesomeIcons.birthdayCake,
+                          color: Color.fromRGBO(222, 222, 255, 1),
+                          size: 15,
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Center(
+                          child: Text(
+                            '출생 연도',
+                            style: TextStyle(fontSize: 15),
+                          ),
+                        ),
+                        Spacer(),
+                        Expanded(
+                          child: Center(
+                            child: Text(
+                              '$birthYear',
+                              style: TextStyle(fontSize: 15),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 40,),
+                      ],
+                ));
+  }
+  Padding _buildEmail() {
+    return Padding(
+                  padding: const EdgeInsets.all(common_gap),
+                    child: Row(
+                      children: <Widget>[
+                        SizedBox(
+                          width: 40,
+                        ),
+                        Icon(
+                          FontAwesomeIcons.envelope,
+                          color: Color.fromRGBO(222, 222, 255, 1),
+                          size: 15,
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Center(
+                          child: Text(
+                            '이메일',
+                            style: TextStyle(fontSize: 15),
+                          ),
+                        ),
+                        Spacer(),
+                        Expanded(
+                          child: Center(
+                            child: Text(
+                              '$email',
+                              style: TextStyle(fontSize: 15),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 40,),
+                      ],
+                ));
+  }
+  Padding _buildRegion() {
+    return Padding(
+                  padding: const EdgeInsets.all(common_gap),
+                    child: Row(
+                      children: <Widget>[
+                        SizedBox(
+                          width: 40,
+                        ),
+                        Icon(
+                          FontAwesomeIcons.mapMarked,
+                          color: Color.fromRGBO(222, 222, 255, 1),
+                          size: 15,
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Center(
+                          child: Text(
+                            '지역',
+                            style: TextStyle(fontSize: 15),
+                          ),
+                        ),
+                        Spacer(),
+                        Expanded(
+                          child: Center(
+                            child: Text(
+                              '$region',
+                              style: TextStyle(fontSize: 15),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 40,),
+                      ],
+                ));
   }
 
   Widget _buildHeight() {
