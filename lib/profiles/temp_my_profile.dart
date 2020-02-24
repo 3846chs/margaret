@@ -189,63 +189,29 @@ class _TempMyProfileState extends State<TempMyProfile> {
                 );
   }
 
-  SimpleDialog _buildHeightDialog(BuildContext context) {
-    return SimpleDialog(
-      children: <Widget>[
-        _simpleDialogOption_height(context, 150),
-        _simpleDialogOption_height(context, 151),
-        _simpleDialogOption_height(context, 152),
-        _simpleDialogOption_height(context, 153),
-        _simpleDialogOption_height(context, 154),
-        _simpleDialogOption_height(context, 155),
-        _simpleDialogOption_height(context, 156),
-        _simpleDialogOption_height(context, 157),
-        _simpleDialogOption_height(context, 158),
-        _simpleDialogOption_height(context, 159),
-        _simpleDialogOption_height(context, 160),
-        _simpleDialogOption_height(context, 161),
-        _simpleDialogOption_height(context, 162),
-        _simpleDialogOption_height(context, 163),
-        _simpleDialogOption_height(context, 164),
-        _simpleDialogOption_height(context, 165),
-        _simpleDialogOption_height(context, 166),
-        _simpleDialogOption_height(context, 167),
-        _simpleDialogOption_height(context, 168),
-        _simpleDialogOption_height(context, 169),
-        _simpleDialogOption_height(context, 170),
-        _simpleDialogOption_height(context, 171),
-        _simpleDialogOption_height(context, 172),
-        _simpleDialogOption_height(context, 173),
-        _simpleDialogOption_height(context, 174),
-        _simpleDialogOption_height(context, 175),
-        _simpleDialogOption_height(context, 176),
-        _simpleDialogOption_height(context, 177),
-        _simpleDialogOption_height(context, 178),
-        _simpleDialogOption_height(context, 179),
-        _simpleDialogOption_height(context, 180),
-        _simpleDialogOption_height(context, 181),
-        _simpleDialogOption_height(context, 182),
-        _simpleDialogOption_height(context, 183),
-        _simpleDialogOption_height(context, 184),
-        _simpleDialogOption_height(context, 185),
-        _simpleDialogOption_height(context, 186),
-        _simpleDialogOption_height(context, 187),
-        _simpleDialogOption_height(context, 188),
-        _simpleDialogOption_height(context, 189),
-      ],
-    );
-  }
-
-  SimpleDialogOption _simpleDialogOption_height(BuildContext context, int height_input) {
-    return SimpleDialogOption(
+  // simpleDialogOptionList
+  create_simpleDialogOptionList (int a, int b ){
+    var list = new List<int>.generate(b-a+1, (index) => a + index);
+    var simpleDialogOptionList = <SimpleDialogOption>[];
+    list.forEach((i) {
+      var new_simpleDialogOption = new SimpleDialogOption(
         onPressed: () {
           Navigator.pop(context);
           setState(() {
-            height = height_input;
+            height = i;
           });
         },
-        child: Center(child: Text('$height_input')),
+        child: Center(child: Text('$i')),
       );
+      simpleDialogOptionList.add(new_simpleDialogOption);
+    });
+    return simpleDialogOptionList;
+  }
+
+  SimpleDialog _buildHeightDialog(BuildContext context) {
+    return SimpleDialog(
+      children: create_simpleDialogOptionList(140, 190)
+    );
   }
 
   Widget _buildCareer() {
