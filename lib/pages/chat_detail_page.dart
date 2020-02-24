@@ -105,44 +105,60 @@ class ChatDetailPage extends StatelessWidget {
           }
 
           final messages = snapshot.data;
-          final children = <Widget>[];
 
-          for (int i = 0; i < messages.length; i++) {
-            final date2 = DateTime.fromMillisecondsSinceEpoch(
-                int.parse(messages[i].timestamp));
+          return Scrollbar(
+            child: ListView.builder(
+              controller: _scrollController,
+              padding: const EdgeInsets.all(common_gap),
+              reverse: true,
+              itemCount: messages.length,
+              itemBuilder: (context, i) {
+                final date2 = DateTime.fromMillisecondsSinceEpoch(
+                    int.parse(messages[i].timestamp));
 
-            children.add(ChatBubble(
-              message: messages[i],
-              isSent: myKey == messages[i].idFrom,
-              onRead: (key) {
-                firestoreProvider.updateMessage(chatKey, key, {
-                  MessageKeys.KEY_ISREAD: true,
-                });
+                if (i == messages.length - 1) {
+                  return Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      _buildDate(date2),
+                      _buildChatBubble(messages[i]),
+                    ],
+                  );
+                }
+
+                final date1 = DateTime.fromMillisecondsSinceEpoch(
+                    int.parse(messages[i + 1].timestamp));
+
+                if (date1.year != date2.year ||
+                    date1.month != date2.month ||
+                    date1.day != date2.day) {
+                  return Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      _buildDate(date2),
+                      _buildChatBubble(messages[i]),
+                    ],
+                  );
+                }
+
+                return _buildChatBubble(messages[i]);
               },
-            ));
-
-            if (i == messages.length - 1) {
-              children.add(_buildDate(date2));
-            } else {
-              final date1 = DateTime.fromMillisecondsSinceEpoch(
-                  int.parse(messages[i + 1].timestamp));
-
-              if (date1.year != date2.year ||
-                  date1.month != date2.month ||
-                  date1.day != date2.day) {
-                children.add(_buildDate(date2));
-              }
-            }
-          }
-
-          return ListView(
-            controller: _scrollController,
-            padding: const EdgeInsets.all(common_gap),
-            reverse: true,
-            children: children,
+            ),
           );
         },
       ),
+    );
+  }
+
+  ChatBubble _buildChatBubble(Message message) {
+    return ChatBubble(
+      message: message,
+      isSent: myKey == message.idFrom,
+      onRead: (key) {
+        firestoreProvider.updateMessage(chatKey, key, {
+          MessageKeys.KEY_ISREAD: true,
+        });
+      },
     );
   }
 
