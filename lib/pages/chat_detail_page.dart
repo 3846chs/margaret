@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:datingapp/constants/firebase_keys.dart';
 import 'package:datingapp/constants/size.dart';
 import 'package:datingapp/data/message.dart';
@@ -7,6 +9,7 @@ import 'package:datingapp/firebase/storage_provider.dart';
 import 'package:datingapp/pages/image_page.dart';
 import 'package:datingapp/widgets/chat_bubble.dart';
 import 'package:flutter/material.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
@@ -39,17 +42,39 @@ class ChatDetailPage extends StatelessWidget {
     }
   }
 
+  Future<void> _sendImage() async {
+    File image = await ImagePicker.pickImage(source: ImageSource.gallery);
+
+    if (image == null) return;
+
+    image = await ImageCropper.cropImage(
+      sourcePath: image.path,
+      maxWidth: 200,
+    );
+
+    if (image != null) {
+      final url = await storageProvider.uploadImg(
+          image, 'chats/${DateTime.now().millisecondsSinceEpoch}_$myKey');
+      _sendMessage(url, MessageType.image);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(peer.nickname),
       ),
-      body: Column(
-        children: <Widget>[
-          _buildBubbleList(),
-          _buildInput(),
-        ],
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).requestFocus(FocusNode());
+        },
+        child: Column(
+          children: <Widget>[
+            _buildBubbleList(),
+            _buildInput(),
+          ],
+        ),
       ),
     );
   }
@@ -61,16 +86,7 @@ class ChatDetailPage extends StatelessWidget {
           padding: const EdgeInsets.all(common_s_gap),
           child: IconButton(
             icon: const Icon(Icons.image),
-            onPressed: () async {
-              final image =
-                  await ImagePicker.pickImage(source: ImageSource.gallery);
-
-              if (image != null) {
-                final url = await storageProvider.uploadImg(image,
-                    'chats/${DateTime.now().millisecondsSinceEpoch}_$myKey');
-                _sendMessage(url, MessageType.image);
-              }
-            },
+            onPressed: _sendImage,
           ),
         ),
         Expanded(
