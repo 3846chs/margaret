@@ -8,10 +8,11 @@ import 'package:intl/intl.dart';
 class ChatBubble extends StatefulWidget {
   final Message message;
   final bool isSent;
+  final VoidCallback onTap;
   final Function(String) onRead;
 
   ChatBubble(
-      {@required this.message, @required this.isSent, @required this.onRead});
+      {@required this.message, @required this.isSent, this.onTap, this.onRead});
 
   @override
   _ChatBubbleState createState() => _ChatBubbleState();
@@ -74,9 +75,6 @@ class _ChatBubbleState extends State<ChatBubble>
 
   Widget _buildBubble() {
     return Container(
-      padding: widget.message.type == MessageType.text
-          ? const EdgeInsets.all(common_gap)
-          : null,
       constraints: const BoxConstraints(maxWidth: 200.0),
       decoration: BoxDecoration(
         color: widget.isSent ? Colors.blue : Colors.grey,
@@ -84,21 +82,48 @@ class _ChatBubbleState extends State<ChatBubble>
       ),
       margin: const EdgeInsets.all(common_gap),
       child: widget.message.type == MessageType.text
-          ? Text(
-              widget.message.content,
-              style: const TextStyle(color: Colors.white),
-            )
-          : ClipRRect(
+          ? _buildTextBubble()
+          : _buildImageBubble(),
+    );
+  }
+
+  Widget _buildImageBubble() {
+    return Stack(
+      children: <Widget>[
+        ClipRRect(
+          borderRadius: BorderRadius.circular(12.0),
+          child: CachedNetworkImage(
+            imageUrl: widget.message.content,
+            cacheManager: StorageCacheManager(),
+          ),
+        ),
+        Positioned.fill(
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: widget.onTap,
               borderRadius: BorderRadius.circular(12.0),
-              child: CachedNetworkImage(
-                imageUrl: widget.message.content,
-                placeholder: (context, url) =>
-                    const CircularProgressIndicator(),
-                errorWidget: (context, url, error) =>
-                    const Icon(Icons.broken_image),
-                cacheManager: StorageCacheManager(),
-              ),
             ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildTextBubble() {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: widget.onTap,
+        borderRadius: BorderRadius.circular(12.0),
+        child: Padding(
+          padding: const EdgeInsets.all(common_gap),
+          child: Text(
+            widget.message.content,
+            style: const TextStyle(color: Colors.white),
+          ),
+        ),
+      ),
     );
   }
 

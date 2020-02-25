@@ -4,6 +4,7 @@ import 'package:datingapp/data/message.dart';
 import 'package:datingapp/data/user.dart';
 import 'package:datingapp/firebase/firestore_provider.dart';
 import 'package:datingapp/firebase/storage_provider.dart';
+import 'package:datingapp/pages/image_page.dart';
 import 'package:datingapp/widgets/chat_bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -121,7 +122,7 @@ class ChatDetailPage extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       _buildDate(date2),
-                      _buildChatBubble(messages[i]),
+                      _buildChatBubble(context, messages[i]),
                     ],
                   );
                 }
@@ -136,12 +137,12 @@ class ChatDetailPage extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       _buildDate(date2),
-                      _buildChatBubble(messages[i]),
+                      _buildChatBubble(context, messages[i]),
                     ],
                   );
                 }
 
-                return _buildChatBubble(messages[i]);
+                return _buildChatBubble(context, messages[i]);
               },
             ),
           );
@@ -150,10 +151,18 @@ class ChatDetailPage extends StatelessWidget {
     );
   }
 
-  ChatBubble _buildChatBubble(Message message) {
+  ChatBubble _buildChatBubble(BuildContext context, Message message) {
     return ChatBubble(
       message: message,
       isSent: myKey == message.idFrom,
+      onTap: () {
+        if (message.type == MessageType.image) {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => ImagePage(message.content)));
+        }
+      },
       onRead: (key) {
         firestoreProvider.updateMessage(chatKey, key, {
           MessageKeys.KEY_ISREAD: true,
