@@ -27,7 +27,7 @@ class _ChatBubbleState extends State<ChatBubble>
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
           const Spacer(),
-          widget.message.isRead ? const SizedBox.shrink() : _buildHeart(),
+          _buildHeart(),
           _buildTime(),
           _buildBubble(),
         ],
@@ -48,12 +48,15 @@ class _ChatBubbleState extends State<ChatBubble>
   }
 
   Widget _buildHeart() {
-    return Padding(
-      padding: const EdgeInsets.all(common_gap),
-      child: const Icon(
-        Icons.favorite,
-        color: Colors.red,
-        size: 16.0,
+    return Visibility(
+      visible: !widget.message.isRead,
+      child: Padding(
+        padding: const EdgeInsets.all(common_gap),
+        child: const Icon(
+          Icons.favorite,
+          color: Colors.red,
+          size: 16.0,
+        ),
       ),
     );
   }
