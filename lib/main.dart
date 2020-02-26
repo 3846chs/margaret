@@ -6,7 +6,6 @@ import 'package:datingapp/widgets/loading_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'auth/auth_main.dart';
 
 void main() => runApp(ChangeNotifierProvider<MyUserData>(

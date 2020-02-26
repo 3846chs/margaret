@@ -247,6 +247,7 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
           height: int.parse(_heightController.text),
           recentMatchTime: Timestamp.now(),
           recentMatchState: MatchState.QUESTION,
+          exposed: 0,
           chats: [],
         );
 

@@ -70,7 +70,6 @@ class _TodayQuestionState extends State<TodayQuestion> {
                               setState(() {
                                 _selected = value;
                                 _selectedIndex = choiceList.indexOf(value);
-                                print(_selectedIndex);
                               });
                             },
                           ),
@@ -81,63 +80,122 @@ class _TodayQuestionState extends State<TodayQuestion> {
                         ),
                         Consumer<MyUserData>(builder: (context, value, child) {
                           return FloatingActionButton(
-                            backgroundColor: Colors.white,
-                            foregroundColor: Colors.black,
-                            child: Icon(
-                              Icons.send,
-                            ),
-                            onPressed: () {
-                              final answer = _answerController.text;
+                              backgroundColor: Colors.white,
+                              foregroundColor: Colors.black,
+                              child: Icon(
+                                Icons.send,
+                              ),
+                              onPressed: () async {
+                                final answer = _answerController.text;
 
-                              if (_selectedIndex == -1) {
-                                simpleSnackbar(context, '선택지를 골라주세요');
-                                return;
-                              } else if (answer.length < 10) {
-                                simpleSnackbar(context, '답변이 너무 짧습니다');
-                                return;
-                              } else {
-                                DocumentReference userRef = Firestore.instance
-                                    .collection(COLLECTION_USERS)
-                                    .document(value.userData.userKey);
-
-                                var now = DateTime.now();
-                                var formatter = DateFormat('yyyy-MM-dd');
-
-                                // 23시 59분 59초에 유저가 답변을 제출하면, 시간 지연으로 인해 다음 날 답변으로 기록되는 현상 발생 -> 아래와 같이 해결
-                                if (now.day ==
-                                    value.userData.recentMatchTime
-                                        .toDate()
-                                        .day) {
-                                  userRef
-                                      .collection('TodayQuestions')
-                                      .document(formatter.format(now))
-                                      .setData({
-                                    'question': snapshot.data.data['question'],
-                                    'choice': _selected,
-                                    'answer': answer
-                                  }); // 유저 답변 DB 에 저장
-                                  userRef.updateData(
-                                      {'recentMatchTime': now}); // 답변한 시각 저장
-                                  userRef.updateData({
-                                    'recentMatchState': _selectedIndex + 1
-                                  }); // 1번 선택했으면 1 저장, 2번 선택했으면 2 저장
+                                if (_selectedIndex == -1) {
+                                  simpleSnackbar(context, '선택지를 골라주세요');
+                                  return;
+                                } else if (answer.length < 10) {
+                                  simpleSnackbar(context, '답변이 너무 짧습니다');
+                                  return;
                                 } else {
-                                  print('시간 지연 발생');
-                                  userRef
-                                      .collection('TodayQuestions')
-                                      .document(formatter.format(value
-                                          .userData.recentMatchTime
-                                          .toDate()))
-                                      .setData({
-                                    'question': snapshot.data.data['question'],
-                                    'choice': _selected,
-                                    'answer': answer
+                                  DocumentReference userRef = Firestore.instance
+                                      .collection(COLLECTION_USERS)
+                                      .document(value.userData.userKey);
+
+                                  var now = DateTime.now();
+                                  var formatter = DateFormat('yyyy-MM-dd');
+
+                                  // 23시 59분 59초에 유저가 답변을 제출하면, 시간 지연으로 인해 다음 날 답변으로 기록되는 현상 발생 -> 아래와 같이 해결
+                                  if (now.day ==
+                                      value.userData.recentMatchTime
+                                          .toDate()
+                                          .day) {
+                                    userRef
+                                        .collection('TodayQuestions')
+                                        .document(formatter.format(now))
+                                        .setData({
+                                      'question':
+                                          snapshot.data.data['question'],
+                                      'choice': _selected,
+                                      'answer': answer
+                                    }); // 유저 답변 DB 에 저장
+                                    userRef.updateData(
+                                        {'recentMatchTime': now}); // 답변한 시각 저장
+                                    userRef.updateData({
+                                      'recentMatchState': _selectedIndex + 1
+                                    }); // 1번 선택했으면 1 저장, 2번 선택했으면 2 저장
+                                  } else {
+                                    print('시간 지연 발생');
+                                    userRef
+                                        .collection('TodayQuestions')
+                                        .document(formatter.format(value
+                                            .userData.recentMatchTime
+                                            .toDate()))
+                                        .setData({
+                                      'question':
+                                          snapshot.data.data['question'],
+                                      'choice': _selected,
+                                      'answer': answer
+                                    });
+                                    // recentMatchTime 을 이용하여 유저 답변만 DB 에 저장
+                                  }
+
+                                  Firestore.instance
+                                      .collection(TODAYQUESTIONS)
+                                      .document(formatter.format(now))
+                                      .updateData({
+                                    'unmatchedList': FieldValue.arrayUnion(
+                                        [value.userData.userKey])
                                   });
-                                  // recentMatchTime 을 이용하여 유저 답변만 DB 에 저장
+
+                                  DocumentSnapshot ds = await Firestore.instance
+                                      .collection(TODAYQUESTIONS)
+                                      .document(formatter.format(now))
+                                      .get();
+
+                                  ds.data['unmatchedList']
+                                      .forEach((unmatchedUserKey) async {
+                                    List<String> recommendedPeople =
+                                        await matchUser(unmatchedUserKey);
+
+                                    if (recommendedPeople.length >= 3) {
+                                      // first, second, third 를 추천해주고, 세 사람에게는 exposed++ 를 해준다.
+                                      Firestore.instance
+                                          .collection(COLLECTION_USERS)
+                                          .document(unmatchedUserKey)
+                                          .collection(TODAYQUESTIONS)
+                                          .document(formatter.format(now))
+                                          .updateData({
+                                        'recommendedPeople':
+                                            recommendedPeople.take(3).toList()
+                                      });
+                                      Firestore.instance
+                                          .collection(COLLECTION_USERS)
+                                          .document(recommendedPeople[0])
+                                          .updateData({
+                                        'exposed': FieldValue.increment(1)
+                                      });
+                                      Firestore.instance
+                                          .collection(COLLECTION_USERS)
+                                          .document(recommendedPeople[1])
+                                          .updateData({
+                                        'exposed': FieldValue.increment(1)
+                                      });
+                                      Firestore.instance
+                                          .collection(COLLECTION_USERS)
+                                          .document(recommendedPeople[2])
+                                          .updateData({
+                                        'exposed': FieldValue.increment(1)
+                                      });
+
+                                      Firestore.instance
+                                          .collection(TODAYQUESTIONS)
+                                          .document(formatter.format(now))
+                                          .updateData({
+                                        'unmatchedList': FieldValue.arrayRemove(
+                                            [unmatchedUserKey])
+                                      });
+                                    }
+                                  });
                                 }
-                              }
-                            },
-                          );
+                              });
                         }),
                       ],
                     ),
@@ -200,5 +258,34 @@ class _TodayQuestionState extends State<TodayQuestion> {
       fillColor: Colors.white60,
       filled: true,
     );
+  }
+
+  Future<List<String>> matchUser(String userKey) async {
+    List<String> ls = [];
+    DocumentSnapshot ds = await Firestore.instance
+        .collection(COLLECTION_USERS)
+        .document(userKey)
+        .get();
+
+    final QuerySnapshot querySnapshot = await Firestore.instance
+        .collection(COLLECTION_USERS)
+//        .where('gender', isEqualTo: ds.data['gender'] == '남성' ? '여성' : '남성')
+//        .where('recentMatchState', isEqualTo: ds.data['recentMatchState'])
+        .orderBy('exposed', descending: false)
+        .getDocuments();
+
+    var now = DateTime.now();
+    querySnapshot.documents
+        .where((doc) => (doc['gender'] != ds.data['gender'] &&
+            doc['recentMatchState'].abs() ==
+                ds.data['recentMatchState'].abs() &&
+            doc['recentMatchTime'].toDate().year == now.year &&
+            doc['recentMatchTime'].toDate().month == now.month &&
+            doc['recentMatchTime'].toDate().day == now.day))
+        .forEach((e) {
+      ls.add(e.documentID);
+    });
+
+    return ls;
   }
 }

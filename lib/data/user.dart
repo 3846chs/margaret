@@ -14,25 +14,26 @@ class User {
   int height;
   MatchState recentMatchState;
   Timestamp recentMatchTime;
+  int exposed;
   List<String> chats;
   String pushToken;
   DocumentReference reference;
 
-  User(
-      {this.userKey,
-      this.profiles,
-      this.email,
-      this.nickname,
-      this.gender,
-      this.birthYear,
-      this.region,
-      this.job,
-      this.height,
-      this.recentMatchState,
-      this.recentMatchTime,
-      this.chats,
-      this.pushToken,
-      this.reference});
+  User({this.userKey,
+    this.profiles,
+    this.email,
+    this.nickname,
+    this.gender,
+    this.birthYear,
+    this.region,
+    this.job,
+    this.height,
+    this.recentMatchState,
+    this.recentMatchTime,
+    this.exposed,
+    this.chats,
+    this.pushToken,
+    this.reference});
 
   User.fromMap(Map<String, dynamic> map, this.userKey, {this.reference}) {
     email = map[UserKeys.KEY_EMAIL];
@@ -53,13 +54,15 @@ class User {
     });
     recentMatchState = MatchState.fromInt(map[UserKeys.KEY_RECENTMATCHSTATE]);
     recentMatchTime = map[UserKeys.KEY_RECENTMATCHTIME];
+    exposed = map[UserKeys.KEY_EXPOSED];
   }
 
   User.fromSnapshot(DocumentSnapshot snapshot)
       : this.fromMap(snapshot.data, snapshot.documentID,
-            reference: snapshot.reference);
+      reference: snapshot.reference);
 
-  Map<String, dynamic> toMap() => {
+  Map<String, dynamic> toMap() =>
+      {
         UserKeys.KEY_EMAIL: email,
         UserKeys.KEY_PROFILES: profiles,
         UserKeys.KEY_NICKNAME: nickname,
@@ -70,6 +73,7 @@ class User {
         UserKeys.KEY_HEIGHT: height,
         UserKeys.KEY_RECENTMATCHSTATE: recentMatchState.value,
         UserKeys.KEY_RECENTMATCHTIME: recentMatchTime,
+        UserKeys.KEY_EXPOSED: exposed,
         UserKeys.KEY_CHATS: chats,
         UserKeys.KEY_PUSHTOKEN: pushToken,
       };
@@ -85,7 +89,9 @@ class MatchState {
       case 0:
         return QUESTION;
       case -1:
-        return FINISHED;
+        return FINISHED_ONE;
+      case -2:
+        return FINISHED_TWO;
       case 1:
         return ANSWER_ONE;
       case 2:
@@ -96,7 +102,8 @@ class MatchState {
   }
 
   static const QUESTION = MatchState._fromInt(0);
-  static const FINISHED = MatchState._fromInt(-1);
+  static const FINISHED_ONE = MatchState._fromInt(-1);
+  static const FINISHED_TWO = MatchState._fromInt(-2);
   static const ANSWER_ONE = MatchState._fromInt(1);
   static const ANSWER_TWO = MatchState._fromInt(2);
 }

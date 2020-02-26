@@ -16,6 +16,8 @@ class UserKeys {
   static const KEY_RECENTMATCHTIME = 'recentMatchTime';
   static const KEY_CHATS = 'chats';
   static const KEY_PUSHTOKEN = 'pushToken';
+  static const KEY_EXPOSED = 'exposed';
+
 }
 
 class MessageKeys {

@@ -4,7 +4,6 @@ import 'package:datingapp/data/user.dart';
 import 'package:datingapp/firebase/firestore_provider.dart';
 import 'package:datingapp/widgets/loading_page.dart';
 import 'package:datingapp/pages/match/today_finished.dart';
-
 import 'package:datingapp/pages/match/today_people.dart';
 import 'package:datingapp/pages/match/today_question.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +28,9 @@ class MatchMain extends StatelessWidget {
           switch (userData.recentMatchState) {
             case MatchState.QUESTION:
               return TodayQuestion();
-            case MatchState.FINISHED:
+            case MatchState.FINISHED_ONE:
+              return TodayFinished();
+            case MatchState.FINISHED_TWO:
               return TodayFinished();
             default: // 1 or 2
               return TodayPeople();
