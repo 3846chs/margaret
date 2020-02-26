@@ -1,11 +1,15 @@
+import 'dart:io';
+
 import 'package:datingapp/constants/firebase_keys.dart';
 import 'package:datingapp/constants/size.dart';
 import 'package:datingapp/data/message.dart';
 import 'package:datingapp/data/user.dart';
 import 'package:datingapp/firebase/firestore_provider.dart';
 import 'package:datingapp/firebase/storage_provider.dart';
+import 'package:datingapp/pages/image_page.dart';
 import 'package:datingapp/widgets/chat_bubble.dart';
 import 'package:flutter/material.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
@@ -38,17 +42,39 @@ class ChatDetailPage extends StatelessWidget {
     }
   }
 
+  Future<void> _sendImage() async {
+    File image = await ImagePicker.pickImage(source: ImageSource.gallery);
+
+    if (image == null) return;
+
+    image = await ImageCropper.cropImage(
+      sourcePath: image.path,
+      maxWidth: 200,
+    );
+
+    if (image != null) {
+      final url = await storageProvider.uploadImg(
+          image, 'chats/${DateTime.now().millisecondsSinceEpoch}_$myKey');
+      _sendMessage(url, MessageType.image);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(peer.nickname),
       ),
-      body: Column(
-        children: <Widget>[
-          _buildBubbleList(),
-          _buildInput(),
-        ],
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).requestFocus(FocusNode());
+        },
+        child: Column(
+          children: <Widget>[
+            _buildBubbleList(),
+            _buildInput(),
+          ],
+        ),
       ),
     );
   }
@@ -60,16 +86,7 @@ class ChatDetailPage extends StatelessWidget {
           padding: const EdgeInsets.all(common_s_gap),
           child: IconButton(
             icon: const Icon(Icons.image),
-            onPressed: () async {
-              final image =
-                  await ImagePicker.pickImage(source: ImageSource.gallery);
-
-              if (image != null) {
-                final url = await storageProvider.uploadImg(image,
-                    'chats/${DateTime.now().millisecondsSinceEpoch}_$myKey');
-                _sendMessage(url, MessageType.image);
-              }
-            },
+            onPressed: _sendImage,
           ),
         ),
         Expanded(
@@ -105,44 +122,68 @@ class ChatDetailPage extends StatelessWidget {
           }
 
           final messages = snapshot.data;
-          final children = <Widget>[];
 
-          for (int i = 0; i < messages.length; i++) {
-            final date2 = DateTime.fromMillisecondsSinceEpoch(
-                int.parse(messages[i].timestamp));
+          return Scrollbar(
+            child: ListView.builder(
+              controller: _scrollController,
+              padding: const EdgeInsets.all(common_gap),
+              reverse: true,
+              itemCount: messages.length,
+              itemBuilder: (context, i) {
+                final date2 = DateTime.fromMillisecondsSinceEpoch(
+                    int.parse(messages[i].timestamp));
 
-            children.add(ChatBubble(
-              message: messages[i],
-              isSent: myKey == messages[i].idFrom,
-              onRead: (key) {
-                firestoreProvider.updateMessage(chatKey, key, {
-                  MessageKeys.KEY_ISREAD: true,
-                });
+                if (i == messages.length - 1) {
+                  return Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      _buildDate(date2),
+                      _buildChatBubble(context, messages[i]),
+                    ],
+                  );
+                }
+
+                final date1 = DateTime.fromMillisecondsSinceEpoch(
+                    int.parse(messages[i + 1].timestamp));
+
+                if (date1.year != date2.year ||
+                    date1.month != date2.month ||
+                    date1.day != date2.day) {
+                  return Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      _buildDate(date2),
+                      _buildChatBubble(context, messages[i]),
+                    ],
+                  );
+                }
+
+                return _buildChatBubble(context, messages[i]);
               },
-            ));
-
-            if (i == messages.length - 1) {
-              children.add(_buildDate(date2));
-            } else {
-              final date1 = DateTime.fromMillisecondsSinceEpoch(
-                  int.parse(messages[i + 1].timestamp));
-
-              if (date1.year != date2.year ||
-                  date1.month != date2.month ||
-                  date1.day != date2.day) {
-                children.add(_buildDate(date2));
-              }
-            }
-          }
-
-          return ListView(
-            controller: _scrollController,
-            padding: const EdgeInsets.all(common_gap),
-            reverse: true,
-            children: children,
+            ),
           );
         },
       ),
+    );
+  }
+
+  ChatBubble _buildChatBubble(BuildContext context, Message message) {
+    return ChatBubble(
+      message: message,
+      isSent: myKey == message.idFrom,
+      onTap: () {
+        if (message.type == MessageType.image) {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => ImagePage(message.content)));
+        }
+      },
+      onRead: (key) {
+        firestoreProvider.updateMessage(chatKey, key, {
+          MessageKeys.KEY_ISREAD: true,
+        });
+      },
     );
   }
 

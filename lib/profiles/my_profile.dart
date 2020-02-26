@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:datingapp/constants/size.dart';
 import 'package:datingapp/data/provider/my_user_data.dart';
-import 'package:datingapp/firebase/storage_provider.dart';
+import 'package:datingapp/firebase/storage_cache_manager.dart';
 import 'package:datingapp/profiles/profile_basic_info.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -54,36 +54,28 @@ class _MyProfileState extends State<MyProfile> {
                     scrollDirection: Axis.horizontal,
                     child: Row(
                       children: value.userData.profiles
-                          .map((path) => FutureBuilder<String>(
-                              future:
-                                  storageProvider.getImageUri("profiles/$path"),
-                              builder: (context, snapshot) {
-                                if (snapshot.connectionState ==
-                                    ConnectionState.done) {
-                                  return Padding(
-                                    padding: const EdgeInsets.all(common_gap),
-                                    child: InkWell(
-                                      onTap: () {
-                                        print(path);
-                                      },
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(14),
-                                        child: CachedNetworkImage(
-                                          width: 100,
-                                          height: 100,
-                                          fit: BoxFit.cover,
-                                          imageUrl: snapshot.data,
-                                          placeholder: (context, url) =>
-                                              const CircularProgressIndicator(),
-                                          errorWidget: (context, url, error) =>
-                                              const Icon(Icons.account_circle),
-                                        ),
-                                      ),
+                          .map((path) => Padding(
+                                padding: const EdgeInsets.all(common_gap),
+                                child: InkWell(
+                                  onTap: () {
+                                    print(path);
+                                  },
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(14),
+                                    child: CachedNetworkImage(
+                                      imageUrl: "profiles/$path",
+                                      cacheManager: StorageCacheManager(),
+                                      width: 100,
+                                      height: 100,
+                                      fit: BoxFit.cover,
+                                      placeholder: (context, url) =>
+                                          const CircularProgressIndicator(),
+                                      errorWidget: (context, url, error) =>
+                                          const Icon(Icons.account_circle),
                                     ),
-                                  );
-                                }
-                                return const CircularProgressIndicator();
-                              }))
+                                  ),
+                                ),
+                              ))
                           .toList(),
                     ),
                   ),

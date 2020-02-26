@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:datingapp/constants/firebase_keys.dart';
 import 'package:datingapp/data/user.dart';
+import 'package:datingapp/firebase/transformer.dart';
 import 'package:datingapp/widgets/loading_page.dart';
 import 'package:datingapp/pages/match/today_people_card.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +9,7 @@ import 'package:datingapp/data/provider/my_user_data.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-class TodayPeople extends StatelessWidget {
+class TodayPeople extends StatelessWidget with Transformer {
   @override
   Widget build(BuildContext context) {
     var now = DateTime.now();
@@ -59,7 +60,9 @@ class ShowPeople extends StatelessWidget {
     @required this.recommendedPeople,
   }) : super(key: key);
 
+
   final List<String> recommendedPeople;
+
 
   @override
   Widget build(BuildContext context) {

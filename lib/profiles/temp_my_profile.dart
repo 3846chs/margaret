@@ -4,7 +4,7 @@ import 'package:datingapp/constants/size.dart';
 import 'package:datingapp/data/provider/my_user_data.dart';
 import 'package:datingapp/data/user.dart';
 import 'package:datingapp/firebase/firestore_provider.dart';
-import 'package:datingapp/firebase/storage_provider.dart';
+import 'package:datingapp/firebase/storage_cache_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -93,36 +93,30 @@ class _TempMyProfileState extends State<TempMyProfile> {
                     scrollDirection: Axis.horizontal,
                     child: Row(
                       children: value.userData.profiles
-                          .map((path) => FutureBuilder<String>(
-                              future:
-                                  storageProvider.getImageUri("profiles/$path"),
-                              builder: (context, snapshot) {
-                                if (snapshot.connectionState ==
-                                    ConnectionState.done) {
-                                  return Padding(
-                                    padding: const EdgeInsets.all(common_gap),
-                                    child: InkWell(
-                                      onTap: () {
-                                        print(path);
-                                      },
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(14),
-                                        child: CachedNetworkImage(
-                                          width: 100,
-                                          height: 100,
-                                          fit: BoxFit.cover,
-                                          imageUrl: snapshot.data,
-                                          placeholder: (context, url) =>
-                                              const CircularProgressIndicator(),
-                                          errorWidget: (context, url, error) =>
-                                              const Icon(Icons.account_circle),
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                }
-                                return const CircularProgressIndicator();
-                              }))
+                          .map(
+                            (path) => Padding(
+                              padding: const EdgeInsets.all(common_gap),
+                              child: InkWell(
+                                onTap: () {
+                                  print(path);
+                                },
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(14),
+                                  child: CachedNetworkImage(
+                                    imageUrl: "profiles/$path",
+                                    cacheManager: StorageCacheManager(),
+                                    width: 100,
+                                    height: 100,
+                                    fit: BoxFit.cover,
+                                    placeholder: (context, url) =>
+                                        const CircularProgressIndicator(),
+                                    errorWidget: (context, url, error) =>
+                                        const Icon(Icons.account_circle),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          )
                           .toList(),
                     ),
                   ),
@@ -334,56 +328,57 @@ class _TempMyProfileState extends State<TempMyProfile> {
 
   Widget _buildHeight() {
     return Padding(
-                  padding: const EdgeInsets.all(common_gap),
-                  child: Row(
-                    children: <Widget>[
-                      SizedBox(
-                        width: 40,
-                      ),
-                      Icon(
-                        FontAwesomeIcons.child,
-                        color: Color.fromRGBO(222, 222, 255, 1),
-                        size: 15,
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Center(
-                        child: Text(
-                          '키',
-                          style: TextStyle(fontSize: 15),
-                        ),
-                      ),
-                      Spacer(),
-                      Expanded(
-                        child: Center(
-                          child: InkWell(
-                            child: Text(
-                              '$height',
-                               style: TextStyle(fontSize: 15),
-                            ),
-                            onTap: () {
-                              return showDialog(
-                                context: context,
-                                builder: (context) => Center(
-                                  child: Container(
-                                    height: 600,
-                                      child: _buildHeightDialog(context)),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 40,)
-                    ],
-                  ),
-                );
+      padding: const EdgeInsets.all(common_gap),
+      child: Row(
+        children: <Widget>[
+          SizedBox(
+            width: 40,
+          ),
+          Icon(
+            FontAwesomeIcons.child,
+            color: Color.fromRGBO(222, 222, 255, 1),
+            size: 15,
+          ),
+          SizedBox(
+            width: 10,
+          ),
+          Center(
+            child: Text(
+              '키',
+              style: TextStyle(fontSize: 15),
+            ),
+          ),
+          Spacer(),
+          Expanded(
+            child: Center(
+              child: InkWell(
+                child: Text(
+                  '$height',
+                  style: TextStyle(fontSize: 15),
+                ),
+                onTap: () {
+                  return showDialog(
+                    context: context,
+                    builder: (context) => Center(
+                      child: Container(
+                          height: 600, child: _buildHeightDialog(context)),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+          const SizedBox(
+            width: 40,
+          )
+        ],
+      ),
+    );
   }
 
   // simpleDialogOptionList
-  create_simpleDialogOptionList (int a, int b ){
-    var list = new List<int>.generate(b-a+1, (index) => a + index);
+  create_simpleDialogOptionList(int a, int b) {
+    var list = new List<int>.generate(b - a + 1, (index) => a + index);
     var simpleDialogOptionList = <SimpleDialogOption>[];
     list.forEach((i) {
       var new_simpleDialogOption = new SimpleDialogOption(
@@ -401,9 +396,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
   }
 
   SimpleDialog _buildHeightDialog(BuildContext context) {
-    return SimpleDialog(
-      children: create_simpleDialogOptionList(140, 190)
-    );
+    return SimpleDialog(children: create_simpleDialogOptionList(140, 190));
   }
 
   Widget _buildCareer() {

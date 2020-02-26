@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:datingapp/data/provider/my_user_data.dart';
-import 'package:datingapp/firebase/storage_provider.dart';
+import 'package:datingapp/firebase/storage_cache_manager.dart';
 import 'package:datingapp/pages/chat_page.dart';
 import 'package:datingapp/pages/match/match_main.dart';
 import 'package:datingapp/pages/receive_page.dart';
@@ -119,22 +119,13 @@ class _HomeState extends State<Home> {
                 child: ClipOval(
                   child: Consumer<MyUserData>(
                     builder: (context, value, child) {
-                      return FutureBuilder<String>(
-                        future: storageProvider.getImageUri(
-                            "profiles/${value.userData.profiles[0]}"),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.done) {
-                            return CachedNetworkImage(
-                              imageUrl: snapshot.data,
-                              placeholder: (context, url) =>
-                                  const CircularProgressIndicator(),
-                              errorWidget: (context, url, error) =>
-                                  const Icon(Icons.account_circle),
-                            );
-                          }
-                          return const CircularProgressIndicator();
-                        },
+                      return CachedNetworkImage(
+                        imageUrl: "profiles/${value.userData.profiles[0]}",
+                        cacheManager: StorageCacheManager(),
+                        placeholder: (context, url) =>
+                            const CircularProgressIndicator(),
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.account_circle),
                       );
                     },
                   ),

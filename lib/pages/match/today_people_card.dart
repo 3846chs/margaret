@@ -61,6 +61,7 @@ class _TodayPeopleCardState extends State<TodayPeopleCard> {
                             child: Text('선택'),
                             onPressed: () {
                               Navigator.pop(context);
+
                               // recentMatchState 변경
 
                               Firestore.instance
