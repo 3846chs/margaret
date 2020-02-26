@@ -23,7 +23,7 @@ class AuthMain extends StatelessWidget {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/temp13.png"),
+            image: AssetImage("assets/temp8.png"),
             fit: BoxFit.cover,
           ),
         ),
