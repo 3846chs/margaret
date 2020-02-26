@@ -99,6 +99,8 @@ class _TodayQuestionState extends State<TodayQuestion> {
                                       .collection(COLLECTION_USERS)
                                       .document(value.userData.userKey);
 
+                                  userRef.updateData({'exposed': 0});
+
                                   var now = DateTime.now();
                                   var formatter = DateFormat('yyyy-MM-dd');
 
