@@ -7,6 +7,7 @@ import 'package:datingapp/firebase/firestore_provider.dart';
 import 'package:datingapp/firebase/storage_cache_manager.dart';
 import 'package:datingapp/profiles/profile_basic_info.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 class YourProfile extends StatelessWidget {
@@ -20,9 +21,10 @@ class YourProfile extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Consumer<MyUserData>(builder: (context, value, child) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
+            return Column( // UI column 시작
+              crossAxisAlignment: CrossAxisAlignment.center, // 가운데 정렬
               children: <Widget>[
+                SizedBox(width: double.infinity, height: 20,),
                 SingleChildScrollView(
                   padding: const EdgeInsets.all(common_l_gap),
                   scrollDirection: Axis.horizontal,
@@ -34,13 +36,13 @@ class YourProfile extends StatelessWidget {
                                 onTap: () {
                                   print(path);
                                 },
-                                child: ClipRRect(
+                                child: ClipRRect( // 상대 프로필 이미지 사진
                                   borderRadius: BorderRadius.circular(14),
                                   child: CachedNetworkImage(
                                     imageUrl: "profiles/$path",
                                     cacheManager: StorageCacheManager(),
-                                    width: 100,
-                                    height: 100,
+                                    width: 150,
+                                    height: 150,
                                     fit: BoxFit.cover,
                                     placeholder: (context, url) =>
                                         const CircularProgressIndicator(),
@@ -60,6 +62,15 @@ class YourProfile extends StatelessWidget {
                     style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                   ),
                 ),
+
+                // 자기소개
+                _selfIntroduction(),
+                SizedBox(height: 20,),
+                // 가치관 질문
+                _valueQuestions(),
+                _valueQuestions(),
+                SizedBox(height: 20,),
+                // 기본 정보
                 ProfileBasicInfo('나이',
                     (DateTime.now().year - user.birthYear + 1).toString()),
                 ProfileBasicInfo('지역', user.region),
@@ -101,5 +112,91 @@ class YourProfile extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Padding _valueQuestions() {
+    return Padding(
+                padding: const EdgeInsets.all(common_gap),
+                child: Column(
+                  children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        SizedBox(width: 10,),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 5) ,
+                          child: Text('Q.',
+                            style: TextStyle(fontSize: 20, color: Color.fromRGBO(222, 222, 255, 1), fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        Text(
+                          '인생에서 가장 중요한 세 가지는 무엇인가요?',
+                          style: TextStyle(fontSize: 15, color: Color.fromRGBO(222, 222, 255, 1)),
+                        ),
+                        Spacer(),
+                      ],
+                    ),
+                    Row(
+                      children: <Widget>[
+                        SizedBox(width: 10,),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 5) ,
+                          child: Text('A.',
+                            style: TextStyle(fontSize: 20, color: Color.fromRGBO(222, 222, 255, 1), fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        Text(
+                          '제 인생에서 가장 중요한 세 가지는 a, b, c 입니다',
+                          style: TextStyle(fontSize: 15, ),
+                        ),
+                        Spacer(),
+                      ],
+                    ),
+                  ],
+                ),
+              );
+  }
+
+  Padding _selfIntroduction() {
+    return Padding(
+                padding: const EdgeInsets.all(common_gap),
+                child: Column(
+                  children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        SizedBox(width: 20,),
+                        Icon(
+                          FontAwesomeIcons.quoteLeft,
+                          color: Color.fromRGBO(222, 222, 255, 1),
+                          size: 15,
+                        ),
+                        Spacer(),
+                      ],
+                    ),
+                    Row(
+                      children: <Widget>[
+                        SizedBox(width: 40,),
+                        Center(
+                          child: Text(
+                            '안녕하세요, 저는 ㅇㅇㅇ입니다. 반갑습니다', // text 길이 길어질 경우 어떻게 할지 해결하기
+                            style: TextStyle(fontSize: 15),
+                          ),
+                        ),
+                        SizedBox(width: 40,),
+                      ],
+                    ),
+                    Row(
+                      children: <Widget>[
+                        Spacer(),
+                        Icon(
+                          FontAwesomeIcons.quoteRight,
+                          color: Color.fromRGBO(222, 222, 255, 1),
+                          size: 15,
+                        ),
+                        SizedBox(width: 20,),
+                      ],
+                    ),
+                  ],
+                ),
+              );
   }
 }
