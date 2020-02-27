@@ -11,42 +11,45 @@ export const sendNotification = functions.firestore
         const doc = snapshot.data() as FirebaseFirestore.DocumentData;
         console.log(doc);
 
-        const idFrom = doc.idFrom;
-        const idTo = doc.idTo;
-        const contentMessage =
-            doc.type === 0 ? doc.content : "사진을 보냈습니다.";
+        const idFrom: string = doc.idFrom;
+        const idTo: string = doc.idTo;
 
         // Get push token user to (receive)
-        const userToDoc = await admin
+        const snapshotTo = await admin
             .firestore()
             .collection("Users")
             .doc(idTo)
             .get();
-        const userTo = userToDoc.data() as FirebaseFirestore.DocumentData;
+        const userTo = snapshotTo.data() as FirebaseFirestore.DocumentData;
         console.log(`Found user to: ${userTo.nickname}`);
 
         // Get info user from (sent)
-        const userFromDoc = await admin
+        const snapshotFrom = await admin
             .firestore()
             .collection("Users")
             .doc(idFrom)
             .get();
-        const userFrom = userFromDoc.data() as FirebaseFirestore.DocumentData;
+        const userFrom = snapshotFrom.data() as FirebaseFirestore.DocumentData;
         console.log(`Found user from: ${userFrom.nickname}`);
 
+        const title: string = userFrom.nickname;
+        const body: string =
+            doc.type === 0 ? doc.content : "사진을 보냈습니다.";
+
+        const registrationToken: string = userTo.pushToken;
         const payload: admin.messaging.MessagingPayload = {
             notification: {
-                title: `You have a message from "${userFrom.nickname}"`,
-                body: contentMessage,
+                title: title,
+                body: body,
                 badge: "1",
                 sound: "default",
-                tag: idFrom
+                tag: idFrom,
             }
         };
         // Let push to the target device
         admin
             .messaging()
-            .sendToDevice(String(userTo.pushToken), payload)
+            .sendToDevice(registrationToken, payload)
             .then(response => {
                 console.log("Successfully sent message:", response);
             })

@@ -1,18 +1,24 @@
 import 'dart:convert';
 
 import 'package:datingapp/data/provider/my_user_data.dart';
+import 'package:datingapp/utils/prefs_provider.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 final firebaseMessaging = FirebaseMessaging();
 final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
-void registerNotification(MyUserData myUserData) {
+void registerNotification(MyUserData myUserData) async {
   firebaseMessaging.requestNotificationPermissions();
+
+  await prefsProvider.initialize();
 
   firebaseMessaging.configure(onMessage: (Map<String, dynamic> message) {
     print('onMessage: $message');
-    showNotification(message['notification']);
+    final notification = message['notification'];
+    if (prefsProvider.isNotificationEnabled(notification['title'])) {
+      showNotification(notification);
+    }
     return;
   }, onResume: (Map<String, dynamic> message) {
     print('onResume: $message');

@@ -7,36 +7,45 @@ import 'package:datingapp/data/user.dart';
 import 'package:datingapp/firebase/firestore_provider.dart';
 import 'package:datingapp/firebase/storage_provider.dart';
 import 'package:datingapp/pages/image_page.dart';
+import 'package:datingapp/utils/prefs_provider.dart';
 import 'package:datingapp/widgets/chat_bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
-class ChatDetailPage extends StatelessWidget {
+class ChatDetailPage extends StatefulWidget {
   final String chatKey;
   final String myKey;
   final User peer;
-  final _messageController = TextEditingController();
-  final _scrollController = ScrollController();
 
   ChatDetailPage(
       {@required this.chatKey, @required this.myKey, @required this.peer});
+
+  @override
+  _ChatDetailPageState createState() => _ChatDetailPageState();
+}
+
+class _ChatDetailPageState extends State<ChatDetailPage> {
+  final _messageController = TextEditingController();
+  final _scrollController = ScrollController();
+
+  bool _isNotificationEnabled;
 
   void _sendMessage(String content, MessageType type) {
     if (content.trim().isNotEmpty) {
       _messageController.clear();
 
       final message = Message(
-        idFrom: myKey,
-        idTo: peer.userKey,
+        idFrom: widget.myKey,
+        idTo: widget.peer.userKey,
         content: content,
         timestamp: DateTime.now().millisecondsSinceEpoch.toString(),
         type: type,
         isRead: false,
       );
 
-      firestoreProvider.createMessage(chatKey, message);
+      firestoreProvider.createMessage(widget.chatKey, message);
       _scrollController.animateTo(0.0,
           duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
     }
@@ -53,17 +62,34 @@ class ChatDetailPage extends StatelessWidget {
     );
 
     if (image != null) {
-      final url = await storageProvider.uploadImg(
-          image, 'chats/${DateTime.now().millisecondsSinceEpoch}_$myKey');
+      final url = await storageProvider.uploadImg(image,
+          'chats/${DateTime.now().millisecondsSinceEpoch}_${widget.myKey}');
       _sendMessage(url, MessageType.image);
     }
   }
 
+  void _notificationChange() async {
+    await prefsProvider.setNotification(
+        widget.peer.nickname, !_isNotificationEnabled);
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
+    _isNotificationEnabled =
+        prefsProvider.isNotificationEnabled(widget.peer.nickname);
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(peer.nickname),
+        title: Text(widget.peer.nickname),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(_isNotificationEnabled
+                ? Icons.notifications
+                : Icons.notifications_off),
+            onPressed: _notificationChange,
+          ),
+        ],
       ),
       body: GestureDetector(
         onTap: () {
@@ -113,7 +139,7 @@ class ChatDetailPage extends StatelessWidget {
   Widget _buildBubbleList() {
     return Expanded(
       child: StreamBuilder<List<Message>>(
-        stream: firestoreProvider.fetchAllMessages(chatKey),
+        stream: firestoreProvider.fetchAllMessages(widget.chatKey),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return Center(
@@ -170,7 +196,7 @@ class ChatDetailPage extends StatelessWidget {
   ChatBubble _buildChatBubble(BuildContext context, Message message) {
     return ChatBubble(
       message: message,
-      isSent: myKey == message.idFrom,
+      isSent: widget.myKey == message.idFrom,
       onTap: () {
         if (message.type == MessageType.image) {
           Navigator.push(
@@ -180,7 +206,7 @@ class ChatDetailPage extends StatelessWidget {
         }
       },
       onRead: (key) {
-        firestoreProvider.updateMessage(chatKey, key, {
+        firestoreProvider.updateMessage(widget.chatKey, key, {
           MessageKeys.KEY_ISREAD: true,
         });
       },
