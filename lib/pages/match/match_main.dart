@@ -28,12 +28,12 @@ class MatchMain extends StatelessWidget {
           switch (userData.recentMatchState) {
             case MatchState.QUESTION:
               return TodayQuestion();
-            case MatchState.FINISHED_ONE:
-              return TodayFinished();
-            case MatchState.FINISHED_TWO:
-              return TodayFinished();
-            default: // 1 or 2
+            case MatchState.ANSWER_ONE:
               return TodayPeople();
+            case MatchState.ANSWER_TWO:
+              return TodayPeople();
+            default:
+              return TodayFinished();
           }
         }
 

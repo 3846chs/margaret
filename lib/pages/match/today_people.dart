@@ -6,6 +6,7 @@ import 'package:datingapp/widgets/loading_page.dart';
 import 'package:datingapp/pages/match/today_people_card.dart';
 import 'package:flutter/material.dart';
 import 'package:datingapp/data/provider/my_user_data.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -50,7 +51,13 @@ class NotShowPeople extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text('아직 해당 선택지를 고른 사람이 없습니다. 기다려주세요.');
+    return Scaffold(
+      body: Center(
+        child: SpinKitCircle(
+          color: Colors.greenAccent,
+        ),
+      ),
+    );
   }
 }
 

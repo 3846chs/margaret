@@ -118,8 +118,7 @@ class _TodayQuestionState extends State<TodayQuestion> {
                                       'choice': _selected,
                                       'answer': answer
                                     }); // 유저 답변 DB 에 저장
-                                    userRef.updateData(
-                                        {'recentMatchTime': now}); // 답변한 시각 저장
+
                                     userRef.updateData({
                                       'recentMatchState': _selectedIndex + 1
                                     }); // 1번 선택했으면 1 저장, 2번 선택했으면 2 저장
@@ -154,6 +153,7 @@ class _TodayQuestionState extends State<TodayQuestion> {
 
                                   ds.data['unmatchedList']
                                       .forEach((unmatchedUserKey) async {
+                                        // unmatchedUserKey 가 (계정 삭제 등으로 인해) invalid 할 수도 있음 => 에러남 -> 나중에 처리
                                     List<String> recommendedPeople =
                                         await matchUser(unmatchedUserKey);
 

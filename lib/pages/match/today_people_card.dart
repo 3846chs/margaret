@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:datingapp/constants/firebase_keys.dart';
 import 'package:datingapp/data/provider/my_user_data.dart';
-import 'package:datingapp/data/user.dart';
-import 'package:datingapp/firebase/firestore_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -34,7 +32,7 @@ class _TodayPeopleCardState extends State<TodayPeopleCard> {
         if (!snapshot.hasData) // 해당 날짜에 응답한 유저를 가져왔기 때문에 호출되지 않는게 정상
           return ListTile(
             leading: CircleAvatar(),
-            title: Text('등록된 답변이 없습니다.'),
+            title: Text('유저가 해당 질문에 답변을 하지 않았습니다.'),
           );
         print(snapshot.data.data['answer']);
 
@@ -62,21 +60,22 @@ class _TodayPeopleCardState extends State<TodayPeopleCard> {
                             onPressed: () {
                               Navigator.pop(context);
 
-                              // recentMatchState 변경
-
                               Firestore.instance
                                   .collection(COLLECTION_USERS)
                                   .document(value.userData.userKey)
                                   .updateData({
                                 'recentMatchState':
                                     -value.userData.recentMatchState.value
+                                // 음수로 변환
                               });
 
-//                              Navigator.push(
-//                                  context,
-//                                  MaterialPageRoute(
-//                                      builder: (context) =>
-//                                          YourProfile(widget.document)));
+                              Firestore.instance
+                                  .collection(COLLECTION_USERS)
+                                  .document(value.userData.userKey)
+                                  .collection(TODAYQUESTIONS)
+                                  .document(formattedDate)
+                                  .updateData(
+                                      {'selectedPerson': widget.userKey});
                             },
                           ),
                           MaterialButton(
