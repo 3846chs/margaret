@@ -1,7 +1,7 @@
-import 'package:datingapp/constants/colors.dart';
-import 'package:datingapp/constants/size.dart';
-import 'package:datingapp/auth/profile_input_page.dart';
-import 'package:datingapp/utils/base_height.dart';
+import 'package:margaret/constants/colors.dart';
+import 'package:margaret/constants/size.dart';
+import 'package:margaret/auth/profile_input_page.dart';
+import 'package:margaret/utils/base_height.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 

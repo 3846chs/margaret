@@ -1,7 +1,7 @@
 
-import 'package:datingapp/auth/email/email_sign_in.dart';
-import 'package:datingapp/auth/email/email_sign_up.dart';
-import 'package:datingapp/constants/colors.dart';
+import 'package:margaret/auth/email/email_sign_in.dart';
+import 'package:margaret/auth/email/email_sign_up.dart';
+import 'package:margaret/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 class EmailAuth extends StatefulWidget {

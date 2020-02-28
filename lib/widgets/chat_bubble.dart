@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:datingapp/constants/size.dart';
-import 'package:datingapp/data/message.dart';
-import 'package:datingapp/firebase/storage_cache_manager.dart';
+import 'package:margaret/constants/size.dart';
+import 'package:margaret/data/message.dart';
+import 'package:margaret/firebase/storage_cache_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 

@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:datingapp/constants/material_white_color.dart';
-import 'package:datingapp/data/provider/my_user_data.dart';
-import 'package:datingapp/home.dart';
-import 'package:datingapp/widgets/loading_page.dart';
+import 'package:margaret/constants/material_white_color.dart';
+import 'package:margaret/data/provider/my_user_data.dart';
+import 'package:margaret/home.dart';
+import 'package:margaret/widgets/loading_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

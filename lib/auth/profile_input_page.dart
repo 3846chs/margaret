@@ -1,13 +1,13 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:datingapp/constants/colors.dart';
-import 'package:datingapp/constants/size.dart';
-import 'package:datingapp/data/provider/my_user_data.dart';
-import 'package:datingapp/data/user.dart';
-import 'package:datingapp/firebase/firestore_provider.dart';
-import 'package:datingapp/firebase/storage_provider.dart';
-import 'package:datingapp/utils/simple_snack_bar.dart';
+import 'package:margaret/constants/colors.dart';
+import 'package:margaret/constants/size.dart';
+import 'package:margaret/data/provider/my_user_data.dart';
+import 'package:margaret/data/user.dart';
+import 'package:margaret/firebase/firestore_provider.dart';
+import 'package:margaret/firebase/storage_provider.dart';
+import 'package:margaret/utils/simple_snack_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

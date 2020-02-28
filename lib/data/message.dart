@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:datingapp/constants/firebase_keys.dart';
+import 'package:margaret/constants/firebase_keys.dart';
 
 enum MessageType {
   text,

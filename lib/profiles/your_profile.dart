@@ -1,11 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:datingapp/constants/size.dart';
-import 'package:datingapp/data/provider/my_user_data.dart';
-import 'package:datingapp/data/user.dart';
-import 'package:datingapp/firebase/firestore_provider.dart';
-import 'package:datingapp/firebase/storage_cache_manager.dart';
-import 'package:datingapp/profiles/profile_basic_info.dart';
+import 'package:margaret/constants/size.dart';
+import 'package:margaret/data/provider/my_user_data.dart';
+import 'package:margaret/data/user.dart';
+import 'package:margaret/firebase/firestore_provider.dart';
+import 'package:margaret/firebase/storage_cache_manager.dart';
+import 'package:margaret/profiles/profile_basic_info.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';

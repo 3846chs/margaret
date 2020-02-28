@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "617409300334",
-    "firebase_url": "https://datingapp-9.firebaseio.com",
-    "project_id": "datingapp-9",
-    "storage_bucket": "datingapp-9.appspot.com"
+    "project_number": "1046778309577",
+    "firebase_url": "https://margaret-official.firebaseio.com",
+    "project_id": "margaret-official",
+    "storage_bucket": "margaret-official.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:617409300334:android:39e10c8d620d87ca3da37f",
+        "mobilesdk_app_id": "1:1046778309577:android:9e950dceee29c9179dd618",
         "android_client_info": {
-          "package_name": "com.datingapp.datingapp"
+          "package_name": "com.margaret.margaret"
         }
       },
       "oauth_client": [
         {
-          "client_id": "617409300334-egmlhp8iu7v62fh35gp5ncrc4l5bksst.apps.googleusercontent.com",
+          "client_id": "1046778309577-6l452eq9unb1sb5a82ud60343jap0lf1.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyD4WMOFQTHm0TzUwRC3UMe7V5UfjLSOgxs"
+          "current_key": "AIzaSyCNPWiyYOib6xbiaR5sfMzrZXfDPVGQ0yE"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "617409300334-egmlhp8iu7v62fh35gp5ncrc4l5bksst.apps.googleusercontent.com",
+              "client_id": "1046778309577-6l452eq9unb1sb5a82ud60343jap0lf1.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

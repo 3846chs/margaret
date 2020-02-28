@@ -1,5 +1,5 @@
-import 'package:datingapp/constants/size.dart';
-import 'package:datingapp/widgets/user_avatar.dart';
+import 'package:margaret/constants/size.dart';
+import 'package:margaret/widgets/user_avatar.dart';
 import 'package:flutter/material.dart';
 
 class SendCard extends StatelessWidget {

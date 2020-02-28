@@ -1,4 +1,4 @@
-import 'package:datingapp/firebase/storage_provider.dart';
+import 'package:margaret/firebase/storage_provider.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart'
     show BaseCacheManager, FileFetcherResponse, HttpFileFetcherResponse;
 import 'package:http/http.dart' as http;

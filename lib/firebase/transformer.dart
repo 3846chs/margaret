@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:datingapp/data/message.dart';
-import 'package:datingapp/data/user.dart';
+import 'package:margaret/data/message.dart';
+import 'package:margaret/data/user.dart';
 
 class Transformer {
   final toUser = StreamTransformer<DocumentSnapshot, User>.fromHandlers(

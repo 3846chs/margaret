@@ -1,5 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:datingapp/firebase/storage_cache_manager.dart';
+import 'package:margaret/firebase/storage_cache_manager.dart';
 import 'package:flutter/material.dart';
 
 class ImagePage extends StatelessWidget {

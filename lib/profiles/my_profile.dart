@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:datingapp/constants/size.dart';
-import 'package:datingapp/data/provider/my_user_data.dart';
-import 'package:datingapp/firebase/storage_cache_manager.dart';
-import 'package:datingapp/profiles/profile_basic_info.dart';
+import 'package:margaret/constants/size.dart';
+import 'package:margaret/data/provider/my_user_data.dart';
+import 'package:margaret/firebase/storage_cache_manager.dart';
+import 'package:margaret/profiles/profile_basic_info.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';

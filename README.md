@@ -1,6 +1,6 @@
-# datingapp
+# margaret
 
-A new Flutter application.
+Margaret, Dating App
 
 ## Getting Started
 

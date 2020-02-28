@@ -1,14 +1,14 @@
 import 'dart:io';
 
-import 'package:datingapp/constants/firebase_keys.dart';
-import 'package:datingapp/constants/size.dart';
-import 'package:datingapp/data/message.dart';
-import 'package:datingapp/data/user.dart';
-import 'package:datingapp/firebase/firestore_provider.dart';
-import 'package:datingapp/firebase/storage_provider.dart';
-import 'package:datingapp/pages/image_page.dart';
-import 'package:datingapp/utils/prefs_provider.dart';
-import 'package:datingapp/widgets/chat_bubble.dart';
+import 'package:margaret/constants/firebase_keys.dart';
+import 'package:margaret/constants/size.dart';
+import 'package:margaret/data/message.dart';
+import 'package:margaret/data/user.dart';
+import 'package:margaret/firebase/firestore_provider.dart';
+import 'package:margaret/firebase/storage_provider.dart';
+import 'package:margaret/pages/image_page.dart';
+import 'package:margaret/utils/prefs_provider.dart';
+import 'package:margaret/widgets/chat_bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';

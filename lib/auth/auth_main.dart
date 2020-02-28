@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:datingapp/auth/email/email_auth.dart';
-import 'package:datingapp/auth/profile_input_page.dart';
-import 'package:datingapp/auth/login_button.dart';
-import 'package:datingapp/data/provider/my_user_data.dart';
-import 'package:datingapp/utils/base_height.dart';
-import 'package:datingapp/utils/simple_snack_bar.dart';
+import 'package:margaret/auth/email/email_auth.dart';
+import 'package:margaret/auth/profile_input_page.dart';
+import 'package:margaret/auth/login_button.dart';
+import 'package:margaret/data/provider/my_user_data.dart';
+import 'package:margaret/utils/base_height.dart';
+import 'package:margaret/utils/simple_snack_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:datingapp/constants/firebase_keys.dart';
-import 'package:datingapp/constants/size.dart';
-import 'package:datingapp/data/provider/my_user_data.dart';
-import 'package:datingapp/utils/simple_snack_bar.dart';
-import 'package:datingapp/widgets/loading_page.dart';
+import 'package:margaret/constants/firebase_keys.dart';
+import 'package:margaret/constants/size.dart';
+import 'package:margaret/data/provider/my_user_data.dart';
+import 'package:margaret/utils/simple_snack_bar.dart';
+import 'package:margaret/widgets/loading_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';

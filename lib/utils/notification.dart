@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:datingapp/data/provider/my_user_data.dart';
-import 'package:datingapp/utils/prefs_provider.dart';
+import 'package:margaret/data/provider/my_user_data.dart';
+import 'package:margaret/utils/prefs_provider.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
