@@ -38,8 +38,8 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
 
   List<bool> _genderSelected = [true, false];
 
-  Future<void> _getProfile() async {
-    if (_profiles.length >= 2) return;
+  Future<void> _getProfile([int index]) async {
+    if (_profiles.length >= 2 && index == null) return;
 
     File image = await ImagePicker.pickImage(source: ImageSource.gallery);
 
@@ -55,7 +55,10 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
 
     if (image != null) {
       setState(() {
-        _profiles.add(image);
+        if (index == null)
+          _profiles.add(image);
+        else
+          _profiles[index] = image;
       });
     }
   }
@@ -97,10 +100,13 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                                   onPressed: _getProfile,
                                 ),
                               )
-                            : Image.file(
-                                _profiles[0],
-                                height: 300,
-                                width: 300,
+                            : FlatButton(
+                                onPressed: () => _getProfile(0),
+                                child: Image.file(
+                                  _profiles[0],
+                                  height: 150,
+                                  width: 150,
+                                ),
                               ),
                       ),
                       Padding(
@@ -114,10 +120,13 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                                   onPressed: _getProfile,
                                 ),
                               )
-                            : Image.file(
-                                _profiles[1],
-                                height: 300,
-                                width: 300,
+                            : FlatButton(
+                                onPressed: () => _getProfile(1),
+                                child: Image.file(
+                                  _profiles[1],
+                                  height: 150,
+                                  width: 150,
+                                ),
                               ),
                       ),
                     ],

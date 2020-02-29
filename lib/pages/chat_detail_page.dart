@@ -118,9 +118,14 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
         Expanded(
           child: Padding(
             padding: const EdgeInsets.all(common_s_gap),
-            child: TextField(
-              controller: _messageController,
-              decoration: _buildInputDecoration("메시지를 입력해주세요..."),
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxHeight: 100),
+              child: TextField(
+                controller: _messageController,
+                keyboardType: TextInputType.multiline,
+                maxLines: null,
+                decoration: _buildInputDecoration("메시지를 입력해주세요..."),
+              ),
             ),
           ),
         ),
