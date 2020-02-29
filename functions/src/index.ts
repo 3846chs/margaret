@@ -3,8 +3,9 @@ import * as admin from "firebase-admin";
 
 admin.initializeApp();
 
-export const sendNotification = functions.firestore
-    .document("Chats/{groupId1}/{groupId2}/{message}")
+export const sendNotification = functions
+    .region("asia-northeast1")
+    .firestore.document("Chats/{groupId1}/{groupId2}/{message}")
     .onCreate(async (snapshot, context) => {
         console.log("----------------start function--------------------");
 
@@ -43,7 +44,7 @@ export const sendNotification = functions.firestore
                 body: body,
                 badge: "1",
                 sound: "default",
-                tag: idFrom,
+                tag: idFrom
             }
         };
         // Let push to the target device

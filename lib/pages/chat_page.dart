@@ -39,7 +39,7 @@ class ChatPage extends StatelessWidget {
                   return StreamBuilder<Message>(
                     stream: firestoreProvider.connectMessage(chatKey),
                     builder: (context, snapshot) {
-                      if (!snapshot.hasData)
+                      if (snapshot.connectionState == ConnectionState.waiting)
                         return const CircularProgressIndicator();
 
                       final lastMessage = snapshot.data;
