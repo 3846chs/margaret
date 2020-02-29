@@ -1,9 +1,11 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:margaret/constants/firebase_keys.dart';
 import 'package:margaret/data/user.dart';
 import 'package:margaret/firebase/firestore_provider.dart';
 import 'package:margaret/firebase/transformer.dart';
+import 'package:margaret/utils/base_height.dart';
 import 'package:margaret/widgets/loading_page.dart';
 import 'package:margaret/pages/match/today_people_card.dart';
 import 'package:flutter/material.dart';
@@ -92,29 +94,28 @@ class ShowPeople extends StatelessWidget {
             return SingleChildScrollView(
                 child: Column(children: <Widget>[
               SizedBox(
-                height: 50,
+                height: screenAwareSize(40, context),
               ),
               Text(
                 snapshot.data.data['question'],
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.black,
-                ),
+                style: GoogleFonts.jua(fontSize: 20),
               ),
               SizedBox(
-                height: 30,
+                height: screenAwareSize(20, context),
               ),
               Text(
                 snapshot.data.data['choice'],
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 15,
-                  color: Colors.blueAccent,
-                ),
+                style: GoogleFonts.jua(fontSize: 15, color: Colors.blueAccent),
+              ),
+              SizedBox(
+                height: screenAwareSize(20, context),
               ),
               CarouselSlider.builder(
+                height: screenAwareSize(370, context),
                 enlargeCenterPage: true,
+                enableInfiniteScroll: false,
                 itemCount: 3,
                 itemBuilder: (BuildContext context, int itemIndex) {
                   return StreamBuilder(
