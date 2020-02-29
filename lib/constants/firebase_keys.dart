@@ -17,6 +17,8 @@ class UserKeys {
   static const KEY_CHATS = 'chats';
   static const KEY_PUSHTOKEN = 'pushToken';
   static const KEY_EXPOSED = 'exposed';
+  static const KEY_ANSWER = 'answer';
+
 
 }
 

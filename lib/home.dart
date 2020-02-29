@@ -33,11 +33,11 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     final myUserData = Provider.of<MyUserData>(context, listen: false);
 
-    if (!_isInitialized) {
-      registerNotification(myUserData);
-      configLocalNotification();
-      _isInitialized = true;
-    }
+//    if (!_isInitialized) {
+//      registerNotification(myUserData);
+//      configLocalNotification();
+//      _isInitialized = true;
+//    }
 
     return Scaffold(
       appBar: AppBar(

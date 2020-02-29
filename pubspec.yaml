@@ -42,6 +42,7 @@ dependencies:
   cached_network_image: ^2.0.0
   rich_alert: ^0.1.32
   shared_preferences: ^0.5.6+2
+  carousel_slider: ^1.4.1
 
 dev_dependencies:
   flutter_test:

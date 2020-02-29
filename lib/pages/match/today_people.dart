@@ -1,6 +1,8 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:margaret/constants/firebase_keys.dart';
 import 'package:margaret/data/user.dart';
+import 'package:margaret/firebase/firestore_provider.dart';
 import 'package:margaret/firebase/transformer.dart';
 import 'package:margaret/widgets/loading_page.dart';
 import 'package:margaret/pages/match/today_people_card.dart';
@@ -34,8 +36,9 @@ class TodayPeople extends StatelessWidget with Transformer {
             return NotShowPeople();
           else {
             return ShowPeople(
-              recommendedPeople:
-                  snapshot.data.data['recommendedPeople'].cast<String>(),
+              recommendedPeople: snapshot.data.data['recommendedPeople']
+                  .cast<String>()
+                  .toList(),
             );
           }
         }
@@ -67,9 +70,7 @@ class ShowPeople extends StatelessWidget {
     @required this.recommendedPeople,
   }) : super(key: key);
 
-
   final List<String> recommendedPeople;
-
 
   @override
   Widget build(BuildContext context) {
@@ -85,45 +86,52 @@ class ShowPeople extends StatelessWidget {
             .document(formattedDate)
             .snapshots(),
         builder: (context, snapshot) {
-          if (snapshot.data == null)
-            return LoadingPage();
-          else if (!snapshot.hasData)
+          if (snapshot.data == null || !snapshot.hasData)
             return LoadingPage();
           else
             return SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  SizedBox(
-                    height: 50,
-                  ),
-                  Text(
-                    snapshot.data.data['question'],
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.black,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  Text(
-                    snapshot.data.data['choice'],
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 15,
-                      color: Colors.blueAccent,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  TodayPeopleCard(recommendedPeople[0]),
-                  TodayPeopleCard(recommendedPeople[1]),
-                  TodayPeopleCard(recommendedPeople[2]),
-                ],
+                child: Column(children: <Widget>[
+              SizedBox(
+                height: 50,
               ),
-            );
+              Text(
+                snapshot.data.data['question'],
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.black,
+                ),
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              Text(
+                snapshot.data.data['choice'],
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 15,
+                  color: Colors.blueAccent,
+                ),
+              ),
+              CarouselSlider.builder(
+                enlargeCenterPage: true,
+                itemCount: 3,
+                itemBuilder: (BuildContext context, int itemIndex) {
+                  return StreamBuilder(
+                    stream: recommendedPeople
+                        .map(
+                            (userKey) => firestoreProvider.connectUser(userKey))
+                        .toList()[itemIndex],
+                    builder: (context, snapshot) {
+                      if (snapshot.data == null || !snapshot.hasData)
+                        return CircularProgressIndicator();
+                      else
+                        return TodayPeopleCard(snapshot.data);
+                    },
+                  );
+                },
+              )
+            ]));
         });
   }
 }
