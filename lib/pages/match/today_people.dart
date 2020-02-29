@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:margaret/constants/colors.dart';
 import 'package:margaret/constants/firebase_keys.dart';
 import 'package:margaret/data/user.dart';
 import 'package:margaret/firebase/firestore_provider.dart';
@@ -58,8 +59,28 @@ class NotShowPeople extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: SpinKitCircle(
-          color: Colors.greenAccent,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              '매 칭 중 . . .',
+              style: GoogleFonts.jua(fontSize: 60, color: pastel_purple),
+            ),
+            SizedBox(
+              height: screenAwareSize(100, context),
+            ),
+            SpinKitRipple(
+              color: Colors.pinkAccent,
+              size: 100,
+            ),
+            SizedBox(
+              height: screenAwareSize(100, context),
+            ),
+            Text(
+              '같은 선택지를 고른 3명이 모이면 알림을 보내드릴게요!',
+//              style: GoogleFonts.jua(fontSize: 30),
+            ),
+          ],
         ),
       ),
     );

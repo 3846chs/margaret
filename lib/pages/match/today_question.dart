@@ -27,8 +27,15 @@ class _TodayQuestionState extends State<TodayQuestion> {
 
   @override
   Widget build(BuildContext context) {
+    var now = DateTime.now();
+    var formatter = DateFormat('yyyy-MM-dd');
+    String formattedDate = formatter.format(now);
+
     return StreamBuilder<DocumentSnapshot>(
-        stream: myStream(),
+        stream: Firestore.instance
+            .collection(TODAYQUESTIONS)
+            .document(formattedDate)
+            .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.data == null)
             return LoadingPage();
@@ -210,17 +217,6 @@ class _TodayQuestionState extends State<TodayQuestion> {
             );
           }
         });
-  }
-
-  Stream<DocumentSnapshot> myStream() {
-    var now = DateTime.now();
-    var formatter = DateFormat('yyyy-MM-dd');
-    String formattedDate = formatter.format(now);
-
-    return Firestore.instance
-        .collection(TODAYQUESTIONS)
-        .document(formattedDate)
-        .snapshots();
   }
 
   Widget _buildQuestion(String question) {

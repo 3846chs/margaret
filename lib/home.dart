@@ -41,9 +41,15 @@ class _HomeState extends State<Home> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Margaret',
-          style: GoogleFonts.handlee(fontWeight: FontWeight.bold),
+        title: Row(
+          children: <Widget>[
+            Spacer(flex: 1,),
+            Text(
+              '마    가    렛',
+              style: GoogleFonts.jua(),
+            ),
+            Spacer(flex: 2,),
+          ],
         ),
         flexibleSpace: Container(
           decoration: const BoxDecoration(
