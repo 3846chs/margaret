@@ -38,6 +38,8 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
 
   List<bool> _genderSelected = [true, false];
 
+  bool _isButtonEnabled = true;
+
   Future<void> _getProfile([int index]) async {
     if (_profiles.length >= 2 && index == null) return;
 
@@ -206,11 +208,25 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                 const SizedBox(height: common_l_gap),
                 Builder(
                   builder: (context) => FlatButton(
-                    onPressed: () {
-                      if (_formKey.currentState.validate() &&
-                          _profiles.length > 0) _register(context);
-                    },
-                    child: Text("가입하기", style: TextStyle(color: Colors.white)),
+                    onPressed: !_isButtonEnabled
+                        ? null
+                        : () {
+                            if (_formKey.currentState.validate() &&
+                                _profiles.length > 0) {
+                              setState(() {
+                                _isButtonEnabled = false;
+                              });
+                              _register(context);
+                            }
+                          },
+                    child: _isButtonEnabled
+                        ? Text(
+                            "가입하기",
+                            style: TextStyle(color: Colors.white),
+                          )
+                        : const CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation(Colors.black87),
+                          ),
                     color: pastel_purple,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(6),
