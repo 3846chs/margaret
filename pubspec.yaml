@@ -43,6 +43,7 @@ dependencies:
   rich_alert: ^0.1.32
   shared_preferences: ^0.5.6+2
   permission_handler: ^4.3.0
+  photo_view: ^0.9.2
 
 dev_dependencies:
   flutter_test:
