@@ -47,7 +47,7 @@ void configLocalNotification() {
 
 void showNotification(message) async {
   final androidPlatformChannelSpecifics = AndroidNotificationDetails(
-    'com.datingapp.datingapp',
+    'com.margaret.margaret',
     'Margaret',
     'your channel description',
     playSound: true,
