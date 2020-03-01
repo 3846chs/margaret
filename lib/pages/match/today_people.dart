@@ -146,7 +146,7 @@ class ShowPeople extends StatelessWidget {
                       if (snapshot.data == null || !snapshot.hasData)
                         return CircularProgressIndicator();
                       else
-                        return TodayPeopleCard(snapshot.data);
+                        return TodayPeopleCard(snapshot.data, itemIndex);
                     },
                   );
                 },
