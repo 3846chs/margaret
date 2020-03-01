@@ -29,6 +29,9 @@ class _TempMyProfileState extends State<TempMyProfile> {
   String region;
   String job;
   int height;
+  //String introduction;
+  //String answer1;
+  //String answer2;
 
   @override
   void initState() {
@@ -58,6 +61,10 @@ class _TempMyProfileState extends State<TempMyProfile> {
                 firestoreProvider.updateUser(widget.user.userKey, {
                   UserKeys.KEY_JOB: job,
                   UserKeys.KEY_HEIGHT: height,
+                  UserKeys.KEY_REGION: region,
+                  //UserKeys.KEY_INTRODUCTION: introduction,
+                  //UserKeys.KEY_ANSWER1: answer1,
+                  //UserKeys.KEY_ANSWER2: answer2,
                 });
 
                 Navigator.pop(context);
@@ -140,6 +147,19 @@ class _TempMyProfileState extends State<TempMyProfile> {
                   _buildRegion(),
                   _buildCareer(),
                   _buildHeight(),
+                  Container(
+                    height: 30,
+                    width: double.infinity,
+                    color: Colors.grey[200],
+                    child: Center(
+                        child: Text(
+                          '가치관 정보 등록',
+                          style: GoogleFonts.notoSans(color: Colors.grey),
+                        )),
+                  ),
+                  _selfIntroduction(),
+                  _valueQuestions(),
+                  _valueQuestions(),
                 ],
               );
             }),
@@ -180,7 +200,12 @@ class _TempMyProfileState extends State<TempMyProfile> {
                             ),
                           ),
                         ),
-                        SizedBox(width: 40,),
+                        SizedBox(width: 25,),
+                        Icon(
+                          FontAwesomeIcons.lock,
+                          color: Color.fromRGBO(222, 222, 255, 1),
+                          size: 15,
+                        ),
                       ],
                 ));
   }
@@ -216,7 +241,12 @@ class _TempMyProfileState extends State<TempMyProfile> {
                             ),
                           ),
                         ),
-                        SizedBox(width: 40,),
+                        SizedBox(width: 25,),
+                        Icon(
+                          FontAwesomeIcons.lock,
+                          color: Color.fromRGBO(222, 222, 255, 1),
+                          size: 15,
+                        ),
                       ],
                 ));
   }
@@ -238,7 +268,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
                         ),
                         Center(
                           child: Text(
-                            '출생 연도',
+                            '나이',
                             style: TextStyle(fontSize: 15),
                           ),
                         ),
@@ -246,12 +276,17 @@ class _TempMyProfileState extends State<TempMyProfile> {
                         Expanded(
                           child: Center(
                             child: Text(
-                              '$birthYear',
+                              (DateTime.now().year - birthYear + 1).toString(),
                               style: TextStyle(fontSize: 15),
                             ),
                           ),
                         ),
-                        SizedBox(width: 40,),
+                        SizedBox(width: 25,),
+                        Icon(
+                          FontAwesomeIcons.lock,
+                          color: Color.fromRGBO(222, 222, 255, 1),
+                          size: 15,
+                        ),
                       ],
                 ));
   }
@@ -286,7 +321,12 @@ class _TempMyProfileState extends State<TempMyProfile> {
                             ),
                           ),
                         ),
-                        SizedBox(width: 40,),
+                        SizedBox(width: 25,),
+                        Icon(
+                          FontAwesomeIcons.lock,
+                          color: Color.fromRGBO(222, 222, 255, 1),
+                          size: 15,
+                        ),
                       ],
                 ));
   }
@@ -315,15 +355,66 @@ class _TempMyProfileState extends State<TempMyProfile> {
                         Spacer(),
                         Expanded(
                           child: Center(
-                            child: Text(
-                              '$region',
-                              style: TextStyle(fontSize: 15),
+                            child: InkWell(
+                              child: SizedBox(
+                                width: 80,
+                                child: Center(
+                                  child: Text(
+                                    '$region',
+                                    style: TextStyle(fontSize: 15),
+                                  ),
+                                ),
+                              ),
+                              onTap: (){
+                                return showDialog(
+                                  context: context,
+                                  builder: (context) => Center(
+                                    child: Container(
+                                        height: 600, child: _buildRegionDialog(context)),
+                                  ),
+                                );
+                              },
                             ),
                           ),
                         ),
                         SizedBox(width: 40,),
                       ],
                 ));
+  }
+
+  SimpleDialog _buildRegionDialog(BuildContext context) {
+    return SimpleDialog(
+      children: <Widget>[
+        _regionSimpleDialogOption(context, '서울'),
+        _regionSimpleDialogOption(context, '부산'),
+        _regionSimpleDialogOption(context, '인천'),
+        _regionSimpleDialogOption(context, '광주'),
+        _regionSimpleDialogOption(context, '대전'),
+        _regionSimpleDialogOption(context, '대구'),
+        _regionSimpleDialogOption(context, '울산'),
+        _regionSimpleDialogOption(context, '경기'),
+        _regionSimpleDialogOption(context, '강원'),
+        _regionSimpleDialogOption(context, '충북'),
+        _regionSimpleDialogOption(context, '충남'),
+        _regionSimpleDialogOption(context, '전북'),
+        _regionSimpleDialogOption(context, '전남'),
+        _regionSimpleDialogOption(context, '경북'),
+        _regionSimpleDialogOption(context, '경남'),
+        _regionSimpleDialogOption(context, '제주'),
+      ],
+    );
+  }
+
+  SimpleDialogOption _regionSimpleDialogOption(BuildContext context, String regionName) {
+    return SimpleDialogOption(
+        onPressed: () {
+          Navigator.pop(context);
+          setState(() {
+            region = regionName;
+          });
+        },
+        child: Center(child: Text('$regionName')),
+      );
   }
 
   Widget _buildHeight() {
@@ -344,7 +435,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
           ),
           Center(
             child: Text(
-              '키',
+              '키   ',
               style: TextStyle(fontSize: 15),
             ),
           ),
@@ -352,9 +443,14 @@ class _TempMyProfileState extends State<TempMyProfile> {
           Expanded(
             child: Center(
               child: InkWell(
-                child: Text(
-                  '$height',
-                  style: TextStyle(fontSize: 15),
+                child: SizedBox(
+                  width: 80,
+                  child: Center(
+                    child: Text(
+                      '$height',
+                      style: TextStyle(fontSize: 15),
+                    ),
+                  ),
                 ),
                 onTap: () {
                   return showDialog(
@@ -425,9 +521,14 @@ class _TempMyProfileState extends State<TempMyProfile> {
           Expanded(
             child: Center(
               child: InkWell(
-                  child: Text(
-                    job,
-                    style: TextStyle(fontSize: 15),
+                  child: SizedBox(
+                    width: 80,
+                    child: Center(
+                      child: Text(
+                        job,
+                        style: TextStyle(fontSize: 15),
+                      ),
+                    ),
                   ),
                   onTap: () {
                     return showDialog(
@@ -456,6 +557,134 @@ class _TempMyProfileState extends State<TempMyProfile> {
             Navigator.pop(context);
             setState(() {
               job = _textEditingController.text;
+              _textEditingController.clear();
+            });
+          },
+        ),
+        MaterialButton(
+            child: Text('취소'),
+            onPressed: () {
+              Navigator.pop(context);
+              setState(() {
+                _textEditingController.clear();
+              });
+            }),
+      ],
+    );
+  }
+
+  Padding _selfIntroduction() {
+    return Padding(
+      padding: const EdgeInsets.all(common_gap),
+      child: Column(
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              SizedBox(width: 20,),
+              Icon(
+                FontAwesomeIcons.quoteLeft,
+                color: Color.fromRGBO(222, 222, 255, 1),
+                size: 15,
+              ),
+              Spacer(),
+            ],
+          ),
+          Row(
+            children: <Widget>[
+              SizedBox(width: 40,),
+              Expanded(
+                child: Center(
+                  child: InkWell(
+                    child: Text(
+                      '안녕하세요, 저는 $nickname 입니다. 저는 $region에 살고 있습니다. 반갑습니다',
+                      style: TextStyle(fontSize: 15),
+                    ),
+                    onTap: () {
+                      return showDialog(
+                        context: context,
+                        builder: (context) => _buildIntroductionDialog(context, email),
+                      );
+                    },
+                  ),
+                ),
+              ),
+              SizedBox(width: 40,),
+            ],
+          ),
+          Row(
+            children: <Widget>[
+              Spacer(),
+              Icon(
+                FontAwesomeIcons.quoteRight,
+                color: Color.fromRGBO(222, 222, 255, 1),
+                size: 15,
+              ),
+              SizedBox(width: 20,),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Padding _valueQuestions() {
+    return Padding(
+      padding: const EdgeInsets.all(common_gap),
+      child: Column(
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              SizedBox(width: 10,),
+              Padding(
+                padding: const EdgeInsets.only(right: 5) ,
+                child: Text('Q.',
+                  style: TextStyle(fontSize: 20, color: Color.fromRGBO(222, 222, 255, 1), fontWeight: FontWeight.bold),
+                ),
+              ),
+              Expanded(
+                child: Text(
+                  '인생에서 가장 중요한 세 가지는 무엇인가요?',
+                  style: TextStyle(fontSize: 15, color: Color.fromRGBO(222, 222, 255, 1)),
+                ),
+              ),
+              SizedBox(width: 10,),
+            ],
+          ),
+          Row(
+            children: <Widget>[
+              SizedBox(width: 10,),
+              Padding(
+                padding: const EdgeInsets.only(right: 5) ,
+                child: Text('A.',
+                  style: TextStyle(fontSize: 20, color: Color.fromRGBO(222, 222, 255, 1), fontWeight: FontWeight.bold),
+                ),
+              ),
+              Expanded(
+                child: Text(
+                  '아직 응답하지 않았습니다. 응답하기 클릭',
+                  style: TextStyle(fontSize: 15, ),
+                ),
+              ),
+              SizedBox(width: 10,),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  AlertDialog _buildIntroductionDialog(BuildContext context, String str) {
+    return AlertDialog(
+      content: TextFormField(
+        controller: _textEditingController,
+      ),
+      actions: <Widget>[
+        MaterialButton(
+          child: Text('수정'),
+          onPressed: () {
+            Navigator.pop(context);
+            setState(() {
+              str = _textEditingController.text;
               _textEditingController.clear();
             });
           },

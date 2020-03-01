@@ -8,12 +8,15 @@ import 'package:margaret/firebase/storage_cache_manager.dart';
 import 'package:margaret/profiles/profile_basic_info.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class YourProfile extends StatelessWidget {
   final User user;
 
   YourProfile(this.user);
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -111,6 +114,15 @@ class YourProfile extends StatelessWidget {
           }),
         ),
       ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {},
+        label: Text('호감보내기', style: GoogleFonts.notoSans(fontSize: 15),),
+        icon: Icon(FontAwesomeIcons.heart,
+          color: Colors.pink,
+          size: 15,),
+        backgroundColor: Colors.blue[50],
+      ),
+
     );
   }
 
@@ -128,11 +140,13 @@ class YourProfile extends StatelessWidget {
                             style: TextStyle(fontSize: 20, color: Color.fromRGBO(222, 222, 255, 1), fontWeight: FontWeight.bold),
                           ),
                         ),
-                        Text(
-                          '인생에서 가장 중요한 세 가지는 무엇인가요?',
-                          style: TextStyle(fontSize: 15, color: Color.fromRGBO(222, 222, 255, 1)),
+                        Expanded(
+                          child: Text(
+                            '인생에서 가장 중요한 세 가지는 무엇인가요?',
+                            style: TextStyle(fontSize: 15, color: Color.fromRGBO(222, 222, 255, 1)),
+                          ),
                         ),
-                        Spacer(),
+                        SizedBox(width: 10,),
                       ],
                     ),
                     Row(
@@ -144,11 +158,13 @@ class YourProfile extends StatelessWidget {
                             style: TextStyle(fontSize: 20, color: Color.fromRGBO(222, 222, 255, 1), fontWeight: FontWeight.bold),
                           ),
                         ),
-                        Text(
-                          '제 인생에서 가장 중요한 세 가지는 a, b, c 입니다',
-                          style: TextStyle(fontSize: 15, ),
+                        Expanded(
+                          child: Text(
+                            '제 인생에서 가장 중요한 세 가지는 a, b, c 입니다',
+                            style: TextStyle(fontSize: 15, ),
+                          ),
                         ),
-                        Spacer(),
+                        SizedBox(width: 10,),
                       ],
                     ),
                   ],
@@ -175,10 +191,12 @@ class YourProfile extends StatelessWidget {
                     Row(
                       children: <Widget>[
                         SizedBox(width: 40,),
-                        Center(
-                          child: Text(
-                            '안녕하세요, 저는 ㅇㅇㅇ입니다. 반갑습니다', // text 길이 길어질 경우 어떻게 할지 해결하기
-                            style: TextStyle(fontSize: 15),
+                        Expanded(
+                          child: Center(
+                            child: Text(
+                              '안녕하세요, 저는 ㅇㅇㅇ입니다. 저는 서울에 살고 있습니다. 반갑습니다',
+                              style: TextStyle(fontSize: 15),
+                            ),
                           ),
                         ),
                         SizedBox(width: 40,),
