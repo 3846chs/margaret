@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:margaret/constants/colors.dart';
 import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/firebase/storage_cache_manager.dart';
 import 'package:margaret/pages/chat_page.dart';
@@ -49,25 +50,25 @@ class _HomeState extends State<Home> {
             ),
             Text(
               '마    가    렛',
-              style: GoogleFonts.jua(),
+              style: GoogleFonts.jua(color: Colors.purple[300]),
             ),
             Spacer(
               flex: 2,
             ),
           ],
         ),
-        flexibleSpace: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: <Color>[
-                Color(0xFFCCDDFF),
-                Color(0xFFFFEEFF),
-              ],
-            ),
-          ),
-        ),
+//        flexibleSpace: Container(
+//          decoration: const BoxDecoration(
+//            gradient: LinearGradient(
+//              begin: Alignment.topLeft,
+//              end: Alignment.bottomRight,
+//              colors: <Color>[
+//                Color(0xFFCCDDFF),
+//                Color(0xFFFFEEFF),
+//              ],
+//            ),
+//          ),
+//        ),
       ),
       body: IndexedStack(
         index: _selectedIndex,

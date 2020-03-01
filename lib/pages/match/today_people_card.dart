@@ -25,41 +25,46 @@ class _TodayPeopleCardState extends State<TodayPeopleCard> {
     String formattedDate = formatter.format(now);
     return InkWell(
       child: Container(
-        width: screenAwareSize(300, context),
-        child: Card(
-            elevation: 3,
-            color: Colors.purple[50],
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-            child: Column(
-              children: <Widget>[
-                Container(
-                  width: 270,
-                  height: screenAwareSize(90, context),
-                  child: Card(
-                      color: Colors.blue[100],
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15)),
-                      child: Center(
-                        child: Text(
-                          '   ' + widget.you.answer,
-                          style: GoogleFonts.nanumPenScript(fontSize: 17),
-                        ),
-                      )),
+        width: screenAwareSize(290, context),
+        child: Column(
+          children: <Widget>[
+            Container(
+              width: 270,
+              height: screenAwareSize(90, context),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(15)),
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: <Color>[
+                    Color(0xFFCCDDFF),
+                    Color(0xFFFFEEFF),
+                  ],
                 ),
-                SizedBox(
-                  height: screenAwareSize(20, context),
+              ),
+              child: Center(
+                child: Text(
+                  '   ' + widget.you.answer,
+                  style: GoogleFonts.nanumPenScript(fontSize: 17),
                 ),
-                Container(
-                  width: double.infinity,
-                    child: Text("   저는요...", style: GoogleFonts.jua(fontSize: 15))),
-                BuildTodayAnswer(widget: widget),
-                BuildTodayAnswer(widget: widget),
-                BuildPersonality(
-                  color: Colors.pink[100],
-                ),
-              ],
-            )),
+              ),
+            ),
+            SizedBox(
+              height: screenAwareSize(20, context),
+            ),
+            Container(
+                width: double.infinity,
+                child: Text("   저는요...", style: GoogleFonts.jua(fontSize: 15))),
+            BuildTodayAnswer(widget: widget),
+            SizedBox(
+              height: screenAwareSize(10, context),
+            ),
+            BuildTodayAnswer(widget: widget),
+            BuildPersonality(
+              color: Colors.pink[100],
+            ),
+          ],
+        ),
       ),
       onTap: () {
         showDialog(
@@ -121,18 +126,24 @@ class BuildTodayAnswer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 270,
-      height: screenAwareSize(80, context),
-      child: Card(
-          color: Colors.pink[100],
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-          child: Center(
-              child: Text(
-            '   ' + widget.you.answer,
-            style: GoogleFonts.notoSans(
-              fontSize: 13,
-            ),
-          ))),
+      height: screenAwareSize(70, context),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(15)),
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: <Color>[
+            Color(0xFFCCEEEE),
+            Color(0xFFFFEEDD),
+          ],
+        ),
+      ),
+      child: Center(
+        child: Text(
+          '   ' + widget.you.answer,
+//          style: GoogleFonts.nanumPenScript(fontSize: 17),
+        ),
+      ),
     );
   }
 }
