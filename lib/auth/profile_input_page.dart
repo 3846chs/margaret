@@ -38,8 +38,10 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
 
   List<bool> _genderSelected = [true, false];
 
-  Future<void> _getProfile() async {
-    if (_profiles.length >= 2) return;
+  bool _isButtonEnabled = true;
+
+  Future<void> _getProfile([int index]) async {
+    if (_profiles.length >= 2 && index == null) return;
 
     File image = await ImagePicker.pickImage(source: ImageSource.gallery);
 
@@ -55,7 +57,10 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
 
     if (image != null) {
       setState(() {
-        _profiles.add(image);
+        if (index == null)
+          _profiles.add(image);
+        else
+          _profiles[index] = image;
       });
     }
   }
@@ -97,10 +102,13 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                                   onPressed: _getProfile,
                                 ),
                               )
-                            : Image.file(
-                                _profiles[0],
-                                height: 300,
-                                width: 300,
+                            : FlatButton(
+                                onPressed: () => _getProfile(0),
+                                child: Image.file(
+                                  _profiles[0],
+                                  height: 150,
+                                  width: 150,
+                                ),
                               ),
                       ),
                       Padding(
@@ -114,10 +122,13 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                                   onPressed: _getProfile,
                                 ),
                               )
-                            : Image.file(
-                                _profiles[1],
-                                height: 300,
-                                width: 300,
+                            : FlatButton(
+                                onPressed: () => _getProfile(1),
+                                child: Image.file(
+                                  _profiles[1],
+                                  height: 150,
+                                  width: 150,
+                                ),
                               ),
                       ),
                     ],
@@ -197,11 +208,25 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                 const SizedBox(height: common_l_gap),
                 Builder(
                   builder: (context) => FlatButton(
-                    onPressed: () {
-                      if (_formKey.currentState.validate() &&
-                          _profiles.length > 0) _register(context);
-                    },
-                    child: Text("가입하기", style: TextStyle(color: Colors.white)),
+                    onPressed: !_isButtonEnabled
+                        ? null
+                        : () {
+                            if (_formKey.currentState.validate() &&
+                                _profiles.length > 0) {
+                              setState(() {
+                                _isButtonEnabled = false;
+                              });
+                              _register(context);
+                            }
+                          },
+                    child: _isButtonEnabled
+                        ? Text(
+                            "가입하기",
+                            style: TextStyle(color: Colors.white),
+                          )
+                        : const CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation(Colors.black87),
+                          ),
                     color: pastel_purple,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(6),
