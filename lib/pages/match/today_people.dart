@@ -64,7 +64,7 @@ class NotShowPeople extends StatelessWidget {
           children: <Widget>[
             Text(
               '매 칭 중 . . .',
-              style: GoogleFonts.jua(fontSize: 60, color: pastel_purple),
+              style: GoogleFonts.jua(fontSize: 30, color: pastel_purple),
             ),
             SizedBox(
               height: screenAwareSize(100, context),
@@ -77,8 +77,7 @@ class NotShowPeople extends StatelessWidget {
               height: screenAwareSize(100, context),
             ),
             Text(
-              '같은 선택지를 고른 3명이 모이면 알림을 보내드릴게요!',
-//              style: GoogleFonts.jua(fontSize: 30),
+              '같은 선택지를 고른 이성 3명이 모이면 알림을 보내드릴게요!',
             ),
           ],
         ),

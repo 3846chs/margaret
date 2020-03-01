@@ -50,7 +50,9 @@ class _TodayPeopleCardState extends State<TodayPeopleCard> {
                 SizedBox(
                   height: screenAwareSize(20, context),
                 ),
-                Text("저는요...", style: GoogleFonts.jua(fontSize: 17)),
+                Container(
+                  width: double.infinity,
+                    child: Text("   저는요...", style: GoogleFonts.jua(fontSize: 15))),
                 BuildTodayAnswer(widget: widget),
                 BuildTodayAnswer(widget: widget),
                 BuildPersonality(
