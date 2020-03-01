@@ -27,8 +27,15 @@ class _TodayQuestionState extends State<TodayQuestion> {
 
   @override
   Widget build(BuildContext context) {
+    var now = DateTime.now();
+    var formatter = DateFormat('yyyy-MM-dd');
+    String formattedDate = formatter.format(now);
+
     return StreamBuilder<DocumentSnapshot>(
-        stream: myStream(),
+        stream: Firestore.instance
+            .collection(TODAYQUESTIONS)
+            .document(formattedDate)
+            .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.data == null)
             return LoadingPage();
@@ -100,6 +107,9 @@ class _TodayQuestionState extends State<TodayQuestion> {
                                       .document(value.userData.userKey);
 
                                   userRef.updateData({'exposed': 0});
+                                  userRef.updateData({
+                                    'answer': answer
+                                  }); // 유저 field 에 답변 저장(your_profile 에서 꺼내기 용이하게 하려고)
 
                                   var now = DateTime.now();
                                   var formatter = DateFormat('yyyy-MM-dd');
@@ -153,7 +163,7 @@ class _TodayQuestionState extends State<TodayQuestion> {
 
                                   ds.data['unmatchedList']
                                       .forEach((unmatchedUserKey) async {
-                                        // unmatchedUserKey 가 (계정 삭제 등으로 인해) invalid 할 수도 있음 => 에러남 -> 나중에 처리
+                                    // unmatchedUserKey 가 (계정 삭제 등으로 인해) invalid 할 수도 있음 => 에러남 -> 나중에 처리
                                     List<String> recommendedPeople =
                                         await matchUser(unmatchedUserKey);
 
@@ -207,17 +217,6 @@ class _TodayQuestionState extends State<TodayQuestion> {
             );
           }
         });
-  }
-
-  Stream<DocumentSnapshot> myStream() {
-    var now = DateTime.now();
-    var formatter = DateFormat('yyyy-MM-dd');
-    String formattedDate = formatter.format(now);
-
-    return Firestore.instance
-        .collection(TODAYQUESTIONS)
-        .document(formattedDate)
-        .snapshots();
   }
 
   Widget _buildQuestion(String question) {

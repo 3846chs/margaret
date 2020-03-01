@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:margaret/constants/colors.dart';
 import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/firebase/storage_cache_manager.dart';
 import 'package:margaret/pages/chat_page.dart';
@@ -12,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -41,22 +43,32 @@ class _HomeState extends State<Home> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Margaret',
-          style: GoogleFonts.handlee(fontWeight: FontWeight.bold),
-        ),
-        flexibleSpace: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: <Color>[
-                Color(0xFFCCDDFF),
-                Color(0xFFFFEEFF),
-              ],
+        title: Row(
+          children: <Widget>[
+            Spacer(
+              flex: 1,
             ),
-          ),
+            Text(
+              '마    가    렛',
+              style: GoogleFonts.jua(color: Colors.purple[300]),
+            ),
+            Spacer(
+              flex: 2,
+            ),
+          ],
         ),
+//        flexibleSpace: Container(
+//          decoration: const BoxDecoration(
+//            gradient: LinearGradient(
+//              begin: Alignment.topLeft,
+//              end: Alignment.bottomRight,
+//              colors: <Color>[
+//                Color(0xFFCCDDFF),
+//                Color(0xFFFFEEFF),
+//              ],
+//            ),
+//          ),
+//        ),
       ),
       body: IndexedStack(
         index: _selectedIndex,
@@ -140,7 +152,15 @@ class _HomeState extends State<Home> {
           ),
           ListTile(
             title: Text('오늘의 질문 제보'),
-            onTap: null,
+            onTap: () async {
+              const url =
+                  'https://docs.google.com/forms/d/e/1FAIpQLSfOH4Q7M6i5q0BMu4TGe-_P_XoDjfIvzNTTKYTsoxjr5ZRqCw/viewform';
+              if (await canLaunch(url)) {
+                await launch(url);
+              } else {
+                throw 'Could not launch $url';
+              }
+            },
           ),
           ListTile(
             title: Text('알림 설정'),

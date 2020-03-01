@@ -1,7 +1,12 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:margaret/constants/colors.dart';
 import 'package:margaret/constants/firebase_keys.dart';
 import 'package:margaret/data/user.dart';
+import 'package:margaret/firebase/firestore_provider.dart';
 import 'package:margaret/firebase/transformer.dart';
+import 'package:margaret/utils/base_height.dart';
 import 'package:margaret/widgets/loading_page.dart';
 import 'package:margaret/pages/match/today_people_card.dart';
 import 'package:flutter/material.dart';
@@ -34,8 +39,9 @@ class TodayPeople extends StatelessWidget with Transformer {
             return NotShowPeople();
           else {
             return ShowPeople(
-              recommendedPeople:
-                  snapshot.data.data['recommendedPeople'].cast<String>(),
+              recommendedPeople: snapshot.data.data['recommendedPeople']
+                  .cast<String>()
+                  .toList(),
             );
           }
         }
@@ -53,8 +59,27 @@ class NotShowPeople extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: SpinKitCircle(
-          color: Colors.greenAccent,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              '매 칭 중 . . .',
+              style: GoogleFonts.jua(fontSize: 30, color: pastel_purple),
+            ),
+            SizedBox(
+              height: screenAwareSize(100, context),
+            ),
+            SpinKitRipple(
+              color: Colors.pinkAccent,
+              size: 100,
+            ),
+            SizedBox(
+              height: screenAwareSize(100, context),
+            ),
+            Text(
+              '같은 선택지를 고른 이성 3명이 모이면 알림을 보내드릴게요!',
+            ),
+          ],
         ),
       ),
     );
@@ -67,9 +92,7 @@ class ShowPeople extends StatelessWidget {
     @required this.recommendedPeople,
   }) : super(key: key);
 
-
   final List<String> recommendedPeople;
-
 
   @override
   Widget build(BuildContext context) {
@@ -85,45 +108,51 @@ class ShowPeople extends StatelessWidget {
             .document(formattedDate)
             .snapshots(),
         builder: (context, snapshot) {
-          if (snapshot.data == null)
-            return LoadingPage();
-          else if (!snapshot.hasData)
+          if (snapshot.data == null || !snapshot.hasData)
             return LoadingPage();
           else
             return SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  SizedBox(
-                    height: 50,
-                  ),
-                  Text(
-                    snapshot.data.data['question'],
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.black,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  Text(
-                    snapshot.data.data['choice'],
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 15,
-                      color: Colors.blueAccent,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  TodayPeopleCard(recommendedPeople[0]),
-                  TodayPeopleCard(recommendedPeople[1]),
-                  TodayPeopleCard(recommendedPeople[2]),
-                ],
+                child: Column(children: <Widget>[
+              SizedBox(
+                height: screenAwareSize(40, context),
               ),
-            );
+              Text(
+                snapshot.data.data['question'],
+                textAlign: TextAlign.center,
+                style: GoogleFonts.jua(fontSize: 20),
+              ),
+              SizedBox(
+                height: screenAwareSize(20, context),
+              ),
+              Text(
+                snapshot.data.data['choice'],
+                textAlign: TextAlign.center,
+                style: GoogleFonts.jua(fontSize: 15, color: Colors.blueAccent),
+              ),
+              SizedBox(
+                height: screenAwareSize(20, context),
+              ),
+              CarouselSlider.builder(
+                height: screenAwareSize(370, context),
+                enlargeCenterPage: true,
+                enableInfiniteScroll: false,
+                itemCount: 3,
+                itemBuilder: (BuildContext context, int itemIndex) {
+                  return StreamBuilder(
+                    stream: recommendedPeople
+                        .map(
+                            (userKey) => firestoreProvider.connectUser(userKey))
+                        .toList()[itemIndex],
+                    builder: (context, snapshot) {
+                      if (snapshot.data == null || !snapshot.hasData)
+                        return CircularProgressIndicator();
+                      else
+                        return TodayPeopleCard(snapshot.data);
+                    },
+                  );
+                },
+              )
+            ]));
         });
   }
 }
