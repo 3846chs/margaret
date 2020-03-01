@@ -43,6 +43,30 @@ class _HomeState extends State<Home> {
 
     return Scaffold(
       appBar: AppBar(
+        leading: Builder(
+          builder: (BuildContext context) {
+            return GestureDetector(
+              onTap: () => Scaffold.of(context).openDrawer(),
+              child: CircleAvatar(
+                child: ClipOval(
+                  child: Consumer<MyUserData>(
+                    builder: (context, value, child) {
+                      return CachedNetworkImage(
+                        width: 40,
+                        imageUrl: "profiles/${value.userData.profiles[0]}",
+                        cacheManager: StorageCacheManager(),
+                        placeholder: (context, url) =>
+                            const CircularProgressIndicator(),
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.account_circle),
+                      );
+                    },
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
         title: Row(
           children: <Widget>[
             Spacer(

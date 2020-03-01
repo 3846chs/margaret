@@ -1,10 +1,14 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:margaret/constants/colors.dart';
 import 'package:margaret/constants/firebase_keys.dart';
 import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:margaret/data/user.dart';
+import 'package:margaret/firebase/storage_cache_manager.dart';
 import 'package:margaret/utils/base_height.dart';
 import 'package:provider/provider.dart';
 
@@ -25,13 +29,56 @@ class _TodayPeopleCardState extends State<TodayPeopleCard> {
     String formattedDate = formatter.format(now);
     return InkWell(
       child: Container(
-        width: screenAwareSize(290, context),
+        width: screenAwareSize(300, context),
         child: Column(
           children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                CircleAvatar(
+                  child: ClipOval(
+                    child: Consumer<MyUserData>(
+                      builder: (context, value, child) {
+                        return CachedNetworkImage(
+                          imageUrl: "profiles/${widget.you.profiles[0]}",
+                          cacheManager: StorageCacheManager(),
+                          placeholder: (context, url) =>
+                              const CircularProgressIndicator(),
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.account_circle),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 20,
+                ),
+                Text(
+                  widget.you.nickname,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+            Container(
+                alignment: Alignment(-1, 0),
+                child: Icon(
+                  FontAwesomeIcons.quoteLeft,
+                  size: 15,
+                  color:  Colors.purple[100],
+                )),
             Container(
               width: 270,
               height: screenAwareSize(90, context),
               decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey,
+                    blurRadius: 2.0,
+                    spreadRadius: 0.0,
+                    offset: Offset(2.0, 2.0), // shadow direction: bottom right
+                  )
+                ],
                 borderRadius: BorderRadius.all(Radius.circular(15)),
                 gradient: LinearGradient(
                   begin: Alignment.topLeft,
@@ -45,24 +92,26 @@ class _TodayPeopleCardState extends State<TodayPeopleCard> {
               child: Center(
                 child: Text(
                   '   ' + widget.you.answer,
-                  style: GoogleFonts.nanumPenScript(fontSize: 17),
+                  style: GoogleFonts.nanumPenScript(fontSize: 18),
                 ),
               ),
             ),
-            SizedBox(
-              height: screenAwareSize(20, context),
-            ),
             Container(
-                width: double.infinity,
-                child: Text("   저는요...", style: GoogleFonts.jua(fontSize: 15))),
-            BuildTodayAnswer(widget: widget),
+                alignment: Alignment(1, 0),
+                child: Icon(
+                  FontAwesomeIcons.quoteRight,
+                  size: 15 ,
+                  color:  Colors.purple[100],
+                )),
+            Center(child: Text("가치관 소개", style: GoogleFonts.jua(fontSize: 15))),
+            BuildValue1(),
             SizedBox(
-              height: screenAwareSize(10, context),
+              height: screenAwareSize(5, context),
             ),
-            BuildTodayAnswer(widget: widget),
-            BuildPersonality(
-              color: Colors.pink[100],
-            ),
+            NewWidget(),
+//            BuildPersonality(
+//              color: Colors.blue[100],
+//            ),
           ],
         ),
       ),
@@ -114,13 +163,10 @@ class _TodayPeopleCardState extends State<TodayPeopleCard> {
   }
 }
 
-class BuildTodayAnswer extends StatelessWidget {
-  const BuildTodayAnswer({
+class NewWidget extends StatelessWidget {
+  const NewWidget({
     Key key,
-    @required this.widget,
   }) : super(key: key);
-
-  final TodayPeopleCard widget;
 
   @override
   Widget build(BuildContext context) {
@@ -138,11 +184,38 @@ class BuildTodayAnswer extends StatelessWidget {
           ],
         ),
       ),
-      child: Center(
-        child: Text(
-          '   ' + widget.you.answer,
-//          style: GoogleFonts.nanumPenScript(fontSize: 17),
+      child: Text(
+        'Q. 휴일에 주로 무엇을 하나요? \n\nA. 요리하기 청소하기 쇼핑하기',
+        style: GoogleFonts.jua(fontSize: 13),
+      ),
+    );
+  }
+}
+
+class BuildValue1 extends StatelessWidget {
+  const BuildValue1({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 270,
+      height: screenAwareSize(70, context),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(15)),
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: <Color>[
+            Color(0xFFCCEEEE),
+            Color(0xFFFFEEDD),
+          ],
         ),
+      ),
+      child: Text(
+        ' Q. 인생에서 가장 중요한 세가지는 무엇인가요?\n\n A. 돈과 사랑과 건강입니다,',
+        style: GoogleFonts.jua(fontSize: 13),
       ),
     );
   }
