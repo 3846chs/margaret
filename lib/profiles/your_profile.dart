@@ -70,8 +70,8 @@ class YourProfile extends StatelessWidget {
                 _selfIntroduction(),
                 SizedBox(height: 20,),
                 // 가치관 질문
-                _valueQuestions(),
-                _valueQuestions(),
+//                _valueQuestions(),
+//                _valueQuestions(),
                 SizedBox(height: 20,),
                 // 기본 정보
                 ProfileBasicInfo('나이',

@@ -2,12 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:margaret/constants/material_white_color.dart';
 import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/home.dart';
-import 'package:margaret/widgets/loading_page.dart';
+import 'package:margaret/pages/auth/auth_main.dart';
+import 'package:margaret/pages/loading_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
-import 'auth/auth_main.dart';
 
 void main() => runApp(ChangeNotifierProvider<MyUserData>(
     create: (context) => MyUserData(), child: OurApp()));

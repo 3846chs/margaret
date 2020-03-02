@@ -12,6 +12,7 @@ class UserKeys {
   static const KEY_REGION = 'region';
   static const KEY_JOB = 'job';
   static const KEY_HEIGHT = 'height';
+  static const KEY_INTRODUCTION = 'introduction';
   static const KEY_RECENTMATCHSTATE = 'recentMatchState';
   static const KEY_RECENTMATCHTIME = 'recentMatchTime';
   static const KEY_CHATS = 'chats';

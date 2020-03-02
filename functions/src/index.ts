@@ -3,6 +3,38 @@ import * as admin from "firebase-admin";
 
 admin.initializeApp();
 
+export const createToken = functions
+    .region("asia-northeast1")
+    .https.onCall(async (data, context) => {
+        const id: string = data.id;
+        const email: string = data.email;
+
+        console.log("creating a firebase user");
+
+        const updateParams: admin.auth.CreateRequest = {
+            displayName: email
+        };
+
+        console.log(updateParams);
+
+        const userRecord = await admin
+            .auth()
+            .updateUser(id, updateParams)
+            .catch(error => {
+                if (error.code === "auth/user-not-found") {
+                    updateParams.uid = id;
+                    updateParams.email = email;
+                    return admin.auth().createUser(updateParams);
+                }
+                throw error;
+            });
+        const userId = userRecord.uid;
+
+        console.log(`creating a custom firebase token based on uid ${userId}`);
+
+        return { firebaseToken: await admin.auth().createCustomToken(userId) };
+    });
+
 export const sendNotification = functions
     .region("asia-northeast1")
     .firestore.document("Chats/{groupId1}/{groupId2}/{message}")
