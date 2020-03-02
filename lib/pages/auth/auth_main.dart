@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter_kakao_login/flutter_kakao_login.dart';
+import 'package:flutter_naver_login/flutter_naver_login.dart';
 import 'package:margaret/constants/firebase_keys.dart';
 import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/pages/auth/email/email_auth.dart';
@@ -19,6 +20,7 @@ import 'package:flutter/services.dart';
 class AuthMain extends StatelessWidget {
   final _firestore = Firestore.instance;
   final _auth = FirebaseAuth.instance;
+  final _cloudFunctions = CloudFunctions(region: "asia-northeast1");
 
   final _googleSignIn = GoogleSignIn();
   final _kakaoSignIn = FlutterKakaoLogin();
@@ -73,7 +75,7 @@ class AuthMain extends StatelessWidget {
                     text: "Naver  로그인",
                     icon: FontAwesomeIcons.facebookF,
                     color: Colors.green,
-                    onPressed: () => null,
+                    onPressed: () => _handleNaverSignIn(context),
                   ),
                   SizedBox(height: screenAwareSize(5.0, context)),
                   LoginButton(
@@ -159,11 +161,63 @@ class AuthMain extends StatelessWidget {
       }
 
       if (result.status == KakaoLoginStatus.loggedIn) {
-        final createTokenCallable = CloudFunctions(region: "asia-northeast1")
-            .getHttpsCallable(functionName: "createToken");
+        final createTokenCallable =
+            _cloudFunctions.getHttpsCallable(functionName: "createToken");
         final response = await createTokenCallable.call(<String, dynamic>{
           "id": "kakao:${result.account.userID}",
           "email": result.account.userEmail,
+        });
+
+        final authResult = await _auth.signInWithCustomToken(
+            token: response.data["firebaseToken"]);
+        final user = authResult.user;
+
+        if (user == null) {
+          simpleSnackbar(context, '존재하지 않는 계정입니다');
+          return;
+        }
+
+        print("signed in " + user.displayName);
+
+        final snapShot = await _firestore
+            .collection(COLLECTION_USERS)
+            .document(user.uid)
+            .get();
+
+        if (snapShot == null || !snapShot.exists) {
+          // 해당 snapshot 이 존재하지 않을 때
+          print('Not yet Registered - Profile Input Page');
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      ProfileInputPage(authResult: authResult)));
+        } else {
+          Provider.of<MyUserData>(context, listen: false)
+              .setNewStatus(MyUserDataStatus.progress);
+        }
+      }
+    } on PlatformException catch (exception) {
+      print(exception.code);
+      simpleSnackbar(context, exception.message);
+    }
+  }
+
+  Future<void> _handleNaverSignIn(BuildContext context) async {
+    try {
+      final result = await FlutterNaverLogin.logIn();
+
+      if (result.status == NaverLoginStatus.error) {
+        simpleSnackbar(context, result.errorMessage);
+        return;
+      }
+
+      if (result.status == NaverLoginStatus.loggedIn) {
+        final createTokenCallable =
+            _cloudFunctions.getHttpsCallable(functionName: "createToken");
+        final response = await createTokenCallable.call(<String, dynamic>{
+          "id": "naver:${result.account.id}",
+          "email": result.account.email,
         });
 
         final authResult = await _auth.signInWithCustomToken(
