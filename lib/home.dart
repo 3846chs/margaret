@@ -5,7 +5,7 @@ import 'package:margaret/firebase/storage_cache_manager.dart';
 import 'package:margaret/pages/chat_page.dart';
 import 'package:margaret/pages/match/match_main.dart';
 import 'package:margaret/pages/receive_page.dart';
-import 'package:margaret/pages/send_page.dart';
+import 'package:margaret/pages/send/send_page.dart';
 import 'package:margaret/profiles/temp_my_profile.dart';
 import 'package:margaret/utils/notification.dart';
 import 'package:firebase_auth/firebase_auth.dart';

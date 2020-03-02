@@ -135,7 +135,7 @@ class ShowPeople extends StatelessWidget {
                 height: screenAwareSize(400, context),
                 enlargeCenterPage: true,
                 enableInfiniteScroll: false,
-                itemCount: 3,
+                itemCount: recommendedPeople.length,
                 itemBuilder: (BuildContext context, int itemIndex) {
                   return StreamBuilder(
                     stream: recommendedPeople
