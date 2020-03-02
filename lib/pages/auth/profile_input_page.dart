@@ -16,11 +16,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class ProfileInputPage extends StatefulWidget {
-  final String email;
-  final String password;
   final AuthResult authResult;
 
-  ProfileInputPage({this.authResult, this.email, this.password});
+  ProfileInputPage({@required this.authResult});
 
   @override
   _ProfileInputPageState createState() => _ProfileInputPageState();
@@ -252,53 +250,35 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
   }
 
   Future<void> _register(BuildContext context) async {
-    AuthResult authResult;
-
-    if (widget.authResult == null) {
-      //  이메일 가입일 경우, createUserWithEmailAndPassword 을 통해 AuthResult 를 만든다.
-      print('이메일 가입');
-      authResult = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: widget.email, password: widget.password);
+    if (widget.authResult.user == null) {
+      simpleSnackbar(context, 'Please try again later!');
     } else {
-      authResult = widget.authResult;
-    }
+      final profiles = await Stream.fromIterable(_profiles)
+          .asyncMap((image) => storageProvider.uploadImg(image,
+              "profiles/${DateTime.now().millisecondsSinceEpoch}_${widget.authResult.user.uid}"))
+          .toList();
+      final user = User(
+        userKey: widget.authResult.user.uid,
+        profiles: profiles.map((image) => image.substring(9)).toList(),
+        email: widget.authResult.user.email,
+        nickname: _nicknameController.text,
+        gender: _genderSelected[0] ? '남성' : '여성',
+        birthYear: int.parse(_birthYearController.text),
+        region: _regionController.text,
+        job: _jobController.text,
+        height: int.parse(_heightController.text),
+        introduction: _introductionController.text,
+        recentMatchTime: Timestamp.now(),
+        recentMatchState: MatchState.QUESTION,
+        exposed: 0,
+        chats: [],
+      );
 
-    try {
-      if (authResult.user == null) {
-        simpleSnackbar(context, 'Please try again later!');
-      } else {
-        final profiles = await Stream.fromIterable(_profiles)
-            .asyncMap((image) => storageProvider.uploadImg(image,
-                "profiles/${DateTime.now().millisecondsSinceEpoch}_${authResult.user.uid}"))
-            .toList();
-        final user = User(
-          userKey: authResult.user.uid,
-          profiles: profiles.map((image) => image.substring(9)).toList(),
-          email: authResult.user.email,
-          nickname: _nicknameController.text,
-          gender: _genderSelected[0] ? '남성' : '여성',
-          birthYear: int.parse(_birthYearController.text),
-          region: _regionController.text,
-          job: _jobController.text,
-          height: int.parse(_heightController.text),
-          introduction: _introductionController.text,
-          recentMatchTime: Timestamp.now(),
-          recentMatchState: MatchState.QUESTION,
-          exposed: 0,
-          chats: [],
-        );
+      await firestoreProvider.attemptCreateUser(user);
 
-        await firestoreProvider.attemptCreateUser(user);
-
-        Provider.of<MyUserData>(context, listen: false)
-            .setNewStatus(MyUserDataStatus.progress);
-        Navigator.pop(context);
-      }
-    } on PlatformException catch (exception) {
-      if (exception.code == 'ERROR_EMAIL_ALREADY_IN_USE')
-        simpleSnackbar(context, '이미 가입된 이메일 주소입니다');
-      else
-        simpleSnackbar(context, exception.message);
+      Provider.of<MyUserData>(context, listen: false)
+          .setNewStatus(MyUserDataStatus.progress);
+      Navigator.pop(context);
     }
   }
 

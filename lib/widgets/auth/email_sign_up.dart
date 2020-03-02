@@ -1,9 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
 import 'package:margaret/constants/colors.dart';
 import 'package:margaret/constants/size.dart';
-import 'package:margaret/auth/profile_input_page.dart';
+import 'package:margaret/pages/auth/profile_input_page.dart';
 import 'package:margaret/utils/base_height.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:margaret/utils/simple_snack_bar.dart';
 
 class EmailSignUpForm extends StatefulWidget {
   @override
@@ -85,15 +88,22 @@ class _EmailSignUpFormState extends State<EmailSignUpForm> {
                 height: common_l_gap,
               ),
               FlatButton(
-                onPressed: () {
+                onPressed: () async {
                   if (_formKey.currentState.validate()) {
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ProfileInputPage(
-                                  email: _emailController.text,
-                                  password: _pwController.text,
-                                )));
+                    try {
+                      final authResult = await FirebaseAuth.instance
+                          .createUserWithEmailAndPassword(
+                              email: _emailController.text,
+                              password: _pwController.text);
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  ProfileInputPage(authResult: authResult)));
+                    } on PlatformException catch (exception) {
+                      print(exception.code);
+                      simpleSnackbar(context, exception.message);
+                    }
                   }
                 },
                 child: Text('다음', style: TextStyle(color: Colors.white)),

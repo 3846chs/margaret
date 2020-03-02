@@ -2,7 +2,7 @@ import 'package:margaret/constants/firebase_keys.dart';
 import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/data/user.dart';
 import 'package:margaret/firebase/firestore_provider.dart';
-import 'package:margaret/widgets/loading_page.dart';
+import 'package:margaret/pages/loading_page.dart';
 import 'package:margaret/pages/match/today_finished.dart';
 import 'package:margaret/pages/match/today_people.dart';
 import 'package:margaret/pages/match/today_question.dart';

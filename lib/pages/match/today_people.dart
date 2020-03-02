@@ -6,8 +6,8 @@ import 'package:margaret/constants/firebase_keys.dart';
 import 'package:margaret/data/user.dart';
 import 'package:margaret/firebase/firestore_provider.dart';
 import 'package:margaret/firebase/transformer.dart';
+import 'package:margaret/pages/loading_page.dart';
 import 'package:margaret/utils/base_height.dart';
-import 'package:margaret/widgets/loading_page.dart';
 import 'package:margaret/pages/match/today_people_card.dart';
 import 'package:flutter/material.dart';
 import 'package:margaret/data/provider/my_user_data.dart';
@@ -30,21 +30,14 @@ class TodayPeople extends StatelessWidget with Transformer {
           .document(formattedDate)
           .snapshots(),
       builder: (context, snapshot) {
-        if (snapshot.data == null)
-          return LoadingPage();
-        else if (!snapshot.hasData)
-          return LoadingPage();
-        else {
-          if (snapshot.data.data['recommendedPeople'] == null)
-            return NotShowPeople();
-          else {
-            return ShowPeople(
-              recommendedPeople: snapshot.data.data['recommendedPeople']
-                  .cast<String>()
-                  .toList(),
-            );
-          }
-        }
+        if (snapshot.data == null || !snapshot.hasData) return LoadingPage();
+
+        if (snapshot.data.data['recommendedPeople'] == null)
+          return NotShowPeople();
+        return ShowPeople(
+          recommendedPeople:
+              snapshot.data.data['recommendedPeople'].cast<String>().toList(),
+        );
       },
     );
   }

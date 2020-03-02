@@ -4,8 +4,8 @@ import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/data/user.dart';
 import 'package:margaret/firebase/firestore_provider.dart';
 import 'package:margaret/firebase/transformer.dart';
+import 'package:margaret/pages/loading_page.dart';
 import 'package:margaret/pages/match/selected_person.dart';
-import 'package:margaret/widgets/loading_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
@@ -26,30 +26,22 @@ class TodayFinished extends StatelessWidget with Transformer {
             .document(formattedDate)
             .snapshots(),
         builder: (context, snapshot) {
-          if (snapshot.data == null)
-            return LoadingPage();
-          else if (!snapshot.hasData)
-            return LoadingPage();
-          else {
-            if (snapshot.data['finished'] == null ||
-                snapshot.data['finished'] == false) {
-              String yourKey = snapshot.data['selectedPerson'];
-              return StreamBuilder<User>(
-                stream: firestoreProvider.connectUser(yourKey),
-                builder: (context, snapshot) {
-                  if (snapshot.data == null)
-                    return LoadingPage();
-                  else if (!snapshot.hasData)
-                    return LoadingPage();
-                  else {
-                    User you = snapshot.data;
-                    return SelectedPerson(you);
-                  }
-                },
-              );
-            } else
-              return MatchFinished();
+          if (snapshot.data == null || !snapshot.hasData) return LoadingPage();
+
+          if (snapshot.data['finished'] == null ||
+              snapshot.data['finished'] == false) {
+            String yourKey = snapshot.data['selectedPerson'];
+            return StreamBuilder<User>(
+              stream: firestoreProvider.connectUser(yourKey),
+              builder: (context, snapshot) {
+                if (snapshot.data == null || !snapshot.hasData)
+                  return LoadingPage();
+                User you = snapshot.data;
+                return SelectedPerson(you);
+              },
+            );
           }
+          return MatchFinished();
         });
   }
 }

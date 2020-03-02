@@ -1,8 +1,7 @@
-
-import 'package:margaret/auth/email/email_sign_in.dart';
-import 'package:margaret/auth/email/email_sign_up.dart';
 import 'package:margaret/constants/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:margaret/widgets/auth/email_sign_in.dart';
+import 'package:margaret/widgets/auth/email_sign_up.dart';
 
 class EmailAuth extends StatefulWidget {
   @override
@@ -53,8 +52,9 @@ class _EmailAuthState extends State<EmailAuth> {
                 text: (currentWidget is EmailSignInForm) ? "계정 만들기" : "로그인 하기",
               ),
               TextSpan(
-                  text:
-                      (currentWidget is EmailSignInForm) ? '  Sign Up' : '  Sign In',
+                  text: (currentWidget is EmailSignInForm)
+                      ? '  Sign Up'
+                      : '  Sign In',
                   style: TextStyle(
                       fontWeight: FontWeight.bold, color: pastel_purple)),
             ],
