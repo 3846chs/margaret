@@ -111,10 +111,9 @@ class ShowPeople extends StatelessWidget {
           if (snapshot.data == null || !snapshot.hasData)
             return LoadingPage();
           else
-            return SingleChildScrollView(
-                child: Column(children: <Widget>[
+            return Column(children: <Widget>[
               SizedBox(
-                height: screenAwareSize(40, context),
+                height: screenAwareSize(25, context),
               ),
               Text(
                 snapshot.data.data['question'],
@@ -133,7 +132,7 @@ class ShowPeople extends StatelessWidget {
                 height: screenAwareSize(20, context),
               ),
               CarouselSlider.builder(
-                height: screenAwareSize(370, context),
+                height: screenAwareSize(400, context),
                 enlargeCenterPage: true,
                 enableInfiniteScroll: false,
                 itemCount: 3,
@@ -147,12 +146,12 @@ class ShowPeople extends StatelessWidget {
                       if (snapshot.data == null || !snapshot.hasData)
                         return CircularProgressIndicator();
                       else
-                        return TodayPeopleCard(snapshot.data);
+                        return TodayPeopleCard(snapshot.data, itemIndex);
                     },
                   );
                 },
               )
-            ]));
+            ]);
         });
   }
 }
