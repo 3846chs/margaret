@@ -29,7 +29,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
   String region;
   String job;
   int height;
-  //String introduction;
+  String introduction;
   //String answer1;
   //String answer2;
 
@@ -43,6 +43,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
     region = widget.user.region;
     job = widget.user.job;
     height = widget.user.height;
+    introduction = widget.user.introduction;
   }
 
   @override
@@ -62,7 +63,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
                   UserKeys.KEY_JOB: job,
                   UserKeys.KEY_HEIGHT: height,
                   UserKeys.KEY_REGION: region,
-                  //UserKeys.KEY_INTRODUCTION: introduction,
+                  UserKeys.KEY_INTRODUCTION: introduction,
                   //UserKeys.KEY_ANSWER1: answer1,
                   //UserKeys.KEY_ANSWER2: answer2,
                 });
@@ -158,8 +159,8 @@ class _TempMyProfileState extends State<TempMyProfile> {
                         )),
                   ),
                   _selfIntroduction(),
-                  _valueQuestions(),
-                  _valueQuestions(),
+//                  _valueQuestions(),
+//                  _valueQuestions(),
                 ],
               );
             }),
@@ -596,13 +597,13 @@ class _TempMyProfileState extends State<TempMyProfile> {
                 child: Center(
                   child: InkWell(
                     child: Text(
-                      '안녕하세요, 저는 $nickname 입니다. 저는 $region에 살고 있습니다. 반갑습니다',
+                      '$introduction',
                       style: TextStyle(fontSize: 15),
                     ),
                     onTap: () {
                       return showDialog(
                         context: context,
-                        builder: (context) => _buildIntroductionDialog(context, email),
+                        builder: (context) => _buildIntroductionDialog(context),
                       );
                     },
                   ),
@@ -673,7 +674,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
     );
   }
 
-  AlertDialog _buildIntroductionDialog(BuildContext context, String str) {
+  AlertDialog _buildIntroductionDialog(BuildContext context) {
     return AlertDialog(
       content: TextFormField(
         controller: _textEditingController,
@@ -684,7 +685,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
           onPressed: () {
             Navigator.pop(context);
             setState(() {
-              str = _textEditingController.text;
+              introduction = _textEditingController.text;
               _textEditingController.clear();
             });
           },

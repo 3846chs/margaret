@@ -33,6 +33,7 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
   final _regionController = TextEditingController();
   final _jobController = TextEditingController();
   final _heightController = TextEditingController();
+  final _introductionController = TextEditingController();
 
   List<File> _profiles = [];
 
@@ -72,6 +73,7 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
     _regionController.dispose();
     _jobController.dispose();
     _heightController.dispose();
+    _introductionController.dispose();
     super.dispose();
   }
 
@@ -206,6 +208,15 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                   },
                 ),
                 const SizedBox(height: common_l_gap),
+                TextFormField(
+                  controller: _introductionController,
+                  decoration: getTextFieldDecor('나의 가치관을 나타낼 수 있는 자기소개를 해주세요'),
+                  validator: (value) {
+                    if (value.isEmpty) return '자기소개를 입력해주세요!';
+                    return null;
+                  },
+                ),
+                const SizedBox(height: common_l_gap),
                 Builder(
                   builder: (context) => FlatButton(
                     onPressed: !_isButtonEnabled
@@ -270,6 +281,7 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
           region: _regionController.text,
           job: _jobController.text,
           height: int.parse(_heightController.text),
+          introduction: _introductionController.text,
           recentMatchTime: Timestamp.now(),
           recentMatchState: MatchState.QUESTION,
           exposed: 0,

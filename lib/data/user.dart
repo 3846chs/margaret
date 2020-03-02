@@ -12,6 +12,7 @@ class User {
   String region;
   String job;
   int height;
+  String introduction;
   MatchState recentMatchState;
   Timestamp recentMatchTime;
   int exposed;
@@ -29,6 +30,7 @@ class User {
     this.region,
     this.job,
     this.height,
+    this.introduction,
     this.recentMatchState,
     this.recentMatchTime,
     this.exposed,
@@ -49,6 +51,7 @@ class User {
     region = map[UserKeys.KEY_REGION];
     job = map[UserKeys.KEY_JOB];
     height = map[UserKeys.KEY_HEIGHT];
+    introduction = map[UserKeys.KEY_INTRODUCTION];
     chats = <String>[];
     pushToken = map[UserKeys.KEY_PUSHTOKEN];
     map[UserKeys.KEY_CHATS].forEach((v) {
@@ -74,6 +77,7 @@ class User {
         UserKeys.KEY_REGION: region,
         UserKeys.KEY_JOB: job,
         UserKeys.KEY_HEIGHT: height,
+        UserKeys.KEY_INTRODUCTION: introduction,
         UserKeys.KEY_RECENTMATCHSTATE: recentMatchState.value,
         UserKeys.KEY_RECENTMATCHTIME: recentMatchTime,
         UserKeys.KEY_EXPOSED: exposed,
