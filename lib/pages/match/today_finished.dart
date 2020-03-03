@@ -65,7 +65,6 @@ class MatchFinished extends StatelessWidget {
               '다음 매칭까지 남은 시간',
               style: GoogleFonts.jua(fontSize: 20, color: Colors.black54),
             ),
-
             SizedBox(
               height: screenAwareSize(100, context),
             ),

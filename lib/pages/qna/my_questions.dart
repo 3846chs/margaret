@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class ReturnedAnswers extends StatelessWidget {
-  const ReturnedAnswers({
+class MyQuestions extends StatelessWidget {
+  const MyQuestions({
     Key key,
   }) : super(key: key);
 

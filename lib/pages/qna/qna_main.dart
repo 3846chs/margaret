@@ -1,15 +1,16 @@
 import 'package:margaret/constants/colors.dart';
-import 'package:margaret/pages/send/peer_questions.dart';
-import 'package:margaret/pages/send/returned_answers.dart';
-import 'package:margaret/pages/send/write_question.dart';
-import 'package:flutter/material.dart';
 
-class SendPage extends StatefulWidget {
+import 'package:flutter/material.dart';
+import 'package:margaret/pages/qna/my_questions.dart';
+import 'package:margaret/pages/qna/peer_questions.dart';
+import 'package:margaret/pages/qna/write_question.dart';
+
+class QnAMain extends StatefulWidget {
   @override
-  _SendPageState createState() => _SendPageState();
+  _QnAMainState createState() => _QnAMainState();
 }
 
-class _SendPageState extends State<SendPage> {
+class _QnAMainState extends State<QnAMain> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -43,7 +44,7 @@ class _SendPageState extends State<SendPage> {
           body: TabBarView(
             children: <Widget>[
               PeerQuestions(),
-              ReturnedAnswers(),
+              MyQuestions(),
             ],
           ),
         ),

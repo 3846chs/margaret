@@ -1,11 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:margaret/constants/colors.dart';
+
 import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/firebase/storage_cache_manager.dart';
 import 'package:margaret/pages/chat_page.dart';
 import 'package:margaret/pages/match/match_main.dart';
+import 'package:margaret/pages/qna/qna_main.dart';
 import 'package:margaret/pages/receive_page.dart';
-import 'package:margaret/pages/send/send_page.dart';
+
 import 'package:margaret/profiles/temp_my_profile.dart';
 import 'package:margaret/utils/notification.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -26,7 +27,7 @@ class _HomeState extends State<Home> {
 
   static List<Widget> _widgetOptions = <Widget>[
     MatchMain(),
-    SendPage(),
+    QnAMain(),
     ReceivePage(),
     ChatPage(),
   ];
@@ -81,18 +82,6 @@ class _HomeState extends State<Home> {
             ),
           ],
         ),
-//        flexibleSpace: Container(
-//          decoration: const BoxDecoration(
-//            gradient: LinearGradient(
-//              begin: Alignment.topLeft,
-//              end: Alignment.bottomRight,
-//              colors: <Color>[
-//                Color(0xFFCCDDFF),
-//                Color(0xFFFFEEFF),
-//              ],
-//            ),
-//          ),
-//        ),
       ),
       body: IndexedStack(
         index: _selectedIndex,
@@ -263,7 +252,7 @@ class _SettingAlarmState extends State<SettingAlarm> {
                     child: Text(
                       '호감 알림',
                       style:
-                      TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),
@@ -284,7 +273,6 @@ class _SettingAlarmState extends State<SettingAlarm> {
                 ),
               ],
             ),
-
             Row(
               children: <Widget>[
                 Container(
@@ -293,7 +281,7 @@ class _SettingAlarmState extends State<SettingAlarm> {
                     child: Text(
                       '새로운 채팅 알림',
                       style:
-                      TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),
@@ -314,7 +302,6 @@ class _SettingAlarmState extends State<SettingAlarm> {
                 ),
               ],
             ),
-
             Row(
               children: <Widget>[
                 Container(
@@ -323,7 +310,7 @@ class _SettingAlarmState extends State<SettingAlarm> {
                     child: Text(
                       '오늘의 질문 알림',
                       style:
-                      TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),
