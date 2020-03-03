@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:margaret/constants/colors.dart';
 import 'package:margaret/constants/firebase_keys.dart';
@@ -9,10 +8,10 @@ import 'package:margaret/firebase/firestore_provider.dart';
 import 'package:margaret/firebase/transformer.dart';
 import 'package:margaret/pages/loading_page.dart';
 import 'package:margaret/pages/match/selected_person.dart';
-import 'package:margaret/utils/base_height.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
+import 'package:margaret/utils/base_height.dart';
 import 'package:provider/provider.dart';
 
 class TodayFinished extends StatelessWidget with Transformer {
@@ -66,6 +65,7 @@ class MatchFinished extends StatelessWidget {
               '다음 매칭까지 남은 시간',
               style: GoogleFonts.jua(fontSize: 20, color: Colors.black54),
             ),
+
             SizedBox(
               height: screenAwareSize(100, context),
             ),

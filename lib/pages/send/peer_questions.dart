@@ -8,7 +8,11 @@ class PeerQuestions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Text('Tab One'),
+      body: Column(
+        children: <Widget>[
+          Text('Tab One'),
+        ],
+      ),
     );
   }
 }

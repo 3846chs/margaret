@@ -30,9 +30,7 @@ class _WriteQuestionState extends State<WriteQuestion> {
                 child: Icon(
                   Icons.send,
                 ),
-                onPressed: () {
-                  
-                }),
+                onPressed: () {}),
           ],
         ),
       ),

@@ -4,7 +4,7 @@ class PrefsProvider {
   SharedPreferences _prefs;
 
   Future<void> initialize() async {
-    _prefs = await SharedPreferences.getInstance();
+    if (_prefs == null) _prefs = await SharedPreferences.getInstance();
   }
 
   bool isNotificationEnabled(String peerName) {
@@ -26,6 +26,22 @@ class PrefsProvider {
     }
 
     return null;
+  }
+
+  String getAnswer() {
+    return _prefs.getString("answer");
+  }
+
+  Future<void> setAnswer(String answer) {
+    return _prefs.setString("answer", answer);
+  }
+
+  String getMessage(String chatKey) {
+    return _prefs.getString(chatKey);
+  }
+
+  Future<void> setMessage(String chatKey, String message) {
+    return _prefs.setString(chatKey, message);
   }
 }
 
