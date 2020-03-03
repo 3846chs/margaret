@@ -1,6 +1,8 @@
 const COLLECTION_USERS = 'Users';
 const COLLECTION_CHATS = 'Chats';
 const TODAYQUESTIONS = 'TodayQuestions';
+const PEERQUESTIONS = 'PeerQuestions';
+const MYQUESTIONS = 'MyQuestions';
 
 class UserKeys {
   static const KEY_USERKEY = 'user_key';
@@ -19,8 +21,6 @@ class UserKeys {
   static const KEY_PUSHTOKEN = 'pushToken';
   static const KEY_EXPOSED = 'exposed';
   static const KEY_ANSWER = 'answer';
-
-
 }
 
 class MessageKeys {
