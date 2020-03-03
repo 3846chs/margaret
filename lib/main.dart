@@ -27,6 +27,7 @@ class OurApp extends StatelessWidget {
             );
           return MaterialApp(
             debugShowCheckedModeBanner: false, // 우측상단에 debug 라는 빨간색 띠 없애기
+            title: "마가렛",
             home: Consumer<MyUserData>(
               builder: (context, myUserData, child) {
                 switch (myUserData.status) {
