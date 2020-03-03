@@ -22,14 +22,12 @@ class _TodayQuestionState extends State<TodayQuestion>
   final _answerController = TextEditingController();
   String _selected;
   int _selectedIndex = -1;
+  String _userKey;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    prefsProvider.initialize().then((_) {
-      _answerController.text = prefsProvider.getAnswer();
-    });
   }
 
   @override
@@ -42,7 +40,9 @@ class _TodayQuestionState extends State<TodayQuestion>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state != AppLifecycleState.resumed) {
-      prefsProvider.setAnswer(_answerController.text);
+      if (_userKey != null) {
+        prefsProvider.setAnswer(_userKey, _answerController.text);
+      }
     }
   }
 
@@ -210,6 +210,14 @@ class _TodayQuestionState extends State<TodayQuestion>
               child: _buildAnswer(),
             ),
             Consumer<MyUserData>(builder: (context, myUserData, _) {
+              if (_userKey == null) {
+                _userKey = myUserData.userData.userKey;
+
+                prefsProvider.initialize().then((_) {
+                  _answerController.text = prefsProvider.getAnswer(_userKey);
+                });
+              }
+
               return FloatingActionButton(
                 heroTag: 'summit_answer',
                 backgroundColor: Colors.white,

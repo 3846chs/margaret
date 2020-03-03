@@ -37,7 +37,10 @@ class _ChatDetailPageState extends State<ChatDetailPage>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    _messageController.text = prefsProvider.getMessage(widget.chatKey);
+    prefsProvider.initialize().then((_) {
+      _messageController.text =
+          prefsProvider.getMessage(widget.myKey, widget.peer.userKey);
+    });
   }
 
   @override
@@ -51,7 +54,8 @@ class _ChatDetailPageState extends State<ChatDetailPage>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state != AppLifecycleState.resumed) {
-      prefsProvider.setMessage(widget.chatKey, _messageController.text);
+      prefsProvider.setMessage(
+          widget.myKey, widget.peer.userKey, _messageController.text);
     }
   }
 

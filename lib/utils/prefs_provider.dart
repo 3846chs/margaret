@@ -28,20 +28,20 @@ class PrefsProvider {
     return null;
   }
 
-  String getAnswer() {
-    return _prefs.getString("answer");
+  String getAnswer(String userKey) {
+    return _prefs.getString("$userKey:answer");
   }
 
-  Future<void> setAnswer(String answer) {
-    return _prefs.setString("answer", answer);
+  Future<void> setAnswer(String userKey, String answer) {
+    return _prefs.setString("$userKey:answer", answer);
   }
 
-  String getMessage(String chatKey) {
-    return _prefs.getString(chatKey);
+  String getMessage(String myKey, String peerKey) {
+    return _prefs.getString("$myKey:$peerKey");
   }
 
-  Future<void> setMessage(String chatKey, String message) {
-    return _prefs.setString(chatKey, message);
+  Future<void> setMessage(String myKey, String peerKey, String message) {
+    return _prefs.setString("$myKey:$peerKey", message);
   }
 }
 
