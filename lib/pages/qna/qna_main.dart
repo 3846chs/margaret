@@ -1,5 +1,4 @@
 import 'package:margaret/constants/colors.dart';
-
 import 'package:flutter/material.dart';
 import 'package:margaret/pages/qna/my_questions.dart';
 import 'package:margaret/pages/qna/peer_questions.dart';
@@ -18,7 +17,7 @@ class _QnAMainState extends State<QnAMain> {
         length: 2,
         child: Scaffold(
           floatingActionButton: FloatingActionButton(
-            heroTag: 'WriteQuestion',
+            heroTag: 'QnAMain',
             onPressed: () {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => WriteQuestion()));
@@ -34,10 +33,10 @@ class _QnAMainState extends State<QnAMain> {
             indicatorColor: Colors.black54,
             tabs: <Widget>[
               Tab(
-                text: '이성 질문',
+                text: '이성 질문', // 아이콘 추가할 예정
               ),
               Tab(
-                text: '돌아온 답변',
+                text: '돌아온 답변', // 아이콘 추가할 예정
               ),
             ],
           ),
