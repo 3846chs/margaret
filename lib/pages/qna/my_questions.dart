@@ -22,7 +22,6 @@ class MyQuestions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('dd');
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         heroTag: 'write_question',

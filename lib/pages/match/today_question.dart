@@ -48,7 +48,6 @@ class _TodayQuestionState extends State<TodayQuestion>
 
   Future<void> _summit(User user, String question) async {
     final answer = _answerController.text;
-    _answerController.clear();
 
     if (_selectedIndex == -1) {
       simpleSnackbar(context, '선택지를 골라주세요');
@@ -70,31 +69,22 @@ class _TodayQuestionState extends State<TodayQuestion>
     final now = DateTime.now();
     final formatter = DateFormat('yyyy-MM-dd');
 
-    // 23시 59분 59초에 유저가 답변을 제출하면, 시간 지연으로 인해 다음 날 답변으로 기록되는 현상 발생 -> 아래와 같이 해결
-    if (now.day == user.recentMatchTime.toDate().day) {
-      userRef
-          .collection('TodayQuestions')
-          .document(formatter.format(now))
-          .setData({
-        'question': question,
-        'choice': _selected,
-        'answer': answer,
-      }); // 유저 답변 DB 에 저장
+    userRef
+        .collection('TodayQuestions')
+        .document(formatter.format(user.recentMatchTime.toDate()))
+        .setData({
+      'question': question,
+      'choice': _selected,
+      'answer': answer,
+    }); // recentMatchTime 을 이용하여 유저 답변 DB 에 저장
 
+    if (now.hour == 23 && now.minute == 59 && now.second > 50) {
+      simpleSnackbar(context, '자정까지 10초 미만 남았습니다. 이 경우, 제출되지 않습니다.');
+      return;
+    } else {
       userRef.updateData({
         'recentMatchState': _selectedIndex + 1
       }); // 1번 선택했으면 1 저장, 2번 선택했으면 2 저장
-    } else {
-      print('시간 지연 발생');
-      userRef
-          .collection('TodayQuestions')
-          .document(formatter.format(user.recentMatchTime.toDate()))
-          .setData({
-        'question': question,
-        'choice': _selected,
-        'answer': answer,
-      });
-      // recentMatchTime 을 이용하여 유저 답변만 DB 에 저장
     }
 
     _firestore
@@ -143,6 +133,8 @@ class _TodayQuestionState extends State<TodayQuestion>
         });
       }
     });
+
+    _answerController.clear();
   }
 
   @override
