@@ -108,7 +108,7 @@ class _TodayPeopleCardState extends State<TodayPeopleCard> {
                 Text("  전하고 싶은 말", style: GoogleFonts.jua(fontSize: 15)),
               ],
             ),
-            BuildValue1(
+            BuildIntroduction(
               cardColor: color,
             ),
             SizedBox(
@@ -210,10 +210,10 @@ class BuildTodayAnswer extends StatelessWidget {
   }
 }
 
-class BuildValue1 extends StatelessWidget {
+class BuildIntroduction extends StatelessWidget {
   final MaterialColor cardColor;
 
-  const BuildValue1({
+  const BuildIntroduction({
     this.cardColor,
     Key key,
   }) : super(key: key);
