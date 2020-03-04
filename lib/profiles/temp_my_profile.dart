@@ -30,8 +30,6 @@ class _TempMyProfileState extends State<TempMyProfile> {
   String job;
   int height;
   String introduction;
-  //String answer1;
-  //String answer2;
 
   @override
   void initState() {
@@ -64,8 +62,6 @@ class _TempMyProfileState extends State<TempMyProfile> {
                   UserKeys.KEY_HEIGHT: height,
                   UserKeys.KEY_REGION: region,
                   UserKeys.KEY_INTRODUCTION: introduction,
-                  //UserKeys.KEY_ANSWER1: answer1,
-                  //UserKeys.KEY_ANSWER2: answer2,
                 });
 
                 Navigator.pop(context);
@@ -78,6 +74,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
           ],
         ),
       ),
+      backgroundColor: Colors.grey[200],
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -128,6 +125,40 @@ class _TempMyProfileState extends State<TempMyProfile> {
                           .toList(),
                     ),
                   ),
+
+                  /////////////////////프로필 기본 정보 등록////////////////////
+//                  Container(
+//                    width: double.infinity,
+//                    color: Colors.white,
+//                    child: Padding(
+//                      padding: const EdgeInsets.all(8.0),
+//                      child: Column(
+//                        children: <Widget>[
+//                          Padding(
+//                            padding: const EdgeInsets.all(5.0),
+//                            child: Container(
+//                              width: double.infinity,
+//                              decoration: BoxDecoration(
+//                                  border: Border.all(color: Colors.purpleAccent), borderRadius: BorderRadius.circular(8)),
+//                              child: Center(
+//                                child: Text(
+//                                  '내 소개',
+//                                  style: GoogleFonts.notoSans(color: Colors.grey),
+//                                ),
+//                              ),
+//                            ),
+//                          ),
+//                          _buildNickname(),
+//                          _buildGender(),
+//                          _buildBirthYear(),
+//                          _buildEmail(),
+//                          _buildRegion(),
+//                          _buildCareer(),
+//                          _buildHeight(),
+//                        ],
+//                      ),
+//                    ),
+//                  ),
                   Container(
                     height: 30,
                     width: double.infinity,
