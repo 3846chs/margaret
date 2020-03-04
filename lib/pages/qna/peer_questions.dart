@@ -3,10 +3,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:margaret/constants/colors.dart';
 import 'package:margaret/constants/firebase_keys.dart';
-import 'package:margaret/constants/material_white_color.dart';
+import 'package:margaret/constants/font_names.dart';
 import 'package:margaret/constants/size.dart';
 import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/data/user.dart';
@@ -116,27 +114,34 @@ class PeerQuestionsCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              CircleAvatar(
-                radius: 50,
-                child: ClipOval(
-                  child: Stack(
-                    children: <Widget>[
-                      CachedNetworkImage(
-                        imageUrl: "profiles/${peer.profiles[0]}",
-                        cacheManager: StorageCacheManager(),
-                        placeholder: (context, url) =>
-                            const CircularProgressIndicator(),
-                        errorWidget: (context, url, error) =>
-                            const Icon(Icons.account_circle),
-                      ),
-                      BackdropFilter(
-                        filter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
-                        child: new Container(
-                          decoration: new BoxDecoration(
-                              color: Colors.white.withOpacity(0.5)),
+              Container(
+                decoration: new BoxDecoration(
+                    borderRadius: BorderRadius.circular(48.0),
+                    boxShadow: [
+                      new BoxShadow(color: Colors.grey, blurRadius: 5.0)
+                    ]),
+                child: CircleAvatar(
+                  radius: 50,
+                  child: ClipOval(
+                    child: Stack(
+                      children: <Widget>[
+                        CachedNetworkImage(
+                          imageUrl: "profiles/${peer.profiles[0]}",
+                          cacheManager: StorageCacheManager(),
+                          placeholder: (context, url) =>
+                              const CircularProgressIndicator(),
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.account_circle),
                         ),
-                      )
-                    ],
+                        BackdropFilter(
+                          filter: ImageFilter.blur(sigmaX: 1.0, sigmaY: 1.0),
+                          child: new Container(
+                            decoration: new BoxDecoration(
+                                color: Colors.white.withOpacity(0.0)),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -147,7 +152,7 @@ class PeerQuestionsCard extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     peer.nickname,
-                    style: GoogleFonts.jua(fontSize: 20),
+                    style: TextStyle(fontFamily: FontFamily.jua, fontSize: 20),
                   ),
                   SizedBox(
                     height: 10,
@@ -156,7 +161,7 @@ class PeerQuestionsCard extends StatelessWidget {
                     (DateTime.now().year - peer.birthYear + 1).toString() +
                         '세 / ' +
                         peer.region,
-                    style: GoogleFonts.jua(fontSize: 20),
+                    style: TextStyle(fontFamily: FontFamily.jua, fontSize: 20),
                   ),
                 ],
               ),
@@ -180,7 +185,7 @@ class PeerQuestionsCard extends StatelessWidget {
                 child: Text(
                   peer.introduction,
                   style: TextStyle(
-                      fontFamily: 'NanumBarunpen', fontWeight: FontWeight.bold),
+                      fontFamily: FontFamily.nanumBarunpen, fontWeight: FontWeight.bold),
                 ),
               ),
             ),
@@ -205,14 +210,13 @@ class PeerQuestionsCard extends StatelessWidget {
                         child: Text(
                       peerQuestion,
                       style: TextStyle(
-                        fontFamily: 'SDMiSaeng',
+                        fontFamily: FontFamily.miSaeng,
                         fontSize: 25,
                       ),
                     )),
                   ),
                   width: 270,
                   height: 130,
-
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       begin: Alignment.topLeft,

@@ -7,7 +7,6 @@ import 'package:margaret/pages/loading_page.dart';
 import 'package:margaret/utils/prefs_provider.dart';
 import 'package:margaret/utils/simple_snack_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
@@ -228,10 +227,7 @@ class _TodayQuestionState extends State<TodayQuestion>
     return Text(
       question,
       textAlign: TextAlign.center,
-      style: GoogleFonts.jua(
-        fontSize: 20,
-        color: Colors.black,
-      ),
+      style: TextStyle(fontFamily: 'BMJUA', fontSize: 20),
     );
   }
 

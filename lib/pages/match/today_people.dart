@@ -1,6 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:margaret/constants/colors.dart';
 import 'package:margaret/constants/firebase_keys.dart';
 import 'package:margaret/data/user.dart';
@@ -57,7 +56,8 @@ class NotShowPeople extends StatelessWidget {
           children: <Widget>[
             Text(
               '매 칭 중 . . .',
-              style: GoogleFonts.jua(fontSize: 30, color: pastel_purple),
+              style: TextStyle(
+                  fontFamily: 'BMJUA', fontSize: 30, color: pastel_purple),
             ),
             SizedBox(
               height: screenAwareSize(100, context),
@@ -111,7 +111,10 @@ class ShowPeople extends StatelessWidget {
               Text(
                 snapshot.data.data['question'],
                 textAlign: TextAlign.center,
-                style: GoogleFonts.jua(fontSize: 20),
+                style: TextStyle(
+                  fontFamily: 'BMJUA',
+                  fontSize: 20,
+                ),
               ),
               SizedBox(
                 height: screenAwareSize(20, context),
@@ -119,7 +122,10 @@ class ShowPeople extends StatelessWidget {
               Text(
                 snapshot.data.data['choice'],
                 textAlign: TextAlign.center,
-                style: GoogleFonts.jua(fontSize: 15, color: Colors.blueAccent),
+                style: TextStyle(
+                    fontFamily: 'BMJUA',
+                    fontSize: 15,
+                    color: Colors.blueAccent),
               ),
               SizedBox(
                 height: screenAwareSize(20, context),

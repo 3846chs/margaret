@@ -1,11 +1,9 @@
 import 'package:margaret/constants/colors.dart';
+import 'package:margaret/constants/font_names.dart';
 import 'package:margaret/constants/size.dart';
 import 'package:margaret/utils/base_height.dart';
-import 'package:margaret/utils/simple_snack_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter/services.dart';
 import 'package:rich_alert/rich_alert.dart';
 
 class EmailPwReset extends StatefulWidget {
@@ -34,7 +32,10 @@ class _EmailPwResetState extends State<EmailPwReset> {
                 Center(
                   child: Text(
                     '비밀번호 변경하기',
-                    style: GoogleFonts.jua(fontSize: 30, color: pastel_purple),
+                    style: TextStyle(
+                        fontFamily: FontFamily.jua,
+                        fontSize: 30,
+                        color: pastel_purple),
                   ),
                 ),
                 TextFormField(

@@ -3,6 +3,7 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter_kakao_login/flutter_kakao_login.dart';
 import 'package:flutter_naver_login/flutter_naver_login.dart';
 import 'package:margaret/constants/firebase_keys.dart';
+import 'package:margaret/constants/font_names.dart';
 import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/pages/auth/email/email_auth.dart';
 import 'package:margaret/pages/auth/profile_input_page.dart';
@@ -11,7 +12,6 @@ import 'package:margaret/utils/simple_snack_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:margaret/widgets/auth/login_button.dart';
 import 'package:provider/provider.dart';
@@ -43,18 +43,18 @@ class AuthMain extends StatelessWidget {
                   SizedBox(height: screenAwareSize(100, context)),
                   Text(
                     'Margaret',
-                    style: GoogleFonts.handlee(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 50,
-                    ),
+                    style: TextStyle(
+                        fontFamily: FontFamily.handlee,
+                        fontSize: 50,
+                        fontWeight: FontWeight.bold),
                   ),
                   Text(
                     '                         True Love ',
-                    style: GoogleFonts.pacifico(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 17,
-                      color: Colors.pinkAccent,
-                    ),
+                    style: TextStyle(
+                        fontFamily: 'pacifico',
+                        fontWeight: FontWeight.bold,
+                        fontSize: 17,
+                        color: Colors.pinkAccent),
                   ),
                   SizedBox(height: screenAwareSize(130, context)),
                   LoginButton(

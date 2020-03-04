@@ -1,15 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:margaret/constants/font_names.dart';
 import 'package:margaret/constants/size.dart';
-import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/data/user.dart';
-import 'package:margaret/firebase/firestore_provider.dart';
 import 'package:margaret/firebase/storage_cache_manager.dart';
 import 'package:margaret/profiles/profile_basic_info.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 
 class YourProfile extends StatelessWidget {
   final User user;
@@ -54,20 +50,32 @@ class YourProfile extends StatelessWidget {
                 child: Column(
                   children: <Widget>[
                     _selfIntroduction(), // 저는 이런 가치관을 가진 사람이에요
-                    SizedBox(height: 10,),
+                    SizedBox(
+                      height: 10,
+                    ),
                     SizedBox(
                       height: 5,
-                      child: Container(color: Colors.black12,),
+                      child: Container(
+                        color: Colors.black12,
+                      ),
                     ),
-                    SizedBox(height: 5,),
+                    SizedBox(
+                      height: 5,
+                    ),
                     // 가치관 질문
                     _valueQuestions(),
-                    SizedBox(height: 10,),
+                    SizedBox(
+                      height: 10,
+                    ),
                     SizedBox(
                       height: 5,
-                      child: Container(color: Colors.black12,),
+                      child: Container(
+                        color: Colors.black12,
+                      ),
                     ),
-                    SizedBox(height: 5,),
+                    SizedBox(
+                      height: 5,
+                    ),
                     // 기본 정보
                     Padding(
                       padding: const EdgeInsets.all(common_gap),
@@ -79,10 +87,13 @@ class YourProfile extends StatelessWidget {
                               child: Container(
                                 decoration: ShapeDecoration(
                                   color: Color.fromRGBO(222, 222, 255, 1),
-                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3.0)),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(3.0)),
                                   shadows: [
                                     BoxShadow(
-                                        color: Colors.black26, blurRadius: 3.0, offset: Offset(2, 2))
+                                        color: Colors.black26,
+                                        blurRadius: 3.0,
+                                        offset: Offset(2, 2))
                                   ],
                                 ),
                                 child: Padding(
@@ -212,7 +223,8 @@ class YourProfile extends StatelessWidget {
         onPressed: () {},
         label: Text(
           '호감보내기',
-          style: GoogleFonts.notoSans(fontSize: 15),
+          style:
+          TextStyle(fontFamily: FontFamily.nanumBarunpen, fontSize: 15),
         ),
         icon: Icon(
           FontAwesomeIcons.heart,
@@ -237,10 +249,13 @@ class YourProfile extends StatelessWidget {
                   child: Container(
                     decoration: ShapeDecoration(
                       color: Color.fromRGBO(222, 222, 255, 1),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3.0)),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(3.0)),
                       shadows: [
                         BoxShadow(
-                            color: Colors.black26, blurRadius: 3.0, offset: Offset(2, 2))
+                            color: Colors.black26,
+                            blurRadius: 3.0,
+                            offset: Offset(2, 2))
                       ],
                     ),
                     child: Padding(
@@ -310,10 +325,13 @@ class YourProfile extends StatelessWidget {
                   child: Container(
                     decoration: ShapeDecoration(
                       color: Color.fromRGBO(255, 178, 245, 1),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3.0)),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(3.0)),
                       shadows: [
                         BoxShadow(
-                            color: Colors.black26, blurRadius: 3.0, offset: Offset(2, 2))
+                            color: Colors.black26,
+                            blurRadius: 3.0,
+                            offset: Offset(2, 2))
                       ],
                     ),
                     child: Padding(

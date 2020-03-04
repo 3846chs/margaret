@@ -1,18 +1,17 @@
 import 'package:cached_network_image/cached_network_image.dart';
-
+import 'package:margaret/constants/colors.dart';
+import 'package:margaret/constants/font_names.dart';
 import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/firebase/storage_cache_manager.dart';
 import 'package:margaret/pages/chat_page.dart';
 import 'package:margaret/pages/match/match_main.dart';
 import 'package:margaret/pages/qna/qna_main.dart';
 import 'package:margaret/pages/receive_page.dart';
-
 import 'package:margaret/profiles/temp_my_profile.dart';
 import 'package:margaret/utils/notification.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -75,7 +74,8 @@ class _HomeState extends State<Home> {
             ),
             Text(
               '마    가    렛',
-              style: GoogleFonts.jua(color: Colors.purple[300]),
+              style: TextStyle(
+                  fontFamily: FontFamily.jua, color: Colors.purple[300]),
             ),
             Spacer(
               flex: 2,
