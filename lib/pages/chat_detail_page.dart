@@ -26,11 +26,38 @@ class ChatDetailPage extends StatefulWidget {
   _ChatDetailPageState createState() => _ChatDetailPageState();
 }
 
-class _ChatDetailPageState extends State<ChatDetailPage> {
+class _ChatDetailPageState extends State<ChatDetailPage>
+    with WidgetsBindingObserver {
   final _messageController = TextEditingController();
   final _scrollController = ScrollController();
 
   bool _isNotificationEnabled;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    prefsProvider.initialize().then((_) {
+      _messageController.text =
+          prefsProvider.getMessage(widget.myKey, widget.peer.userKey);
+    });
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    _messageController.dispose();
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state != AppLifecycleState.resumed) {
+      prefsProvider.setMessage(
+          widget.myKey, widget.peer.userKey, _messageController.text);
+    }
+  }
 
   void _sendMessage(String content, MessageType type) {
     if (content.trim().isNotEmpty) {

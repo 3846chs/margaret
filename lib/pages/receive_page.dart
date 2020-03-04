@@ -1,4 +1,4 @@
-import 'package:margaret/widgets/receive_card.dart';
+import 'package:margaret/widgets/send_card.dart';
 import 'package:flutter/material.dart';
 
 class ReceivePage extends StatefulWidget {
@@ -11,7 +11,6 @@ class _ReceivePageState extends State<ReceivePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
-
       body: ListView.separated(
         itemCount: 10,
         itemBuilder: (context, index) {

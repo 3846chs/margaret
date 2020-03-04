@@ -1,7 +1,7 @@
-import 'package:margaret/auth/email/email_pw_reset.dart';
 import 'package:margaret/constants/colors.dart';
 import 'package:margaret/constants/size.dart';
 import 'package:margaret/data/provider/my_user_data.dart';
+import 'package:margaret/pages/auth/email/email_pw_reset.dart';
 import 'package:margaret/utils/base_height.dart';
 import 'package:margaret/utils/simple_snack_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -79,9 +79,7 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
                 ),
                 FlatButton(
                   onPressed: () {
-                    if (_formKey.currentState.validate()) {
-                      _login;
-                    }
+                    if (_formKey.currentState.validate()) _login();
                   },
                   child: Text(
                     "로그인",
@@ -112,7 +110,7 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
     );
   }
 
-  get _login async {
+  Future<void> _login() async {
     try {
       final AuthResult result =
           await FirebaseAuth.instance.signInWithEmailAndPassword(
@@ -140,22 +138,23 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
 
   InputDecoration getTextFieldDecor(String hint) {
     return InputDecoration(
-        hintText: hint,
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: Colors.grey[300],
-            width: 1,
-          ),
-          borderRadius: BorderRadius.circular(12),
+      hintText: hint,
+      enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: Colors.grey[300],
+          width: 1,
         ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: Colors.grey[300],
-            width: 1,
-          ),
-          borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: Colors.grey[300],
+          width: 1,
         ),
-        fillColor: Colors.grey[100],
-        filled: true);
+        borderRadius: BorderRadius.circular(12),
+      ),
+      fillColor: Colors.grey[100],
+      filled: true,
+    );
   }
 }

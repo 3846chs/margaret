@@ -2,12 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:margaret/constants/material_white_color.dart';
 import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/home.dart';
-import 'package:margaret/widgets/loading_page.dart';
+import 'package:margaret/pages/auth/auth_main.dart';
+import 'package:margaret/pages/loading_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
-import 'auth/auth_main.dart';
 
 void main() => runApp(ChangeNotifierProvider<MyUserData>(
     create: (context) => MyUserData(), child: OurApp()));
@@ -27,6 +27,7 @@ class OurApp extends StatelessWidget {
             );
           return MaterialApp(
             debugShowCheckedModeBanner: false, // 우측상단에 debug 라는 빨간색 띠 없애기
+            title: "마가렛",
             home: Consumer<MyUserData>(
               builder: (context, myUserData, child) {
                 switch (myUserData.status) {

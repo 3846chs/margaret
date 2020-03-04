@@ -2,7 +2,7 @@ import 'package:margaret/constants/size.dart';
 import 'package:margaret/widgets/user_avatar.dart';
 import 'package:flutter/material.dart';
 
-class SendCard extends StatelessWidget {
+class ReceiveCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -22,7 +22,7 @@ class SendCard extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(common_s_gap),
                     child: const Text(
-                      '닉네임',
+                      '닉네임뭐로하지',
                       style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
@@ -35,12 +35,12 @@ class SendCard extends StatelessWidget {
                       children: <Widget>[
                         Expanded(
                             child: const Text(
-                          '나이',
+                          '26',
                           style: TextStyle(color: Colors.black),
                         )),
                         Expanded(
                           child: const Text(
-                            '지역',
+                            '대전',
                             style: TextStyle(color: Colors.black),
                           ),
                         ),
@@ -49,14 +49,6 @@ class SendCard extends StatelessWidget {
                   ),
                 ],
               ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(common_gap),
-            child: IconButton(
-              icon: const Icon(Icons.check),
-              color: Colors.black,
-              onPressed: () {},
             ),
           ),
         ],

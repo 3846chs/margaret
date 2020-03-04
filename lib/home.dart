@@ -1,11 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:margaret/constants/colors.dart';
+
 import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/firebase/storage_cache_manager.dart';
 import 'package:margaret/pages/chat_page.dart';
 import 'package:margaret/pages/match/match_main.dart';
+import 'package:margaret/pages/qna/qna_main.dart';
 import 'package:margaret/pages/receive_page.dart';
-import 'package:margaret/pages/send_page.dart';
+
 import 'package:margaret/profiles/temp_my_profile.dart';
 import 'package:margaret/utils/notification.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -26,7 +27,7 @@ class _HomeState extends State<Home> {
 
   static List<Widget> _widgetOptions = <Widget>[
     MatchMain(),
-    SendPage(),
+    QnAMain(),
     ReceivePage(),
     ChatPage(),
   ];
@@ -81,18 +82,6 @@ class _HomeState extends State<Home> {
             ),
           ],
         ),
-//        flexibleSpace: Container(
-//          decoration: const BoxDecoration(
-//            gradient: LinearGradient(
-//              begin: Alignment.topLeft,
-//              end: Alignment.bottomRight,
-//              colors: <Color>[
-//                Color(0xFFCCDDFF),
-//                Color(0xFFFFEEFF),
-//              ],
-//            ),
-//          ),
-//        ),
       ),
       body: IndexedStack(
         index: _selectedIndex,
@@ -143,7 +132,7 @@ class _HomeState extends State<Home> {
       child: ListView(
         children: <Widget>[
           DrawerHeader(
-            child: InkWell(
+            child: GestureDetector(
               onTap: () {
                 Navigator.push(
                     context,
@@ -188,7 +177,10 @@ class _HomeState extends State<Home> {
           ),
           ListTile(
             title: Text('알림 설정'),
-            onTap: null,
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => SettingAlarm()));
+            },
           ),
           ListTile(
             title: Text('로그아웃'),
@@ -201,5 +193,145 @@ class _HomeState extends State<Home> {
         ],
       ),
     );
+  }
+}
+
+class SettingAlarm extends StatefulWidget {
+  @override
+  _SettingAlarmState createState() => _SettingAlarmState();
+}
+
+class _SettingAlarmState extends State<SettingAlarm> {
+  bool matchAlarm = true; // 이성 3명과 매칭되었을 때 알람
+  bool receiveAlarm = true; // 자신에게 호감 보낸 이성 카드가 도착했을 때 알람
+  bool newChatAlarm = true; // 새로운 채팅이 생겼을 때 (각 채팅방에 개별 알람 on/off 기능있음)
+  bool newTodayQuestion = true; // 자정에 새로운 질문 업데이트 되었을 때 알람
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: Text('알림 설정'),
+        ),
+        body: Column(
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                Container(
+                  width: MediaQuery.of(context).size.width / 2,
+                  child: Center(
+                    child: Text(
+                      '매칭 알림',
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width / 2,
+                  child: Center(
+                    child: Switch(
+                      value: matchAlarm,
+                      onChanged: (value) {
+                        setState(() {
+                          matchAlarm = value;
+                        });
+                      },
+                      activeTrackColor: Colors.lightGreenAccent,
+                      activeColor: Colors.green,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              children: <Widget>[
+                Container(
+                  width: MediaQuery.of(context).size.width / 2,
+                  child: Center(
+                    child: Text(
+                      '호감 알림',
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width / 2,
+                  child: Center(
+                    child: Switch(
+                      value: receiveAlarm,
+                      onChanged: (value) {
+                        setState(() {
+                          receiveAlarm = value;
+                        });
+                      },
+                      activeTrackColor: Colors.lightGreenAccent,
+                      activeColor: Colors.green,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              children: <Widget>[
+                Container(
+                  width: MediaQuery.of(context).size.width / 2,
+                  child: Center(
+                    child: Text(
+                      '새로운 채팅 알림',
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width / 2,
+                  child: Center(
+                    child: Switch(
+                      value: newChatAlarm,
+                      onChanged: (value) {
+                        setState(() {
+                          newChatAlarm = value;
+                        });
+                      },
+                      activeTrackColor: Colors.lightGreenAccent,
+                      activeColor: Colors.green,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              children: <Widget>[
+                Container(
+                  width: MediaQuery.of(context).size.width / 2,
+                  child: Center(
+                    child: Text(
+                      '오늘의 질문 알림',
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width / 2,
+                  child: Center(
+                    child: Switch(
+                      value: newTodayQuestion,
+                      onChanged: (value) {
+                        setState(() {
+                          newTodayQuestion = value;
+                        });
+                      },
+                      activeTrackColor: Colors.lightGreenAccent,
+                      activeColor: Colors.green,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ));
   }
 }
