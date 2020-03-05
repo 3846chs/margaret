@@ -38,9 +38,11 @@ class _TodayQuestionState extends State<TodayQuestion>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state != AppLifecycleState.resumed) {
-      if (_userKey != null) {
+    if (_userKey != null) {
+      if (state != AppLifecycleState.resumed) {
         prefsProvider.setAnswer(_userKey, _answerController.text);
+      } else {
+        _answerController?.text = prefsProvider.getAnswer(_userKey);
       }
     }
   }

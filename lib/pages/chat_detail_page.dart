@@ -56,6 +56,9 @@ class _ChatDetailPageState extends State<ChatDetailPage>
     if (state != AppLifecycleState.resumed) {
       prefsProvider.setMessage(
           widget.myKey, widget.peer.userKey, _messageController.text);
+    } else {
+      _messageController.text =
+          prefsProvider.getMessage(widget.myKey, widget.peer.userKey);
     }
   }
 
