@@ -8,11 +8,11 @@ import 'package:margaret/firebase/firestore_provider.dart';
 import 'package:margaret/firebase/storage_provider.dart';
 import 'package:margaret/pages/image_page.dart';
 import 'package:margaret/utils/prefs_provider.dart';
-import 'package:margaret/widgets/chat_bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:margaret/widgets/chat/chat_bubble.dart';
 
 class ChatDetailPage extends StatefulWidget {
   final String chatKey;
@@ -56,6 +56,9 @@ class _ChatDetailPageState extends State<ChatDetailPage>
     if (state != AppLifecycleState.resumed) {
       prefsProvider.setMessage(
           widget.myKey, widget.peer.userKey, _messageController.text);
+    } else {
+      _messageController.text =
+          prefsProvider.getMessage(widget.myKey, widget.peer.userKey);
     }
   }
 

@@ -6,17 +6,25 @@ import 'package:flutter/material.dart';
 
 class UserAvatar extends StatelessWidget {
   final User user;
+  final double width;
+  final double height;
 
-  UserAvatar({this.user});
+  UserAvatar({this.user, this.width, this.height});
 
   @override
   Widget build(BuildContext context) {
     if (user != null) {
       return CircleAvatar(
-        radius: thumbnail_avatar_radius,
-        backgroundImage: CachedNetworkImageProvider(
-          "profiles/${user.profiles.first}",
-          cacheManager: StorageCacheManager(),
+        child: ClipOval(
+          child: CachedNetworkImage(
+            width: width,
+            height: height,
+            imageUrl: "profiles/${user.profiles.first}",
+            cacheManager: StorageCacheManager(),
+            placeholder: (context, url) => const CircularProgressIndicator(),
+            errorWidget: (context, url, error) =>
+                const Icon(Icons.account_circle),
+          ),
         ),
       );
     }

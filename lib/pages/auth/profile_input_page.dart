@@ -275,8 +275,7 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
 
       await firestoreProvider.attemptCreateUser(user);
 
-      Provider.of<MyUserData>(context, listen: false)
-          .setNewStatus(MyUserDataStatus.progress);
+      Provider.of<MyUserData>(context, listen: false).update();
       Navigator.pop(context);
     }
   }
