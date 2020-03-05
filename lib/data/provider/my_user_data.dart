@@ -72,6 +72,7 @@ class MyUserData extends ChangeNotifier {
     _userData = null;
     _status = MyUserDataStatus.none;
     _userStreamsubscription?.cancel();
+    _auth.signOut();
     notifyListeners();
   }
 }
