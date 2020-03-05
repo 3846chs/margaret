@@ -39,8 +39,8 @@ class YourProfile extends StatelessWidget {
                         child: CachedNetworkImage(
                           imageUrl: "profiles/$path",
                           cacheManager: StorageCacheManager(),
-                          //width: MediaQuery.of(context).size.width,
-                          //height: MediaQuery.of(context).size.height,
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height,
                           fit: BoxFit.cover,
                           placeholder: (context, url) =>
                           const CircularProgressIndicator(),
