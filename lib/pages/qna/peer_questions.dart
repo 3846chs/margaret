@@ -42,7 +42,7 @@ class PeerQuestions extends StatelessWidget {
             this.peerQuestion = firstDocument.data['question'];
             this.peerKey = firstDocument.data['userKey'];
             this.documentId = firstDocument.documentID;
-
+            print(this.documentId);
             return StreamBuilder<User>(
                 stream: firestoreProvider.connectUser(peerKey),
                 builder: (context, snapshot) {
@@ -126,7 +126,7 @@ class PeerQuestionsCard extends StatelessWidget {
                     child: Stack(
                       children: <Widget>[
                         CachedNetworkImage(
-                          imageUrl: "profiles/${peer.profiles[0]}",
+                          imageUrl: "profiles/${this.peer.profiles[0]}",
                           cacheManager: StorageCacheManager(),
                           placeholder: (context, url) =>
                               const CircularProgressIndicator(),
@@ -151,16 +151,16 @@ class PeerQuestionsCard extends StatelessWidget {
               Column(
                 children: <Widget>[
                   Text(
-                    peer.nickname,
+                    this.peer.nickname,
                     style: TextStyle(fontFamily: FontFamily.jua, fontSize: 20),
                   ),
                   SizedBox(
                     height: 10,
                   ),
                   Text(
-                    (DateTime.now().year - peer.birthYear + 1).toString() +
+                    (DateTime.now().year - this.peer.birthYear + 1).toString() +
                         '세 / ' +
-                        peer.region,
+                        this.peer.region,
                     style: TextStyle(fontFamily: FontFamily.jua, fontSize: 20),
                   ),
                 ],
@@ -183,9 +183,10 @@ class PeerQuestionsCard extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Center(
                 child: Text(
-                  peer.introduction,
+                  this.peer.introduction ?? '등록된 자기소개가 없습니다',
                   style: TextStyle(
-                      fontFamily: FontFamily.nanumBarunpen, fontWeight: FontWeight.bold),
+                      fontFamily: FontFamily.nanumBarunpen,
+                      fontWeight: FontWeight.bold),
                 ),
               ),
             ),
