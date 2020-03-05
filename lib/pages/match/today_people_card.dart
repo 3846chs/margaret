@@ -2,9 +2,8 @@ import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:margaret/constants/firebase_keys.dart';
-import 'package:margaret/constants/material_white_color.dart';
+import 'package:margaret/constants/font_names.dart';
 import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -105,10 +104,16 @@ class _TodayPeopleCardState extends State<TodayPeopleCard> {
                   color: color,
                   size: 15,
                 ),
-                Text("  전하고 싶은 말", style: GoogleFonts.jua(fontSize: 15)),
+                Text(
+                  "  전하고 싶은 말",
+                  style: TextStyle(
+                    fontFamily: 'BMJUA',
+                    fontSize: 15,
+                  ),
+                ),
               ],
             ),
-            BuildValue1(
+            BuildIntroduction(
               cardColor: color,
             ),
             SizedBox(
@@ -202,7 +207,7 @@ class BuildTodayAnswer extends StatelessWidget {
         child: Center(
           child: Text(
             '   ' + widget.you.answer,
-            style: GoogleFonts.nanumPenScript(fontSize: 18),
+            style: TextStyle(fontFamily: FontFamily.miSaeng, fontSize: 18),
           ),
         ),
       ),
@@ -210,10 +215,10 @@ class BuildTodayAnswer extends StatelessWidget {
   }
 }
 
-class BuildValue1 extends StatelessWidget {
+class BuildIntroduction extends StatelessWidget {
   final MaterialColor cardColor;
 
-  const BuildValue1({
+  const BuildIntroduction({
     this.cardColor,
     Key key,
   }) : super(key: key);
@@ -249,7 +254,7 @@ class BuildValue1 extends StatelessWidget {
         child: Center(
           child: Text(
             '   저의 모습을 그대로 보여줄 수 있는 사람과 연애를 하고 싶습니다. 저 자체만으로 사랑해주는 사람을 만나고 싶어요.',
-            style: GoogleFonts.nanumPenScript(fontSize: 18),
+            style: TextStyle(fontFamily: FontFamily.miSaeng, fontSize: 18),
           ),
         ),
       ),

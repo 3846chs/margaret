@@ -1,10 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:margaret/constants/font_names.dart';
 import 'package:margaret/constants/size.dart';
 import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/firebase/storage_cache_manager.dart';
 import 'package:margaret/profiles/profile_basic_info.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class MyProfile extends StatefulWidget {
@@ -21,12 +21,14 @@ class _MyProfileState extends State<MyProfile> {
           children: <Widget>[
             Text(
               '내 프로필',
-              style: GoogleFonts.notoSans(fontSize: 17),
+              style:
+                  TextStyle(fontFamily: FontFamily.nanumBarunpen, fontSize: 17),
             ),
             Spacer(),
             Text(
               '완료',
-              style: GoogleFonts.notoSans(fontSize: 17),
+              style:
+                  TextStyle(fontFamily: FontFamily.nanumBarunpen, fontSize: 17),
             ),
           ],
         ),
@@ -46,7 +48,9 @@ class _MyProfileState extends State<MyProfile> {
                     child: Center(
                         child: Text(
                       '사진 등록',
-                      style: GoogleFonts.notoSans(color: Colors.grey),
+                      style: TextStyle(
+                          fontFamily: FontFamily.nanumBarunpen,
+                          color: Colors.grey),
                     )),
                   ),
                   SingleChildScrollView(
@@ -86,7 +90,9 @@ class _MyProfileState extends State<MyProfile> {
                     child: Center(
                         child: Text(
                       '기본 정보 등록',
-                      style: GoogleFonts.notoSans(color: Colors.grey),
+                      style: TextStyle(
+                          fontFamily: FontFamily.nanumBarunpen,
+                          color: Colors.grey),
                     )),
                   ),
                   SizedBox(

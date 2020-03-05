@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:margaret/constants/colors.dart';
 import 'package:margaret/constants/size.dart';

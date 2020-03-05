@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:margaret/constants/firebase_keys.dart';
+import 'package:margaret/constants/font_names.dart';
 import 'package:margaret/constants/size.dart';
 import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/data/user.dart';
@@ -7,7 +8,6 @@ import 'package:margaret/firebase/firestore_provider.dart';
 import 'package:margaret/firebase/storage_cache_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class TempMyProfile extends StatefulWidget {
@@ -52,7 +52,8 @@ class _TempMyProfileState extends State<TempMyProfile> {
           children: <Widget>[
             Text(
               '내 프로필',
-              style: GoogleFonts.notoSans(fontSize: 17),
+              style:
+                  TextStyle(fontFamily: FontFamily.nanumBarunpen, fontSize: 17),
             ),
             Spacer(),
             InkWell(
@@ -68,7 +69,8 @@ class _TempMyProfileState extends State<TempMyProfile> {
               },
               child: Text(
                 '완료',
-                style: GoogleFonts.notoSans(fontSize: 17),
+                style: TextStyle(
+                    fontFamily: FontFamily.nanumBarunpen, fontSize: 17),
               ),
             ),
           ],
@@ -90,7 +92,8 @@ class _TempMyProfileState extends State<TempMyProfile> {
                     child: Center(
                         child: Text(
                       '사진 등록',
-                      style: GoogleFonts.notoSans(color: Colors.grey),
+                          style:
+                          TextStyle(fontFamily: FontFamily.nanumBarunpen, color: Colors.grey),
                     )),
                   ),
                   SingleChildScrollView(
@@ -166,7 +169,8 @@ class _TempMyProfileState extends State<TempMyProfile> {
                     child: Center(
                         child: Text(
                       '기본 정보 등록',
-                      style: GoogleFonts.notoSans(color: Colors.grey),
+                          style:
+                          TextStyle(fontFamily: FontFamily.nanumBarunpen, color: Colors.grey),
                     )),
                   ),
                   SizedBox(
@@ -185,9 +189,10 @@ class _TempMyProfileState extends State<TempMyProfile> {
                     color: Colors.grey[200],
                     child: Center(
                         child: Text(
-                          '가치관 정보 등록',
-                          style: GoogleFonts.notoSans(color: Colors.grey),
-                        )),
+                      '가치관 정보 등록',
+                          style:
+                          TextStyle(fontFamily: FontFamily.nanumBarunpen, color: Colors.grey),
+                    )),
                   ),
                   _selfIntroduction(),
 //                  _valueQuestions(),
@@ -203,215 +208,228 @@ class _TempMyProfileState extends State<TempMyProfile> {
 
   Padding _buildNickname() {
     return Padding(
-                  padding: const EdgeInsets.all(common_gap),
-                    child: Row(
-                      children: <Widget>[
-                        SizedBox(
-                          width: 40,
-                        ),
-                        Icon(
-                          FontAwesomeIcons.user,
-                          color: Color.fromRGBO(222, 222, 255, 1),
-                          size: 15,
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Center(
-                          child: Text(
-                            '닉네임',
-                            style: TextStyle(fontSize: 15),
-                          ),
-                        ),
-                        Spacer(),
-                        Expanded(
-                          child: Center(
-                            child: Text(
-                              '$nickname',
-                              style: TextStyle(fontSize: 15),
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 25,),
-                        Icon(
-                          FontAwesomeIcons.lock,
-                          color: Color.fromRGBO(222, 222, 255, 1),
-                          size: 15,
-                        ),
-                      ],
-                ));
+        padding: const EdgeInsets.all(common_gap),
+        child: Row(
+          children: <Widget>[
+            SizedBox(
+              width: 40,
+            ),
+            Icon(
+              FontAwesomeIcons.user,
+              color: Color.fromRGBO(222, 222, 255, 1),
+              size: 15,
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Center(
+              child: Text(
+                '닉네임',
+                style: TextStyle(fontSize: 15),
+              ),
+            ),
+            Spacer(),
+            Expanded(
+              child: Center(
+                child: Text(
+                  '$nickname',
+                  style: TextStyle(fontSize: 15),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 25,
+            ),
+            Icon(
+              FontAwesomeIcons.lock,
+              color: Color.fromRGBO(222, 222, 255, 1),
+              size: 15,
+            ),
+          ],
+        ));
   }
 
   Padding _buildGender() {
     return Padding(
-                  padding: const EdgeInsets.all(common_gap),
-                    child: Row(
-                      children: <Widget>[
-                        SizedBox(
-                          width: 40,
-                        ),
-                        Icon(
-                          FontAwesomeIcons.venusMars,
-                          color: Color.fromRGBO(222, 222, 255, 1),
-                          size: 15,
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Center(
-                          child: Text(
-                            '성별',
-                            style: TextStyle(fontSize: 15),
-                          ),
-                        ),
-                        Spacer(),
-                        Expanded(
-                          child: Center(
-                            child: Text(
-                              '$gender',
-                              style: TextStyle(fontSize: 15),
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 25,),
-                        Icon(
-                          FontAwesomeIcons.lock,
-                          color: Color.fromRGBO(222, 222, 255, 1),
-                          size: 15,
-                        ),
-                      ],
-                ));
+        padding: const EdgeInsets.all(common_gap),
+        child: Row(
+          children: <Widget>[
+            SizedBox(
+              width: 40,
+            ),
+            Icon(
+              FontAwesomeIcons.venusMars,
+              color: Color.fromRGBO(222, 222, 255, 1),
+              size: 15,
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Center(
+              child: Text(
+                '성별',
+                style: TextStyle(fontSize: 15),
+              ),
+            ),
+            Spacer(),
+            Expanded(
+              child: Center(
+                child: Text(
+                  '$gender',
+                  style: TextStyle(fontSize: 15),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 25,
+            ),
+            Icon(
+              FontAwesomeIcons.lock,
+              color: Color.fromRGBO(222, 222, 255, 1),
+              size: 15,
+            ),
+          ],
+        ));
   }
+
   Padding _buildBirthYear() {
     return Padding(
-                  padding: const EdgeInsets.all(common_gap),
-                    child: Row(
-                      children: <Widget>[
-                        SizedBox(
-                          width: 40,
-                        ),
-                        Icon(
-                          FontAwesomeIcons.birthdayCake,
-                          color: Color.fromRGBO(222, 222, 255, 1),
-                          size: 15,
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Center(
-                          child: Text(
-                            '나이',
-                            style: TextStyle(fontSize: 15),
-                          ),
-                        ),
-                        Spacer(),
-                        Expanded(
-                          child: Center(
-                            child: Text(
-                              (DateTime.now().year - birthYear + 1).toString(),
-                              style: TextStyle(fontSize: 15),
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 25,),
-                        Icon(
-                          FontAwesomeIcons.lock,
-                          color: Color.fromRGBO(222, 222, 255, 1),
-                          size: 15,
-                        ),
-                      ],
-                ));
+        padding: const EdgeInsets.all(common_gap),
+        child: Row(
+          children: <Widget>[
+            SizedBox(
+              width: 40,
+            ),
+            Icon(
+              FontAwesomeIcons.birthdayCake,
+              color: Color.fromRGBO(222, 222, 255, 1),
+              size: 15,
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Center(
+              child: Text(
+                '나이',
+                style: TextStyle(fontSize: 15),
+              ),
+            ),
+            Spacer(),
+            Expanded(
+              child: Center(
+                child: Text(
+                  (DateTime.now().year - birthYear + 1).toString(),
+                  style: TextStyle(fontSize: 15),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 25,
+            ),
+            Icon(
+              FontAwesomeIcons.lock,
+              color: Color.fromRGBO(222, 222, 255, 1),
+              size: 15,
+            ),
+          ],
+        ));
   }
+
   Padding _buildEmail() {
     return Padding(
-                  padding: const EdgeInsets.all(common_gap),
-                    child: Row(
-                      children: <Widget>[
-                        SizedBox(
-                          width: 40,
-                        ),
-                        Icon(
-                          FontAwesomeIcons.envelope,
-                          color: Color.fromRGBO(222, 222, 255, 1),
-                          size: 15,
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Center(
-                          child: Text(
-                            '이메일',
-                            style: TextStyle(fontSize: 15),
-                          ),
-                        ),
-                        Spacer(),
-                        Expanded(
-                          child: Center(
-                            child: Text(
-                              '$email',
-                              style: TextStyle(fontSize: 15),
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 25,),
-                        Icon(
-                          FontAwesomeIcons.lock,
-                          color: Color.fromRGBO(222, 222, 255, 1),
-                          size: 15,
-                        ),
-                      ],
-                ));
+        padding: const EdgeInsets.all(common_gap),
+        child: Row(
+          children: <Widget>[
+            SizedBox(
+              width: 40,
+            ),
+            Icon(
+              FontAwesomeIcons.envelope,
+              color: Color.fromRGBO(222, 222, 255, 1),
+              size: 15,
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Center(
+              child: Text(
+                '이메일',
+                style: TextStyle(fontSize: 15),
+              ),
+            ),
+            Spacer(),
+            Expanded(
+              child: Center(
+                child: Text(
+                  '$email',
+                  style: TextStyle(fontSize: 15),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 25,
+            ),
+            Icon(
+              FontAwesomeIcons.lock,
+              color: Color.fromRGBO(222, 222, 255, 1),
+              size: 15,
+            ),
+          ],
+        ));
   }
+
   Padding _buildRegion() {
     return Padding(
-                  padding: const EdgeInsets.all(common_gap),
-                    child: Row(
-                      children: <Widget>[
-                        SizedBox(
-                          width: 40,
-                        ),
-                        Icon(
-                          FontAwesomeIcons.mapMarked,
-                          color: Color.fromRGBO(222, 222, 255, 1),
-                          size: 15,
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Center(
-                          child: Text(
-                            '지역',
-                            style: TextStyle(fontSize: 15),
-                          ),
-                        ),
-                        Spacer(),
-                        Expanded(
-                          child: Center(
-                            child: InkWell(
-                              child: SizedBox(
-                                width: 80,
-                                child: Center(
-                                  child: Text(
-                                    '$region',
-                                    style: TextStyle(fontSize: 15),
-                                  ),
-                                ),
-                              ),
-                              onTap: (){
-                                return showDialog(
-                                  context: context,
-                                  builder: (context) => Center(
-                                    child: Container(
-                                        height: 600, child: _buildRegionDialog(context)),
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 40,),
-                      ],
-                ));
+        padding: const EdgeInsets.all(common_gap),
+        child: Row(
+          children: <Widget>[
+            SizedBox(
+              width: 40,
+            ),
+            Icon(
+              FontAwesomeIcons.mapMarked,
+              color: Color.fromRGBO(222, 222, 255, 1),
+              size: 15,
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Center(
+              child: Text(
+                '지역',
+                style: TextStyle(fontSize: 15),
+              ),
+            ),
+            Spacer(),
+            Expanded(
+              child: Center(
+                child: InkWell(
+                  child: SizedBox(
+                    width: 80,
+                    child: Center(
+                      child: Text(
+                        '$region',
+                        style: TextStyle(fontSize: 15),
+                      ),
+                    ),
+                  ),
+                  onTap: () {
+                    return showDialog(
+                      context: context,
+                      builder: (context) => Center(
+                        child: Container(
+                            height: 600, child: _buildRegionDialog(context)),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 40,
+            ),
+          ],
+        ));
   }
 
   SimpleDialog _buildRegionDialog(BuildContext context) {
@@ -437,16 +455,17 @@ class _TempMyProfileState extends State<TempMyProfile> {
     );
   }
 
-  SimpleDialogOption _regionSimpleDialogOption(BuildContext context, String regionName) {
+  SimpleDialogOption _regionSimpleDialogOption(
+      BuildContext context, String regionName) {
     return SimpleDialogOption(
-        onPressed: () {
-          Navigator.pop(context);
-          setState(() {
-            region = regionName;
-          });
-        },
-        child: Center(child: Text('$regionName')),
-      );
+      onPressed: () {
+        Navigator.pop(context);
+        setState(() {
+          region = regionName;
+        });
+      },
+      child: Center(child: Text('$regionName')),
+    );
   }
 
   Widget _buildHeight() {
@@ -612,7 +631,9 @@ class _TempMyProfileState extends State<TempMyProfile> {
         children: <Widget>[
           Row(
             children: <Widget>[
-              SizedBox(width: 20,),
+              SizedBox(
+                width: 20,
+              ),
               Icon(
                 FontAwesomeIcons.quoteLeft,
                 color: Color.fromRGBO(222, 222, 255, 1),
@@ -623,7 +644,9 @@ class _TempMyProfileState extends State<TempMyProfile> {
           ),
           Row(
             children: <Widget>[
-              SizedBox(width: 40,),
+              SizedBox(
+                width: 40,
+              ),
               Expanded(
                 child: Center(
                   child: InkWell(
@@ -640,7 +663,9 @@ class _TempMyProfileState extends State<TempMyProfile> {
                   ),
                 ),
               ),
-              SizedBox(width: 40,),
+              SizedBox(
+                width: 40,
+              ),
             ],
           ),
           Row(
@@ -651,7 +676,9 @@ class _TempMyProfileState extends State<TempMyProfile> {
                 color: Color.fromRGBO(222, 222, 255, 1),
                 size: 15,
               ),
-              SizedBox(width: 20,),
+              SizedBox(
+                width: 20,
+              ),
             ],
           ),
         ],
@@ -666,38 +693,57 @@ class _TempMyProfileState extends State<TempMyProfile> {
         children: <Widget>[
           Row(
             children: <Widget>[
-              SizedBox(width: 10,),
+              SizedBox(
+                width: 10,
+              ),
               Padding(
-                padding: const EdgeInsets.only(right: 5) ,
-                child: Text('Q.',
-                  style: TextStyle(fontSize: 20, color: Color.fromRGBO(222, 222, 255, 1), fontWeight: FontWeight.bold),
+                padding: const EdgeInsets.only(right: 5),
+                child: Text(
+                  'Q.',
+                  style: TextStyle(
+                      fontSize: 20,
+                      color: Color.fromRGBO(222, 222, 255, 1),
+                      fontWeight: FontWeight.bold),
                 ),
               ),
               Expanded(
                 child: Text(
                   '인생에서 가장 중요한 세 가지는 무엇인가요?',
-                  style: TextStyle(fontSize: 15, color: Color.fromRGBO(222, 222, 255, 1)),
+                  style: TextStyle(
+                      fontSize: 15, color: Color.fromRGBO(222, 222, 255, 1)),
                 ),
               ),
-              SizedBox(width: 10,),
+              SizedBox(
+                width: 10,
+              ),
             ],
           ),
           Row(
             children: <Widget>[
-              SizedBox(width: 10,),
+              SizedBox(
+                width: 10,
+              ),
               Padding(
-                padding: const EdgeInsets.only(right: 5) ,
-                child: Text('A.',
-                  style: TextStyle(fontSize: 20, color: Color.fromRGBO(222, 222, 255, 1), fontWeight: FontWeight.bold),
+                padding: const EdgeInsets.only(right: 5),
+                child: Text(
+                  'A.',
+                  style: TextStyle(
+                      fontSize: 20,
+                      color: Color.fromRGBO(222, 222, 255, 1),
+                      fontWeight: FontWeight.bold),
                 ),
               ),
               Expanded(
                 child: Text(
                   '아직 응답하지 않았습니다. 응답하기 클릭',
-                  style: TextStyle(fontSize: 15, ),
+                  style: TextStyle(
+                    fontSize: 15,
+                  ),
                 ),
               ),
-              SizedBox(width: 10,),
+              SizedBox(
+                width: 10,
+              ),
             ],
           ),
         ],

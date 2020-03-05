@@ -26,7 +26,7 @@ class _QnAMainState extends State<QnAMain> {
             ],
           ),
           body: TabBarView(
-//            physics: NeverScrollableScrollPhysics(),
+            physics: NeverScrollableScrollPhysics(),
             children: <Widget>[
               PeerQuestions(),
               MyQuestions(),

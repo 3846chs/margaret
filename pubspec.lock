@@ -202,7 +202,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
-<<<<<<< HEAD
   flutter_naver_login:
     dependency: "direct main"
     description:
@@ -210,7 +209,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.1"
-=======
   flutter_page_indicator:
     dependency: transitive
     description:
@@ -218,7 +216,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.0.3"
->>>>>>> yookyung
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -264,13 +261,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "8.7.0"
-  google_fonts:
-    dependency: "direct main"
-    description:
-      name: google_fonts
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.3.9"
   google_sign_in:
     dependency: "direct main"
     description:

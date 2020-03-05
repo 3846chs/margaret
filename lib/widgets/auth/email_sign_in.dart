@@ -1,4 +1,5 @@
 import 'package:margaret/constants/colors.dart';
+import 'package:margaret/constants/font_names.dart';
 import 'package:margaret/constants/size.dart';
 import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/pages/auth/email/email_pw_reset.dart';
@@ -6,7 +7,6 @@ import 'package:margaret/utils/base_height.dart';
 import 'package:margaret/utils/simple_snack_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class EmailSignInForm extends StatefulWidget {
@@ -44,7 +44,10 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
                 Center(
                   child: Text(
                     '마  가  렛',
-                    style: GoogleFonts.jua(fontSize: 50, color: pastel_purple),
+                    style: TextStyle(
+                        fontFamily: FontFamily.jua,
+                        fontSize: 50,
+                        color: pastel_purple),
                   ),
                 ),
                 TextFormField(

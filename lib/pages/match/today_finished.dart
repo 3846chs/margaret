@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:margaret/constants/colors.dart';
 import 'package:margaret/constants/firebase_keys.dart';
+import 'package:margaret/constants/font_names.dart';
 import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/data/user.dart';
 import 'package:margaret/firebase/firestore_provider.dart';
@@ -63,7 +63,8 @@ class MatchFinished extends StatelessWidget {
           children: <Widget>[
             Text(
               '다음 매칭까지 남은 시간',
-              style: GoogleFonts.jua(fontSize: 20, color: Colors.black54),
+              style: TextStyle(
+                  fontFamily: FontFamily.jua, fontSize: 20, color: Colors.black54),
             ),
             SizedBox(
               height: screenAwareSize(100, context),

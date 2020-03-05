@@ -1,14 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:margaret/constants/font_names.dart';
 import 'package:margaret/constants/size.dart';
-import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/data/user.dart';
-import 'package:margaret/firebase/firestore_provider.dart';
 import 'package:margaret/firebase/storage_cache_manager.dart';
 import 'package:margaret/profiles/profile_basic_info.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
@@ -233,7 +230,8 @@ class YourProfile extends StatelessWidget {
         onPressed: () {},
         label: Text(
           '호감보내기',
-          style: GoogleFonts.notoSans(fontSize: 15),
+          style:
+          TextStyle(fontFamily: FontFamily.nanumBarunpen, fontSize: 15),
         ),
         icon: Icon(
           FontAwesomeIcons.heart,
