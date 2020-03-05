@@ -139,13 +139,13 @@ class RadialAnimation extends StatelessWidget {
                 context: context,
                 builder: (context) => Center(
                   child: Container(
-                      height: 600, child: _buildRegionDialog(context)),
+                      height: 600, child: _buildDialog(context)),
                 ),
               );
             },
             elevation: 10));
   }
-  SimpleDialog _buildRegionDialog(BuildContext context) {
+  SimpleDialog _buildDialog(BuildContext context) {
     return SimpleDialog(
       children: <Widget>[
         _simpleDialogOption(context, '싸웠을 때 바로 푸는 편인가요?'),
