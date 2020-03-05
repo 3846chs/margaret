@@ -27,25 +27,21 @@ class YourProfile extends StatelessWidget {
               flexibleSpace: FlexibleSpaceBar(
                 title: Text(user.nickname),
                 background: Swiper(
-                  itemCount: 3,
+                  itemCount: 2,
                   itemBuilder: (BuildContext context, int index) {
-                    return Row(
-                      children: user.profiles
-                          .map((path) => ClipRRect(
-                        // 상대 프로필 이미지 사진
-                        child: CachedNetworkImage(
-                          imageUrl: "profiles/$path",
-                          cacheManager: StorageCacheManager(),
-                          width: MediaQuery.of(context).size.width,
-                          height: MediaQuery.of(context).size.height,
-                          fit: BoxFit.cover,
-                          placeholder: (context, url) =>
-                          const CircularProgressIndicator(),
-                          errorWidget: (context, url, error) =>
-                          const Icon(Icons.account_circle),
-                        ),
-                      ))
-                          .toList(),
+                    return ClipRRect(
+                      // 상대 프로필 이미지 사진
+                      child: CachedNetworkImage(
+                        imageUrl: "profiles/" + user.profiles[index].toString(),
+                        cacheManager: StorageCacheManager(),
+                        //width: MediaQuery.of(context).size.width,
+                        //height: MediaQuery.of(context).size.height,
+                        fit: BoxFit.cover,
+                        placeholder: (context, url) =>
+                            const CircularProgressIndicator(),
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.account_circle),
+                      ),
                     );
                   },
                 ),
@@ -230,8 +226,7 @@ class YourProfile extends StatelessWidget {
         onPressed: () {},
         label: Text(
           '호감보내기',
-          style:
-          TextStyle(fontFamily: FontFamily.nanumBarunpen, fontSize: 15),
+          style: TextStyle(fontFamily: FontFamily.nanumBarunpen, fontSize: 15),
         ),
         icon: Icon(
           FontAwesomeIcons.heart,
@@ -245,25 +240,25 @@ class YourProfile extends StatelessWidget {
 
   Widget buildContainer(BuildContext context) {
     return Container(
-                    child: Row(
-                      children: user.profiles
-                          .map((path) => ClipRRect(
-                                // 상대 프로필 이미지 사진
-                                child: CachedNetworkImage(
-                                  imageUrl: "profiles/$path",
-                                  cacheManager: StorageCacheManager(),
-                                  width: MediaQuery.of(context).size.width,
-                                  height: MediaQuery.of(context).size.height,
-                                  fit: BoxFit.cover,
-                                  placeholder: (context, url) =>
-                                      const CircularProgressIndicator(),
-                                  errorWidget: (context, url, error) =>
-                                      const Icon(Icons.account_circle),
-                                ),
-                              ))
-                          .toList(),
-                    ),
-                  );
+      child: Row(
+        children: user.profiles
+            .map((path) => ClipRRect(
+                  // 상대 프로필 이미지 사진
+                  child: CachedNetworkImage(
+                    imageUrl: "profiles/$path",
+                    cacheManager: StorageCacheManager(),
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height,
+                    fit: BoxFit.cover,
+                    placeholder: (context, url) =>
+                        const CircularProgressIndicator(),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.account_circle),
+                  ),
+                ))
+            .toList(),
+      ),
+    );
   }
 
   Padding _valueQuestions() {
