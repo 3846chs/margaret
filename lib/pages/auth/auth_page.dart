@@ -43,8 +43,6 @@ class AuthPage extends StatelessWidget {
   }
 
   Widget _buildBody(BuildContext context) {
-    final myUserData = Provider.of<MyUserData>(context, listen: false);
-
     return Center(
       child: SafeArea(
         child: Column(
@@ -52,39 +50,41 @@ class AuthPage extends StatelessWidget {
             SizedBox(height: screenAwareSize(100, context)),
             Text(
               'Margaret',
-              style: TextStyle(
-                  fontFamily: FontFamily.handlee,
-                  fontSize: 50,
-                  fontWeight: FontWeight.bold),
+              style: const TextStyle(
+                fontFamily: FontFamily.handlee,
+                fontSize: 50,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             Text(
               '                         True Love ',
-              style: TextStyle(
-                  fontFamily: 'pacifico',
-                  fontWeight: FontWeight.bold,
-                  fontSize: 17,
-                  color: Colors.pinkAccent),
+              style: const TextStyle(
+                fontFamily: 'pacifico',
+                fontWeight: FontWeight.bold,
+                fontSize: 17,
+                color: Colors.pinkAccent,
+              ),
             ),
             SizedBox(height: screenAwareSize(130, context)),
             LoginButton(
               text: "Google  로그인",
               icon: FontAwesomeIcons.google,
               color: Colors.red[600],
-              onPressed: () => _handleGoogleSignIn(context, myUserData),
+              onPressed: () => _signInGoogle(context),
             ),
             SizedBox(height: screenAwareSize(5.0, context)),
             LoginButton(
               text: "Kakao  로그인",
               icon: IconData(75),
               color: Colors.yellow[700],
-              onPressed: () => _handleKakaoSignIn(context, myUserData),
+              onPressed: () => _signInKakao(context),
             ),
             SizedBox(height: screenAwareSize(5.0, context)),
             LoginButton(
               text: "Naver  로그인",
               icon: FontAwesomeIcons.facebookF,
               color: Colors.green,
-              onPressed: () => _handleNaverSignIn(context, myUserData),
+              onPressed: () => _signInNaver(context),
             ),
             SizedBox(height: screenAwareSize(5.0, context)),
             LoginButton(
@@ -109,56 +109,54 @@ class AuthPage extends StatelessWidget {
     );
   }
 
-  Future<void> _handleGoogleSignIn(
-      BuildContext context, MyUserData myUserData) async {
+  Future<void> _postAuthResult(
+      BuildContext context, AuthResult authResult) async {
+    final user = authResult.user;
+
+    if (user == null) {
+      simpleSnackbar(context, '존재하지 않는 계정입니다');
+      return;
+    }
+
+    print("signed in " + user.displayName);
+
+    final snapShot =
+        await _firestore.collection(COLLECTION_USERS).document(user.uid).get();
+
+    if (snapShot == null || !snapShot.exists) {
+      // 해당 snapshot 이 존재하지 않을 때
+      print('Not yet Registered - Profile Input Page');
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ProfileInputPage(authResult: authResult)));
+    } else {
+      Provider.of<MyUserData>(context, listen: false).update();
+    }
+  }
+
+  Future<void> _signInGoogle(BuildContext context) async {
     try {
       final googleUser = await _googleSignIn.signIn();
       final googleAuth = await googleUser.authentication;
-      final authResult = await _auth.signInWithCredential(
-          GoogleAuthProvider.getCredential(
-              idToken: googleAuth.idToken,
-              accessToken: googleAuth.accessToken));
+      final credential = GoogleAuthProvider.getCredential(
+          idToken: googleAuth.idToken, accessToken: googleAuth.accessToken);
+      final authResult = await _auth.signInWithCredential(credential);
+
+      _postAuthResult(context, authResult);
 
 //    if (authResult.additionalUserInfo.isNewUser) {
 //      print('new user');
 //    } else {
 //      print('old user');
 //    }
-
-      final user = authResult.user;
-
-      if (user == null) {
-        simpleSnackbar(context, '존재하지 않는 계정입니다');
-        return;
-      }
-
-      print("signed in " + user.displayName);
-      final snapShot = await _firestore
-          .collection(COLLECTION_USERS)
-          .document(user.uid)
-          .get();
-
-      if (snapShot == null || !snapShot.exists) {
-        // 해당 snapshot 이 존재하지 않을 때
-        print('Not yet Registered - Profile Input Page');
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) =>
-                    ProfileInputPage(authResult: authResult)));
-      } else {
-        myUserData.update();
-      }
-
-      return user;
     } on PlatformException catch (exception) {
       print(exception.code);
       simpleSnackbar(context, exception.message);
     }
   }
 
-  Future<void> _handleKakaoSignIn(
-      BuildContext context, MyUserData myUserData) async {
+  Future<void> _signInKakao(BuildContext context) async {
     try {
       final result = await _kakaoSignIn.logIn();
 
@@ -177,31 +175,7 @@ class AuthPage extends StatelessWidget {
 
         final authResult = await _auth.signInWithCustomToken(
             token: response.data["firebaseToken"]);
-        final user = authResult.user;
-
-        if (user == null) {
-          simpleSnackbar(context, '존재하지 않는 계정입니다');
-          return;
-        }
-
-        print("signed in " + user.displayName);
-
-        final snapShot = await _firestore
-            .collection(COLLECTION_USERS)
-            .document(user.uid)
-            .get();
-
-        if (snapShot == null || !snapShot.exists) {
-          // 해당 snapshot 이 존재하지 않을 때
-          print('Not yet Registered - Profile Input Page');
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) =>
-                      ProfileInputPage(authResult: authResult)));
-        } else {
-          myUserData.update();
-        }
+        _postAuthResult(context, authResult);
       }
     } on PlatformException catch (exception) {
       print(exception.code);
@@ -209,8 +183,7 @@ class AuthPage extends StatelessWidget {
     }
   }
 
-  Future<void> _handleNaverSignIn(
-      BuildContext context, MyUserData myUserData) async {
+  Future<void> _signInNaver(BuildContext context) async {
     try {
       final result = await FlutterNaverLogin.logIn();
 
@@ -229,31 +202,7 @@ class AuthPage extends StatelessWidget {
 
         final authResult = await _auth.signInWithCustomToken(
             token: response.data["firebaseToken"]);
-        final user = authResult.user;
-
-        if (user == null) {
-          simpleSnackbar(context, '존재하지 않는 계정입니다');
-          return;
-        }
-
-        print("signed in " + user.displayName);
-
-        final snapShot = await _firestore
-            .collection(COLLECTION_USERS)
-            .document(user.uid)
-            .get();
-
-        if (snapShot == null || !snapShot.exists) {
-          // 해당 snapshot 이 존재하지 않을 때
-          print('Not yet Registered - Profile Input Page');
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) =>
-                      ProfileInputPage(authResult: authResult)));
-        } else {
-          myUserData.update();
-        }
+        _postAuthResult(context, authResult);
       }
     } on PlatformException catch (exception) {
       print(exception.code);
