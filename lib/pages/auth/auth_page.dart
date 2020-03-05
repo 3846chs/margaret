@@ -17,7 +17,7 @@ import 'package:margaret/widgets/auth/login_button.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 
-class AuthMain extends StatelessWidget {
+class AuthPage extends StatelessWidget {
   final _firestore = Firestore.instance;
   final _auth = FirebaseAuth.instance;
   final _cloudFunctions = CloudFunctions(region: "asia-northeast1");
@@ -29,81 +29,88 @@ class AuthMain extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage("assets/temp9.jpeg"),
             fit: BoxFit.cover,
           ),
         ),
-        child: Builder(builder: (context) {
-          return Center(
-            child: SafeArea(
-              child: Column(
-                children: <Widget>[
-                  SizedBox(height: screenAwareSize(100, context)),
-                  Text(
-                    'Margaret',
-                    style: TextStyle(
-                        fontFamily: FontFamily.handlee,
-                        fontSize: 50,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    '                         True Love ',
-                    style: TextStyle(
-                        fontFamily: 'pacifico',
-                        fontWeight: FontWeight.bold,
-                        fontSize: 17,
-                        color: Colors.pinkAccent),
-                  ),
-                  SizedBox(height: screenAwareSize(130, context)),
-                  LoginButton(
-                    text: "Google  로그인",
-                    icon: FontAwesomeIcons.google,
-                    color: Colors.red[600],
-                    onPressed: () => _handleGoogleSignIn(context),
-                  ),
-                  SizedBox(height: screenAwareSize(5.0, context)),
-                  LoginButton(
-                    text: "Kakao  로그인",
-                    icon: IconData(75),
-                    color: Colors.yellow[700],
-                    onPressed: () => _handleKakaoSignIn(context),
-                  ),
-                  SizedBox(height: screenAwareSize(5.0, context)),
-                  LoginButton(
-                    text: "Naver  로그인",
-                    icon: FontAwesomeIcons.facebookF,
-                    color: Colors.green,
-                    onPressed: () => _handleNaverSignIn(context),
-                  ),
-                  SizedBox(height: screenAwareSize(5.0, context)),
-                  LoginButton(
-                    text: "Apple  로그인",
-                    icon: FontAwesomeIcons.facebookF,
-                    color: Colors.black,
-                    onPressed: () => null,
-                  ),
-                  SizedBox(height: screenAwareSize(5.0, context)),
-                  LoginButton(
-                    text: "E-mail  로그인",
-                    icon: FontAwesomeIcons.solidEnvelope,
-                    color: Colors.grey[300],
-                    onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => EmailAuth()));
-                    },
-                  ),
-                ],
-              ),
-            ),
-          );
-        }),
+        child: Builder(
+          builder: (context) => _buildBody(context),
+        ),
       ),
     );
   }
 
-  Future<void> _handleGoogleSignIn(BuildContext context) async {
+  Widget _buildBody(BuildContext context) {
+    final myUserData = Provider.of<MyUserData>(context, listen: false);
+
+    return Center(
+      child: SafeArea(
+        child: Column(
+          children: <Widget>[
+            SizedBox(height: screenAwareSize(100, context)),
+            Text(
+              'Margaret',
+              style: TextStyle(
+                  fontFamily: FontFamily.handlee,
+                  fontSize: 50,
+                  fontWeight: FontWeight.bold),
+            ),
+            Text(
+              '                         True Love ',
+              style: TextStyle(
+                  fontFamily: 'pacifico',
+                  fontWeight: FontWeight.bold,
+                  fontSize: 17,
+                  color: Colors.pinkAccent),
+            ),
+            SizedBox(height: screenAwareSize(130, context)),
+            LoginButton(
+              text: "Google  로그인",
+              icon: FontAwesomeIcons.google,
+              color: Colors.red[600],
+              onPressed: () => _handleGoogleSignIn(context, myUserData),
+            ),
+            SizedBox(height: screenAwareSize(5.0, context)),
+            LoginButton(
+              text: "Kakao  로그인",
+              icon: IconData(75),
+              color: Colors.yellow[700],
+              onPressed: () => _handleKakaoSignIn(context, myUserData),
+            ),
+            SizedBox(height: screenAwareSize(5.0, context)),
+            LoginButton(
+              text: "Naver  로그인",
+              icon: FontAwesomeIcons.facebookF,
+              color: Colors.green,
+              onPressed: () => _handleNaverSignIn(context, myUserData),
+            ),
+            SizedBox(height: screenAwareSize(5.0, context)),
+            LoginButton(
+              text: "Apple  로그인",
+              icon: FontAwesomeIcons.facebookF,
+              color: Colors.black,
+              onPressed: () => null,
+            ),
+            SizedBox(height: screenAwareSize(5.0, context)),
+            LoginButton(
+              text: "E-mail  로그인",
+              icon: FontAwesomeIcons.solidEnvelope,
+              color: Colors.grey[300],
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => EmailAuth()));
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Future<void> _handleGoogleSignIn(
+      BuildContext context, MyUserData myUserData) async {
     try {
       final googleUser = await _googleSignIn.signIn();
       final googleAuth = await googleUser.authentication;
@@ -140,8 +147,7 @@ class AuthMain extends StatelessWidget {
                 builder: (context) =>
                     ProfileInputPage(authResult: authResult)));
       } else {
-        Provider.of<MyUserData>(context, listen: false)
-            .setNewStatus(MyUserDataStatus.progress);
+        myUserData.update();
       }
 
       return user;
@@ -151,7 +157,8 @@ class AuthMain extends StatelessWidget {
     }
   }
 
-  Future<void> _handleKakaoSignIn(BuildContext context) async {
+  Future<void> _handleKakaoSignIn(
+      BuildContext context, MyUserData myUserData) async {
     try {
       final result = await _kakaoSignIn.logIn();
 
@@ -193,8 +200,7 @@ class AuthMain extends StatelessWidget {
                   builder: (context) =>
                       ProfileInputPage(authResult: authResult)));
         } else {
-          Provider.of<MyUserData>(context, listen: false)
-              .setNewStatus(MyUserDataStatus.progress);
+          myUserData.update();
         }
       }
     } on PlatformException catch (exception) {
@@ -203,7 +209,8 @@ class AuthMain extends StatelessWidget {
     }
   }
 
-  Future<void> _handleNaverSignIn(BuildContext context) async {
+  Future<void> _handleNaverSignIn(
+      BuildContext context, MyUserData myUserData) async {
     try {
       final result = await FlutterNaverLogin.logIn();
 
@@ -245,8 +252,7 @@ class AuthMain extends StatelessWidget {
                   builder: (context) =>
                       ProfileInputPage(authResult: authResult)));
         } else {
-          Provider.of<MyUserData>(context, listen: false)
-              .setNewStatus(MyUserDataStatus.progress);
+          myUserData.update();
         }
       }
     } on PlatformException catch (exception) {

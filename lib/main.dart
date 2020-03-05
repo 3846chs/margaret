@@ -1,10 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:margaret/constants/colors.dart';
 import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/home.dart';
-import 'package:margaret/pages/auth/auth_main.dart';
+import 'package:margaret/pages/auth/auth_page.dart';
 import 'package:margaret/pages/loading_page.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
@@ -31,31 +29,11 @@ class OurApp extends StatelessWidget {
             builder: (context, myUserData, child) {
               switch (myUserData.status) {
                 case MyUserDataStatus.progress:
-                  FirebaseAuth.instance
-                      .currentUser()
-                      .then((firebaseUser) async {
-                    if (firebaseUser == null)
-                      myUserData.setNewStatus(MyUserDataStatus.none);
-                    else {
-                      print(firebaseUser.uid);
-                      final snapShot = await Firestore.instance
-                          .collection('Users')
-                          .document(firebaseUser.uid)
-                          .get();
-                      if (snapShot == null || !snapShot.exists) {
-                        // 해당 snapshot 이 존재하지 않을 때
-                        print('Not yet Registered - Auth Page');
-                        myUserData.setNewStatus(MyUserDataStatus.none);
-                      } else {
-                        myUserData.setUserData(firebaseUser.uid);
-                      }
-                    }
-                  });
                   return LoadingPage();
                 case MyUserDataStatus.exist:
                   return Home();
                 default:
-                  return AuthMain();
+                  return AuthPage();
               }
             },
           ),
