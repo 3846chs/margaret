@@ -4,10 +4,10 @@ import 'package:margaret/data/message.dart';
 import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/data/user.dart';
 import 'package:margaret/firebase/firestore_provider.dart';
-import 'package:margaret/pages/chat_detail_page.dart';
+import 'package:margaret/pages/chat/chat_detail_page.dart';
 import 'package:margaret/profiles/your_profile.dart';
-import 'package:margaret/widgets/chat_card.dart';
 import 'package:flutter/material.dart';
+import 'package:margaret/widgets/chat/chat_card.dart';
 import 'package:provider/provider.dart';
 
 class ChatPage extends StatelessWidget {

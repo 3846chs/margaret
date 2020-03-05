@@ -1,11 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:margaret/constants/colors.dart';
 import 'package:margaret/constants/font_names.dart';
 import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/firebase/storage_cache_manager.dart';
-import 'package:margaret/pages/chat_page.dart';
-import 'package:margaret/pages/match/match_main.dart';
-import 'package:margaret/pages/qna/qna_main.dart';
+import 'package:margaret/pages/chat/chat_page.dart';
+import 'package:margaret/pages/match/match_page.dart';
+import 'package:margaret/pages/qna/qna_page.dart';
 import 'package:margaret/pages/receive_page.dart';
 import 'package:margaret/profiles/temp_my_profile.dart';
 import 'package:margaret/utils/notification.dart';
@@ -25,8 +24,8 @@ class _HomeState extends State<Home> {
   int _selectedIndex = 0;
 
   static List<Widget> _widgetOptions = <Widget>[
-    MatchMain(),
-    QnAMain(),
+    MatchPage(),
+    QnaPage(),
     ReceivePage(),
     ChatPage(),
   ];
@@ -42,53 +41,55 @@ class _HomeState extends State<Home> {
     }
 
     return Scaffold(
-      appBar: AppBar(
-        leading: Builder(
-          builder: (BuildContext context) {
-            return GestureDetector(
-              onTap: () => Scaffold.of(context).openDrawer(),
-              child: CircleAvatar(
-                child: ClipOval(
-                  child: Consumer<MyUserData>(
-                    builder: (context, value, child) {
-                      return CachedNetworkImage(
-                        width: 40,
-                        imageUrl: "profiles/${value.userData.profiles[0]}",
-                        cacheManager: StorageCacheManager(),
-                        placeholder: (context, url) =>
-                            const CircularProgressIndicator(),
-                        errorWidget: (context, url, error) =>
-                            const Icon(Icons.account_circle),
-                      );
-                    },
-                  ),
-                ),
-              ),
-            );
-          },
-        ),
-        title: Row(
-          children: <Widget>[
-            Spacer(
-              flex: 1,
-            ),
-            Text(
-              '마    가    렛',
-              style: TextStyle(
-                  fontFamily: FontFamily.jua, color: Colors.purple[300]),
-            ),
-            Spacer(
-              flex: 2,
-            ),
-          ],
-        ),
-      ),
+      appBar: _buildAppBar(),
       body: IndexedStack(
         index: _selectedIndex,
         children: _widgetOptions,
       ),
       drawer: _buildDrawer(myUserData),
       bottomNavigationBar: _buildBottomNavigationBar(),
+    );
+  }
+
+  AppBar _buildAppBar() {
+    return AppBar(
+      leading: Builder(
+        builder: (BuildContext context) {
+          return InkWell(
+            onTap: () => Scaffold.of(context).openDrawer(),
+            child: CircleAvatar(
+              child: ClipOval(
+                child: Consumer<MyUserData>(
+                  builder: (context, myUserData, _) {
+                    return CachedNetworkImage(
+                      width: 40,
+                      imageUrl: "profiles/${myUserData.userData.profiles[0]}",
+                      cacheManager: StorageCacheManager(),
+                      placeholder: (context, url) =>
+                          const CircularProgressIndicator(),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.account_circle),
+                    );
+                  },
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+      title: Row(
+        children: <Widget>[
+          Spacer(flex: 1),
+          Text(
+            '마    가    렛',
+            style: TextStyle(
+              fontFamily: FontFamily.jua,
+              color: Colors.purple[300],
+            ),
+          ),
+          Spacer(flex: 2),
+        ],
+      ),
     );
   }
 
