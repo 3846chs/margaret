@@ -42,7 +42,7 @@ class PeerQuestions extends StatelessWidget {
             this.peerQuestion = firstDocument.data['question'];
             this.peerKey = firstDocument.data['userKey'];
             this.documentId = firstDocument.documentID;
-            print(this.documentId);
+
             return StreamBuilder<User>(
                 stream: firestoreProvider.connectUser(peerKey),
                 builder: (context, snapshot) {
@@ -91,25 +91,25 @@ class PeerQuestionsCard extends StatelessWidget {
       },
       child: Column(
         children: <Widget>[
-          GestureDetector(
-            onTap: () {
-              print('패스하기');
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(common_l_gap),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  Icon(
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              GestureDetector(
+                onTap: () {
+                  print('삭제하기');
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(common_gap),
+                  child: Icon(
                     FontAwesomeIcons.solidTrashAlt,
                     color: Colors.pink[200],
                   ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                ],
+                ),
               ),
-            ),
+              SizedBox(
+                width: 10,
+              ),
+            ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -180,7 +180,7 @@ class PeerQuestionsCard extends StatelessWidget {
           Container(
             width: 250,
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(common_gap),
               child: Center(
                 child: Text(
                   this.peer.introduction ?? '등록된 자기소개가 없습니다',
@@ -201,60 +201,41 @@ class PeerQuestionsCard extends StatelessWidget {
           SizedBox(
             height: screenAwareSize(10, context),
           ),
-          Stack(
-            overflow: Overflow.visible,
-            children: <Widget>[
-              Container(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Center(
-                        child: Text(
-                      peerQuestion,
-                      style: TextStyle(
-                        fontFamily: FontFamily.miSaeng,
-                        fontSize: 25,
-                      ),
-                    )),
+          Container(
+              child: Padding(
+                padding: const EdgeInsets.all(common_gap),
+                child: Center(
+                    child: Text(
+                  peerQuestion,
+                  style: TextStyle(
+                    fontFamily: FontFamily.miSaeng,
+                    fontSize: 25,
                   ),
-                  width: 270,
-                  height: 130,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: <Color>[
-                        Colors.pink[100],
-                        Colors.white,
-                      ],
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey,
-                        blurRadius: 2.0,
-                        spreadRadius: 0.0,
-                        offset:
-                            Offset(7.0, 7.0), // shadow direction: bottom right
-                      )
-                    ],
-//                    border: Border.all(color: Colors.pink[100], width: 2),
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(15),
-                    ),
-                  )),
-//              Positioned(
-//                top: -25,
-//                left: -10,
-//                child: Container(
-//                    width: 30,
-//                    height: 55,
-//                    color: Colors.grey[50],
-//                    child: Text(
-//                      'Q',
-//                      style: GoogleFonts.nanumPenScript(fontSize: 60),
-//                    )),
-//              ),
-            ],
-          ),
+                )),
+              ),
+              width: 270,
+              height: 130,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: <Color>[
+                    Colors.pink[100],
+                    Colors.white,
+                  ],
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey,
+                    blurRadius: 2.0,
+                    spreadRadius: 0.0,
+                    offset: Offset(7.0, 7.0), // shadow direction: bottom right
+                  )
+                ],
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15),
+                ),
+              )),
         ],
       ),
     );

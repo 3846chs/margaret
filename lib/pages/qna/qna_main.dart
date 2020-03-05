@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:margaret/constants/colors.dart';
 import 'package:margaret/pages/qna/my_questions.dart';
 import 'package:margaret/pages/qna/peer_questions.dart';
 
@@ -15,7 +16,9 @@ class _QnAMainState extends State<QnAMain> {
         length: 2,
         child: Scaffold(
           appBar: TabBar(
-            indicatorColor: Colors.black54,
+            indicatorColor: Colors.purple[200],
+            labelColor: Colors.black,
+            unselectedLabelColor: Colors.grey,
             tabs: <Widget>[
               Tab(
                 text: '이성 질문', // 아이콘 추가할 예정

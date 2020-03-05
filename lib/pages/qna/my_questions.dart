@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:margaret/constants/colors.dart';
@@ -97,25 +98,25 @@ class MyQuestionsCard extends StatelessWidget {
       onTap: () {},
       child: Column(
         children: <Widget>[
-          GestureDetector(
-            onTap: () {
-              print('패스하기');
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(common_l_gap),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  Icon(
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              GestureDetector(
+                onTap: () {
+                  print('삭제하기');
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(common_gap),
+                  child: Icon(
                     FontAwesomeIcons.solidTrashAlt,
-                    color: Colors.pink[200],
+                    color: Colors.purple[200],
                   ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                ],
+                ),
               ),
-            ),
+              SizedBox(
+                width: 10,
+              ),
+            ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -186,7 +187,7 @@ class MyQuestionsCard extends StatelessWidget {
           Container(
             width: 250,
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(common_gap),
               child: Center(
                 child: Text(
                   this.peer.introduction ?? '등록된 자기소개가 없습니다',
@@ -207,47 +208,123 @@ class MyQuestionsCard extends StatelessWidget {
           SizedBox(
             height: screenAwareSize(10, context),
           ),
-          Stack(
-            overflow: Overflow.visible,
-            children: <Widget>[
-              Container(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Center(
-                        child: Text(
-                      this.peerAnswer,
-                      style: TextStyle(
-                        fontFamily: FontFamily.miSaeng,
-                        fontSize: 25,
-                      ),
-                    )),
-                  ),
-                  width: 270,
-                  height: 130,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: <Color>[
-                        Colors.pink[100],
-                        Colors.white,
-                      ],
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey,
-                        blurRadius: 2.0,
-                        spreadRadius: 0.0,
-                        offset:
-                            Offset(7.0, 7.0), // shadow direction: bottom right
-                      )
-                    ],
-//                    border: Border.all(color: Colors.pink[100], width: 2),
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(15),
+          FlipCard(
+            front: Container(
+                child: Padding(
+                  padding: const EdgeInsets.all(common_gap),
+                  child: Center(
+                      child: Text(
+                    this.myQuestion,
+                    style: TextStyle(
+                      fontFamily: FontFamily.miSaeng,
+                      fontSize: 25,
                     ),
                   )),
-            ],
+                ),
+                width: 270,
+                height: 130,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: <Color>[
+                      Colors.blue[100],
+                      Colors.white,
+                    ],
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey,
+                      blurRadius: 2.0,
+                      spreadRadius: 0.0,
+                      offset:
+                          Offset(7.0, 7.0), // shadow direction: bottom right
+                    )
+                  ],
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(15),
+                  ),
+                )),
+            back: Container(
+                child: Padding(
+                  padding: const EdgeInsets.all(common_gap),
+                  child: Center(
+                      child: Text(
+                    this.peerAnswer,
+                    style: TextStyle(
+                      fontFamily: FontFamily.miSaeng,
+                      fontSize: 25,
+                    ),
+                  )),
+                ),
+                width: 270,
+                height: 130,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: <Color>[
+                      Colors.pink[100],
+                      Colors.white,
+                    ],
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey,
+                      blurRadius: 2.0,
+                      spreadRadius: 0.0,
+                      offset:
+                          Offset(7.0, 7.0), // shadow direction: bottom right
+                    )
+                  ],
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(15),
+                  ),
+                )),
+          ),
+          SizedBox(
+            height: screenAwareSize(20, context),
+          ),
+          SizedBox(
+            width: 150,
+            height: 40,
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(128)),
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: <Color>[
+                    Color(0xfffd5c76),
+                    Color(0xffff8951),
+                  ],
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey,
+                    blurRadius: 2.0,
+                    spreadRadius: 0.0,
+                    offset: Offset(3.0, 3.0), // shadow direction: bottom right
+                  )
+                ],
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Icon(
+                    FontAwesomeIcons.commentDots,
+                    color: Colors.white,
+                  ),
+                  Text(
+                    "  채팅하기",
+                    style: TextStyle(
+                      fontFamily: FontFamily.jua,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
         ],
       ),
