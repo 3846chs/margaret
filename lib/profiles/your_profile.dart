@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
 
 class YourProfile extends StatelessWidget {
   final User user;
@@ -28,23 +29,28 @@ class YourProfile extends StatelessWidget {
               pinned: true,
               flexibleSpace: FlexibleSpaceBar(
                 title: Text(user.nickname),
-                background: Row(
-                  children: user.profiles
-                      .map((path) => ClipRRect(
-                            // 상대 프로필 이미지 사진
-                            child: CachedNetworkImage(
-                              imageUrl: "profiles/$path",
-                              cacheManager: StorageCacheManager(),
-                              width: MediaQuery.of(context).size.width,
-                              height: MediaQuery.of(context).size.height,
-                              fit: BoxFit.cover,
-                              placeholder: (context, url) =>
-                                  const CircularProgressIndicator(),
-                              errorWidget: (context, url, error) =>
-                                  const Icon(Icons.account_circle),
-                            ),
-                          ))
-                      .toList(),
+                background: Swiper(
+                  itemCount: 3,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Row(
+                      children: user.profiles
+                          .map((path) => ClipRRect(
+                        // 상대 프로필 이미지 사진
+                        child: CachedNetworkImage(
+                          imageUrl: "profiles/$path",
+                          cacheManager: StorageCacheManager(),
+                          //width: MediaQuery.of(context).size.width,
+                          //height: MediaQuery.of(context).size.height,
+                          fit: BoxFit.cover,
+                          placeholder: (context, url) =>
+                          const CircularProgressIndicator(),
+                          errorWidget: (context, url, error) =>
+                          const Icon(Icons.account_circle),
+                        ),
+                      ))
+                          .toList(),
+                    );
+                  },
                 ),
               ),
             ),
@@ -54,20 +60,32 @@ class YourProfile extends StatelessWidget {
                 child: Column(
                   children: <Widget>[
                     _selfIntroduction(), // 저는 이런 가치관을 가진 사람이에요
-                    SizedBox(height: 10,),
+                    SizedBox(
+                      height: 10,
+                    ),
                     SizedBox(
                       height: 5,
-                      child: Container(color: Colors.black12,),
+                      child: Container(
+                        color: Colors.black12,
+                      ),
                     ),
-                    SizedBox(height: 5,),
+                    SizedBox(
+                      height: 5,
+                    ),
                     // 가치관 질문
                     _valueQuestions(),
-                    SizedBox(height: 10,),
+                    SizedBox(
+                      height: 10,
+                    ),
                     SizedBox(
                       height: 5,
-                      child: Container(color: Colors.black12,),
+                      child: Container(
+                        color: Colors.black12,
+                      ),
                     ),
-                    SizedBox(height: 5,),
+                    SizedBox(
+                      height: 5,
+                    ),
                     // 기본 정보
                     Padding(
                       padding: const EdgeInsets.all(common_gap),
@@ -79,10 +97,13 @@ class YourProfile extends StatelessWidget {
                               child: Container(
                                 decoration: ShapeDecoration(
                                   color: Color.fromRGBO(222, 222, 255, 1),
-                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3.0)),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(3.0)),
                                   shadows: [
                                     BoxShadow(
-                                        color: Colors.black26, blurRadius: 3.0, offset: Offset(2, 2))
+                                        color: Colors.black26,
+                                        blurRadius: 3.0,
+                                        offset: Offset(2, 2))
                                   ],
                                 ),
                                 child: Padding(
@@ -224,6 +245,29 @@ class YourProfile extends StatelessWidget {
     );
   }
 
+  Widget buildContainer(BuildContext context) {
+    return Container(
+                    child: Row(
+                      children: user.profiles
+                          .map((path) => ClipRRect(
+                                // 상대 프로필 이미지 사진
+                                child: CachedNetworkImage(
+                                  imageUrl: "profiles/$path",
+                                  cacheManager: StorageCacheManager(),
+                                  width: MediaQuery.of(context).size.width,
+                                  height: MediaQuery.of(context).size.height,
+                                  fit: BoxFit.cover,
+                                  placeholder: (context, url) =>
+                                      const CircularProgressIndicator(),
+                                  errorWidget: (context, url, error) =>
+                                      const Icon(Icons.account_circle),
+                                ),
+                              ))
+                          .toList(),
+                    ),
+                  );
+  }
+
   Padding _valueQuestions() {
     return Padding(
       padding: const EdgeInsets.all(common_gap),
@@ -237,10 +281,13 @@ class YourProfile extends StatelessWidget {
                   child: Container(
                     decoration: ShapeDecoration(
                       color: Color.fromRGBO(222, 222, 255, 1),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3.0)),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(3.0)),
                       shadows: [
                         BoxShadow(
-                            color: Colors.black26, blurRadius: 3.0, offset: Offset(2, 2))
+                            color: Colors.black26,
+                            blurRadius: 3.0,
+                            offset: Offset(2, 2))
                       ],
                     ),
                     child: Padding(
@@ -310,10 +357,13 @@ class YourProfile extends StatelessWidget {
                   child: Container(
                     decoration: ShapeDecoration(
                       color: Color.fromRGBO(255, 178, 245, 1),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3.0)),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(3.0)),
                       shadows: [
                         BoxShadow(
-                            color: Colors.black26, blurRadius: 3.0, offset: Offset(2, 2))
+                            color: Colors.black26,
+                            blurRadius: 3.0,
+                            offset: Offset(2, 2))
                       ],
                     ),
                     child: Padding(
