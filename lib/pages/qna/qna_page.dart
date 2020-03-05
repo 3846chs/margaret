@@ -14,7 +14,9 @@ class _QnaPageState extends State<QnaPage> {
       length: 2,
       child: Scaffold(
         appBar: TabBar(
-          indicatorColor: Colors.black54,
+          unselectedLabelColor: Colors.grey,
+          labelColor: Colors.black,
+          indicatorColor: Colors.purple[200],
           tabs: <Widget>[
             Tab(
               text: '이성 질문', // 아이콘 추가할 예정

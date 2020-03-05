@@ -25,9 +25,10 @@ class PeerQuestionsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
       onTap: () {
         if (documentId == null) {
+          // 호출되지 않는게 정상
           simpleSnackbar(context, '질문이 더 이상 없습니다. 기다려주세요.');
           return;
         }
@@ -41,34 +42,35 @@ class PeerQuestionsCard extends StatelessWidget {
       },
       child: Column(
         children: <Widget>[
-          InkWell(
-            onTap: () {
-              print('패스하기');
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(common_l_gap),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  Icon(
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              GestureDetector(
+                onTap: () {
+                  print('삭제하기');
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(common_gap),
+                  child: Icon(
                     FontAwesomeIcons.solidTrashAlt,
                     color: Colors.pink[200],
                   ),
-                  SizedBox(width: 10),
-                ],
+                ),
               ),
-            ),
+              SizedBox(
+                width: 10,
+              ),
+            ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(48.0),
-                  boxShadow: [
-                    BoxShadow(color: Colors.grey, blurRadius: 5.0),
-                  ],
-                ),
+                decoration: new BoxDecoration(
+                    borderRadius: BorderRadius.circular(48.0),
+                    boxShadow: [
+                      new BoxShadow(color: Colors.grey, blurRadius: 5.0)
+                    ]),
                 child: CircleAvatar(
                   radius: 50,
                   child: ClipOval(
@@ -84,126 +86,107 @@ class PeerQuestionsCard extends StatelessWidget {
                         ),
                         BackdropFilter(
                           filter: ImageFilter.blur(sigmaX: 1.0, sigmaY: 1.0),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.white.withOpacity(0.0),
-                            ),
+                          child: new Container(
+                            decoration: new BoxDecoration(
+                                color: Colors.white.withOpacity(0.0)),
                           ),
-                        ),
+                        )
                       ],
                     ),
                   ),
                 ),
               ),
-              SizedBox(width: 40),
+              SizedBox(
+                width: 40,
+              ),
               Column(
                 children: <Widget>[
                   Text(
-                    peer.nickname,
-                    style: const TextStyle(
-                      fontFamily: FontFamily.jua,
-                      fontSize: 20,
-                    ),
+                    this.peer.nickname,
+                    style: TextStyle(fontFamily: FontFamily.jua, fontSize: 20),
                   ),
-                  SizedBox(height: 10),
+                  SizedBox(
+                    height: 10,
+                  ),
                   Text(
-                    '${(DateTime.now().year - peer.birthYear + 1).toString()}세 / ${peer.region}',
-                    style: const TextStyle(
-                      fontFamily: FontFamily.jua,
-                      fontSize: 20,
-                    ),
+                    (DateTime.now().year - this.peer.birthYear + 1).toString() +
+                        '세 / ' +
+                        this.peer.region,
+                    style: TextStyle(fontFamily: FontFamily.jua, fontSize: 20),
                   ),
                 ],
               ),
             ],
           ),
-          SizedBox(height: screenAwareSize(10, context)),
-          Container(
-            alignment: const Alignment(-0.8, 0),
-            child: Icon(
-              FontAwesomeIcons.quoteLeft,
-              size: 15,
-              color: Colors.purple[100],
-            ),
+          SizedBox(
+            height: screenAwareSize(10, context),
           ),
+          Container(
+              alignment: Alignment(-0.8, 0),
+              child: Icon(
+                FontAwesomeIcons.quoteLeft,
+                size: 15,
+                color: Colors.purple[100],
+              )),
           Container(
             width: 250,
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(common_gap),
               child: Center(
                 child: Text(
-                  peer.introduction ?? '등록된 자기소개가 없습니다',
-                  style: const TextStyle(
-                    fontFamily: FontFamily.nanumBarunpen,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  this.peer.introduction ?? '등록된 자기소개가 없습니다',
+                  style: TextStyle(
+                      fontFamily: FontFamily.nanumBarunpen,
+                      fontWeight: FontWeight.bold),
                 ),
               ),
             ),
           ),
           Container(
-            alignment: const Alignment(0.8, 0.0),
-            child: Icon(
-              FontAwesomeIcons.quoteRight,
-              size: 15,
-              color: Colors.purple[100],
-            ),
+              alignment: Alignment(0.8, 0),
+              child: Icon(
+                FontAwesomeIcons.quoteRight,
+                size: 15,
+                color: Colors.purple[100],
+              )),
+          SizedBox(
+            height: screenAwareSize(10, context),
           ),
-          SizedBox(height: screenAwareSize(10, context)),
-          Stack(
-            overflow: Overflow.visible,
-            children: <Widget>[
-              Container(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Center(
+          Container(
+              child: Padding(
+                padding: const EdgeInsets.all(common_gap),
+                child: Center(
                     child: Text(
-                      peerQuestion,
-                      style: const TextStyle(
-                        fontFamily: FontFamily.miSaeng,
-                        fontSize: 25,
-                      ),
-                    ),
+                  peerQuestion,
+                  style: TextStyle(
+                    fontFamily: FontFamily.miSaeng,
+                    fontSize: 25,
                   ),
-                ),
-                width: 270,
-                height: 130,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: <Color>[
-                      Colors.pink[100],
-                      Colors.white,
-                    ],
-                  ),
-                  boxShadow: [
-                    const BoxShadow(
-                      color: Colors.grey,
-                      blurRadius: 2.0,
-                      spreadRadius: 0.0,
-                      offset:
-                          Offset(7.0, 7.0), // shadow direction: bottom right
-                    )
-                  ],
-//                    border: Border.all(color: Colors.pink[100], width: 2),
-                  borderRadius: BorderRadius.circular(15.0),
-                ),
+                )),
               ),
-//              Positioned(
-//                top: -25,
-//                left: -10,
-//                child: Container(
-//                    width: 30,
-//                    height: 55,
-//                    color: Colors.grey[50],
-//                    child: Text(
-//                      'Q',
-//                      style: GoogleFonts.nanumPenScript(fontSize: 60),
-//                    )),
-//              ),
-            ],
-          ),
+              width: 270,
+              height: 130,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: <Color>[
+                    Colors.pink[100],
+                    Colors.white,
+                  ],
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey,
+                    blurRadius: 2.0,
+                    spreadRadius: 0.0,
+                    offset: Offset(7.0, 7.0), // shadow direction: bottom right
+                  )
+                ],
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15),
+                ),
+              )),
         ],
       ),
     );
