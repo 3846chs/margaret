@@ -14,6 +14,7 @@ class WriteQuestion extends StatefulWidget {
 }
 
 class _WriteQuestionState extends State<WriteQuestion> {
+  final _firestore = Firestore.instance;
   final _questionController = TextEditingController();
 
   @override
@@ -57,21 +58,21 @@ class _WriteQuestionState extends State<WriteQuestion> {
                     String myUserKey = myUserData.userData.userKey;
                     String timestamp =
                         DateTime.now().millisecondsSinceEpoch.toString();
-                    _questionController.text = '';
+                    _questionController.clear();
                     Navigator.pop(context);
 
-                    final QuerySnapshot querySnapshot = await Firestore.instance
+                    QuerySnapshot querySnapshot = await _firestore
                         .collection(COLLECTION_USERS)
-                        //                        .orderBy('recentMatchTime', descending: true)
+                        .orderBy('recentMatchTime', descending: true)
                         .getDocuments();
+
                     querySnapshot.documents
                         .where((doc) => (doc['gender'] !=
                             myUserData.userData.gender)) // 차단 유저 제외 -> 나중에
+                        .take(30)
                         .forEach((ds) {
-                      Firestore.instance
-                          .collection(COLLECTION_USERS)
-                          .document(ds.documentID)
-                          .collection('PeerQuestions')
+                      ds.reference
+                          .collection(PEERQUESTIONS)
                           .document(timestamp)
                           .setData(
                               {'question': question, 'userKey': myUserKey});

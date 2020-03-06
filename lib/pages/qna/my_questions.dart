@@ -1,11 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:margaret/constants/colors.dart';
 import 'package:margaret/constants/firebase_keys.dart';
 import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/data/user.dart';
-import 'package:margaret/dialogs/question_dialog.dart';
 import 'package:margaret/firebase/firestore_provider.dart';
 import 'package:margaret/pages/loading_page.dart';
 import 'package:margaret/pages/qna/write_question.dart';

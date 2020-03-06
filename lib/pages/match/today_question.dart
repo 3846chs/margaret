@@ -59,6 +59,9 @@ class _TodayQuestionState extends State<TodayQuestion>
       simpleSnackbar(context, '답변이 너무 짧습니다');
       return;
     }
+
+    _answerController.clear();
+
     final userRef =
         _firestore.collection(COLLECTION_USERS).document(user.userKey);
 
@@ -135,7 +138,7 @@ class _TodayQuestionState extends State<TodayQuestion>
       }
     });
 
-    _answerController.clear();
+
   }
 
   @override
