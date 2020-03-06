@@ -3,13 +3,16 @@ import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:margaret/constants/firebase_keys.dart';
 import 'package:margaret/constants/font_names.dart';
 import 'package:margaret/constants/size.dart';
+import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/data/user.dart';
 import 'package:margaret/dialogs/answer_dialog.dart';
 import 'package:margaret/firebase/storage_cache_manager.dart';
 import 'package:margaret/utils/base_height.dart';
 import 'package:margaret/utils/simple_snack_bar.dart';
+import 'package:provider/provider.dart';
 
 class PeerQuestionsCard extends StatelessWidget {
   final User peer;
@@ -47,7 +50,13 @@ class PeerQuestionsCard extends StatelessWidget {
             children: <Widget>[
               GestureDetector(
                 onTap: () {
-                  print('삭제하기');
+                  Provider.of<MyUserData>(context, listen: false)
+                      .userData
+                      .reference
+                      .collection(PEERQUESTIONS)
+                      .document(this.documentId)
+                      .delete();
+                  print('삭제완료');
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(common_gap),

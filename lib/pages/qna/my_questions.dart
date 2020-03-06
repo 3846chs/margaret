@@ -7,6 +7,8 @@ import 'package:margaret/data/user.dart';
 import 'package:margaret/firebase/firestore_provider.dart';
 import 'package:margaret/pages/loading_page.dart';
 import 'package:margaret/pages/qna/write_question.dart';
+import 'package:margaret/widgets/qna/empty_my_questions_card.dart';
+import 'package:margaret/widgets/qna/invalid_card.dart';
 import 'package:margaret/widgets/qna/my_questions_card.dart';
 import 'package:provider/provider.dart';
 
@@ -20,11 +22,11 @@ class MyQuestions extends StatelessWidget {
           return FutureBuilder<QuerySnapshot>(
             future: myUserData.userData.reference
                 .collection(MYQUESTIONS)
-//              .limit(1) // ???
+                .limit(1)
                 .getDocuments(),
             builder: (context, snapshot) {
               if (!snapshot.hasData || snapshot.data.documents.length == 0)
-                return LoadingPage();
+                return EmptyMyQuestionsCard();
 
               final firstDocument = snapshot
                   .data.documents.first; // 첫번째 document 만 가져와서 화면에 띄울 것임
@@ -33,7 +35,10 @@ class MyQuestions extends StatelessWidget {
               return StreamBuilder<User>(
                 stream: firestoreProvider.connectUser(peerKey),
                 builder: (context, snapshot) {
-                  if (!snapshot.hasData) return LoadingPage();
+                  if (!snapshot.hasData) {
+                    // 상대 계정 삭제 등 invalid userKey 일 경우
+                    return InvalidCard();
+                  }
                   return MyQuestionsCard(
                     myQuestion: firstDocument.data['question'].toString(),
                     peerAnswer: firstDocument.data['answer'].toString(),
