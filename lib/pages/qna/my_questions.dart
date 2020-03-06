@@ -8,6 +8,7 @@ import 'package:margaret/data/user.dart';
 import 'package:margaret/dialogs/question_dialog.dart';
 import 'package:margaret/firebase/firestore_provider.dart';
 import 'package:margaret/pages/loading_page.dart';
+import 'package:margaret/pages/qna/write_question.dart';
 import 'package:margaret/widgets/qna/my_questions_card.dart';
 import 'package:provider/provider.dart';
 
@@ -54,7 +55,7 @@ class MyQuestions extends StatelessWidget {
     return FloatingActionButton(
       heroTag: 'write_question',
       onPressed: () {
-        showDialog(context: context, builder: (context) => QuestionDialog());
+        showDialog(context: context, builder: (context) => WriteQuestion());
       },
       backgroundColor: Colors.grey[100],
       child: const Icon(

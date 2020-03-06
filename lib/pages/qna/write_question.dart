@@ -6,6 +6,7 @@ import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/pages/qna/radial_menu.dart';
 import 'package:margaret/utils/base_height.dart';
 import 'package:provider/provider.dart';
+import 'package:radial_button/widget/circle_floating_button.dart';
 
 class WriteQuestion extends StatefulWidget {
   @override
@@ -55,17 +56,17 @@ class _WriteQuestionState extends State<WriteQuestion> {
                     String question = _questionController.text;
                     String myUserKey = myUserData.userData.userKey;
                     String timestamp =
-                    DateTime.now().millisecondsSinceEpoch.toString();
+                        DateTime.now().millisecondsSinceEpoch.toString();
                     _questionController.text = '';
                     Navigator.pop(context);
 
                     final QuerySnapshot querySnapshot = await Firestore.instance
                         .collection(COLLECTION_USERS)
-                    //                        .orderBy('recentMatchTime', descending: true)
+                        //                        .orderBy('recentMatchTime', descending: true)
                         .getDocuments();
                     querySnapshot.documents
                         .where((doc) => (doc['gender'] !=
-                        myUserData.userData.gender)) // 차단 유저 제외 -> 나중에
+                            myUserData.userData.gender)) // 차단 유저 제외 -> 나중에
                         .forEach((ds) {
                       Firestore.instance
                           .collection(COLLECTION_USERS)
@@ -73,11 +74,60 @@ class _WriteQuestionState extends State<WriteQuestion> {
                           .collection('PeerQuestions')
                           .document(timestamp)
                           .setData(
-                          {'question': question, 'userKey': myUserKey});
+                              {'question': question, 'userKey': myUserKey});
                     });
                   });
             }),
-            SizedBox.fromSize(size: Size.fromHeight(300), child: RadialMenu()),
+            Center(
+              child: Stack(
+                children: <Widget>[
+                  Positioned(
+                    child: Container(
+                      height: 300,
+                      width: 300,
+                      child: CircleFloatingButton.completeCircle(
+                          key: GlobalKey<CircleFloatingButtonState>(),
+                          color: Colors.redAccent,
+                          duration: Duration(milliseconds: 1000),
+                          curveAnim: Curves.elasticInOut,
+                          items: [
+                            FloatingActionButton(
+                              backgroundColor: Colors.greenAccent,
+                              onPressed: () {},
+                              child: Text('결혼'),
+                            ),
+                            FloatingActionButton(
+                              backgroundColor: Colors.greenAccent,
+                              onPressed: () {},
+                              child: Text('결혼'),
+                            ),
+                            FloatingActionButton(
+                              backgroundColor: Colors.greenAccent,
+                              onPressed: () {},
+                              child: Text('결혼'),
+                            ),
+                            FloatingActionButton(
+                              backgroundColor: Colors.indigoAccent,
+                              onPressed: () {
+                                print('aaa');
+
+                                setState(() {
+                                  _questionController.text = '바보';
+                                });
+                              },
+                              child: Text('결혼'),
+                            ),
+                            FloatingActionButton(
+                              backgroundColor: Colors.orangeAccent,
+                              onPressed: () {},
+                              child: Text('결혼'),
+                            ),
+                          ]),
+                    ),
+                  ),
+                ],
+              ),
+            )
           ],
         )));
   }

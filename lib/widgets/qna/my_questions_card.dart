@@ -65,9 +65,9 @@ class MyQuestionsCard extends StatelessWidget {
                         imageUrl: "profiles/${this.peer.profiles[0]}",
                         cacheManager: StorageCacheManager(),
                         placeholder: (context, url) =>
-                        const CircularProgressIndicator(),
+                            const CircularProgressIndicator(),
                         errorWidget: (context, url, error) =>
-                        const Icon(Icons.account_circle),
+                            const Icon(Icons.account_circle),
                       ),
                       BackdropFilter(
                         filter: ImageFilter.blur(sigmaX: 1.0, sigmaY: 1.0),
@@ -143,12 +143,12 @@ class MyQuestionsCard extends StatelessWidget {
                 padding: const EdgeInsets.all(common_gap),
                 child: Center(
                     child: Text(
-                      this.myQuestion,
-                      style: TextStyle(
-                        fontFamily: FontFamily.miSaeng,
-                        fontSize: 25,
-                      ),
-                    )),
+                  this.myQuestion,
+                  style: TextStyle(
+                    fontFamily: FontFamily.miSaeng,
+                    fontSize: 25,
+                  ),
+                )),
               ),
               width: 270,
               height: 130,
@@ -166,8 +166,7 @@ class MyQuestionsCard extends StatelessWidget {
                     color: Colors.grey,
                     blurRadius: 2.0,
                     spreadRadius: 0.0,
-                    offset:
-                    Offset(7.0, 7.0), // shadow direction: bottom right
+                    offset: Offset(7.0, 7.0), // shadow direction: bottom right
                   )
                 ],
                 borderRadius: BorderRadius.all(
@@ -179,12 +178,12 @@ class MyQuestionsCard extends StatelessWidget {
                 padding: const EdgeInsets.all(common_gap),
                 child: Center(
                     child: Text(
-                      this.peerAnswer,
-                      style: TextStyle(
-                        fontFamily: FontFamily.miSaeng,
-                        fontSize: 25,
-                      ),
-                    )),
+                  this.peerAnswer,
+                  style: TextStyle(
+                    fontFamily: FontFamily.miSaeng,
+                    fontSize: 25,
+                  ),
+                )),
               ),
               width: 270,
               height: 130,
@@ -202,8 +201,7 @@ class MyQuestionsCard extends StatelessWidget {
                     color: Colors.grey,
                     blurRadius: 2.0,
                     spreadRadius: 0.0,
-                    offset:
-                    Offset(7.0, 7.0), // shadow direction: bottom right
+                    offset: Offset(7.0, 7.0), // shadow direction: bottom right
                   )
                 ],
                 borderRadius: BorderRadius.all(

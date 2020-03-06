@@ -51,6 +51,7 @@ dependencies:
   flutter_swiper: ^1.1.6
   flip_card: ^0.4.4
   vector_math: ^2.0.8
+  radial_button: ^1.0.0
 
 
 dev_dependencies:
