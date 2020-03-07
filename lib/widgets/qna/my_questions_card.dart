@@ -221,44 +221,75 @@ class MyQuestionsCard extends StatelessWidget {
         SizedBox(
           height: screenAwareSize(20, context),
         ),
-        SizedBox(
-          width: 150,
-          height: 40,
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(128)),
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: <Color>[
-                  Color(0xfffd5c76),
-                  Color(0xffff8951),
+        GestureDetector(
+          onTap: () {
+            showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                    title: Text('채팅 연결하기'),
+                    actions: <Widget>[
+                      FlatButton(
+                        onPressed: () {
+                          // 이 버튼을 누르면 채팅창이 바로 생성되며, 채팅 시작할 때 채팅창의 UI 는 사진 참고해주세요.
+                        },
+                        child: Text(
+                          '채팅하기',
+                          style: TextStyle(color: Colors.black),
+                        ),
+                      ),
+                      FlatButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text(
+                          '취소하기',
+                          style: TextStyle(color: Colors.black),
+                        ),
+                      ),
+                    ],
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                    )));
+          },
+          child: SizedBox(
+            width: 150,
+            height: 40,
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(128)),
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: <Color>[
+                    Color(0xfffd5c76),
+                    Color(0xffff8951),
+                  ],
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey,
+                    blurRadius: 2.0,
+                    spreadRadius: 0.0,
+                    offset: Offset(3.0, 3.0), // shadow direction: bottom right
+                  )
                 ],
               ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey,
-                  blurRadius: 2.0,
-                  spreadRadius: 0.0,
-                  offset: Offset(3.0, 3.0), // shadow direction: bottom right
-                )
-              ],
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Icon(
-                  FontAwesomeIcons.commentDots,
-                  color: Colors.white,
-                ),
-                Text(
-                  "  채팅하기",
-                  style: TextStyle(
-                    fontFamily: FontFamily.jua,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Icon(
+                    FontAwesomeIcons.commentDots,
                     color: Colors.white,
                   ),
-                ),
-              ],
+                  Text(
+                    "  채팅하기",
+                    style: TextStyle(
+                      fontFamily: FontFamily.jua,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

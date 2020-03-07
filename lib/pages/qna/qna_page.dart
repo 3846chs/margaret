@@ -19,10 +19,10 @@ class _QnaPageState extends State<QnaPage> {
           indicatorColor: Colors.purple[200],
           tabs: <Widget>[
             Tab(
-              text: '이성 질문', // 아이콘 추가할 예정
+              text: '랜덤 질문',
             ),
             Tab(
-              text: '돌아온 답변', // 아이콘 추가할 예정
+              text: '돌아온 답변',
             ),
           ],
         ),

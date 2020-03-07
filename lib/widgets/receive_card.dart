@@ -114,7 +114,7 @@ class ReceiveCard extends StatelessWidget {
                             FlatButton(
                               onPressed: () {
                                 // receives 에서 삭제
-                                // blocks 에 추가
+                                // blocks 에 추가 (서로 blocks 에 추가)
                               },
                               child: Text(
                                 '더 이상 추천받고 싶지 않아요(차단하기)',
