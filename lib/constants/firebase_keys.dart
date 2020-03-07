@@ -1,3 +1,4 @@
+const COLLECTION_STATISTICS = 'Statistics';
 const COLLECTION_USERS = 'Users';
 const COLLECTION_CHATS = 'Chats';
 const TODAYQUESTIONS = 'TodayQuestions';

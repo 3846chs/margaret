@@ -14,8 +14,6 @@ class MatchPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<MyUserData>(
       builder: (context, myUserData, child) {
-        // Send/Receive/Chat에 속하거나 차단한 이성은 다시 매칭하지 않기 => 나중에
-
         if (myUserData.status != MyUserDataStatus.exist) return LoadingPage();
 
         final userData = myUserData.userData;

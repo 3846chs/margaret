@@ -11,9 +11,11 @@ class MyUserData extends ChangeNotifier {
   StreamSubscription<User> _userStreamsubscription;
 
   User _userData;
+
   User get userData => _userData;
 
   MyUserDataStatus _status = MyUserDataStatus.progress;
+
   MyUserDataStatus get status => _status;
 
   final _auth = FirebaseAuth.instance;
@@ -68,11 +70,20 @@ class MyUserData extends ChangeNotifier {
     });
   }
 
-  void clearUser() {
+  void signOutUser() {
     _userData = null;
     _status = MyUserDataStatus.none;
     _userStreamsubscription?.cancel();
     _auth.signOut();
+    notifyListeners();
+  }
+
+  Future<void> withdrawUser() async {
+    _status = MyUserDataStatus.none;
+    _userStreamsubscription?.cancel();
+    FirebaseUser firebaseUser = await _auth.currentUser();
+    await firebaseUser.delete();
+    _userData = null;
     notifyListeners();
   }
 }
