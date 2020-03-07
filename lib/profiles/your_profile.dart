@@ -225,6 +225,7 @@ class YourProfile extends StatelessWidget {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           // 채팅으로 이동
+          // 채팅방 시작할 때 UI -> 사진 참고
         },
         label: Text(
           '채팅하기',
