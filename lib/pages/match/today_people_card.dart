@@ -192,7 +192,7 @@ class BuildTodayAnswer extends StatelessWidget {
             offset: Offset(2.0, 2.0), // shadow direction: bottom right
           )
         ],
-        borderRadius: BorderRadius.all(Radius.circular(15)),
+        borderRadius: BorderRadius.circular(15.0),
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
@@ -237,7 +237,7 @@ class BuildIntroduction extends StatelessWidget {
             offset: Offset(2.0, 2.0), // shadow direction: bottom right
           )
         ],
-        borderRadius: BorderRadius.all(Radius.circular(15)),
+        borderRadius: BorderRadius.circular(15.0),
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,

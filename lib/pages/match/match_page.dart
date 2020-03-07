@@ -9,7 +9,7 @@ import 'package:margaret/pages/match/today_question.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class MatchMain extends StatelessWidget {
+class MatchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<MyUserData>(

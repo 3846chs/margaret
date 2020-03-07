@@ -38,9 +38,11 @@ class _TodayQuestionState extends State<TodayQuestion>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state != AppLifecycleState.resumed) {
-      if (_userKey != null) {
+    if (_userKey != null) {
+      if (state != AppLifecycleState.resumed) {
         prefsProvider.setAnswer(_userKey, _answerController.text);
+      } else {
+        _answerController?.text = prefsProvider.getAnswer(_userKey);
       }
     }
   }
@@ -57,6 +59,9 @@ class _TodayQuestionState extends State<TodayQuestion>
       simpleSnackbar(context, '답변이 너무 짧습니다');
       return;
     }
+
+    _answerController.clear();
+
     final userRef =
         _firestore.collection(COLLECTION_USERS).document(user.userKey);
 
@@ -133,7 +138,7 @@ class _TodayQuestionState extends State<TodayQuestion>
       }
     });
 
-    _answerController.clear();
+
   }
 
   @override
