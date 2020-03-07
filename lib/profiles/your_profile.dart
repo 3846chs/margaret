@@ -27,7 +27,8 @@ class YourProfile extends StatelessWidget {
               flexibleSpace: FlexibleSpaceBar(
                 title: Text(user.nickname),
                 background: Swiper(
-                  itemCount: 2,
+                  loop: false,
+                  itemCount: user.profiles.length,
                   itemBuilder: (BuildContext context, int index) {
                     return ClipRRect(
                       // 상대 프로필 이미지 사진
@@ -123,6 +124,9 @@ class YourProfile extends StatelessWidget {
                     ProfileBasicInfo('지역', user.region),
                     ProfileBasicInfo('직업', user.job),
                     ProfileBasicInfo('키', user.height.toString()),
+                    ProfileBasicInfo('종교', user.religion),
+                    ProfileBasicInfo('흡연 여부', user.smoke),
+                    ProfileBasicInfo('음주 여부', user.drink),
                   ],
                 ),
               ),
@@ -221,19 +225,6 @@ class YourProfile extends StatelessWidget {
 //            );
 //          }),
 //        ),
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
-        label: Text(
-          '호감보내기',
-          style: TextStyle(fontFamily: FontFamily.nanumBarunpen, fontSize: 15),
-        ),
-        icon: Icon(
-          FontAwesomeIcons.heart,
-          color: Colors.pink,
-          size: 15,
-        ),
-        backgroundColor: Colors.blue[50],
       ),
     );
   }

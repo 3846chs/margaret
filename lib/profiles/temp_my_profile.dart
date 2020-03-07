@@ -29,6 +29,9 @@ class _TempMyProfileState extends State<TempMyProfile> {
   String region;
   String job;
   int height;
+  String smoke;
+  String drink;
+  String religion;
   String introduction;
 
   @override
@@ -41,6 +44,9 @@ class _TempMyProfileState extends State<TempMyProfile> {
     region = widget.user.region;
     job = widget.user.job;
     height = widget.user.height;
+    smoke = widget.user.smoke;
+    drink = widget.user.drink;
+    religion = widget.user.religion;
     introduction = widget.user.introduction;
   }
 
@@ -62,6 +68,9 @@ class _TempMyProfileState extends State<TempMyProfile> {
                   UserKeys.KEY_JOB: job,
                   UserKeys.KEY_HEIGHT: height,
                   UserKeys.KEY_REGION: region,
+                  UserKeys.KEY_SMOKE: smoke,
+                  UserKeys.KEY_DRINK: drink,
+                  UserKeys.KEY_RELIGION: religion,
                   UserKeys.KEY_INTRODUCTION: introduction,
                 });
 
@@ -76,7 +85,6 @@ class _TempMyProfileState extends State<TempMyProfile> {
           ],
         ),
       ),
-      backgroundColor: Colors.grey[200],
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -92,8 +100,9 @@ class _TempMyProfileState extends State<TempMyProfile> {
                     child: Center(
                         child: Text(
                       '사진 등록',
-                          style:
-                          TextStyle(fontFamily: FontFamily.nanumBarunpen, color: Colors.grey),
+                      style: TextStyle(
+                          fontFamily: FontFamily.nanumBarunpen,
+                          color: Colors.grey),
                     )),
                   ),
                   SingleChildScrollView(
@@ -129,39 +138,6 @@ class _TempMyProfileState extends State<TempMyProfile> {
                     ),
                   ),
 
-                  /////////////////////프로필 기본 정보 등록////////////////////
-//                  Container(
-//                    width: double.infinity,
-//                    color: Colors.white,
-//                    child: Padding(
-//                      padding: const EdgeInsets.all(8.0),
-//                      child: Column(
-//                        children: <Widget>[
-//                          Padding(
-//                            padding: const EdgeInsets.all(5.0),
-//                            child: Container(
-//                              width: double.infinity,
-//                              decoration: BoxDecoration(
-//                                  border: Border.all(color: Colors.purpleAccent), borderRadius: BorderRadius.circular(8)),
-//                              child: Center(
-//                                child: Text(
-//                                  '내 소개',
-//                                  style: GoogleFonts.notoSans(color: Colors.grey),
-//                                ),
-//                              ),
-//                            ),
-//                          ),
-//                          _buildNickname(),
-//                          _buildGender(),
-//                          _buildBirthYear(),
-//                          _buildEmail(),
-//                          _buildRegion(),
-//                          _buildCareer(),
-//                          _buildHeight(),
-//                        ],
-//                      ),
-//                    ),
-//                  ),
                   Container(
                     height: 30,
                     width: double.infinity,
@@ -169,8 +145,9 @@ class _TempMyProfileState extends State<TempMyProfile> {
                     child: Center(
                         child: Text(
                       '기본 정보 등록',
-                          style:
-                          TextStyle(fontFamily: FontFamily.nanumBarunpen, color: Colors.grey),
+                      style: TextStyle(
+                          fontFamily: FontFamily.nanumBarunpen,
+                          color: Colors.grey),
                     )),
                   ),
                   SizedBox(
@@ -183,6 +160,9 @@ class _TempMyProfileState extends State<TempMyProfile> {
                   _buildRegion(),
                   _buildCareer(),
                   _buildHeight(),
+                  _buildSmoke(),
+                  _buildDrink(),
+                  _buildReligion(),
                   Container(
                     height: 30,
                     width: double.infinity,
@@ -190,13 +170,12 @@ class _TempMyProfileState extends State<TempMyProfile> {
                     child: Center(
                         child: Text(
                       '가치관 정보 등록',
-                          style:
-                          TextStyle(fontFamily: FontFamily.nanumBarunpen, color: Colors.grey),
+                      style: TextStyle(
+                          fontFamily: FontFamily.nanumBarunpen,
+                          color: Colors.grey),
                     )),
                   ),
                   _selfIntroduction(),
-//                  _valueQuestions(),
-//                  _valueQuestions(),
                 ],
               );
             }),
@@ -204,6 +183,61 @@ class _TempMyProfileState extends State<TempMyProfile> {
         ),
       ),
     );
+  }
+
+  Padding _buildSmoke() {
+    return Padding(
+                    padding: const EdgeInsets.all(common_gap),
+                    child: Row(
+                      children: <Widget>[
+                        SizedBox(
+                          width: 40,
+                        ),
+                        Icon(
+                          FontAwesomeIcons.smoking,
+                          color: Color.fromRGBO(222, 222, 255, 1),
+                          size: 15,
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Center(
+                          child: Text(
+                            '흡연 여부',
+                            style: TextStyle(fontSize: 15),
+                          ),
+                        ),
+                        Spacer(),
+                        Expanded(
+                          child: Center(
+                            child: InkWell(
+                              child: SizedBox(
+                                width: 80,
+                                child: Center(
+                                  child: Text(
+                                    '$smoke',
+                                    style: TextStyle(fontSize: 15),
+                                  ),
+                                ),
+                              ),
+                              onTap: () {
+                                return showDialog(
+                                  context: context,
+                                  builder: (context) => Center(
+                                    child: Container(
+                                        height: 600,
+                                        child: _buildSmokeDialog(context)),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 40,
+                        ),
+                      ],
+                    ));
   }
 
   Padding _buildNickname() {
@@ -432,6 +466,115 @@ class _TempMyProfileState extends State<TempMyProfile> {
         ));
   }
 
+  Padding _buildDrink() {
+    return Padding(
+        padding: const EdgeInsets.all(common_gap),
+        child: Row(
+          children: <Widget>[
+            SizedBox(
+              width: 40,
+            ),
+            Icon(
+              FontAwesomeIcons.beer,
+              color: Color.fromRGBO(222, 222, 255, 1),
+              size: 15,
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Center(
+              child: Text(
+                '음주',
+                style: TextStyle(fontSize: 15),
+              ),
+            ),
+            Spacer(),
+            Expanded(
+              child: Center(
+                child: InkWell(
+                  child: SizedBox(
+                    width: 80,
+                    child: Center(
+                      child: Text(
+                        '$drink',
+                        style: TextStyle(fontSize: 15),
+                      ),
+                    ),
+                  ),
+                  onTap: () {
+                    return showDialog(
+                      context: context,
+                      builder: (context) => Center(
+                        child: Container(
+                            height: 600, child: _buildDrinkDialog(context)),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 40,
+            ),
+          ],
+        ));
+
+  }
+
+  Padding _buildReligion() {
+    return Padding(
+        padding: const EdgeInsets.all(common_gap),
+        child: Row(
+          children: <Widget>[
+            SizedBox(
+              width: 40,
+            ),
+            Icon(
+              FontAwesomeIcons.beer,
+              color: Color.fromRGBO(222, 222, 255, 1),
+              size: 15,
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Center(
+              child: Text(
+                '종교',
+                style: TextStyle(fontSize: 15),
+              ),
+            ),
+            Spacer(),
+            Expanded(
+              child: Center(
+                child: InkWell(
+                  child: SizedBox(
+                    width: 80,
+                    child: Center(
+                      child: Text(
+                        '$religion',
+                        style: TextStyle(fontSize: 15),
+                      ),
+                    ),
+                  ),
+                  onTap: () {
+                    return showDialog(
+                      context: context,
+                      builder: (context) => Center(
+                        child: Container(
+                            height: 600, child: _buildReligionDialog(context)),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 40,
+            ),
+          ],
+        ));
+  }
+
   SimpleDialog _buildRegionDialog(BuildContext context) {
     return SimpleDialog(
       children: <Widget>[
@@ -455,6 +598,68 @@ class _TempMyProfileState extends State<TempMyProfile> {
     );
   }
 
+  SimpleDialog _buildSmokeDialog(BuildContext context) {
+    return SimpleDialog(
+      children: <Widget>[
+        _smokeSimpleDialogOption(context, '흡연'),
+        _smokeSimpleDialogOption(context, '비흡연'),
+      ],
+    );
+  }
+
+  SimpleDialog _buildDrinkDialog(BuildContext context) {
+    return SimpleDialog(
+      children: <Widget>[
+        _drinkSimpleDialogOption(context, '전혀 마시지 않음'),
+        _drinkSimpleDialogOption(context, '아주 가끔 마심'),
+        _drinkSimpleDialogOption(context, '가끔 마심'),
+        _drinkSimpleDialogOption(context, '즐기는 편'),
+        _drinkSimpleDialogOption(context, '술자리 자주 있음'),
+      ],
+    );
+  }
+
+  SimpleDialog _buildReligionDialog(BuildContext context) {
+    return SimpleDialog(
+      children: <Widget>[
+        _religionSimpleDialogOption(context, '없음'),
+        _religionSimpleDialogOption(context, '기독교'),
+        _religionSimpleDialogOption(context, '천주교'),
+        _religionSimpleDialogOption(context, '불교'),
+        _religionSimpleDialogOption(context, '원불교'),
+        _religionSimpleDialogOption(context, '유교'),
+        _religionSimpleDialogOption(context, '이슬람교'),
+        _religionSimpleDialogOption(context, '힌두교'),
+        _religionSimpleDialogOption(context, '기타'),
+      ],
+    );
+  }
+
+  SimpleDialogOption _religionSimpleDialogOption(BuildContext context, String s) {
+    return SimpleDialogOption(
+      onPressed: () {
+        Navigator.pop(context);
+        setState(() {
+          religion = s;
+        });
+      },
+      child: Center(child: Text('$religion'),) ,
+    );
+  }
+
+
+  SimpleDialogOption _drinkSimpleDialogOption(BuildContext context, String s) {
+    return SimpleDialogOption(
+      onPressed: () {
+        Navigator.pop(context);
+        setState(() {
+          drink = s;
+        });
+      },
+      child: Center(child: Text('$drink'),) ,
+    );
+  }
+
   SimpleDialogOption _regionSimpleDialogOption(
       BuildContext context, String regionName) {
     return SimpleDialogOption(
@@ -465,6 +670,18 @@ class _TempMyProfileState extends State<TempMyProfile> {
         });
       },
       child: Center(child: Text('$regionName')),
+    );
+  }
+
+  SimpleDialogOption _smokeSimpleDialogOption(BuildContext context, String s) {
+    return SimpleDialogOption(
+      onPressed: () {
+        Navigator.pop(context);
+        setState(() {
+          smoke = s;
+        });
+      },
+      child: Center(child: Text('$smoke'),),
     );
   }
 
@@ -686,71 +903,6 @@ class _TempMyProfileState extends State<TempMyProfile> {
     );
   }
 
-  Padding _valueQuestions() {
-    return Padding(
-      padding: const EdgeInsets.all(common_gap),
-      child: Column(
-        children: <Widget>[
-          Row(
-            children: <Widget>[
-              SizedBox(
-                width: 10,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 5),
-                child: Text(
-                  'Q.',
-                  style: TextStyle(
-                      fontSize: 20,
-                      color: Color.fromRGBO(222, 222, 255, 1),
-                      fontWeight: FontWeight.bold),
-                ),
-              ),
-              Expanded(
-                child: Text(
-                  '인생에서 가장 중요한 세 가지는 무엇인가요?',
-                  style: TextStyle(
-                      fontSize: 15, color: Color.fromRGBO(222, 222, 255, 1)),
-                ),
-              ),
-              SizedBox(
-                width: 10,
-              ),
-            ],
-          ),
-          Row(
-            children: <Widget>[
-              SizedBox(
-                width: 10,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 5),
-                child: Text(
-                  'A.',
-                  style: TextStyle(
-                      fontSize: 20,
-                      color: Color.fromRGBO(222, 222, 255, 1),
-                      fontWeight: FontWeight.bold),
-                ),
-              ),
-              Expanded(
-                child: Text(
-                  '아직 응답하지 않았습니다. 응답하기 클릭',
-                  style: TextStyle(
-                    fontSize: 15,
-                  ),
-                ),
-              ),
-              SizedBox(
-                width: 10,
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
   AlertDialog _buildIntroductionDialog(BuildContext context) {
     return AlertDialog(
       content: TextFormField(
@@ -778,4 +930,6 @@ class _TempMyProfileState extends State<TempMyProfile> {
       ],
     );
   }
+
+
 }

@@ -12,6 +12,9 @@ class User {
   String region;
   String job;
   int height;
+  String smoke;
+  String drink;
+  String religion;
   String introduction;
   MatchState recentMatchState;
   Timestamp recentMatchTime;
@@ -30,6 +33,9 @@ class User {
     this.region,
     this.job,
     this.height,
+    this.smoke,
+    this.drink,
+    this.religion,
     this.introduction,
     this.recentMatchState,
     this.recentMatchTime,
@@ -51,6 +57,9 @@ class User {
     region = map[UserKeys.KEY_REGION];
     job = map[UserKeys.KEY_JOB];
     height = map[UserKeys.KEY_HEIGHT];
+    smoke = map[UserKeys.KEY_SMOKE];
+    drink = map[UserKeys.KEY_DRINK];
+    religion = map[UserKeys.KEY_RELIGION];
     introduction = map[UserKeys.KEY_INTRODUCTION];
     chats = <String>[];
     pushToken = map[UserKeys.KEY_PUSHTOKEN];
@@ -77,6 +86,9 @@ class User {
         UserKeys.KEY_REGION: region,
         UserKeys.KEY_JOB: job,
         UserKeys.KEY_HEIGHT: height,
+        UserKeys.KEY_SMOKE: smoke,
+        UserKeys.KEY_DRINK: drink,
+        UserKeys.KEY_RELIGION: religion,
         UserKeys.KEY_INTRODUCTION: introduction,
         UserKeys.KEY_RECENTMATCHSTATE: recentMatchState.value,
         UserKeys.KEY_RECENTMATCHTIME: recentMatchTime,

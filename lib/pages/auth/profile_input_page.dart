@@ -30,6 +30,9 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
   final _regionController = TextEditingController();
   final _jobController = TextEditingController();
   final _heightController = TextEditingController();
+  final _smokeController = TextEditingController();
+  final _drinkController = TextEditingController();
+  final _religionController = TextEditingController();
   final _introductionController = TextEditingController();
 
   List<File> _profiles = [];
@@ -70,6 +73,9 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
     _regionController.dispose();
     _jobController.dispose();
     _heightController.dispose();
+    _smokeController.dispose();
+    _drinkController.dispose();
+    _religionController.dispose();
     _introductionController.dispose();
     super.dispose();
   }
@@ -206,6 +212,33 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                 ),
                 const SizedBox(height: common_l_gap),
                 TextFormField(
+                  controller: _smokeController,
+                  decoration: getTextFieldDecor('흡연 여부'),
+                  validator: (value) {
+                    if (value.isEmpty) return '흡연 여부를 선택해주세요!';
+                    return null;
+                  },
+                ),
+                const SizedBox(height: common_l_gap),
+                TextFormField(
+                  controller: _drinkController,
+                  decoration: getTextFieldDecor('음주 여부'),
+                  validator: (value) {
+                    if (value.isEmpty) return '음주 여부를 선택해주세요!';
+                    return null;
+                  },
+                ),
+                const SizedBox(height: common_l_gap),
+                TextFormField(
+                  controller: _religionController,
+                  decoration: getTextFieldDecor('종교'),
+                  validator: (value) {
+                    if (value.isEmpty) return '종교를 선택해주세요!';
+                    return null;
+                  },
+                ),
+                const SizedBox(height: common_l_gap),
+                TextFormField(
                   controller: _introductionController,
                   decoration: getTextFieldDecor('나의 가치관을 나타낼 수 있는 자기소개를 해주세요'),
                   validator: (value) {
@@ -266,6 +299,9 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
         region: _regionController.text,
         job: _jobController.text,
         height: int.parse(_heightController.text),
+        smoke: _smokeController.text,
+        drink: _drinkController.text,
+        religion: _religionController.text,
         introduction: _introductionController.text,
         recentMatchTime: Timestamp.now(),
         recentMatchState: MatchState.QUESTION,
