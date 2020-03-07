@@ -121,7 +121,7 @@ class _HomeState extends State<Home> {
       child: ListView(
         children: <Widget>[
           DrawerHeader(
-            child: InkWell(
+            child: GestureDetector(
               onTap: () {
                 Navigator.push(
                     context,
