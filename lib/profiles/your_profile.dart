@@ -6,7 +6,6 @@ import 'package:margaret/firebase/storage_cache_manager.dart';
 import 'package:margaret/profiles/profile_basic_info.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
 class YourProfile extends StatelessWidget {

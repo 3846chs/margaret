@@ -50,13 +50,49 @@ class PeerQuestionsCard extends StatelessWidget {
             children: <Widget>[
               GestureDetector(
                 onTap: () {
-                  Provider.of<MyUserData>(context, listen: false)
-                      .userData
-                      .reference
-                      .collection(PEERQUESTIONS)
-                      .document(this.documentId)
-                      .delete();
-                  print('삭제완료');
+                  showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                          title: Text('카드를 삭제하겠습니까?'),
+                          actions: <Widget>[
+                            FlatButton(
+                              onPressed: () {
+                                Provider.of<MyUserData>(context, listen: false)
+                                    .userData
+                                    .reference
+                                    .collection(PEERQUESTIONS)
+                                    .document(this.documentId)
+                                    .delete();
+                                print('삭제완료');
+                                Navigator.pop(context);
+                              },
+                              child: Text(
+                                '삭제만 하고 싶어요',
+                                style: TextStyle(color: Colors.blue),
+                              ),
+                            ),
+                            FlatButton(
+                              onPressed: () {
+                                Provider.of<MyUserData>(context, listen: false)
+                                    .userData
+                                    .reference
+                                    .collection(PEERQUESTIONS)
+                                    .document(this.documentId)
+                                    .delete();
+                                print('삭제완료');
+                                Navigator.pop(context);
+
+                                // blocks 에 추가 (서로 blocks 에 추가) 구현해야 합니다
+                              },
+                              child: Text(
+                                '더 이상 추천받고 싶지 않아요(차단하기)',
+                                style: TextStyle(color: Colors.blue),
+                              ),
+                            ),
+                          ],
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          )));
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(common_gap),

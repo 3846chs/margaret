@@ -5,7 +5,6 @@ import 'package:margaret/constants/firebase_keys.dart';
 import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/data/user.dart';
 import 'package:margaret/firebase/firestore_provider.dart';
-import 'package:margaret/pages/loading_page.dart';
 import 'package:margaret/pages/qna/write_question.dart';
 import 'package:margaret/widgets/qna/empty_my_questions_card.dart';
 import 'package:margaret/widgets/qna/invalid_card.dart';
