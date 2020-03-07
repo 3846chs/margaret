@@ -223,9 +223,11 @@ class YourProfile extends StatelessWidget {
 //        ),
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
+        onPressed: () {
+          // 채팅으로 이동
+        },
         label: Text(
-          '호감보내기',
+          '채팅하기',
           style: TextStyle(fontFamily: FontFamily.nanumBarunpen, fontSize: 15),
         ),
         icon: Icon(

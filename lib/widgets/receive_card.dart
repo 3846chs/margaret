@@ -87,6 +87,48 @@ class ReceiveCard extends StatelessWidget {
               ),
             ),
           ),
+          Align(
+            alignment: Alignment.centerRight,
+            child: SizedBox(
+              width: 32,
+              height: 32,
+              child: IconButton(
+                icon: const Icon(Icons.close),
+                color: Colors.blueAccent,
+                iconSize: 16,
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                          title: Text('카드를 삭제하겠습니까?'),
+                          actions: <Widget>[
+                            FlatButton(
+                              onPressed: () {
+                                // receives 에서 삭제
+                              },
+                              child: Text(
+                                '삭제만 하고 싶어요',
+                                style: TextStyle(color: Colors.blue),
+                              ),
+                            ),
+                            FlatButton(
+                              onPressed: () {
+                                // receives 에서 삭제
+                                // blocks 에 추가
+                              },
+                              child: Text(
+                                '더 이상 추천받고 싶지 않아요(차단하기)',
+                                style: TextStyle(color: Colors.blue),
+                              ),
+                            ),
+                          ],
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          )));
+                },
+              ),
+            ),
+          ),
         ],
       ),
     );

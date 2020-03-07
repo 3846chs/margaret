@@ -6,9 +6,9 @@ class AlarmPage extends StatefulWidget {
 }
 
 class _AlarmPageState extends State<AlarmPage> {
-  bool matchAlarm = true; // 이성 3명과 매칭되었을 때 알람
-  bool receiveAlarm = true; // 자신에게 호감 보낸 이성 카드가 도착했을 때 알람
-  bool newChatAlarm = true; // 새로운 채팅이 생겼을 때 (각 채팅방에 개별 알람 on/off 기능있음)
+  bool matchAlarm = true; // 이성 3명과 매칭되었을 때 알람. 각 유저의 TodayQuestions(subcollection) 의 오늘날짜 document 의 recommendedPeople 필드가 생성될 때 trigger
+  bool receiveAlarm = true; // 자신에게 호감 보낸 이성 카드가 도착했을 때 알람. receives 에 유저키가 추가될 때 trigger
+  bool newChatAlarm = true; // 새로운 채팅이 생겼을 때 알람. chats 에 유저키가 추가될 때 trigger
   bool newTodayQuestion = true; // 자정에 새로운 질문 업데이트 되었을 때 알람
 
   @override
