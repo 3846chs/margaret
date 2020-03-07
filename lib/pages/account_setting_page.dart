@@ -20,9 +20,9 @@ class AccountSetting extends StatelessWidget {
             padding: const EdgeInsets.all(common_l_gap),
             child: GestureDetector(
               onTap: () {
-                print('로그아웃');
+                Navigator.popUntil(context, ModalRoute.withName('/'));
                 this.myUserData.clearUser();
-                Navigator.pop(context);
+                print('로그아웃');
               },
               child: Text(
                 '로그아웃',
@@ -34,6 +34,8 @@ class AccountSetting extends StatelessWidget {
             padding: const EdgeInsets.all(common_l_gap),
             child: GestureDetector(
               onTap: () {
+                Navigator.popUntil(context, ModalRoute.withName('/'));
+
                 print('회원탈퇴');
               },
               child: Text(
