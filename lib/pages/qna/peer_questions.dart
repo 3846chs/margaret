@@ -16,11 +16,11 @@ class PeerQuestions extends StatelessWidget {
     return Scaffold(
       body: Consumer<MyUserData>(
         builder: (context, myUserData, _) {
-          return FutureBuilder<QuerySnapshot>(
-            future: myUserData.userData.reference
+          return StreamBuilder<QuerySnapshot>(
+            stream: myUserData.userData.reference
                 .collection(PEERQUESTIONS)
                 .limit(1)
-                .getDocuments(),
+                .snapshots(),
             builder: (context, snapshot) {
               if (!snapshot.hasData || snapshot.data.documents.length == 0)
                 return EmptyPeerQuestionsCard();

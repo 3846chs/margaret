@@ -85,7 +85,9 @@ class AlarmData extends ChangeNotifier {
     if (alarms.containsKey("match")) _match = alarms["match"];
     if (alarms.containsKey("receive")) _receive = alarms["receive"];
     if (alarms.containsKey("newChat")) _newChat = alarms["newChat"];
-    _newTodayQuestion = prefsProvider.getTodayQuestionAlarm();
+    prefsProvider.initialize().then((_) {
+      _newTodayQuestion = prefsProvider.getTodayQuestionAlarm();
+    });
     if (alarms.containsKey("newPeerQuestion"))
       _newPeerQuestion = alarms["newPeerQuestion"];
     if (alarms.containsKey("newMyQuestion"))

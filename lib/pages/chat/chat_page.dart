@@ -17,15 +17,13 @@ class ChatPage extends StatelessWidget {
       backgroundColor: Colors.transparent,
       body: Consumer<MyUserData>(
         builder: (context, value, child) {
-          final chats = value.userData.chats
-              .map((userKey) => firestoreProvider.connectUser(userKey))
-              .toList();
+          final chats = value.userData.chats;
 
           return ListView.separated(
             itemCount: chats.length,
             itemBuilder: (context, index) {
               return StreamBuilder<User>(
-                stream: chats[index],
+                stream: firestoreProvider.connectUser(chats[index]),
                 builder: (context, snapshot) {
                   if (!snapshot.hasData)
                     return const CircularProgressIndicator();
