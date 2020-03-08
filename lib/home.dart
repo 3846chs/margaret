@@ -1,4 +1,5 @@
 import 'package:margaret/constants/font_names.dart';
+import 'package:margaret/data/provider/alarm_data.dart';
 import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/pages/alarm_page.dart';
 import 'package:margaret/pages/chat/chat_page.dart';
@@ -32,10 +33,12 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     final myUserData = Provider.of<MyUserData>(context, listen: false);
+    final alarmData = Provider.of<AlarmData>(context, listen: false);
 
     if (!_isInitialized) {
       registerNotification(myUserData);
       configLocalNotification();
+      alarmData.getData(myUserData.userData.reference);
       _isInitialized = true;
     }
 
