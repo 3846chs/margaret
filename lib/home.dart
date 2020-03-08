@@ -1,6 +1,7 @@
 import 'package:margaret/constants/font_names.dart';
 import 'package:margaret/data/provider/alarm_data.dart';
 import 'package:margaret/data/provider/my_user_data.dart';
+import 'package:margaret/pages/account_setting_page.dart';
 import 'package:margaret/pages/alarm_page.dart';
 import 'package:margaret/pages/chat/chat_page.dart';
 import 'package:margaret/pages/match/match_page.dart';
@@ -137,10 +138,6 @@ class _HomeState extends State<Home> {
             decoration: const BoxDecoration(color: Color(0xFFDCD3FF)),
           ),
           ListTile(
-            title: Text('공지사항'),
-            onTap: null,
-          ),
-          ListTile(
             title: Text('오늘의 질문 제보'),
             onTap: () async {
               const url =
@@ -160,10 +157,14 @@ class _HomeState extends State<Home> {
             },
           ),
           ListTile(
-            title: Text('로그아웃'),
+            title: Text('계정 설정'),
             onTap: () {
-              Navigator.pop(context); // 없으면 에러
-              myUserData.clearUser();
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => AccountSetting(
+                            myUserData: myUserData,
+                          )));
             },
           ),
         ],
