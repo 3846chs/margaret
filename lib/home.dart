@@ -135,10 +135,6 @@ class _HomeState extends State<Home> {
             decoration: const BoxDecoration(color: Color(0xFFDCD3FF)),
           ),
           ListTile(
-            title: Text('공지사항'),
-            onTap: null,
-          ),
-          ListTile(
             title: Text('오늘의 질문 제보'),
             onTap: () async {
               const url =
@@ -161,8 +157,11 @@ class _HomeState extends State<Home> {
             title: Text('계정 설정'),
             onTap: () {
               Navigator.push(
-                          context, MaterialPageRoute(builder: (context) => AccountSetting(myUserData: myUserData,)));
-
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => AccountSetting(
+                            myUserData: myUserData,
+                          )));
             },
           ),
         ],
