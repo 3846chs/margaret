@@ -32,7 +32,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
   String smoke;
   String drink;
   String religion;
-  String introduction;
+  String introduction = '나의 가치관을 표현할 수 있는 자기소개를 써주세요';
 
   @override
   void initState() {
