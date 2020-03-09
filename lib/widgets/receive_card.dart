@@ -1,5 +1,6 @@
 import 'package:bubble/bubble.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:margaret/constants/colors.dart';
 import 'package:margaret/constants/font_names.dart';
 import 'package:margaret/constants/size.dart';
 import 'package:margaret/widgets/user_avatar.dart';
@@ -103,7 +104,8 @@ class ReceiveCard extends StatelessWidget {
                                         fontFamily: FontFamily.miSaeng,
                                         fontSize: 20),
                                   ),
-                                  color: Colors.pink[50], // 상대가 여자일 때는 pink[50], 남자일 때는 blue[50]
+                                  color: Colors.pink[
+                                      50], // 상대가 여자일 때는 pink[50], 남자일 때는 blue[50]
                                 ),
                                 SizedBox(
                                   height: 20,
@@ -117,7 +119,8 @@ class ReceiveCard extends StatelessWidget {
                                         fontFamily: FontFamily.miSaeng,
                                         fontSize: 20),
                                   ),
-                                  color: Colors.pink[50], // 상대가 여자일 때는 pink[50], 남자일 때는 blue[50]
+                                  color: Colors.pink[
+                                      50], // 상대가 여자일 때는 pink[50], 남자일 때는 blue[50]
                                 ),
                               ],
                             ),
@@ -133,8 +136,8 @@ class ReceiveCard extends StatelessWidget {
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                     colors: <Color>[
-                      Color(0xff7ad7f0),
-                      Color(0xffb7e9f7),
+                      Colors.pink[50],
+                      Colors.blue[50],
                     ],
                   ),
                   boxShadow: [
@@ -152,7 +155,7 @@ class ReceiveCard extends StatelessWidget {
                     "오늘의 답변",
                     style: TextStyle(
                       fontFamily: FontFamily.jua,
-                      color: Colors.white,
+                      color: Colors.black87,
                     ),
                   ),
                 ),
