@@ -20,30 +20,29 @@ class User {
   Timestamp recentMatchTime;
   int exposed;
   String answer;
-  List<String> chats;
   String pushToken;
   DocumentReference reference;
 
-  User({this.userKey,
-    this.profiles,
-    this.email,
-    this.nickname,
-    this.gender,
-    this.birthYear,
-    this.region,
-    this.job,
-    this.height,
-    this.smoke,
-    this.drink,
-    this.religion,
-    this.introduction,
-    this.recentMatchState,
-    this.recentMatchTime,
-    this.exposed,
-    this.answer,
-    this.chats,
-    this.pushToken,
-    this.reference});
+  User(
+      {this.userKey,
+      this.profiles,
+      this.email,
+      this.nickname,
+      this.gender,
+      this.birthYear,
+      this.region,
+      this.job,
+      this.height,
+      this.smoke,
+      this.drink,
+      this.religion,
+      this.introduction,
+      this.recentMatchState,
+      this.recentMatchTime,
+      this.exposed,
+      this.answer,
+      this.pushToken,
+      this.reference});
 
   User.fromMap(Map<String, dynamic> map, this.userKey, {this.reference}) {
     email = map[UserKeys.KEY_EMAIL];
@@ -61,11 +60,7 @@ class User {
     drink = map[UserKeys.KEY_DRINK];
     religion = map[UserKeys.KEY_RELIGION];
     introduction = map[UserKeys.KEY_INTRODUCTION];
-    chats = <String>[];
     pushToken = map[UserKeys.KEY_PUSHTOKEN];
-    map[UserKeys.KEY_CHATS].forEach((v) {
-      chats.add(v.toString());
-    });
     recentMatchState = MatchState.fromInt(map[UserKeys.KEY_RECENTMATCHSTATE]);
     recentMatchTime = map[UserKeys.KEY_RECENTMATCHTIME];
     exposed = map[UserKeys.KEY_EXPOSED];
@@ -74,10 +69,9 @@ class User {
 
   User.fromSnapshot(DocumentSnapshot snapshot)
       : this.fromMap(snapshot.data, snapshot.documentID,
-      reference: snapshot.reference);
+            reference: snapshot.reference);
 
-  Map<String, dynamic> toMap() =>
-      {
+  Map<String, dynamic> toMap() => {
         UserKeys.KEY_EMAIL: email,
         UserKeys.KEY_PROFILES: profiles,
         UserKeys.KEY_NICKNAME: nickname,
@@ -94,7 +88,6 @@ class User {
         UserKeys.KEY_RECENTMATCHTIME: recentMatchTime,
         UserKeys.KEY_EXPOSED: exposed,
         UserKeys.KEY_ANSWER: answer,
-        UserKeys.KEY_CHATS: chats,
         UserKeys.KEY_PUSHTOKEN: pushToken,
       };
 }
