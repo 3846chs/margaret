@@ -93,7 +93,7 @@ export const sendPeerQuestionAlarm = functions
 export const sendMyQuestionAlarm = functions
     .region("asia-northeast1")
     .firestore.document("Users/{userId}/MyQuestions/{questionId}")
-    .onUpdate(async (snapshot, context) => {
+    .onCreate(async (snapshot, context) => {
         const userId: string = context.params.userId;
         const userSnapshot = await admin
             .firestore()
@@ -129,59 +129,71 @@ export const sendMyQuestionAlarm = functions
         return null;
     });
 
-export const sendOtherAlarms = functions
+export const sendReceiveAlarm = functions
     .region("asia-northeast1")
-    .firestore.document("Users/{userId}")
-    .onUpdate((snapshot, context) => {
-        const before = snapshot.before.data() as FirebaseFirestore.DocumentData;
-        const after = snapshot.after.data() as FirebaseFirestore.DocumentData;
-
-        const registrationToken: string = after.pushToken;
+    .firestore.document("Users/{userId}/Receives/{peerId}")
+    .onCreate(async (snapshot, context) => {
+        const userId: string = context.params.userId;
+        const userSnapshot = await admin
+            .firestore()
+            .collection("Users")
+            .doc(userId)
+            .get();
+        const user = userSnapshot.data() as FirebaseFirestore.DocumentData;
+        const registrationToken: string = user.pushToken;
         if (!registrationToken || registrationToken.length === 0) return null;
 
-        const alarms = after.alarms;
+        const receive: boolean = user.alarms.receive;
+        if (!receive) return null;
 
-        if (!alarms) return null;
-
-        let payload: admin.messaging.MessagingPayload | undefined;
-        const receive: boolean = alarms.receive;
-        const newChat: boolean = alarms.newChat;
-
-        if (receive) {
-            const beforeReceives: string[] = before.receives;
-            const afterReceives: string[] = after.receives;
-
-            if (afterReceives?.length - beforeReceives?.length > 0) {
-                payload = {
-                    notification: {
-                        title: "새로운 이성이 호감을 보냈습니다!",
-                        body: "확인하시려면 클릭하세요.",
-                        badge: "1",
-                        sound: "default",
-                        tag: "receive"
-                    }
-                };
+        const payload: admin.messaging.MessagingPayload = {
+            notification: {
+                title: "새로운 이성이 호감을 보냈습니다!",
+                body: "확인하시려면 클릭하세요.",
+                badge: "1",
+                sound: "default",
+                tag: "receive"
             }
-        }
-        if (newChat) {
-            const beforeChats: string[] = before.chats;
-            const afterChats: string[] = after.chats;
+        };
+        // Let push to the target device
+        admin
+            .messaging()
+            .sendToDevice(registrationToken, payload)
+            .then(response => {
+                console.log("Successfully sent message:", response);
+            })
+            .catch(error => {
+                console.log("Error sending message:", error);
+            });
+        return null;
+    });
 
-            if (afterChats?.length - beforeChats?.length > 0) {
-                payload = {
-                    notification: {
-                        title: "새로운 이성이 채팅을 보냈습니다!",
-                        body: "확인하시려면 클릭하세요.",
-                        badge: "1",
-                        sound: "default",
-                        tag: "newChat"
-                    }
-                };
+export const sendNewChatAlarm = functions
+    .region("asia-northeast1")
+    .firestore.document("Users/{userId}/Chats/{peerId}")
+    .onCreate(async (snapshot, context) => {
+        const userId: string = context.params.userId;
+        const userSnapshot = await admin
+            .firestore()
+            .collection("Users")
+            .doc(userId)
+            .get();
+        const user = userSnapshot.data() as FirebaseFirestore.DocumentData;
+        const registrationToken: string = user.pushToken;
+        if (!registrationToken || registrationToken.length === 0) return null;
+
+        const newChat: boolean = user.alarms.newChat;
+        if (!newChat) return null;
+
+        const payload: admin.messaging.MessagingPayload = {
+            notification: {
+                title: "새로운 이성이 채팅을 보냈습니다!",
+                body: "확인하시려면 클릭하세요.",
+                badge: "1",
+                sound: "default",
+                tag: "newChat"
             }
-        }
-
-        if (!payload) return null;
-
+        };
         // Let push to the target device
         admin
             .messaging()
