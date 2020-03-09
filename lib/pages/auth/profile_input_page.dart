@@ -642,6 +642,14 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
   Future<void> _register(BuildContext context) async {
     if (widget.authResult.user == null) {
       simpleSnackbar(context, 'Please try again later!');
+    } else if (_profiles.length != 2) {
+      simpleSnackbar(context, '사진을 2개 입력해주세요');
+    } else if (smokeinput == '흡연 여부를 선택해주세요') {
+      simpleSnackbar(context, '흡연 여부를 선택해주세요');
+    } else if (drinkinput == '음주 여부를 선택해주세요') {
+      simpleSnackbar(context, '음주 여부를 선택해주세요');
+    } else if (religioninput == '종교를 선택해주세요') {
+      simpleSnackbar(context, '종교를 선택해주세요');
     } else {
       final profiles = await Stream.fromIterable(_profiles)
           .asyncMap((image) => storageProvider.uploadImg(image,
