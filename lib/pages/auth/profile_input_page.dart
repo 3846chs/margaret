@@ -618,9 +618,11 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                               setState(() {
                                 _isButtonEnabled = false;
                               });
-                              //_register(context);
+                              _register(context);
                             }
-                            _register(context);
+                            else{
+                              simpleSnackbar(context, '잘못 입력했거나 미입력한 정보가 있습니다.');
+                            }
                           },
                     child: _isButtonEnabled
                         ? Text(
@@ -646,14 +648,6 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
   Future<void> _register(BuildContext context) async {
     if (widget.authResult.user == null) {
       simpleSnackbar(context, 'Please try again later!');
-    } else if (_profiles.length != 2) {
-      return simpleSnackbar(context, '사진을 2개 입력해주세요');
-    } else if (smokeinput == '흡연 여부를 선택해주세요') {
-      return simpleSnackbar(context, '흡연 여부를 선택해주세요');
-    } else if (drinkinput == '음주 여부를 선택해주세요') {
-      return simpleSnackbar(context, '음주 여부를 선택해주세요');
-    } else if (religioninput == '종교를 선택해주세요') {
-      return simpleSnackbar(context, '종교를 선택해주세요');
     } else {
       final profiles = await Stream.fromIterable(_profiles)
           .asyncMap((image) => storageProvider.uploadImg(image,
