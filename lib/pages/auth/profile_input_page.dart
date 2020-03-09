@@ -209,13 +209,13 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                           ),
                         ),
                       ),
-                      SizedBox(width: 10,),
+                      SizedBox(width: 20,),
                       Expanded(
                         child: TextFormField(
                           controller: _nicknameController,
-                          decoration: getTextFieldDecor('닉네임',),
+                          decoration: getTextFieldDecor('닉네임을 입력해주세요',),
                           validator: (value) {
-                            if (value.isEmpty) return '닉네임을 입력해주세요!';
+                            if (value.isEmpty) {return '닉네임을 입력해주세요!';} else if (value.length > 6) {return '닉네임은 6자리 이내로 해주세요';}
                             return null;
                           },
                         ),
@@ -225,26 +225,54 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                   ),
                 ),
                 const SizedBox(height: common_l_gap),
-                ToggleButtons(
-                  children: const [
-                    Text('남성'),
-                    Text('여성'),
-                  ],
-                  onPressed: (index) {
-                    setState(() {
-                      switch (index) {
-                        case 0:
-                          _genderSelected[0] = true;
-                          _genderSelected[1] = false;
-                          break;
-                        case 1:
-                          _genderSelected[0] = false;
-                          _genderSelected[1] = true;
-                          break;
-                      }
-                    });
-                  },
-                  isSelected: _genderSelected,
+                Padding(
+                  padding: const EdgeInsets.all(common_gap),
+                  child: Row(
+                    children: <Widget>[
+                      SizedBox(width: 10,),
+                      Icon(
+                        FontAwesomeIcons.venusMars,
+                        color: Color.fromRGBO(222, 222, 255, 1),
+                        size: 15,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Container(
+                        width: 70,
+                        child: Center(
+                          child: Text(
+                            '성별',
+                            style: TextStyle(fontSize: 15),
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 20,),
+                      Expanded(
+                        child: ToggleButtons(
+                          children: [
+                            Text('남성', style: TextStyle(color: _genderSelected[0] == true ? Colors.blue : Colors.black12),),
+                            Text('여성', style: TextStyle(color: _genderSelected[1] == true ? Colors.blue : Colors.black12),),
+                          ],
+                          onPressed: (index) {
+                            setState(() {
+                              switch (index) {
+                                case 0:
+                                  _genderSelected[0] = true;
+                                  _genderSelected[1] = false;
+                                  break;
+                                case 1:
+                                  _genderSelected[0] = false;
+                                  _genderSelected[1] = true;
+                                  break;
+                              }
+                            });
+                          },
+                          isSelected: _genderSelected,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 const SizedBox(height: common_l_gap),
                 Padding(
@@ -269,11 +297,11 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                           ),
                         ),
                       ),
-                      SizedBox(width: 10,),
+                      SizedBox(width: 20,),
                       Expanded(
                         child: TextFormField(
                           controller: _birthYearController,
-                          decoration: getTextFieldDecor('출생 연도'),
+                          decoration: getTextFieldDecor('출생 연도를 입력해주세요'),
                           inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
                           keyboardType: TextInputType.number,
                           validator: (value) {
@@ -309,11 +337,11 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                           ),
                         ),
                       ),
-                      SizedBox(width: 10,),
+                      SizedBox(width: 20,),
                       Expanded(
                         child: TextFormField(
                           controller: _regionController,
-                          decoration: getTextFieldDecor('지역'),
+                          decoration: getTextFieldDecor('사는 지역을 입력해주세요'),
                           validator: (value) {
                             if (value.isEmpty) return '사는 지역을 입력해주세요!';
                             return null;
@@ -325,24 +353,82 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                   ),
                 ),
                 const SizedBox(height: common_l_gap),
-                TextFormField(
-                  controller: _jobController,
-                  decoration: getTextFieldDecor('직업'),
-                  validator: (value) {
-                    if (value.isEmpty) return '직업을 입력해주세요!';
-                    return null;
-                  },
+                Padding(
+                  padding: const EdgeInsets.all(common_gap),
+                  child: Row(
+                    children: <Widget>[
+                      SizedBox(width: 10,),
+                      Icon(
+                        FontAwesomeIcons.suitcase,
+                        color: Color.fromRGBO(222, 222, 255, 1),
+                        size: 15,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Container(
+                        width: 70,
+                        child: Center(
+                          child: Text(
+                            '직업',
+                            style: TextStyle(fontSize: 15),
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 20,),
+                      Expanded(
+                        child: TextFormField(
+                          controller: _jobController,
+                          decoration: getTextFieldDecor('직업을 입력해주세요'),
+                          validator: (value) {
+                            if (value.isEmpty) return '직업을 입력해주세요!';
+                            return null;
+                          },
+                        ),
+                      ),
+                      SizedBox(width: 20,),
+                    ],
+                  ),
                 ),
                 const SizedBox(height: common_l_gap),
-                TextFormField(
-                  controller: _heightController,
-                  decoration: getTextFieldDecor('키'),
-                  inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
-                  keyboardType: TextInputType.number,
-                  validator: (value) {
-                    if (value.isEmpty) return '키를 입력해주세요!';
-                    return null;
-                  },
+                Padding(
+                  padding: const EdgeInsets.all(common_gap),
+                  child: Row(
+                    children: <Widget>[
+                      SizedBox(width: 10,),
+                      Icon(
+                        FontAwesomeIcons.child,
+                        color: Color.fromRGBO(222, 222, 255, 1),
+                        size: 15,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Container(
+                        width: 70,
+                        child: Center(
+                          child: Text(
+                            '키',
+                            style: TextStyle(fontSize: 15),
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 20,),
+                      Expanded(
+                        child: TextFormField(
+                          controller: _heightController,
+                          decoration: getTextFieldDecor('키'),
+                          inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
+                          keyboardType: TextInputType.number,
+                          validator: (value) {
+                            if (value.isEmpty) return '키를 입력해주세요!';
+                            return null;
+                          },
+                        ),
+                      ),
+                      SizedBox(width: 20,),
+                    ],
+                  ),
                 ),
                 const SizedBox(height: common_l_gap),
                 Padding(
@@ -367,21 +453,34 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                           ),
                         ),
                       ),
-                      SizedBox(width: 10,),
+                      SizedBox(width: 20,),
                       Expanded(
-                        child: Center(
-                          child: InkWell(
-                            child: Text('$smokeinput'),
-                            onTap: () {
-                              return showDialog(
-                                context: context,
-                                builder: (context) => Center(
-                                  child: Container(
-                                      height: 600,
-                                      child: _buildSmokeDialog(context)),
+                        child: Container(
+                          height: 60,
+                          decoration: BoxDecoration(
+                              color: Colors.grey[100],
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(color: Colors.grey[300], width: 1)),
+                          child: Row(
+                            children: <Widget>[
+                              SizedBox(width: 10,),
+                              Expanded(
+                                child: InkWell(
+                                  child: Text('$smokeinput', style: TextStyle(color: Colors.black38, fontSize: 16)),
+                                  onTap: () {
+                                    return showDialog(
+                                      context: context,
+                                      builder: (context) => Center(
+                                        child: Container(
+                                            height: 600,
+                                            child: _buildSmokeDialog(context)),
+                                      ),
+                                    );
+                                  },
                                 ),
-                              );
-                            },
+                              ),
+                              SizedBox(width: 10,),
+                            ],
                           ),
                         ),
                       ),
@@ -412,21 +511,34 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                           ),
                         ),
                       ),
-                      SizedBox(width: 10,),
+                      SizedBox(width: 20,),
                       Expanded(
-                        child: Center(
-                          child: InkWell(
-                            child: Text('$drinkinput'),
-                            onTap: () {
-                              return showDialog(
-                                context: context,
-                                builder: (context) => Center(
-                                  child: Container(
-                                      height: 600,
-                                      child: _buildDrinkDialog(context)),
+                        child: Container(
+                          height: 60,
+                          decoration: BoxDecoration(
+                              color: Colors.grey[100],
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(color: Colors.grey[300], width: 1)),
+                          child: Row(
+                            children: <Widget>[
+                              SizedBox(width: 10,),
+                              Expanded(
+                                child: InkWell(
+                                  child: Text('$drinkinput', style: TextStyle(color: Colors.grey, fontSize: 16)),
+                                  onTap: () {
+                                    return showDialog(
+                                      context: context,
+                                      builder: (context) => Center(
+                                        child: Container(
+                                            height: 600,
+                                            child: _buildDrinkDialog(context)),
+                                      ),
+                                    );
+                                  },
                                 ),
-                              );
-                            },
+                              ),
+                              SizedBox(width: 10,),
+                            ],
                           ),
                         ),
                       ),
@@ -457,21 +569,34 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                           ),
                         ),
                       ),
-                      SizedBox(width: 10,),
+                      SizedBox(width: 20,),
                       Expanded(
-                        child: Center(
-                          child: InkWell(
-                            child: Text('$drinkinput'),
-                            onTap: () {
-                              return showDialog(
-                                context: context,
-                                builder: (context) => Center(
-                                  child: Container(
-                                      height: 600,
-                                      child: _buildDrinkDialog(context)),
+                        child: Container(
+                          height: 60,
+                          decoration: BoxDecoration(
+                              color: Colors.grey[100],
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(color: Colors.grey[300], width: 1)),
+                          child: Row(
+                            children: <Widget>[
+                              SizedBox(width: 10,),
+                              Expanded(
+                                child: InkWell(
+                                  child: Text('$religioninput', style: TextStyle(color: Colors.grey, fontSize: 16)),
+                                  onTap: () {
+                                    return showDialog(
+                                      context: context,
+                                      builder: (context) => Center(
+                                        child: Container(
+                                            height: 600,
+                                            child: _buildReligionDialog(context)),
+                                      ),
+                                    );
+                                  },
                                 ),
-                              );
-                            },
+                              ),
+                              SizedBox(width: 10),
+                            ],
                           ),
                         ),
                       ),
