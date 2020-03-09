@@ -1,3 +1,4 @@
+import 'package:margaret/constants/colors.dart';
 import 'package:margaret/constants/font_names.dart';
 import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/pages/account_setting_page.dart';
@@ -92,7 +93,7 @@ class _HomeState extends State<Home> {
       },
       showSelectedLabels: false,
       showUnselectedLabels: false,
-      selectedItemColor: Colors.black,
+      selectedItemColor: pastel_purple,
       unselectedItemColor: Colors.grey[400],
       type: BottomNavigationBarType.fixed,
       backgroundColor: Colors.white,

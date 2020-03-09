@@ -133,8 +133,8 @@ class ReceiveCard extends StatelessWidget {
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                     colors: <Color>[
-                      Color(0xff03c04a),
-                      Color(0xff3ded97),
+                      Color(0xff7ad7f0),
+                      Color(0xffb7e9f7),
                     ],
                   ),
                   boxShadow: [
