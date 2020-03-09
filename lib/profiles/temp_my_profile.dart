@@ -114,7 +114,9 @@ class _TempMyProfileState extends State<TempMyProfile> {
                             (path) => Padding(
                               padding: const EdgeInsets.all(common_gap),
                               child: InkWell(
-                                onTap: () {
+                                onTap: ( // 사진 눌렀을 때 변경 가능하도록!
+
+                                    ) {
                                   print(path);
                                 },
                                 child: ClipRRect(
@@ -156,7 +158,6 @@ class _TempMyProfileState extends State<TempMyProfile> {
                   _buildNickname(),
                   _buildGender(),
                   _buildBirthYear(),
-                  _buildEmail(),
                   _buildRegion(),
                   _buildCareer(),
                   _buildHeight(),
@@ -369,48 +370,6 @@ class _TempMyProfileState extends State<TempMyProfile> {
         ));
   }
 
-  Padding _buildEmail() {
-    return Padding(
-        padding: const EdgeInsets.all(common_gap),
-        child: Row(
-          children: <Widget>[
-            SizedBox(
-              width: 40,
-            ),
-            Icon(
-              FontAwesomeIcons.envelope,
-              color: Color.fromRGBO(222, 222, 255, 1),
-              size: 15,
-            ),
-            SizedBox(
-              width: 10,
-            ),
-            Center(
-              child: Text(
-                '이메일',
-                style: TextStyle(fontSize: 15),
-              ),
-            ),
-            Spacer(),
-            Expanded(
-              child: Center(
-                child: Text(
-                  '$email',
-                  style: TextStyle(fontSize: 15),
-                ),
-              ),
-            ),
-            SizedBox(
-              width: 25,
-            ),
-            Icon(
-              FontAwesomeIcons.lock,
-              color: Color.fromRGBO(222, 222, 255, 1),
-              size: 15,
-            ),
-          ],
-        ));
-  }
 
   Padding _buildRegion() {
     return Padding(
@@ -530,7 +489,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
               width: 40,
             ),
             Icon(
-              FontAwesomeIcons.beer,
+              FontAwesomeIcons.pray,
               color: Color.fromRGBO(222, 222, 255, 1),
               size: 15,
             ),
@@ -643,7 +602,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
           religion = s;
         });
       },
-      child: Center(child: Text('$religion'),) ,
+      child: Center(child: Text('$s'),) ,
     );
   }
 
@@ -656,7 +615,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
           drink = s;
         });
       },
-      child: Center(child: Text('$drink'),) ,
+      child: Center(child: Text('$s'),) ,
     );
   }
 
@@ -681,7 +640,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
           smoke = s;
         });
       },
-      child: Center(child: Text('$smoke'),),
+      child: Center(child: Text('$s'),),
     );
   }
 

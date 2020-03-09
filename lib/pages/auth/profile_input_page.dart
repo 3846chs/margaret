@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:margaret/constants/colors.dart';
+import 'package:margaret/constants/font_names.dart';
 import 'package:margaret/constants/size.dart';
 import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/data/user.dart';
@@ -30,16 +32,16 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
   final _regionController = TextEditingController();
   final _jobController = TextEditingController();
   final _heightController = TextEditingController();
-  final _smokeController = TextEditingController();
-  final _drinkController = TextEditingController();
-  final _religionController = TextEditingController();
-  final _introductionController = TextEditingController();
 
   List<File> _profiles = [];
 
   List<bool> _genderSelected = [true, false];
 
   bool _isButtonEnabled = true;
+
+  String smokeinput = '흡연 여부를 선택해주세요';
+  String drinkinput = '음주 여부를 선택해주세요';
+  String religioninput = '종교를 선택해주세요';
 
   Future<void> _getProfile([int index]) async {
     if (_profiles.length >= 2 && index == null) return;
@@ -73,10 +75,6 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
     _regionController.dispose();
     _jobController.dispose();
     _heightController.dispose();
-    _smokeController.dispose();
-    _drinkController.dispose();
-    _religionController.dispose();
-    _introductionController.dispose();
     super.dispose();
   }
 
@@ -91,62 +89,140 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
             child: ListView(
               shrinkWrap: true,
               children: <Widget>[
-                const SizedBox(height: common_l_gap),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
+                Container(
+                  height: 30,
+                  width: double.infinity,
+                  color: pastel_purple,
                   child: Row(
                     children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.all(common_gap),
-                        child: _profiles.length < 1
-                            ? SizedBox(
-                                width: 150,
-                                height: 150,
-                                child: RaisedButton(
-                                  child: const Icon(Icons.add_a_photo),
-                                  onPressed: _getProfile,
-                                ),
-                              )
-                            : FlatButton(
-                                onPressed: () => _getProfile(0),
-                                child: Image.file(
-                                  _profiles[0],
-                                  height: 150,
-                                  width: 150,
-                                ),
-                              ),
+                      Spacer(),
+                      Center(
+                        child: Text('마가렛 가입을 환영합니다',
+                          style: TextStyle(fontFamily: FontFamily.nanumBarunpen, color: Colors.white),),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(common_gap),
-                        child: _profiles.length < 2
-                            ? SizedBox(
-                                width: 150,
-                                height: 150,
-                                child: RaisedButton(
-                                  child: const Icon(Icons.add_a_photo),
-                                  onPressed: _getProfile,
-                                ),
-                              )
-                            : FlatButton(
-                                onPressed: () => _getProfile(1),
-                                child: Image.file(
-                                  _profiles[1],
-                                  height: 150,
-                                  width: 150,
-                                ),
-                              ),
-                      ),
+                      Spacer(),
                     ],
                   ),
                 ),
+                SizedBox(height: common_gap,),
+                Container(
+                  height: 30,
+                  width: double.infinity,
+                  color: Colors.grey[200],
+                  child: Center(
+                      child: Text(
+                        '사진 등록',
+                        style: TextStyle(
+                            fontFamily: FontFamily.nanumBarunpen,
+                            color: Colors.grey),
+                      )),
+                ),
+                SizedBox(height: common_gap,),
+                Center(
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.all(common_gap),
+                          child: _profiles.length < 1
+                              ? SizedBox(
+                                  width: 150,
+                                  height: 150,
+                                  child: RaisedButton(
+                                    child: const Icon(Icons.add_a_photo),
+                                    onPressed: _getProfile,
+                                  ),
+                                )
+                              : FlatButton(
+                                  onPressed: () => _getProfile(0),
+                                  child: Image.file(
+                                    _profiles[0],
+                                    height: 150,
+                                    width: 150,
+                                  ),
+                                ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(common_gap),
+                          child: _profiles.length < 2
+                              ? SizedBox(
+                                  width: 150,
+                                  height: 150,
+                                  child: RaisedButton(
+                                    child: const Icon(Icons.add_a_photo),
+                                    onPressed: _getProfile,
+                                  ),
+                                )
+                              : FlatButton(
+                                  onPressed: () => _getProfile(1),
+                                  child: Image.file(
+                                    _profiles[1],
+                                    height: 150,
+                                    width: 150,
+                                  ),
+                                ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                //SizedBox(height: common_s_gap),
+                Padding(
+                  padding: const EdgeInsets.all(common_s_gap),
+                  child: Center(child: Text('사진 2개를 등록해주세요', style: TextStyle(fontSize: 15, fontFamily: FontFamily.nanumBarunpen,
+                      color: _profiles.length == 2 ? Colors.grey : Colors.redAccent),)),
+                ),
                 const SizedBox(height: common_l_gap),
-                TextFormField(
-                  controller: _nicknameController,
-                  decoration: getTextFieldDecor('닉네임'),
-                  validator: (value) {
-                    if (value.isEmpty) return '닉네임을 입력해주세요!';
-                    return null;
-                  },
+                Container(
+                  height: 30,
+                  width: double.infinity,
+                  color: Colors.grey[200],
+                  child: Center(
+                      child: Text(
+                        '기본 정보 등록',
+                        style: TextStyle(
+                            fontFamily: FontFamily.nanumBarunpen,
+                            color: Colors.grey),
+                      )),
+                ),
+                const SizedBox(height: common_gap,),
+                Padding(
+                  padding: const EdgeInsets.all(common_gap),
+                  child: Row(
+                    children: <Widget>[
+                      SizedBox(width: 10,),
+                      Icon(
+                        FontAwesomeIcons.user,
+                        color: Color.fromRGBO(222, 222, 255, 1),
+                        size: 15,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Container(
+                        width: 70,
+                        child: Center(
+                          child: Text(
+                            '닉네임',
+                            style: TextStyle(fontSize: 15),
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 10,),
+                      Expanded(
+                        child: TextFormField(
+                          controller: _nicknameController,
+                          decoration: getTextFieldDecor('닉네임',),
+                          validator: (value) {
+                            if (value.isEmpty) return '닉네임을 입력해주세요!';
+                            return null;
+                          },
+                        ),
+                      ),
+                      SizedBox(width: 20,),
+                    ],
+                  ),
                 ),
                 const SizedBox(height: common_l_gap),
                 ToggleButtons(
@@ -171,24 +247,82 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                   isSelected: _genderSelected,
                 ),
                 const SizedBox(height: common_l_gap),
-                TextFormField(
-                  controller: _birthYearController,
-                  decoration: getTextFieldDecor('출생 연도'),
-                  inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
-                  keyboardType: TextInputType.number,
-                  validator: (value) {
-                    if (value.isEmpty) return '출생 연도 4자리를 입력해주세요!';
-                    return null;
-                  },
+                Padding(
+                  padding: const EdgeInsets.all(common_gap),
+                  child: Row(
+                    children: <Widget>[
+                      SizedBox(width: 10,),
+                      Icon(
+                        FontAwesomeIcons.birthdayCake,
+                        color: Color.fromRGBO(222, 222, 255, 1),
+                        size: 15,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Container(
+                        width: 70,
+                        child: Center(
+                          child: Text(
+                            '출생 연도',
+                            style: TextStyle(fontSize: 15),
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 10,),
+                      Expanded(
+                        child: TextFormField(
+                          controller: _birthYearController,
+                          decoration: getTextFieldDecor('출생 연도'),
+                          inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
+                          keyboardType: TextInputType.number,
+                          validator: (value) {
+                            if (value.isEmpty) return '출생 연도 4자리를 입력해주세요!';
+                            return null;
+                          },
+                        ),
+                      ),
+                      SizedBox(width: 20,),
+                    ],
+                  ),
                 ),
                 const SizedBox(height: common_l_gap),
-                TextFormField(
-                  controller: _regionController,
-                  decoration: getTextFieldDecor('지역'),
-                  validator: (value) {
-                    if (value.isEmpty) return '사는 지역을 입력해주세요!';
-                    return null;
-                  },
+                Padding(
+                  padding: const EdgeInsets.all(common_gap),
+                  child: Row(
+                    children: <Widget>[
+                      SizedBox(width: 10,),
+                      Icon(
+                        FontAwesomeIcons.mapMarked,
+                        color: Color.fromRGBO(222, 222, 255, 1),
+                        size: 15,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Container(
+                        width: 70,
+                        child: Center(
+                          child: Text(
+                            '지역',
+                            style: TextStyle(fontSize: 15),
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 10,),
+                      Expanded(
+                        child: TextFormField(
+                          controller: _regionController,
+                          decoration: getTextFieldDecor('지역'),
+                          validator: (value) {
+                            if (value.isEmpty) return '사는 지역을 입력해주세요!';
+                            return null;
+                          },
+                        ),
+                      ),
+                      SizedBox(width: 20,),
+                    ],
+                  ),
                 ),
                 const SizedBox(height: common_l_gap),
                 TextFormField(
@@ -211,40 +345,139 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                   },
                 ),
                 const SizedBox(height: common_l_gap),
-                TextFormField(
-                  controller: _smokeController,
-                  decoration: getTextFieldDecor('흡연 여부'),
-                  validator: (value) {
-                    if (value.isEmpty) return '흡연 여부를 선택해주세요!';
-                    return null;
-                  },
+                Padding(
+                  padding: const EdgeInsets.all(common_gap),
+                  child: Row(
+                    children: <Widget>[
+                      SizedBox(width: 10,),
+                      Icon(
+                        FontAwesomeIcons.smoking,
+                        color: Color.fromRGBO(222, 222, 255, 1),
+                        size: 15,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Container(
+                        width: 70,
+                        child: Center(
+                          child: Text(
+                            '흡연 여부',
+                            style: TextStyle(fontSize: 15),
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 10,),
+                      Expanded(
+                        child: Center(
+                          child: InkWell(
+                            child: Text('$smokeinput'),
+                            onTap: () {
+                              return showDialog(
+                                context: context,
+                                builder: (context) => Center(
+                                  child: Container(
+                                      height: 600,
+                                      child: _buildSmokeDialog(context)),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 20,),
+                    ],
+                  ),
                 ),
                 const SizedBox(height: common_l_gap),
-                TextFormField(
-                  controller: _drinkController,
-                  decoration: getTextFieldDecor('음주 여부'),
-                  validator: (value) {
-                    if (value.isEmpty) return '음주 여부를 선택해주세요!';
-                    return null;
-                  },
+                Padding(
+                  padding: const EdgeInsets.all(common_gap),
+                  child: Row(
+                    children: <Widget>[
+                      SizedBox(width: 10,),
+                      Icon(
+                        FontAwesomeIcons.beer,
+                        color: Color.fromRGBO(222, 222, 255, 1),
+                        size: 15,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Container(
+                        width: 70,
+                        child: Center(
+                          child: Text(
+                            '음주 여부',
+                            style: TextStyle(fontSize: 15),
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 10,),
+                      Expanded(
+                        child: Center(
+                          child: InkWell(
+                            child: Text('$drinkinput'),
+                            onTap: () {
+                              return showDialog(
+                                context: context,
+                                builder: (context) => Center(
+                                  child: Container(
+                                      height: 600,
+                                      child: _buildDrinkDialog(context)),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 20,),
+                    ],
+                  ),
                 ),
                 const SizedBox(height: common_l_gap),
-                TextFormField(
-                  controller: _religionController,
-                  decoration: getTextFieldDecor('종교'),
-                  validator: (value) {
-                    if (value.isEmpty) return '종교를 선택해주세요!';
-                    return null;
-                  },
-                ),
-                const SizedBox(height: common_l_gap),
-                TextFormField(
-                  controller: _introductionController,
-                  decoration: getTextFieldDecor('나의 가치관을 나타낼 수 있는 자기소개를 해주세요'),
-                  validator: (value) {
-                    if (value.isEmpty) return '자기소개를 입력해주세요!';
-                    return null;
-                  },
+                Padding(
+                  padding: const EdgeInsets.all(common_gap),
+                  child: Row(
+                    children: <Widget>[
+                      SizedBox(width: 10,),
+                      Icon(
+                        FontAwesomeIcons.pray,
+                        color: Color.fromRGBO(222, 222, 255, 1),
+                        size: 15,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Container(
+                        width: 70,
+                        child: Center(
+                          child: Text(
+                            '종교',
+                            style: TextStyle(fontSize: 15),
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 10,),
+                      Expanded(
+                        child: Center(
+                          child: InkWell(
+                            child: Text('$drinkinput'),
+                            onTap: () {
+                              return showDialog(
+                                context: context,
+                                builder: (context) => Center(
+                                  child: Container(
+                                      height: 600,
+                                      child: _buildDrinkDialog(context)),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 20,),
+                    ],
+                  ),
                 ),
                 const SizedBox(height: common_l_gap),
                 Builder(
@@ -299,10 +532,9 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
         region: _regionController.text,
         job: _jobController.text,
         height: int.parse(_heightController.text),
-        smoke: _smokeController.text,
-        drink: _drinkController.text,
-        religion: _religionController.text,
-        introduction: _introductionController.text,
+        smoke: smokeinput,
+        drink: drinkinput,
+        religion: religioninput,
         recentMatchTime: Timestamp.now(),
         recentMatchState: MatchState.QUESTION,
         exposed: 0,
@@ -335,6 +567,81 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
       ),
       fillColor: Colors.grey[100],
       filled: true,
+    );
+
+
+  }
+
+  SimpleDialog _buildSmokeDialog(BuildContext context) {
+    return SimpleDialog(
+      children: <Widget>[
+        _smokeSimpleDialogOption(context, '흡연'),
+        _smokeSimpleDialogOption(context, '비흡연'),
+      ],
+    );
+  }
+
+  SimpleDialogOption _smokeSimpleDialogOption(BuildContext context, String s) {
+    return SimpleDialogOption(
+      onPressed: () {
+        Navigator.pop(context);
+        setState(() {
+          smokeinput = s;
+        });
+      },
+      child: Center(child: Text('$s'),),
+    );
+  }
+
+  SimpleDialog _buildDrinkDialog(BuildContext context) {
+    return SimpleDialog(
+      children: <Widget>[
+        _drinkSimpleDialogOption(context, '전혀 마시지 않음'),
+        _drinkSimpleDialogOption(context, '아주 가끔 마심'),
+        _drinkSimpleDialogOption(context, '가끔 마심'),
+        _drinkSimpleDialogOption(context, '즐기는 편'),
+        _drinkSimpleDialogOption(context, '술자리 자주 있음'),
+      ],
+    );
+  }
+
+  SimpleDialogOption _drinkSimpleDialogOption(BuildContext context, String s) {
+    return SimpleDialogOption(
+      onPressed: () {
+        Navigator.pop(context);
+        setState(() {
+          drinkinput = s;
+        });
+      },
+      child: Center(child: Text('$s'),) ,
+    );
+  }
+
+  _buildReligionDialog(BuildContext context) {
+    return SimpleDialog(
+      children: <Widget>[
+        _religionSimpleDialogOption(context, '없음'),
+        _religionSimpleDialogOption(context, '기독교'),
+        _religionSimpleDialogOption(context, '천주교'),
+        _religionSimpleDialogOption(context, '불교'),
+        _religionSimpleDialogOption(context, '원불교'),
+        _religionSimpleDialogOption(context, '유교'),
+        _religionSimpleDialogOption(context, '이슬람교'),
+        _religionSimpleDialogOption(context, '힌두교'),
+        _religionSimpleDialogOption(context, '기타'),
+      ],
+    );
+  }
+
+  _religionSimpleDialogOption(BuildContext context, String s) {
+    return SimpleDialogOption(
+      onPressed: () {
+        Navigator.pop(context);
+        setState(() {
+          religioninput = s;
+        });
+      },
+      child: Center(child: Text('$s'),) ,
     );
   }
 }
