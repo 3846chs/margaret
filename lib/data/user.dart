@@ -19,6 +19,7 @@ class User {
   MatchState recentMatchState;
   Timestamp recentMatchTime;
   int exposed;
+  int numMyQuestions;
   String answer;
   String pushToken;
   DocumentReference reference;
@@ -40,6 +41,7 @@ class User {
       this.recentMatchState,
       this.recentMatchTime,
       this.exposed,
+      this.numMyQuestions,
       this.answer,
       this.pushToken,
       this.reference});
@@ -64,6 +66,7 @@ class User {
     recentMatchState = MatchState.fromInt(map[UserKeys.KEY_RECENTMATCHSTATE]);
     recentMatchTime = map[UserKeys.KEY_RECENTMATCHTIME];
     exposed = map[UserKeys.KEY_EXPOSED];
+    numMyQuestions = map[UserKeys.KEY_NUMMYQUESTIONS];
     answer = map[UserKeys.KEY_ANSWER];
   }
 
@@ -87,6 +90,7 @@ class User {
         UserKeys.KEY_RECENTMATCHSTATE: recentMatchState.value,
         UserKeys.KEY_RECENTMATCHTIME: recentMatchTime,
         UserKeys.KEY_EXPOSED: exposed,
+        UserKeys.KEY_NUMMYQUESTIONS : numMyQuestions,
         UserKeys.KEY_ANSWER: answer,
         UserKeys.KEY_PUSHTOKEN: pushToken,
       };
