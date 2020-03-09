@@ -1,8 +1,10 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:margaret/constants/firebase_keys.dart';
 import 'package:margaret/constants/size.dart';
 import 'package:margaret/data/message.dart';
+import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/data/user.dart';
 import 'package:margaret/firebase/firestore_provider.dart';
 import 'package:margaret/firebase/storage_provider.dart';
@@ -13,6 +15,7 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:margaret/widgets/chat/chat_bubble.dart';
+import 'package:provider/provider.dart';
 
 class ChatDetailPage extends StatefulWidget {
   final String chatKey;
@@ -62,26 +65,34 @@ class _ChatDetailPageState extends State<ChatDetailPage>
     }
   }
 
-  void _sendMessage(String content, MessageType type) {
+  void _sendMessage(User myUser, String content, MessageType type) {
     if (content.trim().isNotEmpty) {
       _messageController.clear();
 
+      final now = DateTime.now();
       final message = Message(
         idFrom: widget.myKey,
         idTo: widget.peer.userKey,
         content: content,
-        timestamp: DateTime.now().millisecondsSinceEpoch.toString(),
+        timestamp: now.millisecondsSinceEpoch.toString(),
         type: type,
         isRead: false,
       );
 
       firestoreProvider.createMessage(widget.chatKey, message);
+      myUser.reference
+          .collection("Chats")
+          .document(widget.peer.userKey)
+          .updateData({
+        "lastMessage": type == MessageType.text ? content : '사진을 보냈습니다.',
+        "lastDateTime": Timestamp.fromDate(now),
+      });
       _scrollController.animateTo(0.0,
           duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
     }
   }
 
-  Future<void> _sendImage() async {
+  Future<void> _sendImage(User myUser) async {
     File image = await ImagePicker.pickImage(source: ImageSource.gallery);
 
     if (image == null) return;
@@ -94,7 +105,7 @@ class _ChatDetailPageState extends State<ChatDetailPage>
     if (image != null) {
       final url = await storageProvider.uploadImg(image,
           'chats/${DateTime.now().millisecondsSinceEpoch}_${widget.myKey}');
-      _sendMessage(url, MessageType.image);
+      _sendMessage(myUser, url, MessageType.image);
     }
   }
 
@@ -106,6 +117,8 @@ class _ChatDetailPageState extends State<ChatDetailPage>
 
   @override
   Widget build(BuildContext context) {
+    final myUser = Provider.of<MyUserData>(context, listen: false).userData;
+
     _isNotificationEnabled =
         prefsProvider.isNotificationEnabled(widget.peer.nickname);
 
@@ -119,30 +132,71 @@ class _ChatDetailPageState extends State<ChatDetailPage>
                 : Icons.notifications_off),
             onPressed: _notificationChange,
           ),
+          IconButton(
+            icon: const Icon(Icons.exit_to_app),
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (context) => _buildExitDialog(myUser));
+            },
+          ),
         ],
       ),
       body: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).requestFocus(FocusNode());
-        },
+        onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
         child: Column(
           children: <Widget>[
             _buildBubbleList(),
-            _buildInput(),
+            _buildInput(myUser),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildInput() {
+  AlertDialog _buildExitDialog(User myUser) {
+    return AlertDialog(
+      title: Text('해당 유저를 차단하고 채팅을 나가겠습니까?'),
+      actions: <Widget>[
+        FlatButton(
+          onPressed: () {
+            myUser.reference.updateData({
+              "blocks": FieldValue.arrayUnion([widget.peer.userKey]),
+            });
+            widget.peer.reference.updateData({
+              "blocks": FieldValue.arrayUnion([myUser.userKey]),
+            });
+            myUser.reference
+                .collection("Chats")
+                .document(widget.peer.userKey)
+                .delete();
+            widget.peer.reference
+                .collection("Chats")
+                .document(myUser.userKey)
+                .delete();
+            Navigator.pop(context);
+            Navigator.pop(context);
+          },
+          child: Text(
+            '예(더 이상 해당 유저를 추천받지 않습니다)',
+            style: const TextStyle(color: Colors.blue),
+          ),
+        ),
+      ],
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8.0),
+      ),
+    );
+  }
+
+  Widget _buildInput(User myUser) {
     return Row(
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.all(common_s_gap),
           child: IconButton(
             icon: const Icon(Icons.image),
-            onPressed: _sendImage,
+            onPressed: () => _sendImage(myUser),
           ),
         ),
         Expanded(
@@ -164,7 +218,7 @@ class _ChatDetailPageState extends State<ChatDetailPage>
           child: IconButton(
             icon: const Icon(Icons.send),
             onPressed: () =>
-                _sendMessage(_messageController.text, MessageType.text),
+                _sendMessage(myUser, _messageController.text, MessageType.text),
           ),
         ),
       ],

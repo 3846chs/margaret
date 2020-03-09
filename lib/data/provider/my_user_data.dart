@@ -54,7 +54,7 @@ class MyUserData extends ChangeNotifier {
   }
 
   void setPushToken(String token) {
-    firestoreProvider.updateUser(_userData.userKey, {
+    userData.reference.updateData({
       UserKeys.KEY_PUSHTOKEN: token,
     });
   }
@@ -71,6 +71,7 @@ class MyUserData extends ChangeNotifier {
   }
 
   void signOutUser() {
+    setPushToken("");
     _userData = null;
     _status = MyUserDataStatus.none;
     _userStreamsubscription?.cancel();
