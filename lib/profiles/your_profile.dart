@@ -26,7 +26,8 @@ class YourProfile extends StatelessWidget {
               flexibleSpace: FlexibleSpaceBar(
                 title: Text(user.nickname),
                 background: Swiper(
-                  itemCount: 2,
+                  loop: false,
+                  itemCount: user.profiles.length,
                   itemBuilder: (BuildContext context, int index) {
                     return ClipRRect(
                       // 상대 프로필 이미지 사진
@@ -122,6 +123,9 @@ class YourProfile extends StatelessWidget {
                     ProfileBasicInfo('지역', user.region),
                     ProfileBasicInfo('직업', user.job),
                     ProfileBasicInfo('키', user.height.toString()),
+                    ProfileBasicInfo('종교', user.religion),
+                    ProfileBasicInfo('흡연 여부', user.smoke),
+                    ProfileBasicInfo('음주 여부', user.drink),
                   ],
                 ),
               ),
@@ -129,73 +133,6 @@ class YourProfile extends StatelessWidget {
           ],
         ),
 
-//        SingleChildScrollView(
-//          child: Consumer<MyUserData>(builder: (context, value, child) {
-//            return Column( // UI column 시작
-//              crossAxisAlignment: CrossAxisAlignment.center, // 가운데 정렬
-//              children: <Widget>[
-//                SizedBox(width: double.infinity, height: 20,),
-//                SingleChildScrollView(
-//                  padding: const EdgeInsets.all(common_l_gap),
-//                  scrollDirection: Axis.horizontal,
-//                  child: Row(
-//                    children: user.profiles
-//                        .map((path) => Padding(
-//                              padding: const EdgeInsets.all(common_gap),
-//                              child: InkWell(
-//                                onTap: () {
-//                                  print(path);
-//                                },
-//                                child: ClipRRect( // 상대 프로필 이미지 사진
-//                                  borderRadius: BorderRadius.circular(14),
-//                                  child: CachedNetworkImage(
-//                                    imageUrl: "profiles/$path",
-//                                    cacheManager: StorageCacheManager(),
-//                                    width: 150,
-//                                    height: 150,
-//                                    fit: BoxFit.cover,
-//                                    placeholder: (context, url) =>
-//                                        const CircularProgressIndicator(),
-//                                    errorWidget: (context, url, error) =>
-//                                        const Icon(Icons.account_circle),
-//                                  ),
-//                                ),
-//                              ),
-//                            ))
-//                        .toList(),
-//                  ),
-//                ),
-//                Padding(
-//                  padding: const EdgeInsets.all(common_gap),
-//                  child: Text(
-//                    user.nickname,
-//                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-//                  ),
-//                ),
-//
-//                // 자기소개
-//                _selfIntroduction(),
-//                SizedBox(height: 20,),
-//                // 가치관 질문
-////                _valueQuestions(),
-////                _valueQuestions(),
-//                SizedBox(height: 20,),
-//                // 기본 정보
-//                ProfileBasicInfo('나이',
-//                    (DateTime.now().year - user.birthYear + 1).toString()),
-//                ProfileBasicInfo('지역', user.region),
-//                ProfileBasicInfo('직업', user.job),
-//                ProfileBasicInfo('키', user.height.toString()),
-//                Padding(
-//                  padding: const EdgeInsets.all(common_l_gap),
-//                  child: Center(
-//                    child: FlatButton(
-//                      child: const Text(
-//                        '호감 보내기',
-//                        style: TextStyle(
-//                          color: Colors.black,
-//                        ),
-//                      ),
 //                      onPressed: () {
 //                        // 먼저 지금 상대방이 나한테 Receive 를 보냈는지 확인해야 함 => 나중에
 //
@@ -220,22 +157,6 @@ class YourProfile extends StatelessWidget {
 //            );
 //          }),
 //        ),
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          // 채팅으로 이동
-          // 채팅방 시작할 때 UI -> 사진 참고
-        },
-        label: Text(
-          '채팅하기',
-          style: TextStyle(fontFamily: FontFamily.nanumBarunpen, fontSize: 15),
-        ),
-        icon: Icon(
-          FontAwesomeIcons.heart,
-          color: Colors.pink,
-          size: 15,
-        ),
-        backgroundColor: Colors.blue[50],
       ),
     );
   }

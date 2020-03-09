@@ -15,10 +15,12 @@ class UserKeys {
   static const KEY_REGION = 'region';
   static const KEY_JOB = 'job';
   static const KEY_HEIGHT = 'height';
+  static const KEY_SMOKE = 'smoke';
+  static const KEY_DRINK = 'drink';
+  static const KEY_RELIGION = 'religion';
   static const KEY_INTRODUCTION = 'introduction';
   static const KEY_RECENTMATCHSTATE = 'recentMatchState';
   static const KEY_RECENTMATCHTIME = 'recentMatchTime';
-  static const KEY_CHATS = 'chats';
   static const KEY_PUSHTOKEN = 'pushToken';
   static const KEY_EXPOSED = 'exposed';
   static const KEY_ANSWER = 'answer';

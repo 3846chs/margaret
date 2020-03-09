@@ -68,18 +68,7 @@ class FirestoreProvider with Transformer {
         .updateData(data);
   }
 
-  Stream<Message> connectMessage(String chatKey, [String timestamp]) {
-    if (timestamp == null) {
-      return _firestore
-          .collection(COLLECTION_CHATS)
-          .document(chatKey)
-          .collection(chatKey)
-          .orderBy(MessageKeys.KEY_TIMESTAMP, descending: true)
-          .limit(1)
-          .snapshots()
-          .transform(toLastMessage);
-    }
-
+  Stream<Message> connectMessage(String chatKey, String timestamp) {
     return _firestore
         .collection(COLLECTION_CHATS)
         .document(chatKey)

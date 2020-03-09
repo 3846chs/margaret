@@ -8,6 +8,17 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 final firebaseMessaging = FirebaseMessaging();
 final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
+final androidPlatformChannelSpecifics = AndroidNotificationDetails(
+  'com.margaret.margaret',
+  'Margaret',
+  'Margaret, Dating App',
+);
+final iOSPlatformChannelSpecifics = IOSNotificationDetails();
+final platformChannelSpecifics = NotificationDetails(
+  androidPlatformChannelSpecifics,
+  iOSPlatformChannelSpecifics,
+);
+
 void registerNotification(MyUserData myUserData) async {
   firebaseMessaging.requestNotificationPermissions();
 
@@ -16,9 +27,7 @@ void registerNotification(MyUserData myUserData) async {
   firebaseMessaging.configure(onMessage: (Map<String, dynamic> message) {
     print('onMessage: $message');
     final notification = message['notification'];
-    if (prefsProvider.isNotificationEnabled(notification['title'])) {
-      showNotification(notification);
-    }
+    showNotification(notification);
     return;
   }, onResume: (Map<String, dynamic> message) {
     print('onResume: $message');
@@ -46,21 +55,16 @@ void configLocalNotification() {
 }
 
 void showNotification(message) async {
-  final androidPlatformChannelSpecifics = AndroidNotificationDetails(
-    'com.margaret.margaret',
-    'Margaret',
-    'your channel description',
-    playSound: true,
-    enableVibration: true,
-    importance: Importance.Max,
-    priority: Priority.High,
-  );
-  final iOSPlatformChannelSpecifics = IOSNotificationDetails();
-  final platformChannelSpecifics = NotificationDetails(
-    androidPlatformChannelSpecifics,
-    iOSPlatformChannelSpecifics,
-  );
-  await flutterLocalNotificationsPlugin.show(0, message['title'].toString(),
-      message['body'].toString(), platformChannelSpecifics,
-      payload: json.encode(message));
+  if (prefsProvider.isNotificationEnabled(message['title'])) {
+    await flutterLocalNotificationsPlugin.show(0, message['title'].toString(),
+        message['body'].toString(), platformChannelSpecifics,
+        payload: json.encode(message));
+  }
+
+  await flutterLocalNotificationsPlugin.cancel(1);
+
+  if (prefsProvider.getTodayQuestionAlarm()) {
+    await flutterLocalNotificationsPlugin.showDailyAtTime(1, "밤 12시가 되었습니다!",
+        "오늘의 질문을 확인하려면 클릭하세요.", Time(), platformChannelSpecifics);
+  }
 }

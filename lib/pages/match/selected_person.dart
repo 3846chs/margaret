@@ -4,7 +4,6 @@ import 'package:margaret/constants/firebase_keys.dart';
 import 'package:margaret/constants/size.dart';
 import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/data/user.dart';
-import 'package:margaret/firebase/firestore_provider.dart';
 import 'package:margaret/firebase/storage_cache_manager.dart';
 import 'package:margaret/profiles/profile_basic_info.dart';
 import 'package:flutter/material.dart';
@@ -83,17 +82,19 @@ class SelectedPerson extends StatelessWidget {
                         // User A 가 User B 에게 호감을 보낼 경우, 보낸 시점(ex. 2020-03-07) 이 User B 에게 기록되며
                         // User B 는 Receive 탭의 [오늘의 답변] 버튼에서 User A 의 해당 날짜 답변(2020-03-07 날의 답변)을 조회하여 볼 수 있음.
 
-                        firestoreProvider.updateUser(value.userData.userKey, {
+                        value.userData.reference.updateData({
                           "sends": FieldValue.arrayUnion([user.userKey]),
                         });
-                        firestoreProvider.updateUser(user.userKey, {
-                          "receives":
-                              FieldValue.arrayUnion([value.userData.userKey]),
+                        user.reference
+                            .collection("Receives")
+                            .document(value.userData.userKey)
+                            .setData({
+                          "dateTime": Timestamp.now(),
                         });
 
-                        var now = DateTime.now();
-                        var formatter = DateFormat('yyyy-MM-dd');
-                        String formattedDate = formatter.format(now);
+                        final now = DateTime.now();
+                        final formatter = DateFormat('yyyy-MM-dd');
+                        final formattedDate = formatter.format(now);
 
                         // 12시 근처에 선택 시 오류 가능성 => 나중에 처리
 

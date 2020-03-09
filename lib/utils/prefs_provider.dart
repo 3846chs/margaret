@@ -43,6 +43,14 @@ class PrefsProvider {
   Future<void> setMessage(String myKey, String peerKey, String message) {
     return _prefs.setString("$myKey:$peerKey", message);
   }
+
+  bool getTodayQuestionAlarm() {
+    return _prefs.getBool("todayQuestion") ?? true;
+  }
+
+  Future<void> setTodayQuestionAlarm(bool value) {
+    return _prefs.setBool("todayQuestion", value);
+  }
 }
 
 final PrefsProvider prefsProvider = PrefsProvider();

@@ -1,5 +1,4 @@
 import 'package:margaret/constants/size.dart';
-import 'package:margaret/data/message.dart';
 import 'package:margaret/data/user.dart';
 import 'package:margaret/widgets/user_avatar.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +6,8 @@ import 'package:intl/intl.dart';
 
 class ChatCard extends StatelessWidget {
   final User peer;
-  final Message lastMessage;
+  final String lastMessage;
+  final DateTime lastDateTime;
   final int newCount;
   final VoidCallback onTap;
   final VoidCallback onProfileTap;
@@ -15,20 +15,13 @@ class ChatCard extends StatelessWidget {
   ChatCard(
       {@required this.peer,
       @required this.lastMessage,
+      @required this.lastDateTime,
       this.newCount,
       this.onTap,
       this.onProfileTap});
 
   @override
   Widget build(BuildContext context) {
-    String subtitle = '';
-
-    if (lastMessage != null) {
-      subtitle = lastMessage.type == MessageType.text
-          ? lastMessage.content
-          : '사진을 보냈습니다.';
-    }
-
     return InkWell(
       onTap: onTap,
       child: Padding(
@@ -55,7 +48,7 @@ class ChatCard extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(common_s_gap),
                       child: Text(
-                        subtitle,
+                        lastMessage,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(color: Colors.black45),
@@ -75,9 +68,7 @@ class ChatCard extends StatelessWidget {
                     child: Text(
                       lastMessage == null
                           ? ''
-                          : DateFormat.jm().format(
-                              DateTime.fromMillisecondsSinceEpoch(
-                                  int.parse(lastMessage.timestamp))),
+                          : DateFormat.jm().format(lastDateTime),
                       style: TextStyle(
                         color: Colors.black45,
                         fontSize: 10,
