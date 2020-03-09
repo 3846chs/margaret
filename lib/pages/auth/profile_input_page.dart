@@ -1,6 +1,10 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import 'package:margaret/constants/balance.dart';
+
 import 'package:margaret/constants/colors.dart';
 import 'package:margaret/constants/font_names.dart';
 import 'package:margaret/constants/size.dart';
@@ -673,6 +677,7 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
         recentMatchTime: Timestamp.now(),
         recentMatchState: MatchState.QUESTION,
         exposed: 0,
+        numMyQuestions: MAX_NUM_MY_QUESTIONS,
       );
 
       await firestoreProvider.attemptCreateUser(user);
