@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:margaret/constants/colors.dart';
 import 'package:margaret/constants/firebase_keys.dart';
+import 'package:margaret/constants/font_names.dart';
 import 'package:margaret/constants/size.dart';
 import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/data/user.dart';
 import 'package:margaret/pages/loading_page.dart';
+import 'package:margaret/utils/base_height.dart';
 import 'package:margaret/utils/prefs_provider.dart';
 import 'package:margaret/utils/simple_snack_bar.dart';
 import 'package:flutter/material.dart';
@@ -137,8 +140,6 @@ class _TodayQuestionState extends State<TodayQuestion>
         });
       }
     });
-
-
   }
 
   @override
@@ -170,61 +171,66 @@ class _TodayQuestionState extends State<TodayQuestion>
   }
 
   Widget _buildBody(String question, List<String> choiceList) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(common_gap),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            SizedBox(height: 50),
-            Padding(
-              padding: const EdgeInsets.all(common_l_gap),
-              child: _buildQuestion(question),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(common_gap),
-              child: DropdownButtonFormField<String>(
-                decoration: InputDecoration(hintText: '답변을 선택하세요'),
-                value: _selected,
-                items: choiceList
-                    .map((label) => DropdownMenuItem(
-                          child: Text(label),
-                          value: label,
-                        ))
-                    .toList(),
-                onChanged: (value) {
-                  setState(() {
-                    _selected = value;
-                    _selectedIndex = choiceList.indexOf(value);
-                  });
-                },
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(common_l_gap),
+          child: _buildQuestion(question),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(common_gap),
+          child: DropdownButtonFormField<String>(
+            decoration: InputDecoration(hintText: '답변을 선택하세요'),
+            value: _selected,
+            items: choiceList
+                .map((label) => DropdownMenuItem(
+                      child: Text(label),
+                      value: label,
+                    ))
+                .toList(),
+            onChanged: (value) {
+              setState(() {
+                _selected = value;
+                _selectedIndex = choiceList.indexOf(value);
+              });
+            },
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(common_gap),
+          child: _buildAnswer(),
+        ),
+        SizedBox(
+          height: screenAwareSize(90, context),
+        ),
+        Consumer<MyUserData>(builder: (context, myUserData, _) {
+          if (_userKey == null) {
+            _userKey = myUserData.userData.userKey;
+
+            prefsProvider.initialize().then((_) {
+              _answerController.text = prefsProvider.getAnswer(_userKey);
+            });
+          }
+          return SizedBox(
+            width: double.infinity,
+            height: 50,
+            child: RaisedButton(
+              onPressed: () => _summit(myUserData.userData, question),
+              color: pastel_purple,
+              child: Container(
+                child: Text(
+                  '제 출 하 기',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontFamily: FontFamily.jua),
+                ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(common_gap),
-              child: _buildAnswer(),
-            ),
-            Consumer<MyUserData>(builder: (context, myUserData, _) {
-              if (_userKey == null) {
-                _userKey = myUserData.userData.userKey;
-
-                prefsProvider.initialize().then((_) {
-                  _answerController.text = prefsProvider.getAnswer(_userKey);
-                });
-              }
-
-              return FloatingActionButton(
-                heroTag: 'summit_answer',
-                backgroundColor: Colors.white,
-                foregroundColor: Colors.black,
-                child: const Icon(Icons.send),
-                onPressed: () => _summit(myUserData.userData, question),
-              );
-            }),
-          ],
-        ),
-      ),
+          );
+        }),
+      ],
     );
   }
 
