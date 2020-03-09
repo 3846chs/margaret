@@ -1,12 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:margaret/constants/colors.dart';
 import 'package:margaret/constants/firebase_keys.dart';
 import 'package:margaret/constants/font_names.dart';
+import 'package:margaret/constants/questions_example.dart';
 import 'package:margaret/data/provider/my_user_data.dart';
-import 'package:margaret/pages/qna/radial_menu.dart';
 import 'package:margaret/utils/base_height.dart';
+import 'package:margaret/utils/simple_snack_bar.dart';
 import 'package:provider/provider.dart';
-import 'package:radial_button/widget/circle_floating_button.dart';
 
 class WriteQuestion extends StatefulWidget {
   @override
@@ -35,25 +38,69 @@ class _WriteQuestionState extends State<WriteQuestion> {
         ),
         body: SafeArea(
             child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
-            SizedBox(
-              height: screenAwareSize(30, context),
-            ),
             TextField(
                 controller: _questionController,
                 style: TextStyle(color: Colors.black),
-                decoration: _buildInputDecoration('질문을 입력해주세요'),
+                decoration: _buildInputDecoration('가치관 질문을 입력해주세요'),
                 maxLength: 100,
                 maxLines: 5),
-            Consumer<MyUserData>(builder: (context, myUserData, _) {
-              return FloatingActionButton(
-                  heroTag: 'WriteQuestion',
-                  backgroundColor: Colors.white,
-                  foregroundColor: Colors.black,
-                  child: Icon(
-                    Icons.send,
+            GridView.count(
+                crossAxisCount: 3,
+                shrinkWrap: true,
+                children: <Widget>[
+                  MyQuestionExample(
+                    questionController: _questionController,
+                    iconData: FontAwesomeIcons.phoneVolume,
+                    category: '연락/만남',
+                    examples: contactQuestions,
                   ),
+                  MyQuestionExample(
+                    questionController: _questionController,
+                    iconData: FontAwesomeIcons.solidHeart,
+                    category: '연애관',
+                    examples: datingQuestions,
+                  ),
+                  MyQuestionExample(
+                    questionController: _questionController,
+                    iconData: FontAwesomeIcons.baby,
+                    category: '결혼관',
+                    examples: marriageQuestions,
+                  ),
+                  MyQuestionExample(
+                    questionController: _questionController,
+                    iconData: FontAwesomeIcons.grin,
+                    category: '성격/성향',
+                    examples: characterQuestions,
+                  ),
+                  MyQuestionExample(
+                    questionController: _questionController,
+                    iconData: FontAwesomeIcons.seedling,
+                    category: '취미',
+                    examples: hobbyQuestions,
+                  ),
+                  MyQuestionExample(
+                    questionController: _questionController,
+                    iconData: FontAwesomeIcons.venusMars,
+                    category: '19금',
+                    examples: sexQuestions,
+                  ),
+                ]),
+            SizedBox(
+              height: screenAwareSize(60, context),
+            ),
+            Consumer<MyUserData>(builder: (context, myUserData, _) {
+              return SizedBox(
+                width: double.infinity,
+                height: 50,
+                child: RaisedButton(
                   onPressed: () async {
+                    if (_questionController.text.length < 5) {
+                      simpleSnackbar(context, '질문이 너무 짧습니다.');
+                      return;
+                    }
+
                     String question = _questionController.text;
                     String myUserKey = myUserData.userData.userKey;
                     String timestamp =
@@ -77,58 +124,20 @@ class _WriteQuestionState extends State<WriteQuestion> {
                           .setData(
                               {'question': question, 'userKey': myUserKey});
                     });
-                  });
-            }),
-            Center(
-              child: Stack(
-                children: <Widget>[
-                  Positioned(
-                    child: Container(
-                      height: 300,
-                      width: 300,
-                      child: CircleFloatingButton.completeCircle(
-                          key: GlobalKey<CircleFloatingButtonState>(),
-                          color: Colors.redAccent,
-                          duration: Duration(milliseconds: 1000),
-                          curveAnim: Curves.elasticInOut,
-                          items: [
-                            FloatingActionButton(
-                              backgroundColor: Colors.greenAccent,
-                              onPressed: () {},
-                              child: Text('결혼'),
-                            ),
-                            FloatingActionButton(
-                              backgroundColor: Colors.greenAccent,
-                              onPressed: () {},
-                              child: Text('결혼'),
-                            ),
-                            FloatingActionButton(
-                              backgroundColor: Colors.greenAccent,
-                              onPressed: () {},
-                              child: Text('결혼'),
-                            ),
-                            FloatingActionButton(
-                              backgroundColor: Colors.indigoAccent,
-                              onPressed: () {
-                                print('aaa');
-
-                                setState(() {
-                                  _questionController.text = '바보';
-                                });
-                              },
-                              child: Text('결혼'),
-                            ),
-                            FloatingActionButton(
-                              backgroundColor: Colors.orangeAccent,
-                              onPressed: () {},
-                              child: Text('결혼'),
-                            ),
-                          ]),
+                  },
+                  color: pastel_purple,
+                  child: Container(
+                    child: Text(
+                      '제 출 하 기',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontFamily: FontFamily.jua),
                     ),
                   ),
-                ],
-              ),
-            )
+                ),
+              );
+            }),
           ],
         )));
   }
@@ -152,6 +161,81 @@ class _WriteQuestionState extends State<WriteQuestion> {
       ),
       fillColor: Colors.white60,
       filled: true,
+    );
+  }
+}
+
+class MyQuestionExample extends StatelessWidget {
+  const MyQuestionExample({
+    Key key,
+    @required TextEditingController questionController,
+    @required IconData iconData,
+    @required String category,
+    @required List<String> examples,
+  })  : _questionController = questionController,
+        iconData = iconData,
+        category = category,
+        examples = examples,
+        super(key: key);
+
+  final TextEditingController _questionController;
+  final IconData iconData;
+  final String category;
+  final List<String> examples;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        showDialog(
+            context: context,
+            builder: (context) => SimpleDialog(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+                children: ListTile.divideTiles(
+                        context: context,
+                        tiles: examples
+                            .map((example) => GestureDetector(
+                                  onTap: () {
+                                    _questionController.text = example;
+                                    Navigator.pop(context);
+                                  },
+                                  child: ListTile(
+                                    title: Text(
+                                      example,
+                                    ),
+                                  ),
+                                ))
+                            .toList())
+                    .toList()));
+      },
+      child: Card(
+        elevation: 5,
+        color: Colors.cyan[50],
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Spacer(
+              flex: 2,
+            ),
+            Icon(iconData),
+            Spacer(
+              flex: 1,
+            ),
+            Text(
+              category,
+              style: TextStyle(fontFamily: FontFamily.jua),
+            ),
+            Spacer(
+              flex: 2,
+            ),
+          ],
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+      ),
     );
   }
 }
