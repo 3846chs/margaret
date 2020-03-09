@@ -1,3 +1,4 @@
+import 'package:margaret/constants/balance.dart';
 import 'package:margaret/constants/firebase_keys.dart';
 import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/data/user.dart';
@@ -38,6 +39,7 @@ class MatchPage extends StatelessWidget {
         firestoreProvider.updateUser(userData.userKey, {
           UserKeys.KEY_RECENTMATCHSTATE: MatchState.QUESTION.value,
           UserKeys.KEY_RECENTMATCHTIME: now,
+          UserKeys.KEY_NUMMYQUESTIONS : MAX_NUM_MY_QUESTIONS, // Random Q&A 의 <내 질문 보내기> 횟수
         });
 
         return LoadingPage();

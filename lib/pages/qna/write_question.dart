@@ -36,62 +36,69 @@ class _WriteQuestionState extends State<WriteQuestion> {
             style: TextStyle(fontFamily: FontFamily.jua),
           ),
         ),
-        body: SafeArea(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
-            TextField(
-                controller: _questionController,
-                style: TextStyle(color: Colors.black),
-                decoration: _buildInputDecoration('가치관 질문을 입력해주세요'),
-                maxLength: 100,
-                maxLines: 5),
-            GridView.count(
-                crossAxisCount: 3,
-                shrinkWrap: true,
-                children: <Widget>[
-                  MyQuestionExample(
-                    questionController: _questionController,
-                    iconData: FontAwesomeIcons.phoneVolume,
-                    category: '연락/만남',
-                    examples: contactQuestions,
-                  ),
-                  MyQuestionExample(
-                    questionController: _questionController,
-                    iconData: FontAwesomeIcons.solidHeart,
-                    category: '연애관',
-                    examples: datingQuestions,
-                  ),
-                  MyQuestionExample(
-                    questionController: _questionController,
-                    iconData: FontAwesomeIcons.baby,
-                    category: '결혼관',
-                    examples: marriageQuestions,
-                  ),
-                  MyQuestionExample(
-                    questionController: _questionController,
-                    iconData: FontAwesomeIcons.grin,
-                    category: '성격/성향',
-                    examples: characterQuestions,
-                  ),
-                  MyQuestionExample(
-                    questionController: _questionController,
-                    iconData: FontAwesomeIcons.seedling,
-                    category: '취미',
-                    examples: hobbyQuestions,
-                  ),
-                  MyQuestionExample(
-                    questionController: _questionController,
-                    iconData: FontAwesomeIcons.venusMars,
-                    category: '19금',
-                    examples: sexQuestions,
-                  ),
-                ]),
-            SizedBox(
-              height: screenAwareSize(60, context),
-            ),
-            Consumer<MyUserData>(builder: (context, myUserData, _) {
-              return SizedBox(
+        body: Consumer<MyUserData>(builder: (context, myUserData, _) {
+          return SafeArea(
+              child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              Text(
+                '오늘 남은 질문 횟수: ' + myUserData.userData.numMyQuestions.toString(),
+                style: TextStyle(fontFamily: FontFamily.jua),
+              ),
+              SizedBox(
+                height: screenAwareSize(10, context),
+              ),
+              TextField(
+                  controller: _questionController,
+                  style: TextStyle(color: Colors.black),
+                  decoration: _buildInputDecoration('가치관 질문을 입력해주세요'),
+                  maxLength: 100,
+                  maxLines: 5),
+              GridView.count(
+                  crossAxisCount: 3,
+                  shrinkWrap: true,
+                  children: <Widget>[
+                    MyQuestionExample(
+                      questionController: _questionController,
+                      iconData: FontAwesomeIcons.phoneVolume,
+                      category: '연락/만남',
+                      examples: contactQuestions,
+                    ),
+                    MyQuestionExample(
+                      questionController: _questionController,
+                      iconData: FontAwesomeIcons.solidHeart,
+                      category: '연애관',
+                      examples: datingQuestions,
+                    ),
+                    MyQuestionExample(
+                      questionController: _questionController,
+                      iconData: FontAwesomeIcons.baby,
+                      category: '결혼관',
+                      examples: marriageQuestions,
+                    ),
+                    MyQuestionExample(
+                      questionController: _questionController,
+                      iconData: FontAwesomeIcons.grin,
+                      category: '성격/성향',
+                      examples: characterQuestions,
+                    ),
+                    MyQuestionExample(
+                      questionController: _questionController,
+                      iconData: FontAwesomeIcons.seedling,
+                      category: '취미',
+                      examples: hobbyQuestions,
+                    ),
+                    MyQuestionExample(
+                      questionController: _questionController,
+                      iconData: FontAwesomeIcons.venusMars,
+                      category: '19금',
+                      examples: sexQuestions,
+                    ),
+                  ]),
+              SizedBox(
+                height: screenAwareSize(60, context),
+              ),
+              SizedBox(
                 width: double.infinity,
                 height: 50,
                 child: RaisedButton(
@@ -100,6 +107,9 @@ class _WriteQuestionState extends State<WriteQuestion> {
                       simpleSnackbar(context, '질문이 너무 짧습니다.');
                       return;
                     }
+
+                    await myUserData.userData.reference.updateData(
+                        {'numMyQuestions': FieldValue.increment(-1)});
 
                     String question = _questionController.text;
                     String myUserKey = myUserData.userData.userKey;
@@ -136,10 +146,10 @@ class _WriteQuestionState extends State<WriteQuestion> {
                     ),
                   ),
                 ),
-              );
-            }),
-          ],
-        )));
+              ),
+            ],
+          ));
+        }));
   }
 
   InputDecoration _buildInputDecoration(String hint) {

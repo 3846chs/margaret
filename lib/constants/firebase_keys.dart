@@ -23,6 +23,7 @@ class UserKeys {
   static const KEY_RECENTMATCHTIME = 'recentMatchTime';
   static const KEY_PUSHTOKEN = 'pushToken';
   static const KEY_EXPOSED = 'exposed';
+  static const KEY_NUMMYQUESTIONS = 'numMyQuestions';
   static const KEY_ANSWER = 'answer';
 }
 
