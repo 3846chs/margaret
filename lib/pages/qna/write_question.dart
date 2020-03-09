@@ -5,7 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:margaret/constants/colors.dart';
 import 'package:margaret/constants/firebase_keys.dart';
 import 'package:margaret/constants/font_names.dart';
-import 'package:margaret/constants/my_questions_example.dart';
+import 'package:margaret/constants/questions_example.dart';
 import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/utils/base_height.dart';
 import 'package:margaret/utils/simple_snack_bar.dart';
