@@ -610,18 +610,22 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                     onPressed: !_isButtonEnabled
                         ? null
                         : () {
-                            if (_formKey.currentState.validate() &&
-                                _profiles.length == 2 &&
-                                smokeinput != '흡연 여부를 선택해주세요' &&
-                                drinkinput != '음주 여부를 선택해주세요' &&
-                                religioninput != '종교를 선택해주세요') {
+                            if(_profiles.length < 2)
+                              simpleSnackbar(context, '사진을 2개 등록해주세요.');
+                            else if(_nicknameController.text.length > 6)
+                              simpleSnackbar(context, '닉네임 글자수는 최대 6자입니다.');
+                            else if(smokeinput == '흡연 여부를 선택해주세요')
+                              simpleSnackbar(context, '흡연 여부를 선택해주세요');
+                            else if(drinkinput == '음주 여부를 선택해주세요')
+                              simpleSnackbar(context, '음주 여부를 선택해주세요');
+                            else if(religioninput == '종교를 선택해주세요')
+                              simpleSnackbar(context, '종교를 선택해주세요');
+
+                            else if (_formKey.currentState.validate()) {
                               setState(() {
                                 _isButtonEnabled = false;
                               });
                               _register(context);
-                            }
-                            else{
-                              simpleSnackbar(context, '잘못 입력했거나 미입력한 정보가 있습니다.');
                             }
                           },
                     child: _isButtonEnabled
@@ -673,7 +677,7 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
 
       await firestoreProvider.attemptCreateUser(user);
 
-      Provider.of<MyUserData>(context, listen: false).update();
+      await Provider.of<MyUserData>(context, listen: false).update();
       Navigator.pop(context);
     }
   }
