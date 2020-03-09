@@ -663,7 +663,6 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
         recentMatchTime: Timestamp.now(),
         recentMatchState: MatchState.QUESTION,
         exposed: 0,
-        chats: [],
       );
 
       await firestoreProvider.attemptCreateUser(user);

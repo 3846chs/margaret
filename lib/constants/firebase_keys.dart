@@ -1,3 +1,4 @@
+const COLLECTION_STATISTICS = 'Statistics';
 const COLLECTION_USERS = 'Users';
 const COLLECTION_CHATS = 'Chats';
 const TODAYQUESTIONS = 'TodayQuestions';
@@ -20,7 +21,6 @@ class UserKeys {
   static const KEY_INTRODUCTION = 'introduction';
   static const KEY_RECENTMATCHSTATE = 'recentMatchState';
   static const KEY_RECENTMATCHTIME = 'recentMatchTime';
-  static const KEY_CHATS = 'chats';
   static const KEY_PUSHTOKEN = 'pushToken';
   static const KEY_EXPOSED = 'exposed';
   static const KEY_ANSWER = 'answer';

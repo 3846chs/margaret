@@ -18,11 +18,11 @@ class MyQuestions extends StatelessWidget {
       floatingActionButton: _buildFloatingActionButton(context),
       body: Consumer<MyUserData>(
         builder: (context, myUserData, _) {
-          return FutureBuilder<QuerySnapshot>(
-            future: myUserData.userData.reference
+          return StreamBuilder<QuerySnapshot>(
+            stream: myUserData.userData.reference
                 .collection(MYQUESTIONS)
                 .limit(1)
-                .getDocuments(),
+                .snapshots(),
             builder: (context, snapshot) {
               if (!snapshot.hasData || snapshot.data.documents.length == 0)
                 return EmptyMyQuestionsCard();

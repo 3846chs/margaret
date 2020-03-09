@@ -1,4 +1,5 @@
 import 'package:margaret/constants/colors.dart';
+import 'package:margaret/data/provider/alarm_data.dart';
 import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/home.dart';
 import 'package:margaret/pages/auth/auth_page.dart';
@@ -7,8 +8,21 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
-void main() => runApp(ChangeNotifierProvider<MyUserData>(
-    create: (context) => MyUserData(), child: OurApp()));
+void main() => runApp(MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => MyUserData(),
+        ),
+        ChangeNotifierProxyProvider<MyUserData, AlarmData>(
+          create: (_) => AlarmData(),
+          update: (_, myUserData, alarmData) {
+            alarmData.getData(myUserData.userData.reference);
+            return alarmData;
+          },
+        ),
+      ],
+      child: OurApp(),
+    ));
 
 class OurApp extends StatelessWidget {
   @override
