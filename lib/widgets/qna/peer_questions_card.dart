@@ -231,6 +231,27 @@ class PeerQuestionsCard extends StatelessWidget {
                   Radius.circular(15),
                 ),
               )),
+          SizedBox(height: screenAwareHeight(10, context)),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              Icon(
+                Icons.arrow_upward,
+                size: 10,
+                color: Colors.grey[400],
+              ),
+              Text(
+                '카드를 눌러보세요!',
+                style: TextStyle(
+                  fontSize: 10,
+                  color: Colors.grey[400],
+                ),
+              ),
+              SizedBox(
+                width: screenAwareHeight(50, context),
+              ),
+            ],
+          ),
         ],
       ),
     );
