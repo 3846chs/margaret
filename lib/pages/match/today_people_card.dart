@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:margaret/data/user.dart';
 import 'package:margaret/firebase/storage_cache_manager.dart';
-import 'package:margaret/utils/base_height.dart';
+import 'package:margaret/utils/adjust_size.dart';
 import 'package:provider/provider.dart';
 
 class TodayPeopleCard extends StatefulWidget {
@@ -43,7 +43,7 @@ class _TodayPeopleCardState extends State<TodayPeopleCard> {
 
     return GestureDetector(
       child: Container(
-        width: screenAwareSize(300, context),
+        width: screenAwareHeight(300, context),
         child: Column(
           children: <Widget>[
             CircleAvatar(
@@ -75,7 +75,7 @@ class _TodayPeopleCardState extends State<TodayPeopleCard> {
               ),
             ),
             SizedBox(
-              height: screenAwareSize(10, context),
+              height: screenAwareHeight(10, context),
             ),
             Text(
               widget.you.nickname,
@@ -117,7 +117,7 @@ class _TodayPeopleCardState extends State<TodayPeopleCard> {
               cardColor: color,
             ),
             SizedBox(
-              height: screenAwareSize(5, context),
+              height: screenAwareHeight(5, context),
             ),
           ],
         ),
@@ -182,7 +182,7 @@ class BuildTodayAnswer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 222,
-      height: screenAwareSize(130, context),
+      height: screenAwareHeight(130, context),
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
@@ -227,7 +227,7 @@ class BuildIntroduction extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 270,
-      height: screenAwareSize(100, context),
+      height: screenAwareHeight(100, context),
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(

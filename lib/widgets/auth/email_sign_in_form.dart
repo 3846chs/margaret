@@ -4,7 +4,7 @@ import 'package:margaret/constants/font_names.dart';
 import 'package:margaret/constants/size.dart';
 import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/pages/auth/email/email_pw_reset.dart';
-import 'package:margaret/utils/base_height.dart';
+import 'package:margaret/utils/adjust_size.dart';
 import 'package:margaret/utils/simple_snack_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +39,7 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
           child: ListView(
             shrinkWrap: true,
             children: <Widget>[
-              SizedBox(height: screenAwareSize(150, context)),
+              SizedBox(height: screenAwareHeight(150, context)),
               Center(
                 child: Text(
                   '마  가  렛',

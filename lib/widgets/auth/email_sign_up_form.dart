@@ -4,7 +4,7 @@ import 'package:margaret/constants/colors.dart';
 import 'package:margaret/constants/font_names.dart';
 import 'package:margaret/constants/size.dart';
 import 'package:margaret/pages/auth/profile_input_page.dart';
-import 'package:margaret/utils/base_height.dart';
+import 'package:margaret/utils/adjust_size.dart';
 import 'package:flutter/material.dart';
 import 'package:margaret/utils/simple_snack_bar.dart';
 
@@ -38,7 +38,7 @@ class _EmailSignUpFormState extends State<EmailSignUpForm> {
           child: ListView(
             shrinkWrap: true,
             children: <Widget>[
-              SizedBox(height: screenAwareSize(150, context)),
+              SizedBox(height: screenAwareHeight(150, context)),
               Center(
                 child: Text(
                   '마  가  렛',

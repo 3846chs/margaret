@@ -10,7 +10,7 @@ import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/data/user.dart';
 import 'package:margaret/dialogs/answer_dialog.dart';
 import 'package:margaret/firebase/storage_cache_manager.dart';
-import 'package:margaret/utils/base_height.dart';
+import 'package:margaret/utils/adjust_size.dart';
 import 'package:margaret/utils/simple_snack_bar.dart';
 import 'package:provider/provider.dart';
 
@@ -164,7 +164,7 @@ class PeerQuestionsCard extends StatelessWidget {
             ],
           ),
           SizedBox(
-            height: screenAwareSize(10, context),
+            height: screenAwareHeight(10, context),
           ),
           Container(
               alignment: Alignment(-0.8, 0),
@@ -195,7 +195,7 @@ class PeerQuestionsCard extends StatelessWidget {
                 color: Colors.purple[100],
               )),
           SizedBox(
-            height: screenAwareSize(10, context),
+            height: screenAwareHeight(10, context),
           ),
           Container(
               child: Padding(

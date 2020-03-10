@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:margaret/utils/base_height.dart';
 import 'package:flutter/material.dart';
+import 'package:margaret/utils/adjust_size.dart';
 
 class LoginButton extends StatefulWidget {
   final Color color;
@@ -34,7 +34,7 @@ class _LoginButtonState extends State<LoginButton> {
   Widget build(BuildContext context) {
     return RaisedButton(
       padding: EdgeInsets.symmetric(
-        vertical: screenAwareSize(10.0, context),
+        vertical: screenAwareHeight(10.0, context),
         horizontal: 10.0,
       ),
       shape: RoundedRectangleBorder(

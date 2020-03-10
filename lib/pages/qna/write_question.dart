@@ -7,7 +7,7 @@ import 'package:margaret/constants/firebase_keys.dart';
 import 'package:margaret/constants/font_names.dart';
 import 'package:margaret/constants/questions_example.dart';
 import 'package:margaret/data/provider/my_user_data.dart';
-import 'package:margaret/utils/base_height.dart';
+import 'package:margaret/utils/adjust_size.dart';
 import 'package:margaret/utils/simple_snack_bar.dart';
 import 'package:provider/provider.dart';
 
@@ -46,7 +46,7 @@ class _WriteQuestionState extends State<WriteQuestion> {
                 style: TextStyle(fontFamily: FontFamily.jua),
               ),
               SizedBox(
-                height: screenAwareSize(10, context),
+                height: screenAwareHeight(10, context),
               ),
               TextField(
                   controller: _questionController,
@@ -96,7 +96,7 @@ class _WriteQuestionState extends State<WriteQuestion> {
                     ),
                   ]),
               SizedBox(
-                height: screenAwareSize(60, context),
+                height: screenAwareHeight(60, context),
               ),
               SizedBox(
                 width: double.infinity,

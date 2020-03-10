@@ -11,7 +11,7 @@ import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/data/user.dart';
 import 'package:margaret/firebase/storage_cache_manager.dart';
 import 'package:margaret/pages/chat/chat_detail_page.dart';
-import 'package:margaret/utils/base_height.dart';
+import 'package:margaret/utils/adjust_size.dart';
 import 'package:provider/provider.dart';
 
 class MyQuestionsCard extends StatelessWidget {
@@ -112,7 +112,7 @@ class MyQuestionsCard extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(height: screenAwareSize(10, context)),
+        SizedBox(height: screenAwareHeight(10, context)),
         Align(
           alignment: const Alignment(-0.8, 0),
           child: Icon(
@@ -144,7 +144,7 @@ class MyQuestionsCard extends StatelessWidget {
             color: Colors.purple[100],
           ),
         ),
-        SizedBox(height: screenAwareSize(10, context)),
+        SizedBox(height: screenAwareHeight(10, context)),
         FlipCard(
           front: Container(
             child: Padding(
@@ -217,7 +217,7 @@ class MyQuestionsCard extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(height: screenAwareSize(20, context)),
+        SizedBox(height: screenAwareHeight(20, context)),
         InkWell(
           onTap: () {
             showDialog(

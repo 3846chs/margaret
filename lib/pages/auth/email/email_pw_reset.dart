@@ -1,7 +1,7 @@
 import 'package:margaret/constants/colors.dart';
 import 'package:margaret/constants/font_names.dart';
 import 'package:margaret/constants/size.dart';
-import 'package:margaret/utils/base_height.dart';
+import 'package:margaret/utils/adjust_size.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:rich_alert/rich_alert.dart';
@@ -27,7 +27,7 @@ class _EmailPwResetState extends State<EmailPwReset> {
               shrinkWrap: true,
               children: <Widget>[
                 SizedBox(
-                  height: screenAwareSize(200, context),
+                  height: screenAwareHeight(200, context),
                 ),
                 Center(
                   child: Text(
