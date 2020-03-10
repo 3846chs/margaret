@@ -7,6 +7,7 @@ import 'package:margaret/constants/balance.dart';
 
 import 'package:margaret/constants/colors.dart';
 import 'package:margaret/constants/font_names.dart';
+import 'package:margaret/constants/profile_input_info.dart';
 import 'package:margaret/constants/size.dart';
 import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/data/user.dart';
@@ -32,10 +33,7 @@ class ProfileInputPage extends StatefulWidget {
 class _ProfileInputPageState extends State<ProfileInputPage> {
   final _formKey = GlobalKey<FormState>();
   final _nicknameController = TextEditingController();
-  final _birthYearController = TextEditingController();
-  final _regionController = TextEditingController();
   final _jobController = TextEditingController();
-  final _heightController = TextEditingController();
 
   List<File> _profiles = [];
 
@@ -43,6 +41,11 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
 
   bool _isButtonEnabled = true;
 
+  String nicknameinput = '6자 이내';
+  String birthyearinput = '출생 연도를 입력해주세요';
+  String regioninput = '사는 지역을 입력해주세요';
+  String jobinput = '직업을 입력해주세요';
+  String heightinput = '키를 입력해주세요';
   String smokeinput = '흡연 여부를 선택해주세요';
   String drinkinput = '음주 여부를 선택해주세요';
   String religioninput = '종교를 선택해주세요';
@@ -75,10 +78,7 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
   @override
   void dispose() {
     _nicknameController.dispose();
-    _birthYearController.dispose();
-    _regionController.dispose();
     _jobController.dispose();
-    _heightController.dispose();
     super.dispose();
   }
 
@@ -215,13 +215,33 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                       ),
                       SizedBox(width: 20,),
                       Expanded(
-                        child: TextFormField(
-                          controller: _nicknameController,
-                          decoration: getTextFieldDecor('6자 이내로 입력해주세요',),
-                          validator: (value) {
-                            if (value.isEmpty) {return '닉네임을 입력해주세요!';} else if (value.length > 6) {return '닉네임은 6자리 이내로 해주세요';}
-                            return null;
-                          },
+                        child: Container(
+                          height: 60,
+                          decoration: BoxDecoration(
+                              color: Colors.grey[100],
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(color: Colors.grey[300], width: 1)),
+                          child: Row(
+                            children: <Widget>[
+                              SizedBox(width: 10,),
+                              Expanded(
+                                child: InkWell(
+                                  child: Text('$nicknameinput', style: TextStyle(color: Colors.black38, fontSize: 16)),
+                                  onTap: () {
+                                    return showDialog(
+                                      context: context,
+                                      builder: (context) => Center(
+                                        child: Container(
+                                            height: 600,
+                                            child: _buildNicknameDialog(context)),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                              SizedBox(width: 10,),
+                            ],
+                          ),
                         ),
                       ),
                       SizedBox(width: 20,),
@@ -303,15 +323,33 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                       ),
                       SizedBox(width: 20,),
                       Expanded(
-                        child: TextFormField(
-                          controller: _birthYearController,
-                          decoration: getTextFieldDecor('출생 연도를 입력해주세요'),
-                          inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
-                          keyboardType: TextInputType.number,
-                          validator: (value) {
-                            if (value.isEmpty) return '출생 연도 4자리를 입력해주세요!';
-                            return null;
-                          },
+                        child: Container(
+                          height: 60,
+                          decoration: BoxDecoration(
+                              color: Colors.grey[100],
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(color: Colors.grey[300], width: 1)),
+                          child: Row(
+                            children: <Widget>[
+                              SizedBox(width: 10,),
+                              Expanded(
+                                child: InkWell(
+                                  child: Text('$birthyearinput', style: TextStyle(color: Colors.black38, fontSize: 16)),
+                                  onTap: () {
+                                    return showDialog(
+                                      context: context,
+                                      builder: (context) => Center(
+                                        child: Container(
+                                            height: 600,
+                                            child: SimpleDialog(children: create_birthyearOptionList(choose_birthyear[0], choose_birthyear[1]),)),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                              SizedBox(width: 10,),
+                            ],
+                          ),
                         ),
                       ),
                       SizedBox(width: 20,),
@@ -343,13 +381,33 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                       ),
                       SizedBox(width: 20,),
                       Expanded(
-                        child: TextFormField(
-                          controller: _regionController,
-                          decoration: getTextFieldDecor('사는 지역을 입력해주세요'),
-                          validator: (value) {
-                            if (value.isEmpty) return '사는 지역을 입력해주세요!';
-                            return null;
-                          },
+                        child: Container(
+                          height: 60,
+                          decoration: BoxDecoration(
+                              color: Colors.grey[100],
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(color: Colors.grey[300], width: 1)),
+                          child: Row(
+                            children: <Widget>[
+                              SizedBox(width: 10,),
+                              Expanded(
+                                child: InkWell(
+                                  child: Text('$regioninput', style: TextStyle(color: Colors.black38, fontSize: 16)),
+                                  onTap: () {
+                                    return showDialog(
+                                      context: context,
+                                      builder: (context) => Center(
+                                        child: Container(
+                                            height: 600,
+                                            child: SimpleDialog(children: create_regionOptionList(choose_region),)),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                              SizedBox(width: 10,),
+                            ],
+                          ),
                         ),
                       ),
                       SizedBox(width: 20,),
@@ -381,13 +439,33 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                       ),
                       SizedBox(width: 20,),
                       Expanded(
-                        child: TextFormField(
-                          controller: _jobController,
-                          decoration: getTextFieldDecor('직업을 입력해주세요'),
-                          validator: (value) {
-                            if (value.isEmpty) return '직업을 입력해주세요!';
-                            return null;
-                          },
+                        child: Container(
+                          height: 60,
+                          decoration: BoxDecoration(
+                              color: Colors.grey[100],
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(color: Colors.grey[300], width: 1)),
+                          child: Row(
+                            children: <Widget>[
+                              SizedBox(width: 10,),
+                              Expanded(
+                                child: InkWell(
+                                  child: Text('$jobinput', style: TextStyle(color: Colors.black38, fontSize: 16)),
+                                  onTap: () {
+                                    return showDialog(
+                                      context: context,
+                                      builder: (context) => Center(
+                                        child: Container(
+                                            height: 600,
+                                            child: _buildJobDialog(context)),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                              SizedBox(width: 10,),
+                            ],
+                          ),
                         ),
                       ),
                       SizedBox(width: 20,),
@@ -419,15 +497,33 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                       ),
                       SizedBox(width: 20,),
                       Expanded(
-                        child: TextFormField(
-                          controller: _heightController,
-                          decoration: getTextFieldDecor('키를 입력해주세요'),
-                          inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
-                          keyboardType: TextInputType.number,
-                          validator: (value) {
-                            if (value.isEmpty) return '키를 입력해주세요!';
-                            return null;
-                          },
+                        child: Container(
+                          height: 60,
+                          decoration: BoxDecoration(
+                              color: Colors.grey[100],
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(color: Colors.grey[300], width: 1)),
+                          child: Row(
+                            children: <Widget>[
+                              SizedBox(width: 10,),
+                              Expanded(
+                                child: InkWell(
+                                  child: Text('$heightinput', style: TextStyle(color: Colors.black38, fontSize: 16)),
+                                  onTap: () {
+                                    return showDialog(
+                                      context: context,
+                                      builder: (context) => Center(
+                                        child: Container(
+                                            height: 600,
+                                            child: _buildHeightDialog(context)),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                              SizedBox(width: 10,),
+                            ],
+                          ),
                         ),
                       ),
                       SizedBox(width: 20,),
@@ -477,7 +573,7 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                                       builder: (context) => Center(
                                         child: Container(
                                             height: 600,
-                                            child: _buildSmokeDialog(context)),
+                                            child: SimpleDialog(children: create_smokeOptionList(choose_smoke))),
                                       ),
                                     );
                                   },
@@ -535,7 +631,7 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                                       builder: (context) => Center(
                                         child: Container(
                                             height: 600,
-                                            child: _buildDrinkDialog(context)),
+                                            child: SimpleDialog(children: create_drinkOptionList(choose_drink),)),
                                       ),
                                     );
                                   },
@@ -593,7 +689,7 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                                       builder: (context) => Center(
                                         child: Container(
                                             height: 600,
-                                            child: _buildReligionDialog(context)),
+                                            child: SimpleDialog(children: create_religionOptionList(choose_religion))),
                                       ),
                                     );
                                   },
@@ -616,8 +712,18 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                         : () {
                             if(_profiles.length < 2)
                               simpleSnackbar(context, '사진을 2개 등록해주세요.');
-                            else if(_nicknameController.text.length > 6)
+                            else if(nicknameinput.length > 6)
                               simpleSnackbar(context, '닉네임 글자수는 최대 6자입니다.');
+                            else if (nicknameinput == '6자 이내')
+                              simpleSnackbar(context, '닉네임을 입력해주세요');
+                            else if (birthyearinput == '출생 연도를 입력해주세요' || birthyearinput.length != 4)
+                              simpleSnackbar(context, '출생 연도 4자리를 입력해주세요');
+                            else if (regioninput == '사는 지역을 입력해주세요')
+                              simpleSnackbar(context, '지역을 입력해주세요');
+                            else if (jobinput == '직업을 입력해주세요')
+                              simpleSnackbar(context, '직업을 입력해주세요');
+                            else if (heightinput == '키를 입력해주세요')
+                              simpleSnackbar(context, '키를 입력해주세요');
                             else if(smokeinput == '흡연 여부를 선택해주세요')
                               simpleSnackbar(context, '흡연 여부를 선택해주세요');
                             else if(drinkinput == '음주 여부를 선택해주세요')
@@ -665,12 +771,12 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
         userKey: widget.authResult.user.uid,
         profiles: profiles.map((image) => image.substring(9)).toList(),
         email: widget.authResult.user.email,
-        nickname: _nicknameController.text,
+        nickname: nicknameinput,
         gender: _genderSelected[0] ? '남성' : '여성',
-        birthYear: int.parse(_birthYearController.text),
-        region: _regionController.text,
-        job: _jobController.text,
-        height: int.parse(_heightController.text),
+        birthYear: int.parse(birthyearinput),
+        region: regioninput,
+        job: jobinput,
+        height: int.parse(heightinput),
         smoke: smokeinput,
         drink: drinkinput,
         religion: religioninput,
@@ -710,77 +816,185 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
 
 
   }
-
-  SimpleDialog _buildSmokeDialog(BuildContext context) {
-    return SimpleDialog(
-      children: <Widget>[
-        _smokeSimpleDialogOption(context, '흡연'),
-        _smokeSimpleDialogOption(context, '비흡연'),
+  ///////////////////////////// 닉네임 /////////////////////////////////////////
+  _buildNicknameDialog(BuildContext context) {
+    return AlertDialog(
+      content: TextFormField(
+        controller: _nicknameController,
+        decoration: InputDecoration(hintText: '6자 이내'),
+        validator: (value) {
+          if (value.isEmpty) {return '닉네임을 입력해주세요!';} else if (value.length > 6) {return '닉네임은 6자리 이내로 해주세요';}
+          return null;
+        },
+      ),
+      actions: <Widget>[
+        MaterialButton(
+          child: Text('수정'),
+          onPressed: () {
+            Navigator.pop(context);
+            setState(() {
+              nicknameinput = _nicknameController.text;
+              _nicknameController.clear();
+            });
+          },
+        ),
+        MaterialButton(
+            child: Text('취소'),
+            onPressed: () {
+              Navigator.pop(context);
+              setState(() {
+                _nicknameController.clear();
+              });
+            }),
       ],
     );
   }
+  ////////////////////////////// 성별 //////////////////////////////////////////
 
-  SimpleDialogOption _smokeSimpleDialogOption(BuildContext context, String s) {
-    return SimpleDialogOption(
-      onPressed: () {
-        Navigator.pop(context);
-        setState(() {
-          smokeinput = s;
-        });
-      },
-      child: Center(child: Text('$s'),),
-    );
+  //////////////////////////// 출생연도 ////////////////////////////////////////
+  create_birthyearOptionList(int a, int b) {
+    var list = new List<int>.generate(b - a, (index) => a + index);
+    var simpleDialogOptionList = <SimpleDialogOption>[];
+    list.forEach((i) {
+      var new_simpleDialogOption = new SimpleDialogOption(
+        onPressed: () {
+          Navigator.pop(context);
+          setState(() {
+            birthyearinput = i.toString();
+          });
+        },
+        child: Center(child: Text('$i')),
+      );
+      simpleDialogOptionList.add(new_simpleDialogOption);
+    });
+    return simpleDialogOptionList;
   }
-
-  SimpleDialog _buildDrinkDialog(BuildContext context) {
-    return SimpleDialog(
-      children: <Widget>[
-        _drinkSimpleDialogOption(context, '전혀 마시지 않음'),
-        _drinkSimpleDialogOption(context, '아주 가끔 마심'),
-        _drinkSimpleDialogOption(context, '가끔 마심'),
-        _drinkSimpleDialogOption(context, '즐기는 편'),
-        _drinkSimpleDialogOption(context, '술자리 자주 있음'),
+  ////////////////////////////// 지역 //////////////////////////////////////////
+  create_regionOptionList(List<String> L) {
+    var regionOptionList = <SimpleDialogOption>[];
+    L.forEach((i) {
+      var new_simpleDialogOption = new SimpleDialogOption(
+        onPressed: () {
+          Navigator.pop(context);
+          setState(() {
+            regioninput = i;
+          });
+        },
+        child: Center(child: Text('$i')),
+      );
+      regionOptionList.add(new_simpleDialogOption);
+    });
+    return regionOptionList;
+  }
+  ////////////////////////////// 직업 //////////////////////////////////////////
+  _buildJobDialog(BuildContext context) {
+    return AlertDialog(
+      content: TextFormField(
+        controller: _jobController,
+        decoration: InputDecoration(hintText: '직업을 입력해주세요'),
+        validator: (value) {
+          if (value.isEmpty) {return '직업을 입력해주세요!';}
+          return null;
+        },
+      ),
+      actions: <Widget>[
+        MaterialButton(
+          child: Text('수정'),
+          onPressed: () {
+            Navigator.pop(context);
+            setState(() {
+              jobinput = _jobController.text;
+              _jobController.clear();
+            });
+          },
+        ),
+        MaterialButton(
+            child: Text('취소'),
+            onPressed: () {
+              Navigator.pop(context);
+              setState(() {
+                _jobController.clear();
+              });
+            }),
       ],
     );
   }
-
-  SimpleDialogOption _drinkSimpleDialogOption(BuildContext context, String s) {
-    return SimpleDialogOption(
-      onPressed: () {
-        Navigator.pop(context);
-        setState(() {
-          drinkinput = s;
-        });
-      },
-      child: Center(child: Text('$s'),) ,
-    );
+  /////////////////////////////// 키 ///////////////////////////////////////////
+  _buildHeightDialog(BuildContext context) {
+    return SimpleDialog(children: create_simpleDialogOptionList(140, 190));
   }
 
-  _buildReligionDialog(BuildContext context) {
-    return SimpleDialog(
-      children: <Widget>[
-        _religionSimpleDialogOption(context, '없음'),
-        _religionSimpleDialogOption(context, '기독교'),
-        _religionSimpleDialogOption(context, '천주교'),
-        _religionSimpleDialogOption(context, '불교'),
-        _religionSimpleDialogOption(context, '원불교'),
-        _religionSimpleDialogOption(context, '유교'),
-        _religionSimpleDialogOption(context, '이슬람교'),
-        _religionSimpleDialogOption(context, '힌두교'),
-        _religionSimpleDialogOption(context, '기타'),
-      ],
-    );
-  }
 
-  _religionSimpleDialogOption(BuildContext context, String s) {
-    return SimpleDialogOption(
-      onPressed: () {
-        Navigator.pop(context);
-        setState(() {
-          religioninput = s;
-        });
-      },
-      child: Center(child: Text('$s'),) ,
-    );
+  create_simpleDialogOptionList(int a, int b) {
+    var list = new List<int>.generate(b - a + 1, (index) => a + index);
+    var simpleDialogOptionList = <SimpleDialogOption>[];
+    list.forEach((i) {
+      var new_simpleDialogOption = new SimpleDialogOption(
+        onPressed: () {
+          Navigator.pop(context);
+          setState(() {
+            heightinput = i.toString();
+          });
+        },
+        child: Center(child: Text('$i')),
+      );
+      simpleDialogOptionList.add(new_simpleDialogOption);
+    });
+    return simpleDialogOptionList;
   }
+  //////////////////////////// 흡연여부 ////////////////////////////////////////
+  create_smokeOptionList(List<String> L) {
+    var smokeOptionList = <SimpleDialogOption>[];
+    L.forEach((i) {
+      var new_simpleDialogOption = new SimpleDialogOption(
+        onPressed: () {
+          Navigator.pop(context);
+          setState(() {
+            smokeinput = i;
+          });
+        },
+        child: Center(child: Text('$i')),
+      );
+      smokeOptionList.add(new_simpleDialogOption);
+    });
+    return smokeOptionList;
+  }
+  ////////////////////////////// 음주 //////////////////////////////////////////
+  create_drinkOptionList(List<String> L) {
+    var drinkOptionList = <SimpleDialogOption>[];
+    L.forEach((i) {
+      var new_simpleDialogOption = new SimpleDialogOption(
+        onPressed: () {
+          Navigator.pop(context);
+          setState(() {
+            drinkinput = i;
+          });
+        },
+        child: Center(child: Text('$i')),
+      );
+      drinkOptionList.add(new_simpleDialogOption);
+    });
+    return drinkOptionList;
+  }
+  ////////////////////////////// 종교 //////////////////////////////////////////
+  create_religionOptionList(List<String> L) {
+    var religionOptionList = <SimpleDialogOption>[];
+    L.forEach((i) {
+      var new_simpleDialogOption = new SimpleDialogOption(
+        onPressed: () {
+          Navigator.pop(context);
+          setState(() {
+            religioninput = i;
+          });
+        },
+        child: Center(child: Text('$i')),
+      );
+      religionOptionList.add(new_simpleDialogOption);
+    });
+    return religionOptionList;
+  }
+  //////////////////////////////////////////////////////////////////////////////
+
+
+
 }
