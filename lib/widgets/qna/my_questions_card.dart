@@ -7,8 +7,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:margaret/constants/firebase_keys.dart';
 import 'package:margaret/constants/font_names.dart';
 import 'package:margaret/constants/size.dart';
+import 'package:margaret/data/message.dart';
 import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/data/user.dart';
+import 'package:margaret/firebase/firestore_provider.dart';
 import 'package:margaret/firebase/storage_cache_manager.dart';
 import 'package:margaret/pages/chat/chat_detail_page.dart';
 import 'package:margaret/utils/adjust_size.dart';
@@ -318,6 +320,38 @@ class MyQuestionsCard extends StatelessWidget {
             final chatKey = myUser.userKey.hashCode <= peer.userKey.hashCode
                 ? '${myUser.userKey}-${peer.userKey}'
                 : '${peer.userKey}-${myUser.userKey}';
+
+            final now = DateTime.now();
+            final messages = <Message>[
+              Message(
+                idFrom: myUser.userKey,
+                idTo: "",
+                content: myQuestion,
+                timestamp: now.millisecondsSinceEpoch.toString(),
+                type: MessageType.text,
+                isRead: true,
+              ),
+              Message(
+                idFrom: peer.userKey,
+                idTo: "",
+                content: peerAnswer,
+                timestamp: (now.millisecondsSinceEpoch + 1).toString(),
+                type: MessageType.text,
+                isRead: true,
+              ),
+              Message(
+                idFrom: "bot",
+                idTo: "",
+                content: "채팅이 시작되었습니다",
+                timestamp: (now.millisecondsSinceEpoch + 2).toString(),
+                type: MessageType.text,
+                isRead: true,
+              ),
+            ];
+
+            messages.forEach((message) async {
+              await firestoreProvider.createMessage(chatKey, message);
+            });
 
             Navigator.push(
                 context,

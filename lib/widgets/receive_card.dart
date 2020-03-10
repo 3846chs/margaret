@@ -4,8 +4,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:margaret/constants/font_names.dart';
 import 'package:margaret/constants/size.dart';
+import 'package:margaret/data/message.dart';
 import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/data/user.dart';
+import 'package:margaret/firebase/firestore_provider.dart';
 import 'package:margaret/pages/chat/chat_detail_page.dart';
 import 'package:margaret/profiles/your_profile.dart';
 import 'package:margaret/widgets/user_avatar.dart';
@@ -14,9 +16,10 @@ import 'package:provider/provider.dart';
 
 class ReceiveCard extends StatelessWidget {
   final User user;
-  final DateTime dateTime;
+  final String formattedDate;
 
-  ReceiveCard({@required this.user, @required this.dateTime});
+  ReceiveCard({@required this.user, DateTime dateTime})
+      : formattedDate = DateFormat('yyyy-MM-dd').format(dateTime);
 
   @override
   Widget build(BuildContext context) {
@@ -185,9 +188,6 @@ class ReceiveCard extends StatelessWidget {
   }
 
   AlertDialog _buildAnswerDialog(User myUser) {
-    final formatter = DateFormat('yyyy-MM-dd');
-    final formattedDate = formatter.format(dateTime);
-
     return AlertDialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8.0),
@@ -273,15 +273,64 @@ class ReceiveCard extends StatelessWidget {
                     "lastDateTime": Timestamp.now(),
                   });
 
-                  myUser.reference
-                      .collection("Receives")
-                      .document(user.userKey)
-                      .delete();
+                  final myQuestion = await myUser.reference
+                      .collection("TodayQuestions")
+                      .document(formattedDate)
+                      .get();
+                  final peerQuestion = await user.reference
+                      .collection("TodayQuestions")
+                      .document(formattedDate)
+                      .get();
 
                   final chatKey =
                       myUser.userKey.hashCode <= user.userKey.hashCode
                           ? '${myUser.userKey}-${user.userKey}'
                           : '${user.userKey}-${myUser.userKey}';
+
+                  final now = DateTime.now();
+                  final messages = <Message>[
+                    Message(
+                      idFrom: "bot",
+                      idTo: "",
+                      content: myQuestion.data["question"],
+                      timestamp: now.millisecondsSinceEpoch.toString(),
+                      type: MessageType.text,
+                      isRead: true,
+                    ),
+                    Message(
+                      idFrom: myUser.userKey,
+                      idTo: "",
+                      content: myQuestion.data["answer"],
+                      timestamp: (now.millisecondsSinceEpoch + 1).toString(),
+                      type: MessageType.text,
+                      isRead: true,
+                    ),
+                    Message(
+                      idFrom: user.userKey,
+                      idTo: "",
+                      content: peerQuestion.data["answer"],
+                      timestamp: (now.millisecondsSinceEpoch + 2).toString(),
+                      type: MessageType.text,
+                      isRead: true,
+                    ),
+                    Message(
+                      idFrom: "bot",
+                      idTo: "",
+                      content: "채팅이 시작되었습니다",
+                      timestamp: (now.millisecondsSinceEpoch + 3).toString(),
+                      type: MessageType.text,
+                      isRead: true,
+                    ),
+                  ];
+
+                  messages.forEach((message) async {
+                    await firestoreProvider.createMessage(chatKey, message);
+                  });
+
+                  myUser.reference
+                      .collection("Receives")
+                      .document(user.userKey)
+                      .delete();
 
                   Navigator.pop(context);
                   Navigator.push(

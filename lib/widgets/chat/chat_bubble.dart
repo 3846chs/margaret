@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:margaret/constants/colors.dart';
 import 'package:margaret/constants/size.dart';
 import 'package:margaret/data/message.dart';
 import 'package:margaret/firebase/storage_cache_manager.dart';
@@ -23,6 +24,13 @@ class _ChatBubbleState extends State<ChatBubble>
   @override
   Widget build(BuildContext context) {
     super.build(context);
+
+    if (widget.message.idFrom == "bot") {
+      return Center(
+        child: _buildBubble(pastel_purple),
+      );
+    }
+
     if (widget.isSent) {
       return Row(
         crossAxisAlignment: CrossAxisAlignment.end,
@@ -30,7 +38,7 @@ class _ChatBubbleState extends State<ChatBubble>
           const Spacer(),
           _buildHeart(),
           _buildTime(),
-          _buildBubble(),
+          _buildBubble(Colors.blue),
         ],
       );
     }
@@ -41,7 +49,7 @@ class _ChatBubbleState extends State<ChatBubble>
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: <Widget>[
-        _buildBubble(),
+        _buildBubble(Colors.grey),
         _buildTime(),
         const Spacer(),
       ],
@@ -73,11 +81,11 @@ class _ChatBubbleState extends State<ChatBubble>
     );
   }
 
-  Widget _buildBubble() {
+  Widget _buildBubble(Color color) {
     return Container(
       constraints: const BoxConstraints(maxWidth: 200.0),
       decoration: BoxDecoration(
-        color: widget.isSent ? Colors.blue : Colors.grey,
+        color: color,
         borderRadius: BorderRadius.circular(12.0),
       ),
       margin: const EdgeInsets.all(common_gap),
