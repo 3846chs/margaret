@@ -353,6 +353,11 @@ class MyQuestionsCard extends StatelessWidget {
               await firestoreProvider.createMessage(chatKey, message);
             });
 
+            myUser.reference
+                .collection(MYQUESTIONS)
+                .document(documentId)
+                .delete();
+
             Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -403,6 +408,12 @@ class MyQuestionsCard extends StatelessWidget {
             Navigator.pop(context);
 
             // blocks 에 추가 (서로 blocks 에 추가) 구현해야 합니다
+            myUser.reference.updateData({
+              "blocks": FieldValue.arrayUnion([peer.userKey]),
+            });
+            peer.reference.updateData({
+              "blocks": FieldValue.arrayUnion([myUser.userKey]),
+            });
           },
           child: Text(
             '더 이상 추천받고 싶지 않아요(차단하기)',

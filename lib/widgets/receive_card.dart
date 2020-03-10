@@ -122,11 +122,11 @@ class ReceiveCard extends StatelessWidget {
           onPressed: () async {
             // receives 에서 삭제
             // blocks 에 추가 (서로 blocks 에 추가)
-            await myUser.reference
+            myUser.reference
                 .collection("Receives")
                 .document(user.userKey)
                 .delete();
-            await myUser.reference.updateData({
+            myUser.reference.updateData({
               "blocks": FieldValue.arrayUnion([user.userKey]),
             });
             user.reference.updateData({

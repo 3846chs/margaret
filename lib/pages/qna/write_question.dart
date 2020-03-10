@@ -123,9 +123,17 @@ class _WriteQuestionState extends State<WriteQuestion> {
                         .orderBy('recentMatchTime', descending: true)
                         .getDocuments();
 
+                    final myUser = await myUserData.userData.reference.get();
+                    final List<String> blocks = myUser.data['blocks'] ?? [];
+
                     querySnapshot.documents
-                        .where((doc) => (doc['gender'] !=
-                            myUserData.userData.gender)) // 차단 유저 제외 -> 나중에
+                        .where((doc) =>
+                            (doc['gender'] != myUserData.userData.gender) &&
+                            (doc.data['birthYear'] -
+                                        myUserData.userData.birthYear)
+                                    .abs() <=
+                                10 &&
+                            !blocks.contains(doc.documentID))
                         .take(30)
                         .forEach((ds) {
                       ds.reference

@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:margaret/constants/firebase_keys.dart';
@@ -27,6 +28,7 @@ class PeerQuestionsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final myUser = Provider.of<MyUserData>(context, listen: false).userData;
     return GestureDetector(
       onTap: () {
         if (documentId == null) {
@@ -56,9 +58,7 @@ class PeerQuestionsCard extends StatelessWidget {
                           actions: <Widget>[
                             FlatButton(
                               onPressed: () {
-                                Provider.of<MyUserData>(context, listen: false)
-                                    .userData
-                                    .reference
+                                myUser.reference
                                     .collection(PEERQUESTIONS)
                                     .document(this.documentId)
                                     .delete();
@@ -72,9 +72,7 @@ class PeerQuestionsCard extends StatelessWidget {
                             ),
                             FlatButton(
                               onPressed: () {
-                                Provider.of<MyUserData>(context, listen: false)
-                                    .userData
-                                    .reference
+                                myUser.reference
                                     .collection(PEERQUESTIONS)
                                     .document(this.documentId)
                                     .delete();
@@ -82,6 +80,14 @@ class PeerQuestionsCard extends StatelessWidget {
                                 Navigator.pop(context);
 
                                 // blocks 에 추가 (서로 blocks 에 추가) 구현해야 합니다
+                                myUser.reference.updateData({
+                                  "blocks":
+                                      FieldValue.arrayUnion([peer.userKey]),
+                                });
+                                peer.reference.updateData({
+                                  "blocks":
+                                      FieldValue.arrayUnion([myUser.userKey]),
+                                });
                               },
                               child: Text(
                                 '더 이상 추천받고 싶지 않아요(차단하기)',

@@ -289,21 +289,26 @@ class _TodayQuestionState extends State<TodayQuestion>
     final ds =
         await _firestore.collection(COLLECTION_USERS).document(userKey).get();
 
+    final List<String> blocks = ds.data['blocks'] ?? [];
+
     final querySnapshot = await _firestore
         .collection(COLLECTION_USERS)
 //        .where('gender', isEqualTo: ds.data['gender'] == '남성' ? '여성' : '남성')
 //        .where('recentMatchState', isEqualTo: ds.data['recentMatchState'])
-        .orderBy('exposed', descending: false)
+        .orderBy('exposed')
         .getDocuments();
 
     final now = DateTime.now();
     querySnapshot.documents
-        .where((doc) => (doc['gender'] != ds.data['gender'] &&
-            doc['recentMatchState'].abs() ==
-                ds.data['recentMatchState'].abs() &&
-            doc['recentMatchTime'].toDate().year == now.year &&
-            doc['recentMatchTime'].toDate().month == now.month &&
-            doc['recentMatchTime'].toDate().day == now.day))
+        .where((doc) =>
+            (doc.data['gender'] != ds.data['gender'] &&
+                doc.data['recentMatchState'].abs() ==
+                    ds.data['recentMatchState'].abs() &&
+                doc.data['recentMatchTime'].toDate().year == now.year &&
+                doc.data['recentMatchTime'].toDate().month == now.month &&
+                doc.data['recentMatchTime'].toDate().day == now.day) &&
+            (doc.data['birthYear'] - ds.data['birthYear']).abs() <= 10 &&
+            !blocks.contains(doc.documentID))
         .forEach((e) {
       ls.add(e.documentID);
     });
