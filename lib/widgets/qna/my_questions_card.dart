@@ -34,22 +34,24 @@ class MyQuestionsCard extends StatelessWidget {
 
     return Column(
       children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.only(right: common_gap),
-          child: InkWell(
-            onTap: () {
-              showDialog(
-                  context: context,
-                  builder: (context) => _buildDeleteDialog(context, myUser));
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(common_gap),
-              child: Icon(
-                FontAwesomeIcons.solidTrashAlt,
-                color: Colors.purple[200],
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            GestureDetector(
+              onTap: () {
+                showDialog(
+                    context: context,
+                    builder: (context) => _buildDeleteDialog(context, myUser));
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(common_gap),
+                child: Icon(
+                  FontAwesomeIcons.solidTrashAlt,
+                  color: Colors.purple[200],
+                ),
               ),
             ),
-          ),
+          ],
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
