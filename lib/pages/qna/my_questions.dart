@@ -59,7 +59,7 @@ class MyQuestions extends StatelessWidget {
       onPressed: () {
         if (myUserData.userData.numMyQuestions < 1)
           simpleSnackbar(
-              context, '오늘 질문 횟수를 모두 사용해버렸어요ㅠㅠ 하루에 질문은 5개까지만 할 수 있어요!');
+              context, '오늘 질문 횟수를 모두 사용해버렸어요ㅠㅠ\n하루에 질문은 5개까지만 할 수 있어요!');
         else
           showDialog(context: context, builder: (context) => WriteQuestion());
       },

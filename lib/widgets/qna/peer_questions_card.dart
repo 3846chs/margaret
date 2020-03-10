@@ -215,7 +215,9 @@ class PeerQuestionsCard extends StatelessWidget {
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: <Color>[
-                    Colors.pink[100],
+                    this.peer.gender == '남성'
+                        ? Colors.blue[100]
+                        : Colors.pink[100],
                     Colors.white,
                   ],
                 ),
