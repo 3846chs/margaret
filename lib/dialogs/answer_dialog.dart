@@ -1,15 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:margaret/constants/colors.dart';
 import 'package:margaret/constants/firebase_keys.dart';
 import 'package:margaret/constants/font_names.dart';
 import 'package:margaret/constants/size.dart';
 import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/data/user.dart';
 import 'package:margaret/utils/adjust_size.dart';
-import 'package:margaret/utils/simple_snack_bar.dart';
 import 'package:provider/provider.dart';
 
 class AnswerDialog extends StatefulWidget {

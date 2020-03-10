@@ -1,10 +1,7 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
 import 'package:margaret/constants/balance.dart';
-
 import 'package:margaret/constants/colors.dart';
 import 'package:margaret/constants/font_names.dart';
 import 'package:margaret/constants/size.dart';
@@ -101,27 +98,35 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                     children: <Widget>[
                       Spacer(),
                       Center(
-                        child: Text('마가렛 가입을 환영합니다',
-                          style: TextStyle(fontFamily: FontFamily.nanumBarunpen, color: Colors.white),),
+                        child: Text(
+                          '마가렛 가입을 환영합니다',
+                          style: TextStyle(
+                              fontFamily: FontFamily.nanumBarunpen,
+                              color: Colors.white),
+                        ),
                       ),
                       Spacer(),
                     ],
                   ),
                 ),
-                SizedBox(height: common_gap,),
+                SizedBox(
+                  height: common_gap,
+                ),
                 Container(
                   height: 30,
                   width: double.infinity,
                   color: Colors.grey[200],
                   child: Center(
                       child: Text(
-                        '사진 등록',
-                        style: TextStyle(
-                            fontFamily: FontFamily.nanumBarunpen,
-                            color: Colors.grey),
-                      )),
+                    '사진 등록',
+                    style: TextStyle(
+                        fontFamily: FontFamily.nanumBarunpen,
+                        color: Colors.grey),
+                  )),
                 ),
-                SizedBox(height: common_gap,),
+                SizedBox(
+                  height: common_gap,
+                ),
                 Center(
                   child: SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
@@ -174,8 +179,16 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                 //SizedBox(height: common_s_gap),
                 Padding(
                   padding: const EdgeInsets.all(common_s_gap),
-                  child: Center(child: Text('사진 2개를 등록해주세요', style: TextStyle(fontSize: 15, fontFamily: FontFamily.nanumBarunpen,
-                      color: _profiles.length == 2 ? Colors.grey : Colors.redAccent),)),
+                  child: Center(
+                      child: Text(
+                    '사진 2개를 등록해주세요',
+                    style: TextStyle(
+                        fontSize: 15,
+                        fontFamily: FontFamily.nanumBarunpen,
+                        color: _profiles.length == 2
+                            ? Colors.grey
+                            : Colors.redAccent),
+                  )),
                 ),
                 const SizedBox(height: common_l_gap),
                 Container(
@@ -184,18 +197,22 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                   color: Colors.grey[200],
                   child: Center(
                       child: Text(
-                        '기본 정보 등록',
-                        style: TextStyle(
-                            fontFamily: FontFamily.nanumBarunpen,
-                            color: Colors.grey),
-                      )),
+                    '기본 정보 등록',
+                    style: TextStyle(
+                        fontFamily: FontFamily.nanumBarunpen,
+                        color: Colors.grey),
+                  )),
                 ),
-                const SizedBox(height: common_gap,),
+                const SizedBox(
+                  height: common_gap,
+                ),
                 Padding(
                   padding: const EdgeInsets.all(common_gap),
                   child: Row(
                     children: <Widget>[
-                      SizedBox(width: 10,),
+                      SizedBox(
+                        width: 10,
+                      ),
                       Icon(
                         FontAwesomeIcons.user,
                         color: Color.fromRGBO(222, 222, 255, 1),
@@ -213,18 +230,28 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                           ),
                         ),
                       ),
-                      SizedBox(width: 20,),
+                      SizedBox(
+                        width: 20,
+                      ),
                       Expanded(
                         child: TextFormField(
                           controller: _nicknameController,
-                          decoration: getTextFieldDecor('6자 이내로 입력해주세요',),
+                          decoration: getTextFieldDecor(
+                            '6자 이내로 입력해주세요',
+                          ),
                           validator: (value) {
-                            if (value.isEmpty) {return '닉네임을 입력해주세요!';} else if (value.length > 6) {return '닉네임은 6자리 이내로 해주세요';}
+                            if (value.isEmpty) {
+                              return '닉네임을 입력해주세요!';
+                            } else if (value.length > 6) {
+                              return '닉네임은 6자리 이내로 해주세요';
+                            }
                             return null;
                           },
                         ),
                       ),
-                      SizedBox(width: 20,),
+                      SizedBox(
+                        width: 20,
+                      ),
                     ],
                   ),
                 ),
@@ -233,7 +260,9 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                   padding: const EdgeInsets.all(common_gap),
                   child: Row(
                     children: <Widget>[
-                      SizedBox(width: 10,),
+                      SizedBox(
+                        width: 10,
+                      ),
                       Icon(
                         FontAwesomeIcons.venusMars,
                         color: Color.fromRGBO(222, 222, 255, 1),
@@ -251,12 +280,26 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                           ),
                         ),
                       ),
-                      SizedBox(width: 20,),
+                      SizedBox(
+                        width: 20,
+                      ),
                       Expanded(
                         child: ToggleButtons(
                           children: [
-                            Text('남성', style: TextStyle(color: _genderSelected[0] == true ? Colors.blue : Colors.black12),),
-                            Text('여성', style: TextStyle(color: _genderSelected[1] == true ? Colors.blue : Colors.black12),),
+                            Text(
+                              '남성',
+                              style: TextStyle(
+                                  color: _genderSelected[0] == true
+                                      ? Colors.blue
+                                      : Colors.black12),
+                            ),
+                            Text(
+                              '여성',
+                              style: TextStyle(
+                                  color: _genderSelected[1] == true
+                                      ? Colors.blue
+                                      : Colors.black12),
+                            ),
                           ],
                           onPressed: (index) {
                             setState(() {
@@ -283,7 +326,9 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                   padding: const EdgeInsets.all(common_gap),
                   child: Row(
                     children: <Widget>[
-                      SizedBox(width: 10,),
+                      SizedBox(
+                        width: 10,
+                      ),
                       Icon(
                         FontAwesomeIcons.birthdayCake,
                         color: Color.fromRGBO(222, 222, 255, 1),
@@ -301,12 +346,16 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                           ),
                         ),
                       ),
-                      SizedBox(width: 20,),
+                      SizedBox(
+                        width: 20,
+                      ),
                       Expanded(
                         child: TextFormField(
                           controller: _birthYearController,
                           decoration: getTextFieldDecor('출생 연도를 입력해주세요'),
-                          inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
+                          inputFormatters: [
+                            WhitelistingTextInputFormatter.digitsOnly
+                          ],
                           keyboardType: TextInputType.number,
                           validator: (value) {
                             if (value.isEmpty) return '출생 연도 4자리를 입력해주세요!';
@@ -314,7 +363,9 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                           },
                         ),
                       ),
-                      SizedBox(width: 20,),
+                      SizedBox(
+                        width: 20,
+                      ),
                     ],
                   ),
                 ),
@@ -323,7 +374,9 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                   padding: const EdgeInsets.all(common_gap),
                   child: Row(
                     children: <Widget>[
-                      SizedBox(width: 10,),
+                      SizedBox(
+                        width: 10,
+                      ),
                       Icon(
                         FontAwesomeIcons.mapMarked,
                         color: Color.fromRGBO(222, 222, 255, 1),
@@ -341,7 +394,9 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                           ),
                         ),
                       ),
-                      SizedBox(width: 20,),
+                      SizedBox(
+                        width: 20,
+                      ),
                       Expanded(
                         child: TextFormField(
                           controller: _regionController,
@@ -352,7 +407,9 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                           },
                         ),
                       ),
-                      SizedBox(width: 20,),
+                      SizedBox(
+                        width: 20,
+                      ),
                     ],
                   ),
                 ),
@@ -361,7 +418,9 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                   padding: const EdgeInsets.all(common_gap),
                   child: Row(
                     children: <Widget>[
-                      SizedBox(width: 10,),
+                      SizedBox(
+                        width: 10,
+                      ),
                       Icon(
                         FontAwesomeIcons.suitcase,
                         color: Color.fromRGBO(222, 222, 255, 1),
@@ -379,7 +438,9 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                           ),
                         ),
                       ),
-                      SizedBox(width: 20,),
+                      SizedBox(
+                        width: 20,
+                      ),
                       Expanded(
                         child: TextFormField(
                           controller: _jobController,
@@ -390,7 +451,9 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                           },
                         ),
                       ),
-                      SizedBox(width: 20,),
+                      SizedBox(
+                        width: 20,
+                      ),
                     ],
                   ),
                 ),
@@ -399,7 +462,9 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                   padding: const EdgeInsets.all(common_gap),
                   child: Row(
                     children: <Widget>[
-                      SizedBox(width: 10,),
+                      SizedBox(
+                        width: 10,
+                      ),
                       Icon(
                         FontAwesomeIcons.child,
                         color: Color.fromRGBO(222, 222, 255, 1),
@@ -417,12 +482,16 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                           ),
                         ),
                       ),
-                      SizedBox(width: 20,),
+                      SizedBox(
+                        width: 20,
+                      ),
                       Expanded(
                         child: TextFormField(
                           controller: _heightController,
                           decoration: getTextFieldDecor('키를 입력해주세요'),
-                          inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
+                          inputFormatters: [
+                            WhitelistingTextInputFormatter.digitsOnly
+                          ],
                           keyboardType: TextInputType.number,
                           validator: (value) {
                             if (value.isEmpty) return '키를 입력해주세요!';
@@ -430,7 +499,9 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                           },
                         ),
                       ),
-                      SizedBox(width: 20,),
+                      SizedBox(
+                        width: 20,
+                      ),
                     ],
                   ),
                 ),
@@ -439,7 +510,9 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                   padding: const EdgeInsets.all(common_gap),
                   child: Row(
                     children: <Widget>[
-                      SizedBox(width: 10,),
+                      SizedBox(
+                        width: 10,
+                      ),
                       Icon(
                         FontAwesomeIcons.smoking,
                         color: Color.fromRGBO(222, 222, 255, 1),
@@ -457,20 +530,27 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                           ),
                         ),
                       ),
-                      SizedBox(width: 20,),
+                      SizedBox(
+                        width: 20,
+                      ),
                       Expanded(
                         child: Container(
                           height: 60,
                           decoration: BoxDecoration(
                               color: Colors.grey[100],
                               borderRadius: BorderRadius.circular(12),
-                              border: Border.all(color: Colors.grey[300], width: 1)),
+                              border: Border.all(
+                                  color: Colors.grey[300], width: 1)),
                           child: Row(
                             children: <Widget>[
-                              SizedBox(width: 10,),
+                              SizedBox(
+                                width: 10,
+                              ),
                               Expanded(
                                 child: InkWell(
-                                  child: Text('$smokeinput', style: TextStyle(color: Colors.black38, fontSize: 16)),
+                                  child: Text('$smokeinput',
+                                      style: TextStyle(
+                                          color: Colors.black38, fontSize: 16)),
                                   onTap: () {
                                     return showDialog(
                                       context: context,
@@ -483,12 +563,16 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                                   },
                                 ),
                               ),
-                              SizedBox(width: 10,),
+                              SizedBox(
+                                width: 10,
+                              ),
                             ],
                           ),
                         ),
                       ),
-                      SizedBox(width: 20,),
+                      SizedBox(
+                        width: 20,
+                      ),
                     ],
                   ),
                 ),
@@ -497,7 +581,9 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                   padding: const EdgeInsets.all(common_gap),
                   child: Row(
                     children: <Widget>[
-                      SizedBox(width: 10,),
+                      SizedBox(
+                        width: 10,
+                      ),
                       Icon(
                         FontAwesomeIcons.beer,
                         color: Color.fromRGBO(222, 222, 255, 1),
@@ -515,20 +601,27 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                           ),
                         ),
                       ),
-                      SizedBox(width: 20,),
+                      SizedBox(
+                        width: 20,
+                      ),
                       Expanded(
                         child: Container(
                           height: 60,
                           decoration: BoxDecoration(
                               color: Colors.grey[100],
                               borderRadius: BorderRadius.circular(12),
-                              border: Border.all(color: Colors.grey[300], width: 1)),
+                              border: Border.all(
+                                  color: Colors.grey[300], width: 1)),
                           child: Row(
                             children: <Widget>[
-                              SizedBox(width: 10,),
+                              SizedBox(
+                                width: 10,
+                              ),
                               Expanded(
                                 child: InkWell(
-                                  child: Text('$drinkinput', style: TextStyle(color: Colors.grey, fontSize: 16)),
+                                  child: Text('$drinkinput',
+                                      style: TextStyle(
+                                          color: Colors.grey, fontSize: 16)),
                                   onTap: () {
                                     return showDialog(
                                       context: context,
@@ -541,12 +634,16 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                                   },
                                 ),
                               ),
-                              SizedBox(width: 10,),
+                              SizedBox(
+                                width: 10,
+                              ),
                             ],
                           ),
                         ),
                       ),
-                      SizedBox(width: 20,),
+                      SizedBox(
+                        width: 20,
+                      ),
                     ],
                   ),
                 ),
@@ -555,7 +652,9 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                   padding: const EdgeInsets.all(common_gap),
                   child: Row(
                     children: <Widget>[
-                      SizedBox(width: 10,),
+                      SizedBox(
+                        width: 10,
+                      ),
                       Icon(
                         FontAwesomeIcons.pray,
                         color: Color.fromRGBO(222, 222, 255, 1),
@@ -573,27 +672,35 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                           ),
                         ),
                       ),
-                      SizedBox(width: 20,),
+                      SizedBox(
+                        width: 20,
+                      ),
                       Expanded(
                         child: Container(
                           height: 60,
                           decoration: BoxDecoration(
                               color: Colors.grey[100],
                               borderRadius: BorderRadius.circular(12),
-                              border: Border.all(color: Colors.grey[300], width: 1)),
+                              border: Border.all(
+                                  color: Colors.grey[300], width: 1)),
                           child: Row(
                             children: <Widget>[
-                              SizedBox(width: 10,),
+                              SizedBox(
+                                width: 10,
+                              ),
                               Expanded(
                                 child: InkWell(
-                                  child: Text('$religioninput', style: TextStyle(color: Colors.grey, fontSize: 16)),
+                                  child: Text('$religioninput',
+                                      style: TextStyle(
+                                          color: Colors.grey, fontSize: 16)),
                                   onTap: () {
                                     return showDialog(
                                       context: context,
                                       builder: (context) => Center(
                                         child: Container(
                                             height: 600,
-                                            child: _buildReligionDialog(context)),
+                                            child:
+                                                _buildReligionDialog(context)),
                                       ),
                                     );
                                   },
@@ -604,7 +711,9 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                           ),
                         ),
                       ),
-                      SizedBox(width: 20,),
+                      SizedBox(
+                        width: 20,
+                      ),
                     ],
                   ),
                 ),
@@ -614,17 +723,16 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                     onPressed: !_isButtonEnabled
                         ? null
                         : () {
-                            if(_profiles.length < 2)
+                            if (_profiles.length < 2)
                               simpleSnackbar(context, '사진을 2개 등록해주세요.');
-                            else if(_nicknameController.text.length > 6)
+                            else if (_nicknameController.text.length > 6)
                               simpleSnackbar(context, '닉네임 글자수는 최대 6자입니다.');
-                            else if(smokeinput == '흡연 여부를 선택해주세요')
+                            else if (smokeinput == '흡연 여부를 선택해주세요')
                               simpleSnackbar(context, '흡연 여부를 선택해주세요');
-                            else if(drinkinput == '음주 여부를 선택해주세요')
+                            else if (drinkinput == '음주 여부를 선택해주세요')
                               simpleSnackbar(context, '음주 여부를 선택해주세요');
-                            else if(religioninput == '종교를 선택해주세요')
+                            else if (religioninput == '종교를 선택해주세요')
                               simpleSnackbar(context, '종교를 선택해주세요');
-
                             else if (_formKey.currentState.validate()) {
                               setState(() {
                                 _isButtonEnabled = false;
@@ -707,8 +815,6 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
       fillColor: Colors.grey[100],
       filled: true,
     );
-
-
   }
 
   SimpleDialog _buildSmokeDialog(BuildContext context) {
@@ -728,7 +834,9 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
           smokeinput = s;
         });
       },
-      child: Center(child: Text('$s'),),
+      child: Center(
+        child: Text('$s'),
+      ),
     );
   }
 
@@ -752,7 +860,9 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
           drinkinput = s;
         });
       },
-      child: Center(child: Text('$s'),) ,
+      child: Center(
+        child: Text('$s'),
+      ),
     );
   }
 
@@ -780,7 +890,9 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
           religioninput = s;
         });
       },
-      child: Center(child: Text('$s'),) ,
+      child: Center(
+        child: Text('$s'),
+      ),
     );
   }
 }
