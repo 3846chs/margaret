@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:margaret/constants/colors.dart';
 import 'package:margaret/constants/firebase_keys.dart';
 import 'package:margaret/constants/font_names.dart';
 import 'package:margaret/constants/profile_input_info.dart';
@@ -169,6 +170,27 @@ class _TempMyProfileState extends State<TempMyProfile> {
                           .toList(),
                     ),
                   ),
+                  Text(
+                    "얼굴이 명확히 보이지 않는 사진의 경우, 사전 통보 없이 삭제될 수 있습니다.",
+                    style: TextStyle(color: Colors.redAccent, fontSize: 10),
+                  ),
+                  Container(
+                    height: 30,
+                    width: double.infinity,
+                    color: Colors.grey[200],
+                    child: Center(
+                        child: Text(
+                      '가치관 정보 등록',
+                      style: TextStyle(
+                          fontFamily: FontFamily.nanumBarunpen,
+                          color: Colors.grey),
+                    )),
+                  ),
+                  _selfIntroduction(),
+                  Text(
+                    "마가렛은 가치관 소개팅 앱으로 자기소개의 비중이 중요합니다. 매칭 과정에서 사진보다 우선해서 보여지는 정보로, 성실하게 적어주세요. 자신을 소개하거나 자신이 중요하게 생각하는 가치관에 대해 적어주시면 됩니다.",
+                    style: TextStyle(color: Colors.blueAccent),
+                  ),
                   Container(
                     height: 30,
                     width: double.infinity,
@@ -196,19 +218,6 @@ class _TempMyProfileState extends State<TempMyProfile> {
                   SizedBox(
                     height: common_gap,
                   ),
-                  Container(
-                    height: 30,
-                    width: double.infinity,
-                    color: Colors.grey[200],
-                    child: Center(
-                        child: Text(
-                      '가치관 정보 등록',
-                      style: TextStyle(
-                          fontFamily: FontFamily.nanumBarunpen,
-                          color: Colors.grey),
-                    )),
-                  ),
-                  _selfIntroduction(),
                 ],
               );
             }),
@@ -232,7 +241,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
                   ),
                   Icon(
                     FontAwesomeIcons.user,
-                    color: Color.fromRGBO(222, 222, 255, 1),
+                    color: pastel_purple,
                     size: 15,
                   ),
                   SizedBox(
@@ -265,13 +274,11 @@ class _TempMyProfileState extends State<TempMyProfile> {
                           onTap: () {
                             return showDialog(
                               context: context,
-                              builder: (context) => _buildNicknameDialog(context),
+                              builder: (context) =>
+                                  _buildNicknameDialog(context),
                             );
                           }),
                     ),
-                  ),
-                  SizedBox(
-                    width: 25,
                   ),
                 ],
               ),
@@ -284,9 +291,13 @@ class _TempMyProfileState extends State<TempMyProfile> {
     return AlertDialog(
       content: TextFormField(
         controller: _textEditingController,
-        decoration: InputDecoration(hintText: '6자 이내'),
+        decoration: InputDecoration(hintText: '10자 이내'),
         validator: (value) {
-          if (value.isEmpty) {return '닉네임을 입력해주세요!';} else if (value.length > 6) {return '닉네임은 6자리 이내로 해주세요';}
+          if (value.isEmpty) {
+            return '닉네임을 입력해주세요!';
+          } else if (value.length > 10) {
+            return '닉네임은 10자리 이내로 해주세요';
+          }
           return null;
         },
       ),
@@ -294,6 +305,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
         MaterialButton(
           child: Text('수정'),
           onPressed: () {
+            // validator 확인해야함
             Navigator.pop(context);
             setState(() {
               nickname = _textEditingController.text;
@@ -312,6 +324,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
       ],
     );
   }
+
   ////////////////////////////// 성별 //////////////////////////////////////////
   Padding _buildGender() {
     return Padding(
@@ -326,7 +339,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
                   ),
                   Icon(
                     FontAwesomeIcons.venusMars,
-                    color: Color.fromRGBO(222, 222, 255, 1),
+                    color: pastel_purple,
                     size: 15,
                   ),
                   SizedBox(
@@ -357,7 +370,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
                   ),
                   Icon(
                     FontAwesomeIcons.lock,
-                    color: Color.fromRGBO(222, 222, 255, 1),
+                    color: pastel_purple,
                     size: 15,
                   ),
                 ],
@@ -381,7 +394,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
                   ),
                   Icon(
                     FontAwesomeIcons.birthdayCake,
-                    color: Color.fromRGBO(222, 222, 255, 1),
+                    color: pastel_purple,
                     size: 15,
                   ),
                   SizedBox(
@@ -412,7 +425,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
                   ),
                   Icon(
                     FontAwesomeIcons.lock,
-                    color: Color.fromRGBO(222, 222, 255, 1),
+                    color: pastel_purple,
                     size: 15,
                   ),
                 ],
@@ -436,7 +449,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
                   ),
                   Icon(
                     FontAwesomeIcons.mapMarked,
-                    color: Color.fromRGBO(222, 222, 255, 1),
+                    color: pastel_purple,
                     size: 15,
                   ),
                   SizedBox(
@@ -472,7 +485,9 @@ class _TempMyProfileState extends State<TempMyProfile> {
                             builder: (context) => Center(
                               child: Container(
                                   height: 600,
-                                  child: SimpleDialog(children: create_regionOptionList(choose_region))),
+                                  child: SimpleDialog(
+                                      children: create_regionOptionList(
+                                          choose_region))),
                             ),
                           );
                         },
@@ -505,6 +520,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
     });
     return regionOptionList;
   }
+
   ////////////////////////////// 직업 //////////////////////////////////////////
   Widget _buildCareer() {
     return Padding(
@@ -513,26 +529,26 @@ class _TempMyProfileState extends State<TempMyProfile> {
         children: <Widget>[
           Expanded(
               child: Row(
-                children: <Widget>[
-                  SizedBox(
-                    width: 40,
-                  ),
-                  Icon(
-                    FontAwesomeIcons.suitcase,
-                    color: Color.fromRGBO(222, 222, 255, 1),
-                    size: 15,
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Center(
-                    child: Text(
-                      '직업',
-                      style: TextStyle(fontSize: 15),
-                    ),
-                  ),
-                ],
-              )),
+            children: <Widget>[
+              SizedBox(
+                width: 40,
+              ),
+              Icon(
+                FontAwesomeIcons.suitcase,
+                color: pastel_purple,
+                size: 15,
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Center(
+                child: Text(
+                  '직업',
+                  style: TextStyle(fontSize: 15),
+                ),
+              ),
+            ],
+          )),
           Expanded(
             child: Row(
               children: <Widget>[
@@ -575,6 +591,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
         MaterialButton(
           child: Text('수정'),
           onPressed: () {
+            // validator 확인해야함
             Navigator.pop(context);
             setState(() {
               job = _textEditingController.text;
@@ -608,7 +625,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
                 ),
                 Icon(
                   FontAwesomeIcons.child,
-                  color: Color.fromRGBO(222, 222, 255, 1),
+                  color: pastel_purple,
                   size: 15,
                 ),
                 SizedBox(
@@ -684,6 +701,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
   SimpleDialog _buildHeightDialog(BuildContext context) {
     return SimpleDialog(children: create_simpleDialogOptionList(140, 190));
   }
+
   //////////////////////////// 흡연여부 ////////////////////////////////////////
   Padding _buildSmoke() {
     return Padding(
@@ -698,7 +716,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
                   ),
                   Icon(
                     FontAwesomeIcons.smoking,
-                    color: Color.fromRGBO(222, 222, 255, 1),
+                    color: pastel_purple,
                     size: 15,
                   ),
                   SizedBox(
@@ -734,7 +752,9 @@ class _TempMyProfileState extends State<TempMyProfile> {
                             builder: (context) => Center(
                               child: Container(
                                   height: 600,
-                                  child: SimpleDialog(children: create_smokeOptionList(choose_smoke))),
+                                  child: SimpleDialog(
+                                      children: create_smokeOptionList(
+                                          choose_smoke))),
                             ),
                           );
                         },
@@ -767,6 +787,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
     });
     return smokeOptionList;
   }
+
   ////////////////////////////// 음주 //////////////////////////////////////////
   Padding _buildDrink() {
     return Padding(
@@ -781,7 +802,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
                   ),
                   Icon(
                     FontAwesomeIcons.beer,
-                    color: Color.fromRGBO(222, 222, 255, 1),
+                    color: pastel_purple,
                     size: 15,
                   ),
                   SizedBox(
@@ -817,7 +838,9 @@ class _TempMyProfileState extends State<TempMyProfile> {
                             builder: (context) => Center(
                               child: Container(
                                   height: 600,
-                                  child: SimpleDialog(children: create_drinkOptionList(choose_drink))),
+                                  child: SimpleDialog(
+                                      children: create_drinkOptionList(
+                                          choose_drink))),
                             ),
                           );
                         },
@@ -850,6 +873,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
     });
     return drinkOptionList;
   }
+
   ////////////////////////////// 종교 //////////////////////////////////////////
   Padding _buildReligion() {
     return Padding(
@@ -864,7 +888,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
                   ),
                   Icon(
                     FontAwesomeIcons.pray,
-                    color: Color.fromRGBO(222, 222, 255, 1),
+                    color: pastel_purple,
                     size: 15,
                   ),
                   SizedBox(
@@ -900,7 +924,10 @@ class _TempMyProfileState extends State<TempMyProfile> {
                             builder: (context) => Center(
                               child: Container(
                                   height: 600,
-                                  child: SimpleDialog(children: create_religionOptionList(choose_religion),)),
+                                  child: SimpleDialog(
+                                    children: create_religionOptionList(
+                                        choose_religion),
+                                  )),
                             ),
                           );
                         },
@@ -948,7 +975,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
               ),
               Icon(
                 FontAwesomeIcons.quoteLeft,
-                color: Color.fromRGBO(222, 222, 255, 1),
+                color: pastel_purple,
                 size: 15,
               ),
               Spacer(),
@@ -963,9 +990,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
                 child: Center(
                   child: InkWell(
                     child: Text(
-                      introduction == null
-                          ? '자신의 가치관을 표현할 수 있는 자기소개를 써주세요'
-                          : '$introduction',
+                      introduction == null ? '등록된 자기소개가 없습니다' : '$introduction',
                       style: TextStyle(fontSize: 15),
                     ),
                     onTap: () {
@@ -987,7 +1012,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
               Spacer(),
               Icon(
                 FontAwesomeIcons.quoteRight,
-                color: Color.fromRGBO(222, 222, 255, 1),
+                color: pastel_purple,
                 size: 15,
               ),
               SizedBox(
@@ -1028,9 +1053,5 @@ class _TempMyProfileState extends State<TempMyProfile> {
     );
   }
 //////////////////////////////////////////////////////////////////////////////
-
-
-
-
 
 }
