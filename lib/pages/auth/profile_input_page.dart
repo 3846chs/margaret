@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:margaret/constants/balance.dart';
 import 'package:margaret/constants/colors.dart';
+import 'package:margaret/constants/firebase_keys.dart';
 import 'package:margaret/constants/font_names.dart';
 import 'package:margaret/constants/size.dart';
 import 'package:margaret/data/provider/my_user_data.dart';
@@ -791,6 +792,12 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
       await firestoreProvider.attemptCreateUser(user);
 
       await Provider.of<MyUserData>(context, listen: false).update();
+      Firestore.instance
+          .collection(COLLECTION_STATISTICS)
+          .document('statistics')
+          .updateData({
+        (user.gender == '남성' ? 'boy' : 'girl'): FieldValue.increment(1)
+      });
       Navigator.pop(context);
     }
   }
