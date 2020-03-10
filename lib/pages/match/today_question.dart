@@ -6,7 +6,7 @@ import 'package:margaret/constants/size.dart';
 import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/data/user.dart';
 import 'package:margaret/pages/loading_page.dart';
-import 'package:margaret/utils/base_height.dart';
+import 'package:margaret/utils/adjust_size.dart';
 import 'package:margaret/utils/prefs_provider.dart';
 import 'package:margaret/utils/simple_snack_bar.dart';
 import 'package:flutter/material.dart';
@@ -202,7 +202,7 @@ class _TodayQuestionState extends State<TodayQuestion>
           child: _buildAnswer(),
         ),
         SizedBox(
-          height: screenAwareSize(90, context),
+          height: screenAwareHeight(90, context),
         ),
         Consumer<MyUserData>(builder: (context, myUserData, _) {
           if (_userKey == null) {

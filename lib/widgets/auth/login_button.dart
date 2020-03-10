@@ -1,4 +1,4 @@
-import 'package:margaret/utils/base_height.dart';
+import 'package:margaret/utils/adjust_size.dart';
 import 'package:flutter/material.dart';
 
 class LoginButton extends StatelessWidget {
@@ -19,7 +19,7 @@ class LoginButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return RaisedButton(
       padding: EdgeInsets.symmetric(
-        vertical: screenAwareSize(10.0, context),
+        vertical: screenAwareHeight(10.0, context),
         horizontal: 10.0,
       ),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0)),

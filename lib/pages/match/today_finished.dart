@@ -11,7 +11,7 @@ import 'package:margaret/pages/match/selected_person.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
-import 'package:margaret/utils/base_height.dart';
+import 'package:margaret/utils/adjust_size.dart';
 import 'package:provider/provider.dart';
 
 class TodayFinished extends StatelessWidget with Transformer {
@@ -67,14 +67,14 @@ class MatchFinished extends StatelessWidget {
                   fontFamily: FontFamily.jua, fontSize: 20, color: Colors.black54),
             ),
             SizedBox(
-              height: screenAwareSize(100, context),
+              height: screenAwareHeight(100, context),
             ),
             SpinKitChasingDots(
               color: pastel_purple,
               size: 50,
             ),
             SizedBox(
-              height: screenAwareSize(100, context),
+              height: screenAwareHeight(100, context),
             ),
             Text(
               '매일 자정에 가치관을 묻는 질문이 업로드됩니다!',

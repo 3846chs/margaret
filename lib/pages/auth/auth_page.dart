@@ -7,7 +7,7 @@ import 'package:margaret/constants/font_names.dart';
 import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/pages/auth/email/email_auth.dart';
 import 'package:margaret/pages/auth/profile_input_page.dart';
-import 'package:margaret/utils/base_height.dart';
+import 'package:margaret/utils/adjust_size.dart';
 import 'package:margaret/utils/simple_snack_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -47,7 +47,7 @@ class AuthPage extends StatelessWidget {
       child: SafeArea(
         child: Column(
           children: <Widget>[
-            SizedBox(height: screenAwareSize(100, context)),
+            SizedBox(height: screenAwareHeight(100, context)),
             Text(
               'Margaret',
               style: const TextStyle(
@@ -65,35 +65,35 @@ class AuthPage extends StatelessWidget {
                 color: Colors.pinkAccent,
               ),
             ),
-            SizedBox(height: screenAwareSize(130, context)),
+            SizedBox(height: screenAwareHeight(130, context)),
             LoginButton(
               text: "Google  로그인",
               icon: FontAwesomeIcons.google,
               color: Colors.red[600],
               onPressed: () => _signInGoogle(context),
             ),
-            SizedBox(height: screenAwareSize(5.0, context)),
+            SizedBox(height: screenAwareHeight(5.0, context)),
             LoginButton(
               text: "Kakao  로그인",
               icon: IconData(75),
               color: Colors.yellow[700],
               onPressed: () => _signInKakao(context),
             ),
-            SizedBox(height: screenAwareSize(5.0, context)),
+            SizedBox(height: screenAwareHeight(5.0, context)),
             LoginButton(
               text: "Naver  로그인",
               icon: FontAwesomeIcons.facebookF,
               color: Colors.green,
               onPressed: () => _signInNaver(context),
             ),
-            SizedBox(height: screenAwareSize(5.0, context)),
+            SizedBox(height: screenAwareHeight(5.0, context)),
             LoginButton(
               text: "Apple  로그인",
               icon: FontAwesomeIcons.facebookF,
               color: Colors.black,
               onPressed: () => null,
             ),
-            SizedBox(height: screenAwareSize(5.0, context)),
+            SizedBox(height: screenAwareHeight(5.0, context)),
             LoginButton(
               text: "E-mail  로그인",
               icon: FontAwesomeIcons.solidEnvelope,

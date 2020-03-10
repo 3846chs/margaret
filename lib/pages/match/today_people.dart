@@ -6,7 +6,7 @@ import 'package:margaret/data/user.dart';
 import 'package:margaret/firebase/firestore_provider.dart';
 import 'package:margaret/firebase/transformer.dart';
 import 'package:margaret/pages/loading_page.dart';
-import 'package:margaret/utils/base_height.dart';
+import 'package:margaret/utils/adjust_size.dart';
 import 'package:margaret/pages/match/today_people_card.dart';
 import 'package:flutter/material.dart';
 import 'package:margaret/data/provider/my_user_data.dart';
@@ -60,14 +60,14 @@ class NotShowPeople extends StatelessWidget {
                   fontFamily: 'BMJUA', fontSize: 30, color: pastel_purple),
             ),
             SizedBox(
-              height: screenAwareSize(100, context),
+              height: screenAwareHeight(100, context),
             ),
             SpinKitRipple(
               color: Colors.pinkAccent,
               size: 100,
             ),
             SizedBox(
-              height: screenAwareSize(100, context),
+              height: screenAwareHeight(100, context),
             ),
             Text(
               '같은 선택지를 고른 이성 3명이 모이면 알림을 보내드릴게요!',
@@ -106,7 +106,7 @@ class ShowPeople extends StatelessWidget {
           else
             return Column(children: <Widget>[
               SizedBox(
-                height: screenAwareSize(25, context),
+                height: screenAwareHeight(25, context),
               ),
               Text(
                 snapshot.data.data['question'],
@@ -117,7 +117,7 @@ class ShowPeople extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: screenAwareSize(20, context),
+                height: screenAwareHeight(20, context),
               ),
               Text(
                 snapshot.data.data['choice'],
@@ -128,10 +128,10 @@ class ShowPeople extends StatelessWidget {
                     color: Colors.blueAccent),
               ),
               SizedBox(
-                height: screenAwareSize(20, context),
+                height: screenAwareHeight(20, context),
               ),
               CarouselSlider.builder(
-                height: screenAwareSize(400, context),
+                height: screenAwareHeight(400, context),
                 enlargeCenterPage: true,
                 enableInfiniteScroll: false,
                 itemCount: recommendedPeople.length,
