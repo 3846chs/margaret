@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -216,7 +215,9 @@ class PeerQuestionsCard extends StatelessWidget {
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: <Color>[
-                    Colors.pink[100],
+                    this.peer.gender == '남성'
+                        ? Colors.blue[100]
+                        : Colors.pink[100],
                     Colors.white,
                   ],
                 ),
@@ -232,6 +233,27 @@ class PeerQuestionsCard extends StatelessWidget {
                   Radius.circular(15),
                 ),
               )),
+          SizedBox(height: screenAwareHeight(10, context)),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              Icon(
+                Icons.arrow_upward,
+                size: 10,
+                color: Colors.grey[400],
+              ),
+              Text(
+                '카드를 눌러보세요!',
+                style: TextStyle(
+                  fontSize: 10,
+                  color: Colors.grey[400],
+                ),
+              ),
+              SizedBox(
+                width: screenAwareHeight(50, context),
+              ),
+            ],
+          ),
         ],
       ),
     );

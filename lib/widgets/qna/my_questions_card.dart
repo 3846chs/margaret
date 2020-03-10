@@ -34,22 +34,24 @@ class MyQuestionsCard extends StatelessWidget {
 
     return Column(
       children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.only(right: common_gap),
-          child: InkWell(
-            onTap: () {
-              showDialog(
-                  context: context,
-                  builder: (context) => _buildDeleteDialog(context, myUser));
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(common_gap),
-              child: Icon(
-                FontAwesomeIcons.solidTrashAlt,
-                color: Colors.purple[200],
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            GestureDetector(
+              onTap: () {
+                showDialog(
+                    context: context,
+                    builder: (context) => _buildDeleteDialog(context, myUser));
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(common_gap),
+                child: Icon(
+                  FontAwesomeIcons.solidTrashAlt,
+                  color: Colors.purple[200],
+                ),
               ),
             ),
-          ),
+          ],
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -166,7 +168,7 @@ class MyQuestionsCard extends StatelessWidget {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: <Color>[
-                  Colors.blue[100],
+                  myUser.gender == '남성' ? Colors.blue[100] : Colors.pink[100],
                   Colors.white,
                 ],
               ),
@@ -201,7 +203,9 @@ class MyQuestionsCard extends StatelessWidget {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: <Color>[
-                  Colors.pink[100],
+                  this.peer.gender == '남성'
+                      ? Colors.blue[100]
+                      : Colors.pink[100],
                   Colors.white,
                 ],
               ),
@@ -216,6 +220,27 @@ class MyQuestionsCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(15.0),
             ),
           ),
+        ),
+        SizedBox(height: screenAwareHeight(10, context)),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            Icon(
+              Icons.arrow_upward,
+              size: 10,
+              color: Colors.grey[400],
+            ),
+            Text(
+              '카드를 눌러보세요!',
+              style: TextStyle(
+                fontSize: 10,
+                color: Colors.grey[400],
+              ),
+            ),
+            SizedBox(
+              width: screenAwareHeight(50, context),
+            ),
+          ],
         ),
         SizedBox(height: screenAwareHeight(20, context)),
         InkWell(

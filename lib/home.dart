@@ -8,7 +8,7 @@ import 'package:margaret/pages/chat/chat_page.dart';
 import 'package:margaret/pages/match/match_page.dart';
 import 'package:margaret/pages/qna/qna_page.dart';
 import 'package:margaret/pages/receive_page.dart';
-import 'package:margaret/profiles/temp_my_profile.dart';
+import 'package:margaret/profiles/my_profile.dart';
 import 'package:margaret/utils/notification.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
