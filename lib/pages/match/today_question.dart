@@ -41,13 +41,16 @@ class _TodayQuestionState extends State<TodayQuestion>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (_userKey != null) {
-      if (state != AppLifecycleState.resumed) {
-        prefsProvider.setAnswer(_userKey, _answerController.text);
-      } else {
-        _answerController?.text = prefsProvider.getAnswer(_userKey);
+    prefsProvider.initialize().then((_) {
+      if (_userKey != null) {
+        if (state != AppLifecycleState.resumed) {
+          prefsProvider.setAnswer(_userKey, _answerController.text);
+        } else {
+          if (_answerController != null)
+            _answerController.text = prefsProvider.getAnswer(_userKey);
+        }
       }
-    }
+    });
   }
 
   Future<void> _summit(User user, String question) async {
@@ -65,10 +68,7 @@ class _TodayQuestionState extends State<TodayQuestion>
 
     _answerController.clear();
 
-    final userRef =
-        _firestore.collection(COLLECTION_USERS).document(user.userKey);
-
-    userRef.updateData({
+    user.reference.updateData({
       'exposed': 0,
       'answer': answer,
     }); // 유저 field 에 답변 저장(your_profile 에서 꺼내기 용이하게 하려고)
@@ -76,7 +76,7 @@ class _TodayQuestionState extends State<TodayQuestion>
     final now = DateTime.now();
     final formatter = DateFormat('yyyy-MM-dd');
 
-    userRef
+    user.reference
         .collection('TodayQuestions')
         .document(formatter.format(user.recentMatchTime.toDate()))
         .setData({
@@ -89,7 +89,7 @@ class _TodayQuestionState extends State<TodayQuestion>
       simpleSnackbar(context, '자정까지 10초 미만 남았습니다. 이 경우, 제출되지 않습니다.');
       return;
     } else {
-      userRef.updateData({
+      user.reference.updateData({
         'recentMatchState': _selectedIndex + 1
       }); // 1번 선택했으면 1 저장, 2번 선택했으면 2 저장
     }
@@ -154,82 +154,92 @@ class _TodayQuestionState extends State<TodayQuestion>
           .document(formattedDate)
           .snapshots(),
       builder: (context, snapshot) {
-        if (snapshot.data == null || !snapshot.hasData) return LoadingPage();
+        if (!snapshot.hasData) return LoadingPage();
 
         final choiceList = [
           snapshot.data.data['choice1'].toString(),
           snapshot.data.data['choice2'].toString()
         ];
 
-        return Scaffold(
-          body: SafeArea(
-            child: _buildBody(snapshot.data.data['question'], choiceList),
-          ),
-        );
+        return _buildBody(snapshot.data.data['question'], choiceList);
       },
     );
   }
 
   Widget _buildBody(String question, List<String> choiceList) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
+    final myUser = Provider.of<MyUserData>(context, listen: false).userData;
+
+    if (_userKey == null) {
+      _userKey = myUser.userKey;
+
+      prefsProvider.initialize().then((_) {
+        _answerController.text = prefsProvider.getAnswer(_userKey);
+      });
+    }
+
+    return Stack(
       children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(common_l_gap),
-          child: _buildQuestion(question),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(common_gap),
-          child: DropdownButtonFormField<String>(
-            decoration: InputDecoration(hintText: '답변을 선택하세요'),
-            value: _selected,
-            items: choiceList
-                .map((label) => DropdownMenuItem(
-                      child: Text(label),
-                      value: label,
-                    ))
-                .toList(),
-            onChanged: (value) {
-              setState(() {
-                _selected = value;
-                _selectedIndex = choiceList.indexOf(value);
-              });
-            },
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.all(common_gap),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(common_l_gap),
+                  child: _buildQuestion(question),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(common_gap),
+                  child: DropdownButtonFormField<String>(
+                    decoration: InputDecoration(hintText: '답변을 선택하세요'),
+                    value: _selected,
+                    items: choiceList
+                        .map((label) => DropdownMenuItem(
+                              child: Text(label),
+                              value: label,
+                            ))
+                        .toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        _selected = value;
+                        _selectedIndex = choiceList.indexOf(value);
+                      });
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(common_gap),
+                  child: _buildAnswer(),
+                ),
+                SizedBox(height: screenAwareSize(90, context)),
+              ],
+            ),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.all(common_gap),
-          child: _buildAnswer(),
-        ),
-        SizedBox(
-          height: screenAwareSize(90, context),
-        ),
-        Consumer<MyUserData>(builder: (context, myUserData, _) {
-          if (_userKey == null) {
-            _userKey = myUserData.userData.userKey;
-
-            prefsProvider.initialize().then((_) {
-              _answerController.text = prefsProvider.getAnswer(_userKey);
-            });
-          }
-          return SizedBox(
-            width: double.infinity,
+        Positioned(
+          left: 0,
+          right: 0,
+          bottom: 0,
+          height: 50,
+          child: SizedBox(
             height: 50,
             child: RaisedButton(
-              onPressed: () => _summit(myUserData.userData, question),
+              onPressed: () => _summit(myUser, question),
               color: pastel_purple,
               child: Container(
                 child: Text(
                   '제 출 하 기',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontFamily: FontFamily.jua),
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontFamily: FontFamily.jua,
+                  ),
                 ),
               ),
             ),
-          );
-        }),
+          ),
+        ),
       ],
     );
   }

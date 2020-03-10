@@ -10,6 +10,8 @@ import 'package:margaret/widgets/chat/chat_card.dart';
 import 'package:provider/provider.dart';
 
 class ChatPage extends StatelessWidget {
+  final _firestore = Firestore.instance;
+
   @override
   Widget build(BuildContext context) {
     return Consumer<MyUserData>(
@@ -48,7 +50,7 @@ class ChatPage extends StatelessWidget {
                             : '${peer.userKey}-${myUser.userKey}';
 
                     return StreamBuilder<QuerySnapshot>(
-                      stream: Firestore.instance
+                      stream: _firestore
                           .collection(COLLECTION_CHATS)
                           .document(chatKey)
                           .collection(chatKey)
@@ -90,9 +92,7 @@ class ChatPage extends StatelessWidget {
                   },
                 );
               },
-              separatorBuilder: (context, index) {
-                return const Divider(height: 1);
-              },
+              separatorBuilder: (context, index) => const Divider(height: 1),
             );
           },
         );

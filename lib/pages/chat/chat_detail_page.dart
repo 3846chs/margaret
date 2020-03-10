@@ -71,7 +71,7 @@ class _ChatDetailPageState extends State<ChatDetailPage>
 
       final now = DateTime.now();
       final message = Message(
-        idFrom: widget.myKey,
+        idFrom: myUser.userKey,
         idTo: widget.peer.userKey,
         content: content,
         timestamp: now.millisecondsSinceEpoch.toString(),
@@ -80,13 +80,20 @@ class _ChatDetailPageState extends State<ChatDetailPage>
       );
 
       firestoreProvider.createMessage(widget.chatKey, message);
+
+      final newMessageData = {
+        "lastMessage": type == MessageType.text ? content : '사진을 보냈습니다.',
+        "lastDateTime": Timestamp.fromDate(now),
+      };
+
       myUser.reference
           .collection("Chats")
           .document(widget.peer.userKey)
-          .updateData({
-        "lastMessage": type == MessageType.text ? content : '사진을 보냈습니다.',
-        "lastDateTime": Timestamp.fromDate(now),
-      });
+          .updateData(newMessageData);
+      widget.peer.reference
+          .collection("Chats")
+          .document(myUser.userKey)
+          .updateData(newMessageData);
       _scrollController.animateTo(0.0,
           duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
     }
@@ -104,7 +111,7 @@ class _ChatDetailPageState extends State<ChatDetailPage>
 
     if (image != null) {
       final url = await storageProvider.uploadImg(image,
-          'chats/${DateTime.now().millisecondsSinceEpoch}_${widget.myKey}');
+          'chats/${DateTime.now().millisecondsSinceEpoch}_${myUser.userKey}');
       _sendMessage(myUser, url, MessageType.image);
     }
   }

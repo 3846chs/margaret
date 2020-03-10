@@ -56,17 +56,23 @@ export const sendPeerQuestionAlarm = functions
     .firestore.document("Users/{userId}/PeerQuestions/{questionId}")
     .onCreate(async (snapshot, context) => {
         const userId: string = context.params.userId;
-        const userSnapshot = await admin
+        const userRef = admin
             .firestore()
             .collection("Users")
-            .doc(userId)
-            .get();
+            .doc(userId);
+        const userSnapshot = await userRef.get();
         const user = userSnapshot.data() as FirebaseFirestore.DocumentData;
+
         const registrationToken: string = user.pushToken;
         if (!registrationToken || registrationToken.length === 0) return null;
 
         const newPeerQuestion: boolean = user.alarms.newPeerQuestion;
         if (!newPeerQuestion) return null;
+
+        const questionsSnapshot = await userRef
+            .collection("PeerQuestions")
+            .get();
+        if (questionsSnapshot.size !== 1) return null;
 
         const payload: admin.messaging.MessagingPayload = {
             notification: {
@@ -95,17 +101,21 @@ export const sendMyQuestionAlarm = functions
     .firestore.document("Users/{userId}/MyQuestions/{questionId}")
     .onCreate(async (snapshot, context) => {
         const userId: string = context.params.userId;
-        const userSnapshot = await admin
+        const userRef = admin
             .firestore()
             .collection("Users")
-            .doc(userId)
-            .get();
+            .doc(userId);
+        const userSnapshot = await userRef.get();
         const user = userSnapshot.data() as FirebaseFirestore.DocumentData;
+
         const registrationToken: string = user.pushToken;
         if (!registrationToken || registrationToken.length === 0) return null;
 
         const newMyQuestion: boolean = user.alarms.newMyQuestion;
         if (!newMyQuestion) return null;
+
+        const questionsSnapshot = await userRef.collection("MyQuestions").get();
+        if (questionsSnapshot.size !== 1) return null;
 
         const payload: admin.messaging.MessagingPayload = {
             notification: {

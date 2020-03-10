@@ -1,12 +1,14 @@
+import 'dart:async';
+
 import 'package:margaret/utils/base_height.dart';
 import 'package:flutter/material.dart';
 
-class LoginButton extends StatelessWidget {
+class LoginButton extends StatefulWidget {
   final Color color;
   final Color iconColor;
   final String text;
   final IconData icon;
-  final VoidCallback onPressed;
+  final Future Function() onPressed;
 
   LoginButton(
       {@required this.color,
@@ -16,18 +18,34 @@ class LoginButton extends StatelessWidget {
       this.onPressed});
 
   @override
+  _LoginButtonState createState() => _LoginButtonState();
+}
+
+class _LoginButtonState extends State<LoginButton> {
+  bool _isProgress = false;
+
+  void setProgressState(bool isProgress) {
+    setState(() {
+      _isProgress = isProgress;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return RaisedButton(
       padding: EdgeInsets.symmetric(
         vertical: screenAwareSize(10.0, context),
         horizontal: 10.0,
       ),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0)),
-      color: color,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(50.0),
+      ),
+      color: widget.color,
       child: LayoutBuilder(
         builder: (context, constraints) {
           return Container(
             width: constraints.maxWidth * 2 / 3,
+            height: 20,
             child: Stack(
               overflow: Overflow.visible,
               alignment: Alignment.center,
@@ -49,21 +67,34 @@ class LoginButton extends StatelessWidget {
 //                    ),
 //                  ),
 //                ),
-                Text(
-                  text,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
+                _isProgress
+                    ? Center(
+                        child: FittedBox(
+                          fit: BoxFit.contain,
+                          child: const CircularProgressIndicator(),
+                        ),
+                      )
+                    : Text(
+                        widget.text,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
               ],
             ),
           );
         },
       ),
-      onPressed: onPressed ?? () {},
+      onPressed: _isProgress
+          ? () {}
+          : () async {
+              setProgressState(true);
+              await widget.onPressed();
+              setProgressState(false);
+            },
     );
   }
 }

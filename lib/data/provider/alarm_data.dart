@@ -72,11 +72,10 @@ class AlarmData extends ChangeNotifier {
       await _userRef.updateData({
         "alarms": {
           "match": true,
+          "receive": true,
           "newChat": true,
           "newMyQuestion": true,
           "newPeerQuestion": true,
-          "newTodayQuestion": true,
-          "receive": true,
         }
       });
       return;

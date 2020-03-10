@@ -16,7 +16,8 @@ void main() => runApp(MultiProvider(
         ChangeNotifierProxyProvider<MyUserData, AlarmData>(
           create: (_) => AlarmData(),
           update: (_, myUserData, alarmData) {
-            alarmData.getData(myUserData.userData.reference);
+            if (myUserData.status == MyUserDataStatus.exist)
+              alarmData.getData(myUserData.userData.reference);
             return alarmData;
           },
         ),
