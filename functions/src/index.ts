@@ -26,8 +26,14 @@ export const sendMatchAlarm = functions
         const beforeList: String[] = before.recommendedPeople;
         const afterList: String[] = after.recommendedPeople;
 
-        if (beforeList?.length > 0 || !afterList || afterList.length === 0)
+        if (
+            afterList?.length !== 3 ||
+            afterList?.length === beforeList?.length
+        ) {
+            console.log(beforeList);
+            console.log(afterList);
             return null;
+        }
 
         const payload: admin.messaging.MessagingPayload = {
             notification: {
@@ -197,7 +203,7 @@ export const sendNewChatAlarm = functions
 
         const payload: admin.messaging.MessagingPayload = {
             notification: {
-                title: "새로운 이성이 채팅을 보냈습니다!",
+                title: "새로운 이성과 채팅이 연결되었습니다!",
                 body: "확인하시려면 클릭하세요.",
                 badge: "1",
                 sound: "default",

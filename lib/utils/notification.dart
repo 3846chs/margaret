@@ -37,6 +37,13 @@ void registerNotification(MyUserData myUserData) async {
     return;
   });
 
+  await flutterLocalNotificationsPlugin.cancel(1);
+
+  if (prefsProvider.getTodayQuestionAlarm()) {
+    await flutterLocalNotificationsPlugin.showDailyAtTime(1, "밤 12시가 되었습니다!",
+        "오늘의 질문을 확인하려면 클릭하세요.", Time(), platformChannelSpecifics);
+  }
+
   firebaseMessaging.getToken().then((token) {
     print('token: $token');
     myUserData.setPushToken(token);
@@ -59,12 +66,5 @@ void showNotification(message) async {
     await flutterLocalNotificationsPlugin.show(0, message['title'].toString(),
         message['body'].toString(), platformChannelSpecifics,
         payload: json.encode(message));
-  }
-
-  await flutterLocalNotificationsPlugin.cancel(1);
-
-  if (prefsProvider.getTodayQuestionAlarm()) {
-    await flutterLocalNotificationsPlugin.showDailyAtTime(1, "밤 12시가 되었습니다!",
-        "오늘의 질문을 확인하려면 클릭하세요.", Time(), platformChannelSpecifics);
   }
 }

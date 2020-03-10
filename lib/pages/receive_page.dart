@@ -45,9 +45,7 @@ class _ReceivePageState extends State<ReceivePage> {
                   },
                 );
               },
-              separatorBuilder: (context, index) {
-                return const Divider(height: 1);
-              },
+              separatorBuilder: (context, index) => const Divider(height: 1),
             );
           },
         );

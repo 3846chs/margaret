@@ -6,6 +6,8 @@ import 'package:margaret/constants/font_names.dart';
 import 'package:margaret/constants/size.dart';
 import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/data/user.dart';
+import 'package:margaret/pages/chat/chat_detail_page.dart';
+import 'package:margaret/profiles/your_profile.dart';
 import 'package:margaret/widgets/user_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -18,13 +20,21 @@ class ReceiveCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final myUser = Provider.of<MyUserData>(context, listen: false).userData;
+
     return Padding(
       padding: const EdgeInsets.all(common_gap),
       child: Row(
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.all(common_gap),
-            child: UserAvatar(user: user),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => YourProfile(user)));
+              },
+              child: UserAvatar(user: user),
+            ),
           ),
           Expanded(
             child: Padding(
@@ -62,7 +72,11 @@ class ReceiveCard extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.all(common_gap),
-            child: _buildAnswerButton(context),
+            child: _buildButton(
+                "오늘의 답변",
+                () => showDialog(
+                    context: context,
+                    builder: (context) => _buildAnswerDialog(myUser))),
           ),
           Padding(
             padding: const EdgeInsets.all(common_gap),
@@ -73,7 +87,7 @@ class ReceiveCard extends StatelessWidget {
               onPressed: () {
                 showDialog(
                   context: context,
-                  builder: (context) => _buildDeleteDialog(context),
+                  builder: (context) => _buildDeleteDialog(context, myUser),
                 );
               },
             ),
@@ -83,9 +97,7 @@ class ReceiveCard extends StatelessWidget {
     );
   }
 
-  AlertDialog _buildDeleteDialog(BuildContext context) {
-    final myUser = Provider.of<MyUserData>(context, listen: false).userData;
-
+  AlertDialog _buildDeleteDialog(BuildContext context, User myUser) {
     return AlertDialog(
       title: Text('카드를 삭제하겠습니까?'),
       actions: <Widget>[
@@ -131,13 +143,11 @@ class ReceiveCard extends StatelessWidget {
     );
   }
 
-  Widget _buildAnswerButton(BuildContext context) {
+  Widget _buildButton(String title, VoidCallback onTap) {
     return InkWell(
       borderRadius: BorderRadius.circular(128.0),
-      onTap: () => showDialog(
-          context: context, builder: (context) => _buildAnswerDialog()),
+      onTap: onTap,
       child: Container(
-        width: 100,
         height: 40,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(128.0),
@@ -158,12 +168,15 @@ class ReceiveCard extends StatelessWidget {
             ),
           ],
         ),
-        child: Center(
-          child: Text(
-            "오늘의 답변",
-            style: const TextStyle(
-              fontFamily: FontFamily.jua,
-              color: Colors.black87,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: common_l_gap),
+          child: Center(
+            child: Text(
+              title,
+              style: const TextStyle(
+                fontFamily: FontFamily.jua,
+                color: Colors.black87,
+              ),
             ),
           ),
         ),
@@ -171,7 +184,7 @@ class ReceiveCard extends StatelessWidget {
     );
   }
 
-  AlertDialog _buildAnswerDialog() {
+  AlertDialog _buildAnswerDialog(User myUser) {
     final formatter = DateFormat('yyyy-MM-dd');
     final formattedDate = formatter.format(dateTime);
 
@@ -181,71 +194,109 @@ class ReceiveCard extends StatelessWidget {
       ),
       content: SizedBox(
         width: 100,
-        height: 350,
         child: StreamBuilder<DocumentSnapshot>(
-            stream: user.reference
-                .collection("TodayQuestions")
-                .document(formattedDate)
-                .snapshots(),
-            builder: (context, snapshot) {
-              if (!snapshot.hasData) return const CircularProgressIndicator();
+          stream: user.reference
+              .collection("TodayQuestions")
+              .document(formattedDate)
+              .snapshots(),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) return const CircularProgressIndicator();
 
-              final question = snapshot.data.data;
+            final question = snapshot.data.data;
 
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Icon(
-                    FontAwesomeIcons.featherAlt,
-                    color: Colors.purple,
-                    size: 30,
-                  ),
-                  SizedBox(height: 40),
-                  Bubble(
-                    margin: BubbleEdges.only(top: 10),
-                    alignment: Alignment.topLeft,
-                    nip: BubbleNip.leftBottom,
-                    child: Text(
-                      question["question"],
-                      style: const TextStyle(
-                        fontFamily: FontFamily.miSaeng,
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                      ),
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Icon(
+                  FontAwesomeIcons.featherAlt,
+                  color: Colors.purple,
+                  size: 30,
+                ),
+                SizedBox(height: 40),
+                Bubble(
+                  margin: BubbleEdges.only(top: 10),
+                  alignment: Alignment.topLeft,
+                  nip: BubbleNip.leftBottom,
+                  child: Text(
+                    question["question"],
+                    style: const TextStyle(
+                      fontFamily: FontFamily.miSaeng,
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
                     ),
-                    color: Colors.purple[50],
                   ),
-                  SizedBox(height: 40),
-                  Bubble(
-                    elevation: 3,
-                    nip: BubbleNip.rightBottom,
-                    child: Text(
-                      question["choice"],
-                      style: const TextStyle(
-                        fontFamily: FontFamily.miSaeng,
-                        fontSize: 20,
-                      ),
+                  color: Colors.purple[50],
+                ),
+                SizedBox(height: 40),
+                Bubble(
+                  elevation: 3,
+                  nip: BubbleNip.rightBottom,
+                  child: Text(
+                    question["choice"],
+                    style: const TextStyle(
+                      fontFamily: FontFamily.miSaeng,
+                      fontSize: 20,
                     ),
-                    color:
-                        user.gender == "남성" ? Colors.blue[50] : Colors.pink[50],
                   ),
-                  SizedBox(height: 20),
-                  Bubble(
-                    elevation: 3,
-                    nip: BubbleNip.rightBottom,
-                    child: Text(
-                      question["answer"],
-                      style: const TextStyle(
-                        fontFamily: FontFamily.miSaeng,
-                        fontSize: 20,
-                      ),
+                  color:
+                      user.gender == "남성" ? Colors.blue[50] : Colors.pink[50],
+                ),
+                SizedBox(height: 20),
+                Bubble(
+                  elevation: 3,
+                  nip: BubbleNip.rightBottom,
+                  child: Text(
+                    question["answer"],
+                    style: const TextStyle(
+                      fontFamily: FontFamily.miSaeng,
+                      fontSize: 20,
                     ),
-                    color:
-                        user.gender == "남성" ? Colors.blue[50] : Colors.pink[50],
                   ),
-                ],
-              );
-            }),
+                  color:
+                      user.gender == "남성" ? Colors.blue[50] : Colors.pink[50],
+                ),
+                SizedBox(height: 40),
+                _buildButton("채팅 연결하기", () async {
+                  await myUser.reference
+                      .collection("Chats")
+                      .document(user.userKey)
+                      .setData({
+                    "lastMessage": "",
+                    "lastDateTime": Timestamp.now(),
+                  });
+                  await user.reference
+                      .collection("Chats")
+                      .document(myUser.userKey)
+                      .setData({
+                    "lastMessage": "",
+                    "lastDateTime": Timestamp.now(),
+                  });
+
+                  myUser.reference
+                      .collection("Receives")
+                      .document(user.userKey)
+                      .delete();
+
+                  final chatKey =
+                      myUser.userKey.hashCode <= user.userKey.hashCode
+                          ? '${myUser.userKey}-${user.userKey}'
+                          : '${user.userKey}-${myUser.userKey}';
+
+                  Navigator.pop(context);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ChatDetailPage(
+                                chatKey: chatKey,
+                                myKey: myUser.userKey,
+                                peer: user,
+                              )));
+                }),
+              ],
+            );
+          },
+        ),
       ),
     );
   }

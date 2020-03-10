@@ -131,7 +131,7 @@ class ShowPeople extends StatelessWidget {
                 height: screenAwareHeight(20, context),
               ),
               CarouselSlider.builder(
-                height: screenAwareHeight(400, context),
+                height: screenAwareHeight(420, context),
                 enlargeCenterPage: true,
                 enableInfiniteScroll: false,
                 itemCount: recommendedPeople.length,

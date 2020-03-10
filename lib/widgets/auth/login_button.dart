@@ -8,7 +8,7 @@ class LoginButton extends StatefulWidget {
   final Color iconColor;
   final String text;
   final IconData icon;
-  final Future Function() onPressed;
+  final FutureOr<void> Function() onPressed;
 
   LoginButton(
       {@required this.color,

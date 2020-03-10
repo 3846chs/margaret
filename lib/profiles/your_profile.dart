@@ -1,11 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:margaret/constants/font_names.dart';
 import 'package:margaret/constants/size.dart';
 import 'package:margaret/data/user.dart';
 import 'package:margaret/firebase/storage_cache_manager.dart';
 import 'package:margaret/profiles/profile_basic_info.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
 class YourProfile extends StatelessWidget {
@@ -19,104 +17,26 @@ class YourProfile extends StatelessWidget {
       body: SafeArea(
         child: CustomScrollView(
           slivers: <Widget>[
-            SliverAppBar(
-              expandedHeight: MediaQuery.of(context).size.width,
-              floating: false,
-              pinned: true,
-              flexibleSpace: FlexibleSpaceBar(
-                title: Text(user.nickname),
-                background: Swiper(
-                  loop: false,
-                  itemCount: user.profiles.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return ClipRRect(
-                      // 상대 프로필 이미지 사진
-                      child: CachedNetworkImage(
-                        imageUrl: "profiles/" + user.profiles[index].toString(),
-                        cacheManager: StorageCacheManager(),
-                        //width: MediaQuery.of(context).size.width,
-                        //height: MediaQuery.of(context).size.height,
-                        fit: BoxFit.cover,
-                        placeholder: (context, url) =>
-                            const CircularProgressIndicator(),
-                        errorWidget: (context, url, error) =>
-                            const Icon(Icons.account_circle),
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ),
+            _buildSliverAppBar(context),
             SliverFillRemaining(
               child: Padding(
                 padding: const EdgeInsets.only(top: common_l_gap),
                 child: Column(
                   children: <Widget>[
-                    _selfIntroduction(), // 저는 이런 가치관을 가진 사람이에요
-                    SizedBox(
-                      height: 10,
-                    ),
-                    SizedBox(
-                      height: 5,
-                      child: Container(
-                        color: Colors.black12,
-                      ),
-                    ),
-                    SizedBox(
+                    Padding(
+                      padding: const EdgeInsets.all(common_gap),
+                      child: _buildIntroduction(),
+                    ), // 저는 이런 가치관을 가진 사람이에요
+                    const SizedBox(height: 10),
+                    Container(
+                      color: Colors.black12,
                       height: 5,
                     ),
-                    // 가치관 질문
-                    _valueQuestions(),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    SizedBox(
-                      height: 5,
-                      child: Container(
-                        color: Colors.black12,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
+                    const SizedBox(height: 5),
                     // 기본 정보
                     Padding(
                       padding: const EdgeInsets.all(common_gap),
-                      child: Row(
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.all(common_gap),
-                            child: Center(
-                              child: Container(
-                                decoration: ShapeDecoration(
-                                  color: Color.fromRGBO(222, 222, 255, 1),
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(3.0)),
-                                  shadows: [
-                                    BoxShadow(
-                                        color: Colors.black26,
-                                        blurRadius: 3.0,
-                                        offset: Offset(2, 2))
-                                  ],
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    '기본 정보',
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                        ],
-                      ),
+                      child: _buildBasicInfo(),
                     ),
                     ProfileBasicInfo('나이',
                         (DateTime.now().year - user.birthYear + 1).toString()),
@@ -161,6 +81,75 @@ class YourProfile extends StatelessWidget {
     );
   }
 
+  Widget _buildBasicInfo() {
+    return Row(
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(common_gap),
+          child: Center(
+            child: Container(
+              decoration: ShapeDecoration(
+                color: Color.fromRGBO(222, 222, 255, 1),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(3.0)),
+                shadows: [
+                  const BoxShadow(
+                    color: Colors.black26,
+                    blurRadius: 3.0,
+                    offset: Offset(2, 2),
+                  )
+                ],
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  '기본 정보',
+                  style: const TextStyle(
+                    fontSize: 15,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(width: 10),
+      ],
+    );
+  }
+
+  SliverAppBar _buildSliverAppBar(BuildContext context) {
+    return SliverAppBar(
+      expandedHeight: MediaQuery.of(context).size.width,
+      floating: false,
+      pinned: true,
+      flexibleSpace: FlexibleSpaceBar(
+        title: Text(user.nickname),
+        background: Swiper(
+          loop: false,
+          itemCount: user.profiles.length,
+          itemBuilder: (BuildContext context, int index) {
+            return ClipRRect(
+              // 상대 프로필 이미지 사진
+              child: CachedNetworkImage(
+                imageUrl: "profiles/" + user.profiles[index].toString(),
+                cacheManager: StorageCacheManager(),
+                //width: MediaQuery.of(context).size.width,
+                //height: MediaQuery.of(context).size.height,
+                fit: BoxFit.cover,
+                placeholder: (context, url) =>
+                    const CircularProgressIndicator(),
+                errorWidget: (context, url, error) =>
+                    const Icon(Icons.account_circle),
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
   Widget buildContainer(BuildContext context) {
     return Container(
       child: Row(
@@ -184,145 +173,61 @@ class YourProfile extends StatelessWidget {
     );
   }
 
-  Padding _valueQuestions() {
-    return Padding(
-      padding: const EdgeInsets.all(common_gap),
-      child: Column(
-        children: <Widget>[
-          Row(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(common_gap),
-                child: Center(
-                  child: Container(
-                    decoration: ShapeDecoration(
-                      color: Color.fromRGBO(222, 222, 255, 1),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(3.0)),
-                      shadows: [
-                        BoxShadow(
-                            color: Colors.black26,
-                            blurRadius: 3.0,
-                            offset: Offset(2, 2))
-                      ],
+  Widget _buildIntroduction() {
+    return Column(
+      children: <Widget>[
+        Row(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(common_gap),
+              child: Center(
+                child: Container(
+                  decoration: ShapeDecoration(
+                    color: Color.fromRGBO(255, 178, 245, 1),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(3.0),
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        'Q. 서운한 것을 그때그때 말하는 편인가요?',
-                        style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold),
+                    shadows: [
+                      const BoxShadow(
+                        color: Colors.black26,
+                        blurRadius: 3.0,
+                        offset: Offset(2, 2),
+                      ),
+                    ],
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      '❤ 나를 표현하는 가치관은?',
+                      style: const TextStyle(
+                        fontSize: 15,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
                 ),
               ),
-              SizedBox(
-                width: 10,
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            children: <Widget>[
-              SizedBox(
-                width: 20,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 5),
+            ),
+            const SizedBox(width: 10),
+          ],
+        ),
+        const SizedBox(height: 10),
+        Row(
+          children: <Widget>[
+            const SizedBox(width: 40),
+            Expanded(
+              child: Center(
                 child: Text(
-                  'A.',
-                  style: TextStyle(
-                      fontSize: 20,
-                      color: Color.fromRGBO(222, 222, 255, 1),
-                      fontWeight: FontWeight.bold),
+                  user.introduction ?? '등록된 자기소개가 없습니다',
+                  style: const TextStyle(fontSize: 15),
                 ),
               ),
-              Expanded(
-                child: Text(
-                  '저는 서운한 것을 그때그때 말하는 편이에요..',
-                  style: TextStyle(
-                    fontSize: 15,
-                  ),
-                ),
-              ),
-              SizedBox(
-                width: 10,
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Padding _selfIntroduction() {
-    return Padding(
-      padding: const EdgeInsets.all(common_gap),
-      child: Column(
-        children: <Widget>[
-          Row(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(common_gap),
-                child: Center(
-                  child: Container(
-                    decoration: ShapeDecoration(
-                      color: Color.fromRGBO(255, 178, 245, 1),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(3.0)),
-                      shadows: [
-                        BoxShadow(
-                            color: Colors.black26,
-                            blurRadius: 3.0,
-                            offset: Offset(2, 2))
-                      ],
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        '❤ 나를 표현하는 가치관은?',
-                        style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                width: 10,
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            children: <Widget>[
-              SizedBox(
-                width: 40,
-              ),
-              Expanded(
-                child: Center(
-                  child: Text(
-                    '안녕하세요. 저는 test1입니다. 저는 열정이 있는 사람입니다. 일과 사랑 모두 열정적으로 하고 싶어요~',
-                    style: TextStyle(fontSize: 15),
-                  ),
-                ),
-              ),
-              SizedBox(
-                width: 40,
-              ),
-            ],
-          ),
-        ],
-      ),
+            ),
+            const SizedBox(width: 40),
+          ],
+        ),
+      ],
     );
   }
 }
