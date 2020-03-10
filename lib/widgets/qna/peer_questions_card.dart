@@ -103,7 +103,7 @@ class PeerQuestionsCard extends StatelessWidget {
                   padding: const EdgeInsets.all(common_gap),
                   child: Icon(
                     FontAwesomeIcons.solidTrashAlt,
-                    color: Colors.pink[200],
+                    color: Colors.purple[200],
                   ),
                 ),
               ),
