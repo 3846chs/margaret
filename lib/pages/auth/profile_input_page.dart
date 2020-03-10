@@ -131,41 +131,41 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                           padding: const EdgeInsets.all(common_gap),
                           child: _profiles.length < 1
                               ? SizedBox(
-                                  width: 150,
-                                  height: 150,
-                                  child: RaisedButton(
-                                    child: const Icon(Icons.add_a_photo),
-                                    onPressed: _getProfile,
-                                  ),
-                                )
+                            width: 150,
+                            height: 150,
+                            child: RaisedButton(
+                              child: const Icon(Icons.add_a_photo),
+                              onPressed: _getProfile,
+                            ),
+                          )
                               : FlatButton(
-                                  onPressed: () => _getProfile(0),
-                                  child: Image.file(
-                                    _profiles[0],
-                                    height: 150,
-                                    width: 150,
-                                  ),
-                                ),
+                            onPressed: () => _getProfile(0),
+                            child: Image.file(
+                              _profiles[0],
+                              height: 150,
+                              width: 150,
+                            ),
+                          ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(common_gap),
                           child: _profiles.length < 2
                               ? SizedBox(
-                                  width: 150,
-                                  height: 150,
-                                  child: RaisedButton(
-                                    child: const Icon(Icons.add_a_photo),
-                                    onPressed: _getProfile,
-                                  ),
-                                )
+                            width: 150,
+                            height: 150,
+                            child: RaisedButton(
+                              child: const Icon(Icons.add_a_photo),
+                              onPressed: _getProfile,
+                            ),
+                          )
                               : FlatButton(
-                                  onPressed: () => _getProfile(1),
-                                  child: Image.file(
-                                    _profiles[1],
-                                    height: 150,
-                                    width: 150,
-                                  ),
-                                ),
+                            onPressed: () => _getProfile(1),
+                            child: Image.file(
+                              _profiles[1],
+                              height: 150,
+                              width: 150,
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -710,42 +710,42 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                     onPressed: !_isButtonEnabled
                         ? null
                         : () {
-                            if(_profiles.length < 2)
-                              simpleSnackbar(context, '사진을 2개 등록해주세요.');
-                            else if(nicknameinput.length > 6)
-                              simpleSnackbar(context, '닉네임 글자수는 최대 6자입니다.');
-                            else if (nicknameinput == '6자 이내')
-                              simpleSnackbar(context, '닉네임을 입력해주세요');
-                            else if (birthyearinput == '출생 연도를 입력해주세요' || birthyearinput.length != 4)
-                              simpleSnackbar(context, '출생 연도 4자리를 입력해주세요');
-                            else if (regioninput == '사는 지역을 입력해주세요')
-                              simpleSnackbar(context, '지역을 입력해주세요');
-                            else if (jobinput == '직업을 입력해주세요')
-                              simpleSnackbar(context, '직업을 입력해주세요');
-                            else if (heightinput == '키를 입력해주세요')
-                              simpleSnackbar(context, '키를 입력해주세요');
-                            else if(smokeinput == '흡연 여부를 선택해주세요')
-                              simpleSnackbar(context, '흡연 여부를 선택해주세요');
-                            else if(drinkinput == '음주 여부를 선택해주세요')
-                              simpleSnackbar(context, '음주 여부를 선택해주세요');
-                            else if(religioninput == '종교를 선택해주세요')
-                              simpleSnackbar(context, '종교를 선택해주세요');
+                      if(_profiles.length < 2)
+                        simpleSnackbar(context, '사진을 2개 등록해주세요.');
+                      else if(nicknameinput.length > 6)
+                        simpleSnackbar(context, '닉네임 글자수는 최대 6자입니다.');
+                      else if (nicknameinput == '6자 이내')
+                        simpleSnackbar(context, '닉네임을 입력해주세요');
+                      else if (birthyearinput == '출생 연도를 입력해주세요' || birthyearinput.length != 4)
+                        simpleSnackbar(context, '출생 연도 4자리를 입력해주세요');
+                      else if (regioninput == '사는 지역을 입력해주세요')
+                        simpleSnackbar(context, '지역을 입력해주세요');
+                      else if (jobinput == '직업을 입력해주세요')
+                        simpleSnackbar(context, '직업을 입력해주세요');
+                      else if (heightinput == '키를 입력해주세요')
+                        simpleSnackbar(context, '키를 입력해주세요');
+                      else if(smokeinput == '흡연 여부를 선택해주세요')
+                        simpleSnackbar(context, '흡연 여부를 선택해주세요');
+                      else if(drinkinput == '음주 여부를 선택해주세요')
+                        simpleSnackbar(context, '음주 여부를 선택해주세요');
+                      else if(religioninput == '종교를 선택해주세요')
+                        simpleSnackbar(context, '종교를 선택해주세요');
 
-                            else if (_formKey.currentState.validate()) {
-                              setState(() {
-                                _isButtonEnabled = false;
-                              });
-                              _register(context);
-                            }
-                          },
+                      else if (_formKey.currentState.validate()) {
+                        setState(() {
+                          _isButtonEnabled = false;
+                        });
+                        _register(context);
+                      }
+                    },
                     child: _isButtonEnabled
                         ? Text(
-                            "가입하기",
-                            style: TextStyle(color: Colors.white),
-                          )
+                      "가입하기",
+                      style: TextStyle(color: Colors.white),
+                    )
                         : const CircularProgressIndicator(
-                            valueColor: AlwaysStoppedAnimation(Colors.black87),
-                          ),
+                      valueColor: AlwaysStoppedAnimation(Colors.black87),
+                    ),
                     color: pastel_purple,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(6),
@@ -765,7 +765,7 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
     } else {
       final profiles = await Stream.fromIterable(_profiles)
           .asyncMap((image) => storageProvider.uploadImg(image,
-              "profiles/${DateTime.now().millisecondsSinceEpoch}_${widget.authResult.user.uid}"))
+          "profiles/${DateTime.now().millisecondsSinceEpoch}_${widget.authResult.user.uid}"))
           .toList();
       final user = User(
         userKey: widget.authResult.user.uid,
@@ -993,7 +993,7 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
     });
     return religionOptionList;
   }
-  //////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 
 
 

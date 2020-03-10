@@ -59,7 +59,7 @@ class AccountSetting extends StatelessWidget {
                               onPressed: () async {
                                 Firestore.instance
                                     .collection(COLLECTION_STATISTICS)
-                                    .document('withdrawal')
+                                    .document('statistics')
                                     .updateData({
                                   'reasons': FieldValue.arrayUnion(
                                       [_textEditingController.text])
