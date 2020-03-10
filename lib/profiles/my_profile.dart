@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:margaret/constants/balance.dart';
 import 'package:margaret/constants/colors.dart';
 import 'package:margaret/constants/firebase_keys.dart';
 import 'package:margaret/constants/font_names.dart';
@@ -291,12 +292,12 @@ class _TempMyProfileState extends State<TempMyProfile> {
     return AlertDialog(
       content: TextFormField(
         controller: _textEditingController,
-        decoration: InputDecoration(hintText: '10자 이내'),
+        decoration: InputDecoration(hintText: '$MAX_NICKNAME_LENGTH자 이내'),
         validator: (value) {
           if (value.isEmpty) {
             return '닉네임을 입력해주세요!';
-          } else if (value.length > 10) {
-            return '닉네임은 10자리 이내로 해주세요';
+          } else if (value.length > MAX_NICKNAME_LENGTH) {
+            return '닉네임은 $MAX_NICKNAME_LENGTH자리 이내로 해주세요';
           }
           return null;
         },

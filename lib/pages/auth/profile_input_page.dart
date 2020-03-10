@@ -43,7 +43,7 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
 
   bool _isButtonEnabled = true;
 
-  String nicknameinput = '6자 이내';
+  String nicknameinput = '$MAX_NICKNAME_LENGTH자 이내';
   String birthyearinput = '출생 연도를 입력해주세요';
   String regioninput = '사는 지역을 입력해주세요';
   String jobinput = '직업을 입력해주세요';
@@ -906,8 +906,10 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                             if (_profiles.length < 2)
                               simpleSnackbar(context, '사진을 2개 등록해주세요.');
                             else if (nicknameinput.length > 6)
-                              simpleSnackbar(context, '닉네임 글자수는 최대 6자입니다.');
-                            else if (nicknameinput == '6자 이내')
+                              simpleSnackbar(context,
+                                  '닉네임 글자수는 최대 $MAX_NICKNAME_LENGTH자입니다.');
+                            else if (nicknameinput ==
+                                '$MAX_NICKNAME_LENGTH자 이내')
                               simpleSnackbar(context, '닉네임을 입력해주세요');
                             else if (birthyearinput == '출생 연도를 입력해주세요' ||
                                 birthyearinput.length != 4)
@@ -1023,12 +1025,12 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
     return AlertDialog(
       content: TextFormField(
         controller: _nicknameController,
-        decoration: InputDecoration(hintText: '6자 이내'),
+        decoration: InputDecoration(hintText: '$MAX_NICKNAME_LENGTH자 이내'),
         validator: (value) {
           if (value.isEmpty) {
             return '닉네임을 입력해주세요!';
-          } else if (value.length > 6) {
-            return '닉네임은 6자리 이내로 해주세요';
+          } else if (value.length > MAX_NICKNAME_LENGTH) {
+            return '닉네임은 $MAX_NICKNAME_LENGTH자리 이내로 해주세요';
           }
           return null;
         },
