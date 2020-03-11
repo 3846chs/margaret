@@ -167,8 +167,49 @@ class SelectedPerson extends StatelessWidget {
           height: screenAwareHeight(20, context),
         ),
         InkWell(
-          onTap: () {
-            print('호감 보내기');
+          onTap: () async {
+            // 먼저 상대방이 나한테 이미 호감(Receive)을 보냈는지 확인해야 함. 이미 나에게 호감 보냈다면 바로 채팅 이동
+            final doc = await myUser.reference
+                .collection("Receives")
+                .document(user.userKey)
+                .get();
+            if (doc != null && doc.exists) {
+              final chatKey = myUser.userKey.hashCode <= user.userKey.hashCode
+                  ? '${myUser.userKey}-${user.userKey}'
+                  : '${user.userKey}-${myUser.userKey}';
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ChatDetailPage(
+                            chatKey: chatKey,
+                            myKey: myUser.userKey,
+                            peer: user,
+                          )));
+              return;
+            }
+            // User A 가 User B 에게 호감을 보낼 경우, 보낸 시점(ex. 2020-03-07) 이 User B 에게 기록되며
+            // User B 는 Receive 탭의 [오늘의 답변] 버튼에서 User A 의 해당 날짜 답변(2020-03-07 날의 답변)을 조회하여 볼 수 있음.
+
+            myUser.reference.updateData({
+              "sends": FieldValue.arrayUnion([user.userKey]),
+            });
+            user.reference
+                .collection("Receives")
+                .document(myUser.userKey)
+                .setData({
+              "dateTime": Timestamp.now(),
+            });
+
+            final now = DateTime.now();
+            final formatter = DateFormat('yyyy-MM-dd');
+            final formattedDate = formatter.format(now);
+
+            // 12시 근처에 선택 시 오류 가능성 => 나중에 처리
+
+            myUser.reference
+                .collection(TODAYQUESTIONS)
+                .document(formattedDate)
+                .updateData({'finished': true});
           },
           child: Container(
             width: 150,
@@ -216,51 +257,3 @@ class SelectedPerson extends StatelessWidget {
     );
   }
 }
-
-//
-//async {
-//// 먼저 상대방이 나한테 이미 호감(Receive)을 보냈는지 확인해야 함. 이미 나에게 호감 보냈다면 바로 채팅 이동
-//final doc = await myUser.reference
-//    .collection("Receives")
-//.document(user.userKey)
-//.get();
-//if (doc != null && doc.exists) {
-//final chatKey =
-//myUser.userKey.hashCode <= user.userKey.hashCode
-//? '${myUser.userKey}-${user.userKey}'
-//    : '${user.userKey}-${myUser.userKey}';
-//Navigator.push(
-//context,
-//MaterialPageRoute(
-//builder: (context) => ChatDetailPage(
-//chatKey: chatKey,
-//myKey: myUser.userKey,
-//peer: user,
-//)));
-//return;
-//}
-//
-//// User A 가 User B 에게 호감을 보낼 경우, 보낸 시점(ex. 2020-03-07) 이 User B 에게 기록되며
-//// User B 는 Receive 탭의 [오늘의 답변] 버튼에서 User A 의 해당 날짜 답변(2020-03-07 날의 답변)을 조회하여 볼 수 있음.
-//
-//myUser.reference.updateData({
-//"sends": FieldValue.arrayUnion([user.userKey]),
-//});
-//user.reference
-//    .collection("Receives")
-//.document(myUser.userKey)
-//.setData({
-//"dateTime": Timestamp.now(),
-//});
-//
-//final now = DateTime.now();
-//final formatter = DateFormat('yyyy-MM-dd');
-//final formattedDate = formatter.format(now);
-//
-//// 12시 근처에 선택 시 오류 가능성 => 나중에 처리
-//
-//myUser.reference
-//    .collection(TODAYQUESTIONS)
-//.document(formattedDate)
-//.updateData({'finished': true});
-//}
