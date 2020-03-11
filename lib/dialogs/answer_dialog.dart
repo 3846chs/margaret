@@ -121,8 +121,8 @@ class _AnswerDialogState extends State<AnswerDialog> {
                       ),
                     ],
                   ),
-                  width: 130,
-                  height: 40,
+                  width: screenAwareWidth(130, context),
+                  height: screenAwareHeight(40, context),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[

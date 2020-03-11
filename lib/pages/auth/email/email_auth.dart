@@ -1,5 +1,6 @@
 import 'package:margaret/constants/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:margaret/utils/adjust_size.dart';
 import 'package:margaret/widgets/auth/email_sign_in_form.dart';
 import 'package:margaret/widgets/auth/email_sign_up_form.dart';
 
@@ -26,7 +27,7 @@ class _EmailAuthState extends State<EmailAuth> {
               left: 0,
               right: 0,
               bottom: 0,
-              height: 40,
+              height: screenAwareHeight(40, context),
               child: _buildSignUpButton(context),
             ),
           ],
