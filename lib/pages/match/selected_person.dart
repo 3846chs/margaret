@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:margaret/constants/colors.dart';
 import 'package:margaret/constants/firebase_keys.dart';
 import 'package:margaret/constants/font_names.dart';
 import 'package:margaret/constants/size.dart';
@@ -8,7 +9,7 @@ import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/data/user.dart';
 import 'package:margaret/firebase/storage_cache_manager.dart';
 import 'package:margaret/pages/chat/chat_detail_page.dart';
-import 'package:margaret/profiles/profile_basic_info.dart';
+import 'package:margaret/profiles/your_profile_basic_info.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:margaret/utils/adjust_size.dart';
@@ -26,49 +27,49 @@ class SelectedPerson extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        SingleChildScrollView(
-          padding: const EdgeInsets.all(common_l_gap),
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: user.profiles
-                .map((path) => Padding(
-                      padding: const EdgeInsets.all(common_gap),
-                      child: InkWell(
-                        onTap: () {
-                          print(path);
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey,
-                                blurRadius: 2.0,
-                                spreadRadius: 0.0,
-                                offset: Offset(
-                                    2.0, 2.0), // shadow direction: bottom right
-                              )
-                            ],
-                            borderRadius: BorderRadius.circular(14.0),
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(14),
-                            child: CachedNetworkImage(
-                              imageUrl: "profiles/$path",
-                              cacheManager: StorageCacheManager(),
-                              width: screenAwareWidth(150, context),
-                              height: screenAwareHeight(150, context),
-                              fit: BoxFit.cover,
-                              placeholder: (context, url) =>
-                                  const CircularProgressIndicator(),
-                              errorWidget: (context, url, error) =>
-                                  const Icon(Icons.account_circle),
-                            ),
+        SizedBox(
+          height: screenAwareHeight(20, context),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: user.profiles
+              .map((path) => Padding(
+                    padding: const EdgeInsets.all(common_gap),
+                    child: InkWell(
+                      onTap: () {
+                        print(path);
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey,
+                              blurRadius: 2.0,
+                              spreadRadius: 0.0,
+                              offset: Offset(
+                                  2.0, 2.0), // shadow direction: bottom right
+                            )
+                          ],
+                          borderRadius: BorderRadius.circular(14.0),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(14),
+                          child: CachedNetworkImage(
+                            imageUrl: "profiles/$path",
+                            cacheManager: StorageCacheManager(),
+                            width: screenAwareWidth(150, context),
+                            height: screenAwareHeight(150, context),
+                            fit: BoxFit.cover,
+                            placeholder: (context, url) =>
+                                const CircularProgressIndicator(),
+                            errorWidget: (context, url, error) =>
+                                const Icon(Icons.account_circle),
                           ),
                         ),
                       ),
-                    ))
-                .toList(),
-          ),
+                    ),
+                  ))
+              .toList(),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -148,7 +149,7 @@ class SelectedPerson extends StatelessWidget {
                   padding: const EdgeInsets.all(common_gap),
                   child: Icon(
                     FontAwesomeIcons.solidTrashAlt,
-                    color: Colors.purple[200],
+                    color: pastel_purple,
                   ),
                 ),
               ),
@@ -158,11 +159,11 @@ class SelectedPerson extends StatelessWidget {
         SizedBox(
           height: screenAwareHeight(12, context),
         ),
-        ProfileBasicInfo('직업', user.job),
-        ProfileBasicInfo('키', user.height.toString()),
-        ProfileBasicInfo('흡연 여부', user.smoke),
-        ProfileBasicInfo('음주 여부', user.drink),
-        ProfileBasicInfo('종교', user.religion),
+        YourProfileBasicInfo('직업', user.job),
+        YourProfileBasicInfo('키', user.height.toString()),
+        YourProfileBasicInfo('흡연 여부', user.smoke),
+        YourProfileBasicInfo('음주 여부', user.drink),
+        YourProfileBasicInfo('종교', user.religion),
         SizedBox(
           height: screenAwareHeight(20, context),
         ),

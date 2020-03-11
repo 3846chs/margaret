@@ -62,7 +62,7 @@ class MatchFinished extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              '다음 매칭까지 남은 시간',
+              '내일 매칭을 기다려주세요',
               style: TextStyle(
                   fontFamily: FontFamily.jua, fontSize: 20, color: Colors.black54),
             ),

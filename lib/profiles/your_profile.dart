@@ -5,7 +5,7 @@ import 'package:margaret/constants/font_names.dart';
 import 'package:margaret/constants/size.dart';
 import 'package:margaret/data/user.dart';
 import 'package:margaret/firebase/storage_cache_manager.dart';
-import 'package:margaret/profiles/profile_basic_info.dart';
+import 'package:margaret/profiles/your_profile_basic_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
@@ -41,14 +41,14 @@ class YourProfile extends StatelessWidget {
                       padding: const EdgeInsets.all(common_gap),
                       child: _buildBasicInfo(),
                     ),
-                    ProfileBasicInfo('나이',
+                    YourProfileBasicInfo('나이',
                         (DateTime.now().year - user.birthYear + 1).toString()),
-                    ProfileBasicInfo('지역', user.region),
-                    ProfileBasicInfo('직업', user.job),
-                    ProfileBasicInfo('키', user.height.toString()),
-                    ProfileBasicInfo('종교', user.religion),
-                    ProfileBasicInfo('흡연 여부', user.smoke),
-                    ProfileBasicInfo('음주 여부', user.drink),
+                    YourProfileBasicInfo('지역', user.region),
+                    YourProfileBasicInfo('직업', user.job),
+                    YourProfileBasicInfo('키', user.height.toString()),
+                    YourProfileBasicInfo('종교', user.religion),
+                    YourProfileBasicInfo('흡연 여부', user.smoke),
+                    YourProfileBasicInfo('음주 여부', user.drink),
                   ],
                 ),
               ),
