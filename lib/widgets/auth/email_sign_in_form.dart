@@ -58,7 +58,7 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
                   return null;
                 },
               ),
-              const SizedBox(height: common_l_gap),
+              SizedBox(height: screenAwareHeight(common_l_gap, context)),
               TextFormField(
                 obscureText: true,
                 controller: _pwController,
@@ -68,8 +68,8 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
                   return null;
                 },
               ),
-              const SizedBox(height: common_l_gap),
-              const SizedBox(height: common_l_gap),
+              SizedBox(height: screenAwareHeight(common_l_gap, context)),
+              SizedBox(height: screenAwareHeight(common_l_gap, context)),
               FlatButton(
                 onPressed: () {
                   if (_formKey.currentState.validate()) _login();
@@ -89,7 +89,7 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
                       MaterialPageRoute(builder: (context) => EmailPwReset()));
                 },
                 child: Container(
-                  height: 30,
+                  height: screenAwareHeight(30, context),
                   child: Center(
                     child: Text("비밀번호 재설정"),
                   ),

@@ -9,6 +9,7 @@ import 'package:margaret/pages/chat/chat_detail_page.dart';
 import 'package:margaret/profiles/profile_basic_info.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:margaret/utils/adjust_size.dart';
 import 'package:provider/provider.dart';
 
 class SelectedPerson extends StatelessWidget {
@@ -40,8 +41,8 @@ class SelectedPerson extends StatelessWidget {
                             child: CachedNetworkImage(
                               imageUrl: "profiles/$path",
                               cacheManager: StorageCacheManager(),
-                              width: 100,
-                              height: 100,
+                              width: screenAwareWidth(100, context),
+                              height: screenAwareHeight(150, context),
                               fit: BoxFit.cover,
                               placeholder: (context, url) =>
                                   const CircularProgressIndicator(),

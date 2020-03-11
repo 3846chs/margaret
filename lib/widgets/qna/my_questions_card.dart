@@ -94,7 +94,7 @@ class MyQuestionsCard extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(width: 40),
+            SizedBox(width: screenAwareWidth(40, context)),
             Column(
               children: <Widget>[
                 Text(
@@ -104,7 +104,7 @@ class MyQuestionsCard extends StatelessWidget {
                     fontSize: 20,
                   ),
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: screenAwareHeight(10, context)),
                 Text(
                   '${(DateTime.now().year - peer.birthYear + 1)}세 / ${peer.region}',
                   style: const TextStyle(
@@ -126,7 +126,7 @@ class MyQuestionsCard extends StatelessWidget {
           ),
         ),
         SizedBox(
-          width: 250,
+          width: screenAwareWidth(250, context),
           child: Padding(
             padding: const EdgeInsets.all(common_gap),
             child: Center(
@@ -163,8 +163,8 @@ class MyQuestionsCard extends StatelessWidget {
                 ),
               ),
             ),
-            width: 270,
-            height: 130,
+            width: screenAwareWidth(270, context),
+            height: screenAwareHeight(130, context),
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
@@ -198,8 +198,8 @@ class MyQuestionsCard extends StatelessWidget {
                 ),
               ),
             ),
-            width: 270,
-            height: 130,
+            width: screenAwareWidth(270, context),
+            height: screenAwareHeight(130, context),
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
@@ -240,7 +240,7 @@ class MyQuestionsCard extends StatelessWidget {
               ),
             ),
             SizedBox(
-              width: screenAwareHeight(50, context),
+              width: screenAwareWidth(50, context),
             ),
           ],
         ),
@@ -252,8 +252,8 @@ class MyQuestionsCard extends StatelessWidget {
                 builder: (context) => _buildChatDialog(context, myUser));
           },
           child: Container(
-            width: 150,
-            height: 40,
+            width: screenAwareWidth(150, context),
+            height: screenAwareHeight(40, context),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(128.0),
               gradient: const LinearGradient(

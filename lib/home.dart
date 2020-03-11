@@ -9,6 +9,7 @@ import 'package:margaret/pages/match/match_page.dart';
 import 'package:margaret/pages/qna/qna_page.dart';
 import 'package:margaret/pages/receive_page.dart';
 import 'package:margaret/profiles/my_profile.dart';
+import 'package:margaret/utils/adjust_size.dart';
 import 'package:margaret/utils/notification.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -66,7 +67,7 @@ class _HomeState extends State<Home> {
           return InkWell(
             borderRadius: BorderRadius.circular(40.0),
             onTap: () => Scaffold.of(context).openDrawer(),
-            child: UserAvatar(user: myUserData.userData, width: 40.0),
+            child: UserAvatar(user: myUserData.userData, width: screenAwareWidth(40, context)),
           );
         },
       ),

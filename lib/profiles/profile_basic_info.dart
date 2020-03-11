@@ -1,6 +1,7 @@
 import 'package:margaret/constants/size.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:margaret/utils/adjust_size.dart';
 
 class ProfileBasicInfo extends StatefulWidget {
   final String title;
@@ -52,7 +53,7 @@ class _ProfileBasicInfoState extends State<ProfileBasicInfo> {
       child: Row(
         children: <Widget>[
           SizedBox(
-            width: 40,
+            width: screenAwareWidth(40, context),
           ),
           Icon(
             icon,
@@ -60,7 +61,7 @@ class _ProfileBasicInfoState extends State<ProfileBasicInfo> {
             size: 15,
           ),
           SizedBox(
-            width: 10,
+            width: screenAwareWidth(10, context),
           ),
           Center(
             child: Text(
@@ -117,7 +118,7 @@ class _ProfileBasicInfoState extends State<ProfileBasicInfo> {
             ),
           ),
           SizedBox(
-            width: 40,
+            width: screenAwareWidth(40, context),
           ),
         ],
       ),

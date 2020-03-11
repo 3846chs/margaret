@@ -45,7 +45,7 @@ class _LoginButtonState extends State<LoginButton> {
         builder: (context, constraints) {
           return Container(
             width: constraints.maxWidth * 2 / 3,
-            height: 20,
+            height: screenAwareHeight(20, context),
             child: Stack(
               overflow: Overflow.visible,
               alignment: Alignment.center,
