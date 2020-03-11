@@ -449,7 +449,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
                     width: 40,
                   ),
                   Icon(
-                    FontAwesomeIcons.mapMarked,
+                    Icons.location_on,
                     color: pastel_purple,
                     size: 15,
                   ),

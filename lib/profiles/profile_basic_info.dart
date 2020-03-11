@@ -43,14 +43,14 @@ class _ProfileBasicInfoState extends State<ProfileBasicInfo> {
       case "키":
         icon = FontAwesomeIcons.child;
         break;
-      case "종교":
-        icon = FontAwesomeIcons.pray;
-        break;
       case "흡연 여부":
         icon = FontAwesomeIcons.smoking;
         break;
       case "음주 여부":
         icon = FontAwesomeIcons.beer;
+        break;
+      case "종교":
+        icon = FontAwesomeIcons.pray;
         break;
       default:
         icon = Icons.check;
