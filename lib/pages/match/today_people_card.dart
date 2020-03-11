@@ -49,28 +49,24 @@ class _TodayPeopleCardState extends State<TodayPeopleCard> {
             CircleAvatar(
               radius: 30,
               child: ClipOval(
-                child: Consumer<MyUserData>(
-                  builder: (context, value, child) {
-                    return Stack(
-                      children: <Widget>[
-                        CachedNetworkImage(
-                          imageUrl: "profiles/${widget.you.profiles[0]}",
-                          cacheManager: StorageCacheManager(),
-                          placeholder: (context, url) =>
-                              const CircularProgressIndicator(),
-                          errorWidget: (context, url, error) =>
-                              const Icon(Icons.account_circle),
-                        ),
-                        BackdropFilter(
-                          filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
-                          child: new Container(
-                            decoration: new BoxDecoration(
-                                color: Colors.white.withOpacity(0.5)),
-                          ),
-                        )
-                      ],
-                    );
-                  },
+                child: Stack(
+                  children: <Widget>[
+                    CachedNetworkImage(
+                      imageUrl: "profiles/${widget.you.profiles[0]}",
+                      cacheManager: StorageCacheManager(),
+                      placeholder: (context, url) =>
+                          const CircularProgressIndicator(),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.account_circle),
+                    ),
+                    BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+                      child: new Container(
+                        decoration: new BoxDecoration(
+                            color: Colors.white.withOpacity(0.5)),
+                      ),
+                    )
+                  ],
                 ),
               ),
             ),
@@ -88,7 +84,7 @@ class _TodayPeopleCardState extends State<TodayPeopleCard> {
                   size: 15,
                   color: Colors.purple[100],
                 )),
-            BuildTodayAnswer(widget: widget),
+            BuildIntroduction(widget: widget),
             Container(
                 alignment: Alignment(0.8, 0),
                 child: Icon(
@@ -96,6 +92,9 @@ class _TodayPeopleCardState extends State<TodayPeopleCard> {
                   size: 15,
                   color: Colors.purple[100],
                 )),
+            SizedBox(
+              height: screenAwareHeight(10, context),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -105,7 +104,7 @@ class _TodayPeopleCardState extends State<TodayPeopleCard> {
                   size: 15,
                 ),
                 Text(
-                  "  전하고 싶은 말",
+                  " " + widget.you.nickname + "님의 답변",
                   style: TextStyle(
                     fontFamily: 'BMJUA',
                     fontSize: 15,
@@ -113,7 +112,11 @@ class _TodayPeopleCardState extends State<TodayPeopleCard> {
                 ),
               ],
             ),
-            BuildIntroduction(
+            SizedBox(
+              height: screenAwareHeight(10, context),
+            ),
+            BuildTodayAnswer(
+              widget: widget,
               cardColor: color,
             ),
             SizedBox(
@@ -170,8 +173,8 @@ class _TodayPeopleCardState extends State<TodayPeopleCard> {
   }
 }
 
-class BuildTodayAnswer extends StatelessWidget {
-  const BuildTodayAnswer({
+class BuildIntroduction extends StatelessWidget {
+  const BuildIntroduction({
     Key key,
     @required this.widget,
   }) : super(key: key);
@@ -181,44 +184,27 @@ class BuildTodayAnswer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 222,
-      height: screenAwareHeight(130, context),
+      width: screenAwareWidth(222, context),
+      height: screenAwareHeight(110, context),
       decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey,
-            blurRadius: 2.0,
-            spreadRadius: 0.0,
-            offset: Offset(2.0, 2.0), // shadow direction: bottom right
-          )
-        ],
         borderRadius: BorderRadius.circular(15.0),
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: <Color>[
-            Color(0xFFCCDDFF),
-            Color(0xFFFFEEFF),
-          ],
-        ),
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Center(
-          child: Text(
-            '   ' + widget.you.answer,
-            style: TextStyle(fontFamily: FontFamily.miSaeng, fontSize: 18),
-          ),
+      child: Center(
+        child: Text(
+          '   ' + widget.you.introduction,
+          style: TextStyle(fontFamily: FontFamily.miSaeng, fontSize: 20),
         ),
       ),
     );
   }
 }
 
-class BuildIntroduction extends StatelessWidget {
+class BuildTodayAnswer extends StatelessWidget {
   final MaterialColor cardColor;
+  final TodayPeopleCard widget;
 
-  const BuildIntroduction({
+  const BuildTodayAnswer({
+    this.widget,
     this.cardColor,
     Key key,
   }) : super(key: key);
@@ -244,18 +230,13 @@ class BuildIntroduction extends StatelessWidget {
           colors: <Color>[
             cardColor[100],
             Colors.white,
-//            Colors.blue[100],
-//            Colors.white,
           ],
         ),
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Center(
-          child: Text(
-            '   저의 모습을 그대로 보여줄 수 있는 사람과 연애를 하고 싶습니다. 저 자체만으로 사랑해주는 사람을 만나고 싶어요.',
-            style: TextStyle(fontFamily: FontFamily.miSaeng, fontSize: 18),
-          ),
+      child: Center(
+        child: Text(
+          widget.you.answer,
+          style: TextStyle(fontFamily: FontFamily.miSaeng, fontSize: 20),
         ),
       ),
     );

@@ -257,8 +257,8 @@ class _TodayQuestionState extends State<TodayQuestion>
       controller: _answerController,
       style: TextStyle(color: Colors.black),
       decoration: _buildInputDecoration('선택한 이유'),
-      maxLength: 100,
-      maxLines: 5,
+      maxLength: 80,
+      maxLines: 4,
     );
   }
 
@@ -267,14 +267,14 @@ class _TodayQuestionState extends State<TodayQuestion>
       hintText: hint,
       enabledBorder: OutlineInputBorder(
         borderSide: BorderSide(
-          color: Colors.lightBlue[300],
+          color: Colors.purple[300],
           width: 1,
         ),
         borderRadius: BorderRadius.circular(12),
       ),
       focusedBorder: OutlineInputBorder(
         borderSide: BorderSide(
-          color: Colors.lightBlue[300],
+          color: Colors.purple[300],
           width: 1,
         ),
         borderRadius: BorderRadius.circular(12),
