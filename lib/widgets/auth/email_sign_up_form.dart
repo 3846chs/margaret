@@ -30,7 +30,6 @@ class _EmailSignUpFormState extends State<EmailSignUpForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true,
       body: Padding(
         padding: const EdgeInsets.all(common_gap),
         child: Form(

@@ -6,6 +6,7 @@ import 'package:margaret/constants/firebase_keys.dart';
 import 'package:margaret/constants/font_names.dart';
 import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/pages/auth/email/email_auth.dart';
+import 'package:margaret/pages/auth/phonenum_auth.dart';
 import 'package:margaret/pages/auth/profile_input_page.dart';
 import 'package:margaret/utils/adjust_size.dart';
 import 'package:margaret/utils/simple_snack_bar.dart';
@@ -65,7 +66,7 @@ class AuthPage extends StatelessWidget {
                 color: Colors.pinkAccent,
               ),
             ),
-            SizedBox(height: screenAwareHeight(130, context)),
+            SizedBox(height: screenAwareHeight(90, context)),
             LoginButton(
               text: "Google  로그인",
               icon: FontAwesomeIcons.google,
@@ -92,6 +93,16 @@ class AuthPage extends StatelessWidget {
               icon: FontAwesomeIcons.facebookF,
               color: Colors.black,
               onPressed: () => null,
+            ),
+            SizedBox(height: screenAwareHeight(5.0, context)),
+            LoginButton(
+              text: "전화번호  로그인",
+              icon: FontAwesomeIcons.phone,
+              color: Colors.blueAccent,
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => PhonenumAuth()));
+              },
             ),
             SizedBox(height: screenAwareHeight(5.0, context)),
             LoginButton(
