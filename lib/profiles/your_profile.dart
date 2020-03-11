@@ -1,4 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:margaret/constants/colors.dart';
+import 'package:margaret/constants/font_names.dart';
 import 'package:margaret/constants/size.dart';
 import 'package:margaret/data/user.dart';
 import 'package:margaret/firebase/storage_cache_manager.dart';
@@ -89,7 +92,7 @@ class YourProfile extends StatelessWidget {
           child: Center(
             child: Container(
               decoration: ShapeDecoration(
-                color: Color.fromRGBO(222, 222, 255, 1),
+                color: pastel_purple,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(3.0)),
                 shadows: [
@@ -125,7 +128,13 @@ class YourProfile extends StatelessWidget {
       floating: false,
       pinned: true,
       flexibleSpace: FlexibleSpaceBar(
-        title: Text(user.nickname),
+        title: Text(
+          user.nickname,
+          style: TextStyle(
+            fontSize: 20,
+            fontFamily: FontFamily.jua,
+          ),
+        ),
         background: Swiper(
           loop: false,
           itemCount: user.profiles.length,
@@ -178,41 +187,17 @@ class YourProfile extends StatelessWidget {
       children: <Widget>[
         Row(
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(common_gap),
-              child: Center(
-                child: Container(
-                  decoration: ShapeDecoration(
-                    color: Color.fromRGBO(255, 178, 245, 1),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(3.0),
-                    ),
-                    shadows: [
-                      const BoxShadow(
-                        color: Colors.black26,
-                        blurRadius: 3.0,
-                        offset: Offset(2, 2),
-                      ),
-                    ],
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      '❤ 나를 표현하는 가치관은?',
-                      style: const TextStyle(
-                        fontSize: 15,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+            SizedBox(
+              width: 10,
             ),
-            const SizedBox(width: 10),
+            Icon(
+              FontAwesomeIcons.quoteLeft,
+              color: pastel_purple,
+              size: 15,
+            ),
+            Spacer(),
           ],
         ),
-        const SizedBox(height: 10),
         Row(
           children: <Widget>[
             const SizedBox(width: 40),
@@ -220,11 +205,24 @@ class YourProfile extends StatelessWidget {
               child: Center(
                 child: Text(
                   user.introduction ?? '등록된 자기소개가 없습니다',
-                  style: const TextStyle(fontSize: 15),
+                  style: const TextStyle(fontSize: 23, fontFamily: FontFamily.miSaeng),
                 ),
               ),
             ),
             const SizedBox(width: 40),
+          ],
+        ),
+        Row(
+          children: <Widget>[
+            Spacer(),
+            Icon(
+              FontAwesomeIcons.quoteRight,
+              color: pastel_purple,
+              size: 15,
+            ),
+            SizedBox(
+              width: 10,
+            ),
           ],
         ),
       ],

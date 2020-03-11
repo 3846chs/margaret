@@ -336,14 +336,14 @@ class _ChatDetailPageState extends State<ChatDetailPage>
       hintText: hint,
       enabledBorder: OutlineInputBorder(
         borderSide: BorderSide(
-          color: Colors.lightBlue[300],
+          color: Colors.purple[200],
           width: 1,
         ),
         borderRadius: BorderRadius.circular(12),
       ),
       focusedBorder: OutlineInputBorder(
         borderSide: BorderSide(
-          color: Colors.lightBlue[300],
+          color: Colors.purple[200],
           width: 1,
         ),
         borderRadius: BorderRadius.circular(12),

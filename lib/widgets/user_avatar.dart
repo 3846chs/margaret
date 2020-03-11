@@ -15,6 +15,7 @@ class UserAvatar extends StatelessWidget {
   Widget build(BuildContext context) {
     if (user != null) {
       return CircleAvatar(
+        radius: 30.0,
         child: ClipOval(
           child: CachedNetworkImage(
             width: width,

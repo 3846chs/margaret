@@ -27,7 +27,7 @@ class _ChatBubbleState extends State<ChatBubble>
 
     if (widget.message.idFrom == "bot") {
       return Center(
-        child: _buildBubble(pastel_purple),
+        child: _buildBubble(Colors.grey[400]),
       );
     }
 
@@ -38,7 +38,7 @@ class _ChatBubbleState extends State<ChatBubble>
           const Spacer(),
           _buildHeart(),
           _buildTime(),
-          _buildBubble(Colors.blue),
+          _buildBubble(Color(0xffffaabb)),
         ],
       );
     }
@@ -49,7 +49,7 @@ class _ChatBubbleState extends State<ChatBubble>
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: <Widget>[
-        _buildBubble(Colors.grey),
+        _buildBubble(pastel_purple),
         _buildTime(),
         const Spacer(),
       ],

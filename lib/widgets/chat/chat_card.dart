@@ -1,3 +1,4 @@
+import 'package:margaret/constants/font_names.dart';
 import 'package:margaret/constants/size.dart';
 import 'package:margaret/data/user.dart';
 import 'package:margaret/widgets/user_avatar.dart';
@@ -43,7 +44,7 @@ class ChatCard extends StatelessWidget {
                   children: <Widget>[
                     Padding(
                       padding: const EdgeInsets.all(common_s_gap),
-                      child: Text(peer.nickname),
+                      child: Text(peer.nickname, style: TextStyle(fontSize: 17,),),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(common_s_gap),

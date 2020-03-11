@@ -1,3 +1,4 @@
+import 'package:margaret/constants/colors.dart';
 import 'package:margaret/constants/size.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -31,7 +32,7 @@ class _ProfileBasicInfoState extends State<ProfileBasicInfo> {
         icon = FontAwesomeIcons.venusMars;
         break;
       case "나이":
-        icon = Icons.cake;
+        icon = FontAwesomeIcons.birthdayCake;
         break;
       case "지역":
         icon = Icons.location_on;
@@ -40,7 +41,16 @@ class _ProfileBasicInfoState extends State<ProfileBasicInfo> {
         icon = FontAwesomeIcons.suitcase;
         break;
       case "키":
-        icon = FontAwesomeIcons.key;
+        icon = FontAwesomeIcons.child;
+        break;
+      case "종교":
+        icon = FontAwesomeIcons.pray;
+        break;
+      case "흡연 여부":
+        icon = FontAwesomeIcons.smoking;
+        break;
+      case "음주 여부":
+        icon = FontAwesomeIcons.beer;
         break;
       default:
         icon = Icons.check;
@@ -56,7 +66,7 @@ class _ProfileBasicInfoState extends State<ProfileBasicInfo> {
           ),
           Icon(
             icon,
-            color: Color.fromRGBO(222, 222, 255, 1),
+            color: pastel_purple,
             size: 15,
           ),
           SizedBox(
