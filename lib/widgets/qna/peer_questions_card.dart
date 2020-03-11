@@ -108,7 +108,7 @@ class PeerQuestionsCard extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                width: 10,
+                width: screenAwareWidth(10, context),
               ),
             ],
           ),
@@ -147,7 +147,7 @@ class PeerQuestionsCard extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                width: 40,
+                width: screenAwareWidth(40, context),
               ),
               Column(
                 children: <Widget>[
@@ -156,7 +156,7 @@ class PeerQuestionsCard extends StatelessWidget {
                     style: TextStyle(fontFamily: FontFamily.jua, fontSize: 20),
                   ),
                   SizedBox(
-                    height: 10,
+                    height: screenAwareHeight(10, context),
                   ),
                   Text(
                     (DateTime.now().year - this.peer.birthYear + 1).toString() +
@@ -179,7 +179,7 @@ class PeerQuestionsCard extends StatelessWidget {
                 color: Colors.purple[100],
               )),
           Container(
-            width: 250,
+            width: screenAwareWidth(250, context),
             child: Padding(
               padding: const EdgeInsets.all(common_gap),
               child: Center(
@@ -214,8 +214,8 @@ class PeerQuestionsCard extends StatelessWidget {
                   ),
                 )),
               ),
-              width: 270,
-              height: 130,
+              width: screenAwareWidth(270, context),
+              height: screenAwareHeight(130, context),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topLeft,
@@ -256,7 +256,7 @@ class PeerQuestionsCard extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                width: screenAwareHeight(50, context),
+                width: screenAwareWidth(50, context),
               ),
             ],
           ),

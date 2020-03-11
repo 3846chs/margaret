@@ -15,6 +15,7 @@ import 'package:margaret/firebase/firestore_provider.dart';
 import 'package:margaret/firebase/storage_cache_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:margaret/utils/adjust_size.dart';
 import 'package:provider/provider.dart';
 
 class TempMyProfile extends StatefulWidget {
@@ -127,7 +128,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Container(
-                    height: 30,
+                    height: screenAwareHeight(30, context),
                     width: double.infinity,
                     color: Colors.grey[200],
                     child: Center(
@@ -156,8 +157,8 @@ class _TempMyProfileState extends State<TempMyProfile> {
                                   child: CachedNetworkImage(
                                     imageUrl: "profiles/$path",
                                     cacheManager: StorageCacheManager(),
-                                    width: 100,
-                                    height: 100,
+                                    width: screenAwareWidth(100, context),
+                                    height: screenAwareHeight(100, context),
                                     fit: BoxFit.cover,
                                     placeholder: (context, url) =>
                                         const CircularProgressIndicator(),
@@ -176,7 +177,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
                     style: TextStyle(color: Colors.redAccent, fontSize: 10),
                   ),
                   Container(
-                    height: 30,
+                    height: screenAwareHeight(30, context),
                     width: double.infinity,
                     color: Colors.grey[200],
                     child: Center(
@@ -193,7 +194,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
                     style: TextStyle(color: Colors.blueAccent),
                   ),
                   Container(
-                    height: 30,
+                    height: screenAwareHeight(30, context),
                     width: double.infinity,
                     color: Colors.grey[200],
                     child: Center(
@@ -205,7 +206,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
                     )),
                   ),
                   SizedBox(
-                    height: 5,
+                    height: screenAwareHeight(5, context),
                   ),
                   _buildNickname(),
                   _buildGender(),
@@ -217,7 +218,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
                   _buildDrink(),
                   _buildReligion(),
                   SizedBox(
-                    height: common_gap,
+                    height: screenAwareHeight(common_gap, context),
                   ),
                 ],
               );
@@ -238,7 +239,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
               child: Row(
                 children: <Widget>[
                   SizedBox(
-                    width: 40,
+                    width: screenAwareWidth(40, context),
                   ),
                   Icon(
                     FontAwesomeIcons.user,
@@ -246,7 +247,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
                     size: 15,
                   ),
                   SizedBox(
-                    width: 10,
+                    width: screenAwareWidth(10, context),
                   ),
                   Center(
                     child: Text(
@@ -264,7 +265,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
                     child: Center(
                       child: InkWell(
                           child: SizedBox(
-                            width: 120,
+                            width: screenAwareWidth(120, context),
                             child: Center(
                               child: Text(
                                 '$nickname',
@@ -336,7 +337,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
               child: Row(
                 children: <Widget>[
                   SizedBox(
-                    width: 40,
+                    width: screenAwareWidth(40, context),
                   ),
                   Icon(
                     FontAwesomeIcons.venusMars,
@@ -344,7 +345,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
                     size: 15,
                   ),
                   SizedBox(
-                    width: 10,
+                    width: screenAwareWidth(10, context),
                   ),
                   Center(
                     child: Text(
@@ -367,7 +368,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
                     ),
                   ),
                   SizedBox(
-                    width: 10,
+                    width: screenAwareWidth(10, context),
                   ),
                   Icon(
                     FontAwesomeIcons.lock,
@@ -391,7 +392,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
               child: Row(
                 children: <Widget>[
                   SizedBox(
-                    width: 40,
+                    width: screenAwareWidth(40, context),
                   ),
                   Icon(
                     FontAwesomeIcons.birthdayCake,
@@ -399,7 +400,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
                     size: 15,
                   ),
                   SizedBox(
-                    width: 10,
+                    width: screenAwareWidth(10, context),
                   ),
                   Center(
                     child: Text(
@@ -422,7 +423,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
                     ),
                   ),
                   SizedBox(
-                    width: 10,
+                    width: screenAwareWidth(10, context),
                   ),
                   Icon(
                     FontAwesomeIcons.lock,
@@ -446,7 +447,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
               child: Row(
                 children: <Widget>[
                   SizedBox(
-                    width: 40,
+                    width: screenAwareWidth(40, context),
                   ),
                   Icon(
                     Icons.location_on,
@@ -454,7 +455,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
                     size: 15,
                   ),
                   SizedBox(
-                    width: 10,
+                    width: screenAwareWidth(10, context),
                   ),
                   Center(
                     child: Text(
@@ -472,7 +473,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
                     child: Center(
                       child: InkWell(
                         child: SizedBox(
-                          width: 120,
+                          width: screenAwareWidth(120, context),
                           child: Center(
                             child: Text(
                               '$region',
@@ -485,7 +486,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
                             context: context,
                             builder: (context) => Center(
                               child: Container(
-                                  height: 600,
+                                  height: screenAwareHeight(600, context),
                                   child: SimpleDialog(
                                       children: create_regionOptionList(
                                           choose_region))),
@@ -496,7 +497,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
                     ),
                   ),
                   SizedBox(
-                    width: 25,
+                    width: screenAwareWidth(25, context),
                   ),
                 ],
               ),
@@ -532,7 +533,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
               child: Row(
             children: <Widget>[
               SizedBox(
-                width: 40,
+                width: screenAwareWidth(40, context),
               ),
               Icon(
                 FontAwesomeIcons.suitcase,
@@ -540,7 +541,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
                 size: 15,
               ),
               SizedBox(
-                width: 10,
+                width: screenAwareWidth(10, context),
               ),
               Center(
                 child: Text(
@@ -557,7 +558,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
                   child: Center(
                     child: InkWell(
                         child: SizedBox(
-                          width: 120,
+                          width: screenAwareWidth(120, context),
                           child: Center(
                             child: Text(
                               job,
@@ -574,7 +575,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
                     // 클릭하면 팝업창 띄워서 수정하는 디자인으로 갈 예정
                   ),
                 ),
-                const SizedBox(width: 25),
+                SizedBox(width: screenAwareWidth(25, context)),
               ],
             ),
           ),
@@ -622,7 +623,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
             child: Row(
               children: <Widget>[
                 SizedBox(
-                  width: 40,
+                  width: screenAwareWidth(40, context),
                 ),
                 Icon(
                   FontAwesomeIcons.child,
@@ -630,7 +631,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
                   size: 15,
                 ),
                 SizedBox(
-                  width: 10,
+                  width: screenAwareWidth(10, context),
                 ),
                 Center(
                   child: Text(
@@ -648,7 +649,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
                   child: Center(
                     child: InkWell(
                       child: SizedBox(
-                        width: 120,
+                        width: screenAwareWidth(120, context),
                         child: Center(
                           child: Text(
                             '$height',
@@ -661,7 +662,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
                           context: context,
                           builder: (context) => Center(
                             child: Container(
-                                height: 600,
+                                height: screenAwareHeight(600, context),
                                 child: _buildHeightDialog(context)),
                           ),
                         );
@@ -669,8 +670,8 @@ class _TempMyProfileState extends State<TempMyProfile> {
                     ),
                   ),
                 ),
-                const SizedBox(
-                  width: 25,
+                SizedBox(
+                  width: screenAwareWidth(25, context),
                 )
               ],
             ),
@@ -713,7 +714,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
               child: Row(
                 children: <Widget>[
                   SizedBox(
-                    width: 40,
+                    width: screenAwareWidth(40, context),
                   ),
                   Icon(
                     FontAwesomeIcons.smoking,
@@ -721,7 +722,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
                     size: 15,
                   ),
                   SizedBox(
-                    width: 10,
+                    width: screenAwareWidth(10, context),
                   ),
                   Center(
                     child: Text(
@@ -739,7 +740,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
                     child: Center(
                       child: InkWell(
                         child: SizedBox(
-                          width: 120,
+                          width: screenAwareWidth(120, context),
                           child: Center(
                             child: Text(
                               '$smoke',
@@ -752,7 +753,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
                             context: context,
                             builder: (context) => Center(
                               child: Container(
-                                  height: 600,
+                                  height: screenAwareHeight(600, context),
                                   child: SimpleDialog(
                                       children: create_smokeOptionList(
                                           choose_smoke))),
@@ -763,7 +764,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
                     ),
                   ),
                   SizedBox(
-                    width: 25,
+                    width: screenAwareWidth(25, context),
                   ),
                 ],
               ),
@@ -799,7 +800,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
               child: Row(
                 children: <Widget>[
                   SizedBox(
-                    width: 40,
+                    width: screenAwareWidth(40, context),
                   ),
                   Icon(
                     FontAwesomeIcons.beer,
@@ -807,7 +808,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
                     size: 15,
                   ),
                   SizedBox(
-                    width: 10,
+                    width: screenAwareWidth(10, context),
                   ),
                   Center(
                     child: Text(
@@ -825,7 +826,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
                     child: Center(
                       child: InkWell(
                         child: SizedBox(
-                          width: 120,
+                          width: screenAwareWidth(120, context),
                           child: Center(
                             child: Text(
                               '$drink',
@@ -838,7 +839,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
                             context: context,
                             builder: (context) => Center(
                               child: Container(
-                                  height: 600,
+                                  height: screenAwareHeight(600, context),
                                   child: SimpleDialog(
                                       children: create_drinkOptionList(
                                           choose_drink))),
@@ -849,7 +850,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
                     ),
                   ),
                   SizedBox(
-                    width: 25,
+                    width: screenAwareWidth(25, context),
                   ),
                 ],
               ),
@@ -885,7 +886,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
               child: Row(
                 children: <Widget>[
                   SizedBox(
-                    width: 40,
+                    width: screenAwareWidth(40, context),
                   ),
                   Icon(
                     FontAwesomeIcons.pray,
@@ -893,7 +894,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
                     size: 15,
                   ),
                   SizedBox(
-                    width: 10,
+                    width: screenAwareWidth(10, context),
                   ),
                   Center(
                     child: Text(
@@ -911,7 +912,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
                     child: Center(
                       child: InkWell(
                         child: SizedBox(
-                          width: 120,
+                          width: screenAwareWidth(120, context),
                           child: Center(
                             child: Text(
                               '$religion',
@@ -924,7 +925,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
                             context: context,
                             builder: (context) => Center(
                               child: Container(
-                                  height: 600,
+                                  height: screenAwareHeight(600, context),
                                   child: SimpleDialog(
                                     children: create_religionOptionList(
                                         choose_religion),
@@ -936,7 +937,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
                     ),
                   ),
                   SizedBox(
-                    width: 25,
+                    width: screenAwareWidth(25, context),
                   ),
                 ],
               ),
@@ -972,7 +973,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
           Row(
             children: <Widget>[
               SizedBox(
-                width: 20,
+                width: screenAwareWidth(20, context),
               ),
               Icon(
                 FontAwesomeIcons.quoteLeft,
@@ -985,7 +986,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
           Row(
             children: <Widget>[
               SizedBox(
-                width: 40,
+                width: screenAwareWidth(40, context),
               ),
               Expanded(
                 child: Center(
@@ -1004,7 +1005,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
                 ),
               ),
               SizedBox(
-                width: 40,
+                width: screenAwareWidth(40, context),
               ),
             ],
           ),
@@ -1017,7 +1018,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
                 size: 15,
               ),
               SizedBox(
-                width: 20,
+                width: screenAwareWidth(20, context),
               ),
             ],
           ),

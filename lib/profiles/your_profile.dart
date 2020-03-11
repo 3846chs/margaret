@@ -117,7 +117,7 @@ class YourProfile extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(width: 10),
+        SizedBox(width: 10),
       ],
     );
   }

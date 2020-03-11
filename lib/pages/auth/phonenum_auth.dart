@@ -36,7 +36,7 @@ class PhonenumAuth extends StatelessWidget {
               },
             ),
           ),
-          const SizedBox(height: common_gap),
+          SizedBox(height: screenAwareHeight(common_gap, context)),
           Container(
             height: screenAwareHeight(50, context),
             width: screenAwareWidth(300, context),

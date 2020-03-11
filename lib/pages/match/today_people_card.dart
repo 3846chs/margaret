@@ -43,7 +43,7 @@ class _TodayPeopleCardState extends State<TodayPeopleCard> {
 
     return GestureDetector(
       child: Container(
-        width: screenAwareHeight(300, context),
+        width: screenAwareWidth(300, context),
         child: Column(
           children: <Widget>[
             CircleAvatar(
@@ -212,7 +212,7 @@ class BuildTodayAnswer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 270,
+      width: screenAwareWidth(270, context),
       height: screenAwareHeight(100, context),
       decoration: BoxDecoration(
         boxShadow: [

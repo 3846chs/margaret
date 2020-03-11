@@ -5,6 +5,7 @@ import 'package:margaret/data/message.dart';
 import 'package:margaret/firebase/storage_cache_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:margaret/utils/adjust_size.dart';
 
 class ChatBubble extends StatefulWidget {
   final Message message;
@@ -83,7 +84,7 @@ class _ChatBubbleState extends State<ChatBubble>
 
   Widget _buildBubble(Color color) {
     return Container(
-      constraints: const BoxConstraints(maxWidth: 200.0),
+      constraints: BoxConstraints(maxWidth: screenAwareWidth(200, context)),
       decoration: BoxDecoration(
         color: color,
         borderRadius: BorderRadius.circular(12.0),

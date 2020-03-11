@@ -57,7 +57,7 @@ class _EmailSignUpFormState extends State<EmailSignUpForm> {
                   return null;
                 },
               ),
-              const SizedBox(height: common_l_gap),
+              SizedBox(height: screenAwareHeight(common_l_gap, context)),
               TextFormField(
                 obscureText: true,
                 controller: _pwController,
@@ -68,7 +68,7 @@ class _EmailSignUpFormState extends State<EmailSignUpForm> {
                   return null;
                 },
               ),
-              const SizedBox(height: common_l_gap),
+              SizedBox(height: screenAwareHeight(common_l_gap, context)),
               TextFormField(
                 obscureText: true,
                 controller: _cpwController,
@@ -79,7 +79,7 @@ class _EmailSignUpFormState extends State<EmailSignUpForm> {
                   return null;
                 },
               ),
-              const SizedBox(height: common_l_gap),
+              SizedBox(height: screenAwareHeight(common_l_gap, context)),
               FlatButton(
                 onPressed: () {
                   if (_formKey.currentState.validate()) _register();

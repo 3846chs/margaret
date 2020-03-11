@@ -49,7 +49,7 @@ class _EmailPwResetState extends State<EmailPwReset> {
                   },
                 ),
                 SizedBox(
-                  height: 32,
+                  height: screenAwareHeight(32, context),
                 ),
                 FlatButton(
                   onPressed: () async {

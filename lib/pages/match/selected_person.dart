@@ -55,8 +55,8 @@ class SelectedPerson extends StatelessWidget {
                             child: CachedNetworkImage(
                               imageUrl: "profiles/$path",
                               cacheManager: StorageCacheManager(),
-                              width: 150,
-                              height: 150,
+                              width: screenAwareWidth(150, context),
+                              height: screenAwareHeight(150, context),
                               fit: BoxFit.cover,
                               placeholder: (context, url) =>
                                   const CircularProgressIndicator(),

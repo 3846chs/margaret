@@ -9,6 +9,7 @@ import 'package:margaret/data/user.dart';
 import 'package:margaret/firebase/firestore_provider.dart';
 import 'package:margaret/firebase/storage_provider.dart';
 import 'package:margaret/pages/image_page.dart';
+import 'package:margaret/utils/adjust_size.dart';
 import 'package:margaret/utils/prefs_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -210,7 +211,7 @@ class _ChatDetailPageState extends State<ChatDetailPage>
           child: Padding(
             padding: const EdgeInsets.all(common_s_gap),
             child: ConstrainedBox(
-              constraints: const BoxConstraints(maxHeight: 100),
+              constraints: BoxConstraints(maxHeight: screenAwareHeight(100, context)),
               child: TextField(
                 controller: _messageController,
                 keyboardType: TextInputType.multiline,

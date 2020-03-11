@@ -113,10 +113,10 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                     ),
                   ),
                   SizedBox(
-                    height: common_gap,
+                    height: screenAwareHeight(common_gap, context),
                   ),
                   Container(
-                    height: 30,
+                    height: screenAwareHeight(30, context),
                     width: double.infinity,
                     color: Colors.grey[200],
                     child: Center(
@@ -128,7 +128,7 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                     )),
                   ),
                   SizedBox(
-                    height: common_gap,
+                    height: screenAwareHeight(common_gap, context),
                   ),
                   Center(
                     child: SingleChildScrollView(
@@ -139,8 +139,8 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                             padding: const EdgeInsets.all(common_gap),
                             child: _profiles.length < 1
                                 ? SizedBox(
-                                    width: 150,
-                                    height: 150,
+                                    width: screenAwareWidth(150, context),
+                                    height: screenAwareHeight(150, context),
                                     child: RaisedButton(
                                       child: const Icon(Icons.add_a_photo),
                                       onPressed: _getProfile,
@@ -150,8 +150,8 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                                     onPressed: () => _getProfile(0),
                                     child: Image.file(
                                       _profiles[0],
-                                      height: 150,
-                                      width: 150,
+                                      height: screenAwareHeight(150, context),
+                                      width: screenAwareWidth(150, context),
                                     ),
                                   ),
                           ),
@@ -159,8 +159,8 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                             padding: const EdgeInsets.all(common_gap),
                             child: _profiles.length < 2
                                 ? SizedBox(
-                                    width: 150,
-                                    height: 150,
+                                    width: screenAwareWidth(150, context),
+                                    height: screenAwareHeight(150, context),
                                     child: RaisedButton(
                                       child: const Icon(Icons.add_a_photo),
                                       onPressed: _getProfile,
@@ -170,8 +170,8 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                                     onPressed: () => _getProfile(1),
                                     child: Image.file(
                                       _profiles[1],
-                                      height: 150,
-                                      width: 150,
+                                      height: screenAwareHeight(150, context),
+                                      width: screenAwareWidth(150, context),
                                     ),
                                   ),
                           ),
@@ -179,7 +179,6 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                       ),
                     ),
                   ),
-                  //SizedBox(height: common_s_gap),
                   Padding(
                     padding: const EdgeInsets.all(common_s_gap),
                     child: Center(
@@ -193,9 +192,9 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                               : Colors.redAccent),
                     )),
                   ),
-                  const SizedBox(height: common_l_gap),
+                  SizedBox(height: screenAwareHeight(common_l_gap, context)),
                   Container(
-                    height: 30,
+                    height: screenAwareHeight(30, context),
                     width: double.infinity,
                     color: Colors.grey[200],
                     child: Center(
@@ -206,13 +205,13 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                           color: Colors.black),
                     )),
                   ),
-                  const SizedBox(
-                    height: common_gap,
+                  SizedBox(
+                    height: screenAwareHeight(common_gap, context),
                   ),
                   Row(
                     children: <Widget>[
                       SizedBox(
-                        width: 10,
+                        width: screenAwareWidth(10, context),
                       ),
                       Icon(
                         FontAwesomeIcons.user,
@@ -220,10 +219,10 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                         size: 15,
                       ),
                       SizedBox(
-                        width: 10,
+                        width: screenAwareWidth(10, context),
                       ),
                       Container(
-                        width: 70,
+                        width: screenAwareWidth(70, context),
                         child: Center(
                           child: Text(
                             '닉네임',
@@ -232,11 +231,11 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                         ),
                       ),
                       SizedBox(
-                        width: 20,
+                        width: screenAwareWidth(20, context),
                       ),
                       Expanded(
                         child: Container(
-                          height: 60,
+                          height: screenAwareHeight(60, context),
                           decoration: BoxDecoration(
                               color: Colors.grey[100],
                               borderRadius: BorderRadius.circular(12),
@@ -245,7 +244,7 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                           child: Row(
                             children: <Widget>[
                               SizedBox(
-                                width: 10,
+                                width: screenAwareWidth(10, context),
                               ),
                               Expanded(
                                 child: InkWell(
@@ -257,7 +256,7 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                                       context: context,
                                       builder: (context) => Center(
                                         child: Container(
-                                            height: 600,
+                                            height: screenAwareHeight(600, context),
                                             width:
                                                 screenAwareWidth(300, context),
                                             child:
@@ -268,22 +267,22 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                                 ),
                               ),
                               SizedBox(
-                                width: 10,
+                                width: screenAwareWidth(10, context),
                               ),
                             ],
                           ),
                         ),
                       ),
                       SizedBox(
-                        width: 20,
+                        width: screenAwareWidth(20, context),
                       ),
                     ],
                   ),
-                  const SizedBox(height: common_l_gap),
+                  SizedBox(height: screenAwareHeight(common_l_gap, context)),
                   Row(
                     children: <Widget>[
                       SizedBox(
-                        width: 10,
+                        width: screenAwareWidth(10, context),
                       ),
                       Icon(
                         FontAwesomeIcons.venusMars,
@@ -291,10 +290,10 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                         size: 15,
                       ),
                       SizedBox(
-                        width: 10,
+                        width: screenAwareWidth(10, context),
                       ),
                       Container(
-                        width: 70,
+                        width: screenAwareWidth(70, context),
                         child: Center(
                           child: Text(
                             '성별',
@@ -303,7 +302,7 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                         ),
                       ),
                       SizedBox(
-                        width: 20,
+                        width: screenAwareWidth(20, context),
                       ),
                       Expanded(
                         child: Center(
@@ -345,11 +344,11 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: common_l_gap),
+                  SizedBox(height: screenAwareHeight(common_l_gap, context)),
                   Row(
                     children: <Widget>[
                       SizedBox(
-                        width: 10,
+                        width: screenAwareWidth(10, context),
                       ),
                       Icon(
                         FontAwesomeIcons.birthdayCake,
@@ -357,10 +356,10 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                         size: 15,
                       ),
                       SizedBox(
-                        width: 10,
+                        width: screenAwareWidth(10, context),
                       ),
                       Container(
-                        width: 70,
+                        width: screenAwareWidth(70, context),
                         child: Center(
                           child: Text(
                             '출생 연도',
@@ -369,11 +368,11 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                         ),
                       ),
                       SizedBox(
-                        width: 20,
+                        width: screenAwareWidth(20, context),
                       ),
                       Expanded(
                         child: Container(
-                          height: 60,
+                          height: screenAwareHeight(60, context),
                           decoration: BoxDecoration(
                               color: Colors.grey[100],
                               borderRadius: BorderRadius.circular(12),
@@ -382,7 +381,7 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                           child: Row(
                             children: <Widget>[
                               SizedBox(
-                                width: 10,
+                                width: screenAwareWidth(10, context),
                               ),
                               Expanded(
                                 child: InkWell(
@@ -414,22 +413,22 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                                 ),
                               ),
                               SizedBox(
-                                width: 10,
+                                width: screenAwareWidth(10, context),
                               ),
                             ],
                           ),
                         ),
                       ),
                       SizedBox(
-                        width: 20,
+                        width: screenAwareWidth(20, context),
                       ),
                     ],
                   ),
-                  const SizedBox(height: common_l_gap),
+                  SizedBox(height: screenAwareHeight(common_l_gap, context)),
                   Row(
                     children: <Widget>[
                       SizedBox(
-                        width: 10,
+                        width: screenAwareWidth(10, context),
                       ),
                       Icon(
                         Icons.location_on,
@@ -437,10 +436,10 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                         size: 15,
                       ),
                       SizedBox(
-                        width: 10,
+                        width: screenAwareWidth(10, context),
                       ),
                       Container(
-                        width: 70,
+                        width: screenAwareWidth(70, context),
                         child: Center(
                           child: Text(
                             '지역',
@@ -449,11 +448,11 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                         ),
                       ),
                       SizedBox(
-                        width: 20,
+                        width: screenAwareWidth(20, context),
                       ),
                       Expanded(
                         child: Container(
-                          height: 60,
+                          height: screenAwareHeight(60, context),
                           decoration: BoxDecoration(
                               color: Colors.grey[100],
                               borderRadius: BorderRadius.circular(12),
@@ -462,7 +461,7 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                           child: Row(
                             children: <Widget>[
                               SizedBox(
-                                width: 10,
+                                width: screenAwareWidth(10, context),
                               ),
                               Expanded(
                                 child: InkWell(
@@ -474,7 +473,7 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                                       context: context,
                                       builder: (context) => Center(
                                         child: Container(
-                                            height: 600,
+                                            height: screenAwareHeight(600, context),
                                             width:
                                                 screenAwareWidth(300, context),
                                             child: SimpleDialog(
@@ -491,22 +490,22 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                                 ),
                               ),
                               SizedBox(
-                                width: 10,
+                                width: screenAwareWidth(10, context),
                               ),
                             ],
                           ),
                         ),
                       ),
                       SizedBox(
-                        width: 20,
+                        width: screenAwareWidth(20, context),
                       ),
                     ],
                   ),
-                  const SizedBox(height: common_l_gap),
+                  SizedBox(height: screenAwareHeight(common_l_gap, context)),
                   Row(
                     children: <Widget>[
                       SizedBox(
-                        width: 10,
+                        width: screenAwareWidth(10, context),
                       ),
                       Icon(
                         FontAwesomeIcons.suitcase,
@@ -514,10 +513,10 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                         size: 15,
                       ),
                       SizedBox(
-                        width: 10,
+                        width: screenAwareWidth(10, context),
                       ),
                       Container(
-                        width: 70,
+                        width: screenAwareWidth(70, context),
                         child: Center(
                           child: Text(
                             '직업',
@@ -526,11 +525,11 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                         ),
                       ),
                       SizedBox(
-                        width: 20,
+                        width: screenAwareWidth(20, context),
                       ),
                       Expanded(
                         child: Container(
-                          height: 60,
+                          height: screenAwareHeight(60, context),
                           decoration: BoxDecoration(
                               color: Colors.grey[100],
                               borderRadius: BorderRadius.circular(12),
@@ -539,7 +538,7 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                           child: Row(
                             children: <Widget>[
                               SizedBox(
-                                width: 10,
+                                width: screenAwareWidth(10, context),
                               ),
                               Expanded(
                                 child: InkWell(
@@ -551,7 +550,7 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                                       context: context,
                                       builder: (context) => Center(
                                         child: Container(
-                                            height: 600,
+                                            height: screenAwareHeight(600, context),
                                             width:
                                                 screenAwareWidth(300, context),
                                             child: _buildJobDialog(context)),
@@ -561,22 +560,22 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                                 ),
                               ),
                               SizedBox(
-                                width: 10,
+                                width: screenAwareWidth(10, context),
                               ),
                             ],
                           ),
                         ),
                       ),
                       SizedBox(
-                        width: 20,
+                        width: screenAwareWidth(20, context),
                       ),
                     ],
                   ),
-                  const SizedBox(height: common_l_gap),
+                  SizedBox(height: screenAwareHeight(common_l_gap, context)),
                   Row(
                     children: <Widget>[
                       SizedBox(
-                        width: 10,
+                        width: screenAwareWidth(10, context),
                       ),
                       Icon(
                         FontAwesomeIcons.child,
@@ -584,10 +583,10 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                         size: 15,
                       ),
                       SizedBox(
-                        width: 10,
+                        width: screenAwareWidth(10, context),
                       ),
                       Container(
-                        width: 70,
+                        width: screenAwareWidth(70, context),
                         child: Center(
                           child: Text(
                             '키',
@@ -596,11 +595,11 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                         ),
                       ),
                       SizedBox(
-                        width: 20,
+                        width: screenAwareWidth(20, context),
                       ),
                       Expanded(
                         child: Container(
-                          height: 60,
+                          height: screenAwareHeight(60, context),
                           decoration: BoxDecoration(
                               color: Colors.grey[100],
                               borderRadius: BorderRadius.circular(12),
@@ -609,7 +608,7 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                           child: Row(
                             children: <Widget>[
                               SizedBox(
-                                width: 10,
+                                width: screenAwareWidth(10, context),
                               ),
                               Expanded(
                                 child: InkWell(
@@ -621,7 +620,7 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                                       context: context,
                                       builder: (context) => Center(
                                         child: Container(
-                                            height: 600,
+                                            height: screenAwareHeight(600, context),
                                             width:
                                                 screenAwareWidth(300, context),
                                             child: _buildHeightDialog(context)),
@@ -631,22 +630,22 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                                 ),
                               ),
                               SizedBox(
-                                width: 10,
+                                width: screenAwareWidth(10, context),
                               ),
                             ],
                           ),
                         ),
                       ),
                       SizedBox(
-                        width: 20,
+                        width: screenAwareWidth(20, context),
                       ),
                     ],
                   ),
-                  const SizedBox(height: common_l_gap),
+                  SizedBox(height: screenAwareHeight(common_l_gap, context)),
                   Row(
                     children: <Widget>[
                       SizedBox(
-                        width: 10,
+                        width: screenAwareWidth(10, context),
                       ),
                       Icon(
                         FontAwesomeIcons.smoking,
@@ -654,10 +653,10 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                         size: 15,
                       ),
                       SizedBox(
-                        width: 10,
+                        width: screenAwareWidth(10, context),
                       ),
                       Container(
-                        width: 70,
+                        width: screenAwareWidth(70, context),
                         child: Center(
                           child: Text(
                             '흡연 여부',
@@ -666,11 +665,11 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                         ),
                       ),
                       SizedBox(
-                        width: 20,
+                        width: screenAwareWidth(20, context),
                       ),
                       Expanded(
                         child: Container(
-                          height: 60,
+                          height: screenAwareHeight(60, context),
                           decoration: BoxDecoration(
                               color: Colors.grey[100],
                               borderRadius: BorderRadius.circular(12),
@@ -679,7 +678,7 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                           child: Row(
                             children: <Widget>[
                               SizedBox(
-                                width: 10,
+                                width: screenAwareWidth(10, context),
                               ),
                               Expanded(
                                 child: InkWell(
@@ -691,7 +690,7 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                                       context: context,
                                       builder: (context) => Center(
                                         child: Container(
-                                            height: 600,
+                                            height: screenAwareHeight(600, context),
                                             width:
                                                 screenAwareWidth(300, context),
                                             child: SimpleDialog(
@@ -709,22 +708,22 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                                 ),
                               ),
                               SizedBox(
-                                width: 10,
+                                width: screenAwareWidth(10, context),
                               ),
                             ],
                           ),
                         ),
                       ),
                       SizedBox(
-                        width: 20,
+                        width: screenAwareWidth(20, context),
                       ),
                     ],
                   ),
-                  const SizedBox(height: common_l_gap),
+                  SizedBox(height: screenAwareHeight(common_l_gap, context)),
                   Row(
                     children: <Widget>[
                       SizedBox(
-                        width: 10,
+                        width: screenAwareWidth(10, context),
                       ),
                       Icon(
                         FontAwesomeIcons.beer,
@@ -732,10 +731,10 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                         size: 15,
                       ),
                       SizedBox(
-                        width: 10,
+                        width: screenAwareWidth(10, context),
                       ),
                       Container(
-                        width: 70,
+                        width: screenAwareWidth(70, context),
                         child: Center(
                           child: Text(
                             '음주 여부',
@@ -744,11 +743,11 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                         ),
                       ),
                       SizedBox(
-                        width: 20,
+                        width: screenAwareWidth(20, context),
                       ),
                       Expanded(
                         child: Container(
-                          height: 60,
+                          height: screenAwareHeight(60, context),
                           decoration: BoxDecoration(
                               color: Colors.grey[100],
                               borderRadius: BorderRadius.circular(12),
@@ -757,7 +756,7 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                           child: Row(
                             children: <Widget>[
                               SizedBox(
-                                width: 10,
+                                width: screenAwareWidth(10, context),
                               ),
                               Expanded(
                                 child: InkWell(
@@ -769,7 +768,7 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                                       context: context,
                                       builder: (context) => Center(
                                         child: Container(
-                                            height: 600,
+                                            height: screenAwareHeight(600, context),
                                             width:
                                                 screenAwareWidth(300, context),
                                             child: SimpleDialog(
@@ -786,22 +785,22 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                                 ),
                               ),
                               SizedBox(
-                                width: 10,
+                                width: screenAwareWidth(10, context),
                               ),
                             ],
                           ),
                         ),
                       ),
                       SizedBox(
-                        width: 20,
+                        width: screenAwareWidth(20, context),
                       ),
                     ],
                   ),
-                  const SizedBox(height: common_l_gap),
+                  SizedBox(height: screenAwareHeight(common_l_gap, context)),
                   Row(
                     children: <Widget>[
                       SizedBox(
-                        width: 10,
+                        width: screenAwareWidth(10, context),
                       ),
                       Icon(
                         FontAwesomeIcons.pray,
@@ -809,10 +808,10 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                         size: 15,
                       ),
                       SizedBox(
-                        width: 10,
+                        width: screenAwareWidth(10, context),
                       ),
                       Container(
-                        width: 70,
+                        width: screenAwareWidth(70, context),
                         child: Center(
                           child: Text(
                             '종교',
@@ -821,11 +820,11 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                         ),
                       ),
                       SizedBox(
-                        width: 20,
+                        width: screenAwareWidth(20, context),
                       ),
                       Expanded(
                         child: Container(
-                          height: 60,
+                          height: screenAwareHeight(60, context),
                           decoration: BoxDecoration(
                               color: Colors.grey[100],
                               borderRadius: BorderRadius.circular(12),
@@ -834,7 +833,7 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                           child: Row(
                             children: <Widget>[
                               SizedBox(
-                                width: 10,
+                                width: screenAwareWidth(10, context),
                               ),
                               Expanded(
                                 child: InkWell(
@@ -846,7 +845,7 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                                       context: context,
                                       builder: (context) => Center(
                                         child: Container(
-                                            height: 600,
+                                            height: screenAwareHeight(600, context),
                                             width:
                                                 screenAwareWidth(300, context),
                                             child: SimpleDialog(
@@ -863,13 +862,13 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                                   },
                                 ),
                               ),
-                              SizedBox(width: 10),
+                              SizedBox(width: screenAwareWidth(10, context)),
                             ],
                           ),
                         ),
                       ),
                       SizedBox(
-                        width: 40,
+                        width: screenAwareWidth(40, context),
                       ),
                     ],
                   ),
@@ -879,7 +878,7 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                   Row(
                     children: <Widget>[
                       SizedBox(
-                        width: 10,
+                        width: screenAwareWidth(10, context),
                       ),
                       Icon(
                         FontAwesomeIcons.award,
@@ -887,10 +886,10 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                         size: 15,
                       ),
                       SizedBox(
-                        width: 10,
+                        width: screenAwareWidth(10, context),
                       ),
                       Container(
-                        width: 70,
+                        width: screenAwareWidth(70, context),
                         child: Center(
                           child: Text(
                             '자기소개',
@@ -918,7 +917,7 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                     controller: _introductionController,
                     decoration: _buildInputDecoration('자기소개를 입력해주세요!'),
                   ),
-                  const SizedBox(height: common_l_gap),
+                  SizedBox(height: screenAwareHeight(common_l_gap, context)),
                   Builder(
                     builder: (context) => FlatButton(
                       onPressed: !_isButtonEnabled
@@ -974,7 +973,7 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: common_l_gap),
+                  SizedBox(height: screenAwareHeight(common_l_gap, context)),
                   Text(
                     '로딩이 오래걸릴 경우, 앱을 재실행하면 문제가 해결됩니다!',
                     style: TextStyle(color: Colors.redAccent),

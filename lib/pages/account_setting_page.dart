@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:margaret/constants/firebase_keys.dart';
 import 'package:margaret/constants/size.dart';
 import 'package:margaret/data/provider/my_user_data.dart';
+import 'package:margaret/utils/adjust_size.dart';
 
 class AccountSetting extends StatelessWidget {
   AccountSetting({@required this.myUserData});
@@ -45,8 +46,8 @@ class AccountSetting extends StatelessWidget {
                           ),
                           title: Text('탈퇴하시겠습니까?'),
                           content: Container(
-                            width: 100,
-                            height: 140,
+                            width: screenAwareWidth(100, context),
+                            height: screenAwareHeight(140, context),
                             child: TextField(
                               maxLines: 6,
                               controller: _textEditingController,

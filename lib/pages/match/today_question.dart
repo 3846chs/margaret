@@ -221,9 +221,9 @@ class _TodayQuestionState extends State<TodayQuestion>
           left: 0,
           right: 0,
           bottom: 0,
-          height: 50,
+          height: screenAwareHeight(50, context),
           child: SizedBox(
-            height: 50,
+            height: screenAwareHeight(50, context),
             child: RaisedButton(
               onPressed: () => _summit(myUser, question),
               color: pastel_purple,
