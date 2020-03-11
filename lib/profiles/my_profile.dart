@@ -139,38 +139,35 @@ class _TempMyProfileState extends State<TempMyProfile> {
                           color: Colors.grey),
                     )),
                   ),
-                  SingleChildScrollView(
-                    padding: const EdgeInsets.all(common_l_gap),
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: value.userData.profiles
-                          .map(
-                            (path) => Padding(
-                              padding: const EdgeInsets.all(common_gap),
-                              child: InkWell(
-                                onTap: () {
-                                  print(path);
-                                  //_getProfile(0);
-                                },
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(14),
-                                  child: CachedNetworkImage(
-                                    imageUrl: "profiles/$path",
-                                    cacheManager: StorageCacheManager(),
-                                    width: screenAwareWidth(100, context),
-                                    height: screenAwareHeight(100, context),
-                                    fit: BoxFit.cover,
-                                    placeholder: (context, url) =>
-                                        const CircularProgressIndicator(),
-                                    errorWidget: (context, url, error) =>
-                                        const Icon(Icons.account_circle),
-                                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: value.userData.profiles
+                        .map(
+                          (path) => Padding(
+                            padding: const EdgeInsets.all(common_gap),
+                            child: InkWell(
+                              onTap: () {
+                                print(path);
+                                //_getProfile(0);
+                              },
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(14),
+                                child: CachedNetworkImage(
+                                  imageUrl: "profiles/$path",
+                                  cacheManager: StorageCacheManager(),
+                                  width: screenAwareWidth(130, context),
+                                  height: screenAwareHeight(130, context),
+                                  fit: BoxFit.cover,
+                                  placeholder: (context, url) =>
+                                      const CircularProgressIndicator(),
+                                  errorWidget: (context, url, error) =>
+                                      const Icon(Icons.account_circle),
                                 ),
                               ),
                             ),
-                          )
-                          .toList(),
-                    ),
+                          ),
+                        )
+                        .toList(),
                   ),
                   Text(
                     "얼굴이 명확히 보이지 않는 사진의 경우, 사전 통보 없이 삭제될 수 있습니다.",
