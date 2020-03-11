@@ -73,27 +73,21 @@ class ReceiveCard extends StatelessWidget {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(common_gap),
-            child: _buildButton(
-                "오늘의 답변",
-                () => showDialog(
-                    context: context,
-                    builder: (context) => _buildAnswerDialog(myUser))),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(common_gap),
-            child: IconButton(
-              icon: const Icon(Icons.close),
-              color: Colors.blueAccent,
-              iconSize: 16.0,
-              onPressed: () {
-                showDialog(
+          _buildButton(
+              "오늘의 답변",
+              () => showDialog(
                   context: context,
-                  builder: (context) => _buildDeleteDialog(context, myUser),
-                );
-              },
-            ),
+                  builder: (context) => _buildAnswerDialog(myUser))),
+          IconButton(
+            icon: const Icon(Icons.close),
+            color: Colors.blueAccent,
+            iconSize: 16.0,
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) => _buildDeleteDialog(context, myUser),
+              );
+            },
           ),
         ],
       ),
@@ -158,8 +152,8 @@ class ReceiveCard extends StatelessWidget {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              Colors.pink[50],
-              Colors.blue[50],
+              Color(0xfffd5c76),
+              Color(0xffff8951),
             ],
           ),
           boxShadow: [
@@ -178,7 +172,7 @@ class ReceiveCard extends StatelessWidget {
               title,
               style: const TextStyle(
                 fontFamily: FontFamily.jua,
-                color: Colors.black87,
+                color: Colors.white,
               ),
             ),
           ),
@@ -214,47 +208,56 @@ class ReceiveCard extends StatelessWidget {
                   size: 30,
                 ),
                 SizedBox(height: 40),
-                Bubble(
-                  margin: BubbleEdges.only(top: 10),
-                  alignment: Alignment.topLeft,
-                  nip: BubbleNip.leftBottom,
-                  child: Text(
-                    question["question"],
-                    style: const TextStyle(
-                      fontFamily: FontFamily.miSaeng,
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
+                Container(
+                  alignment: Alignment.centerLeft,
+                  child: Bubble(
+                    margin: BubbleEdges.only(top: 10),
+                    alignment: Alignment.topLeft,
+                    nip: BubbleNip.leftBottom,
+                    child: Text(
+                      question["question"],
+                      style: const TextStyle(
+                        fontFamily: FontFamily.miSaeng,
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
+                    color: Colors.purple[50],
                   ),
-                  color: Colors.purple[50],
                 ),
                 SizedBox(height: 40),
-                Bubble(
-                  elevation: 3,
-                  nip: BubbleNip.rightBottom,
-                  child: Text(
-                    question["choice"],
-                    style: const TextStyle(
-                      fontFamily: FontFamily.miSaeng,
-                      fontSize: 20,
+                Container(
+                  alignment: Alignment.centerRight,
+                  child: Bubble(
+                    elevation: 3,
+                    nip: BubbleNip.rightBottom,
+                    child: Text(
+                      question["choice"],
+                      style: const TextStyle(
+                        fontFamily: FontFamily.miSaeng,
+                        fontSize: 20,
+                      ),
                     ),
+                    color:
+                        user.gender == "남성" ? Colors.blue[50] : Colors.pink[50],
                   ),
-                  color:
-                      user.gender == "남성" ? Colors.blue[50] : Colors.pink[50],
                 ),
                 SizedBox(height: 20),
-                Bubble(
-                  elevation: 3,
-                  nip: BubbleNip.rightBottom,
-                  child: Text(
-                    question["answer"],
-                    style: const TextStyle(
-                      fontFamily: FontFamily.miSaeng,
-                      fontSize: 20,
+                Container(
+                  alignment: Alignment.centerRight,
+                  child: Bubble(
+                    elevation: 3,
+                    nip: BubbleNip.rightBottom,
+                    child: Text(
+                      question["answer"],
+                      style: const TextStyle(
+                        fontFamily: FontFamily.miSaeng,
+                        fontSize: 20,
+                      ),
                     ),
+                    color:
+                        user.gender == "남성" ? Colors.blue[50] : Colors.pink[50],
                   ),
-                  color:
-                      user.gender == "남성" ? Colors.blue[50] : Colors.pink[50],
                 ),
                 SizedBox(height: 40),
                 _buildButton("채팅 연결하기", () async {
