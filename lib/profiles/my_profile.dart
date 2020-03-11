@@ -28,7 +28,9 @@ class TempMyProfile extends StatefulWidget {
 }
 
 class _TempMyProfileState extends State<TempMyProfile> {
-  final _textEditingController = TextEditingController();
+  final TextEditingController _introductionController = TextEditingController();
+  final TextEditingController _nicknameController = TextEditingController();
+  final TextEditingController _jobController = TextEditingController();
 
   String nickname;
   String gender;
@@ -81,6 +83,10 @@ class _TempMyProfileState extends State<TempMyProfile> {
     drink = widget.user.drink;
     religion = widget.user.religion;
     introduction = widget.user.introduction;
+
+    _introductionController.text = widget.user.introduction;
+    _nicknameController.text = widget.user.nickname;
+    _jobController.text = widget.user.job;
   }
 
   @override
@@ -97,6 +103,10 @@ class _TempMyProfileState extends State<TempMyProfile> {
             Spacer(),
             InkWell(
               onTap: () {
+                _introductionController.clear();
+                _nicknameController.clear();
+                _jobController.clear();
+
                 firestoreProvider.updateUser(widget.user.userKey, {
                   UserKeys.KEY_NICKNAME: nickname,
                   UserKeys.KEY_JOB: job,
@@ -179,7 +189,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
                     color: Colors.grey[200],
                     child: Center(
                         child: Text(
-                      '가치관 정보 등록',
+                      '자기소개 등록',
                       style: TextStyle(
                           fontFamily: FontFamily.nanumBarunpen,
                           color: Colors.grey),
@@ -288,8 +298,11 @@ class _TempMyProfileState extends State<TempMyProfile> {
 
   _buildNicknameDialog(BuildContext context) {
     return AlertDialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8.0),
+      ),
       content: TextFormField(
-        controller: _textEditingController,
+        controller: _nicknameController,
         decoration: InputDecoration(hintText: '$MAX_NICKNAME_LENGTH자 이내'),
         validator: (value) {
           if (value.isEmpty) {
@@ -307,8 +320,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
             // validator 확인해야함
             Navigator.pop(context);
             setState(() {
-              nickname = _textEditingController.text;
-              _textEditingController.clear();
+              nickname = _nicknameController.text;
             });
           },
         ),
@@ -316,9 +328,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
             child: Text('취소'),
             onPressed: () {
               Navigator.pop(context);
-              setState(() {
-                _textEditingController.clear();
-              });
+              _nicknameController.text = nickname;
             }),
       ],
     );
@@ -485,6 +495,10 @@ class _TempMyProfileState extends State<TempMyProfile> {
                               child: Container(
                                   height: screenAwareHeight(600, context),
                                   child: SimpleDialog(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
                                       children: create_regionOptionList(
                                           choose_region))),
                             ),
@@ -583,8 +597,11 @@ class _TempMyProfileState extends State<TempMyProfile> {
 
   AlertDialog _buildJobDialog(BuildContext context) {
     return AlertDialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8.0),
+      ),
       content: TextFormField(
-        controller: _textEditingController,
+        controller: _jobController,
       ),
       actions: <Widget>[
         MaterialButton(
@@ -593,8 +610,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
             // validator 확인해야함
             Navigator.pop(context);
             setState(() {
-              job = _textEditingController.text;
-              _textEditingController.clear();
+              job = _jobController.text;
             });
           },
         ),
@@ -602,9 +618,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
             child: Text('취소'),
             onPressed: () {
               Navigator.pop(context);
-              setState(() {
-                _textEditingController.clear();
-              });
+              _jobController.text = job;
             }),
       ],
     );
@@ -698,7 +712,11 @@ class _TempMyProfileState extends State<TempMyProfile> {
   }
 
   SimpleDialog _buildHeightDialog(BuildContext context) {
-    return SimpleDialog(children: create_simpleDialogOptionList(140, 190));
+    return SimpleDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        children: create_simpleDialogOptionList(140, 190));
   }
 
   //////////////////////////// 흡연여부 ////////////////////////////////////////
@@ -752,6 +770,10 @@ class _TempMyProfileState extends State<TempMyProfile> {
                               child: Container(
                                   height: screenAwareHeight(600, context),
                                   child: SimpleDialog(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
                                       children: create_smokeOptionList(
                                           choose_smoke))),
                             ),
@@ -838,6 +860,10 @@ class _TempMyProfileState extends State<TempMyProfile> {
                               child: Container(
                                   height: screenAwareHeight(600, context),
                                   child: SimpleDialog(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
                                       children: create_drinkOptionList(
                                           choose_drink))),
                             ),
@@ -924,6 +950,9 @@ class _TempMyProfileState extends State<TempMyProfile> {
                               child: Container(
                                   height: screenAwareHeight(600, context),
                                   child: SimpleDialog(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
                                     children: create_religionOptionList(
                                         choose_religion),
                                   )),
@@ -980,32 +1009,33 @@ class _TempMyProfileState extends State<TempMyProfile> {
               Spacer(),
             ],
           ),
-          Row(
-            children: <Widget>[
-              SizedBox(
-                width: screenAwareWidth(40, context),
-              ),
-              Expanded(
-                child: Center(
-                  child: InkWell(
-                    child: Text(
-                      introduction == null ? '등록된 자기소개가 없습니다' : '$introduction',
-                      style: TextStyle(fontSize: 15),
-                    ),
-                    onTap: () {
-                      return showDialog(
-                        context: context,
-                        builder: (context) => _buildIntroductionDialog(context),
-                      );
-                    },
+          InkWell(
+              child: Row(
+                children: <Widget>[
+                  SizedBox(
+                    width: screenAwareWidth(40, context),
                   ),
-                ),
+                  Expanded(
+                    child: Center(
+                      child: Text(
+                        introduction == null
+                            ? '등록된 자기소개가 없습니다'
+                            : '$introduction',
+                        style: TextStyle(fontSize: 15),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: screenAwareWidth(40, context),
+                  ),
+                ],
               ),
-              SizedBox(
-                width: screenAwareWidth(40, context),
-              ),
-            ],
-          ),
+              onTap: () {
+                return showDialog(
+                  context: context,
+                  builder: (context) => _buildIntroductionDialog(context),
+                );
+              }),
           Row(
             children: <Widget>[
               Spacer(),
@@ -1026,8 +1056,14 @@ class _TempMyProfileState extends State<TempMyProfile> {
 
   AlertDialog _buildIntroductionDialog(BuildContext context) {
     return AlertDialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8.0),
+      ),
       content: TextFormField(
-        controller: _textEditingController,
+        maxLength: 80,
+        maxLines: 6,
+        decoration: _buildInputDecoration('자기소개'),
+        controller: _introductionController,
       ),
       actions: <Widget>[
         MaterialButton(
@@ -1035,8 +1071,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
           onPressed: () {
             Navigator.pop(context);
             setState(() {
-              introduction = _textEditingController.text;
-              _textEditingController.clear();
+              introduction = _introductionController.text;
             });
           },
         ),
@@ -1044,11 +1079,31 @@ class _TempMyProfileState extends State<TempMyProfile> {
             child: Text('취소'),
             onPressed: () {
               Navigator.pop(context);
-              setState(() {
-                _textEditingController.clear();
-              });
+              _introductionController.text = introduction;
             }),
       ],
+    );
+  }
+
+  InputDecoration _buildInputDecoration(String hint) {
+    return InputDecoration(
+      hintText: hint,
+      enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: Colors.purple[300],
+          width: 1,
+        ),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: Colors.purple[300],
+          width: 1,
+        ),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      fillColor: Colors.white60,
+      filled: true,
     );
   }
 //////////////////////////////////////////////////////////////////////////////
