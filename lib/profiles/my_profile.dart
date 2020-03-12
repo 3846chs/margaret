@@ -16,6 +16,7 @@ import 'package:margaret/firebase/storage_cache_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:margaret/utils/adjust_size.dart';
+import 'package:margaret/utils/simple_snack_bar.dart';
 import 'package:provider/provider.dart';
 
 class TempMyProfile extends StatefulWidget {
@@ -101,31 +102,41 @@ class _TempMyProfileState extends State<TempMyProfile> {
                   TextStyle(fontFamily: FontFamily.nanumBarunpen, fontSize: 17),
             ),
             Spacer(),
-            InkWell(
-              onTap: () {
-                _introductionController.clear();
-                _nicknameController.clear();
-                _jobController.clear();
+            Builder(builder: (BuildContext context) {
+              return InkWell(
+                onTap: () {
+                  if (nickname.length > MAX_NICKNAME_LENGTH) {
+                    simpleSnackbar(context, '닉네임 글자 수는 $MAX_NICKNAME_LENGTH자 이내로 정해주세요.');
+                    return;
+                  }
+                  else if(job.length > MAX_JOB_LENGTH){
+                    simpleSnackbar(context, '직업 글자 수는 $MAX_JOB_LENGTH자 이내로 정해주세요.');
+                    return;
+                  }
+                  _introductionController.clear();
+                  _nicknameController.clear();
+                  _jobController.clear();
 
-                firestoreProvider.updateUser(widget.user.userKey, {
-                  UserKeys.KEY_NICKNAME: nickname,
-                  UserKeys.KEY_JOB: job,
-                  UserKeys.KEY_HEIGHT: height,
-                  UserKeys.KEY_REGION: region,
-                  UserKeys.KEY_SMOKE: smoke,
-                  UserKeys.KEY_DRINK: drink,
-                  UserKeys.KEY_RELIGION: religion,
-                  UserKeys.KEY_INTRODUCTION: introduction,
-                });
+                  firestoreProvider.updateUser(widget.user.userKey, {
+                    UserKeys.KEY_NICKNAME: nickname,
+                    UserKeys.KEY_JOB: job,
+                    UserKeys.KEY_HEIGHT: height,
+                    UserKeys.KEY_REGION: region,
+                    UserKeys.KEY_SMOKE: smoke,
+                    UserKeys.KEY_DRINK: drink,
+                    UserKeys.KEY_RELIGION: religion,
+                    UserKeys.KEY_INTRODUCTION: introduction,
+                  });
 
-                Navigator.pop(context);
-              },
-              child: Text(
-                '완료',
-                style: TextStyle(
-                    fontFamily: FontFamily.nanumBarunpen, fontSize: 17),
-              ),
-            ),
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  '완료',
+                  style: TextStyle(
+                      fontFamily: FontFamily.nanumBarunpen, fontSize: 17),
+                ),
+              );
+            }),
           ],
         ),
       ),
