@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/data/user.dart';
 import 'package:margaret/firebase/firestore_provider.dart';
-import 'package:margaret/widgets/receive_card.dart';
+import 'package:margaret/widgets/receive/receive_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
