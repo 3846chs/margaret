@@ -140,107 +140,110 @@ class _TempMyProfileState extends State<TempMyProfile> {
           ],
         ),
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(common_l_gap),
-            child: Consumer<MyUserData>(builder: (context, value, child) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                    height: screenAwareHeight(30, context),
-                    width: double.infinity,
-                    color: Colors.grey[200],
-                    child: Center(
-                        child: Text(
-                      '사진 등록',
-                      style: TextStyle(
-                          fontFamily: FontFamily.nanumBarunpen,
-                          color: Colors.grey),
-                    )),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: value.userData.profiles
-                        .map(
-                          (path) => Padding(
-                            padding: const EdgeInsets.all(common_gap),
-                            child: InkWell(
-                              onTap: () {
-                                print(path);
-                                //_getProfile(0);
-                              },
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(14),
-                                child: CachedNetworkImage(
-                                  imageUrl: "profiles/$path",
-                                  cacheManager: StorageCacheManager(),
-                                  width: screenAwareWidth(130, context),
-                                  height: screenAwareHeight(130, context),
-                                  fit: BoxFit.cover,
-                                  placeholder: (context, url) =>
-                                      const CircularProgressIndicator(),
-                                  errorWidget: (context, url, error) =>
-                                      const Icon(Icons.account_circle),
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+        child: SafeArea(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(common_l_gap),
+              child: Consumer<MyUserData>(builder: (context, value, child) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Container(
+                      height: screenAwareHeight(30, context),
+                      width: double.infinity,
+                      color: Colors.grey[200],
+                      child: Center(
+                          child: Text(
+                        '사진 등록',
+                        style: TextStyle(
+                            fontFamily: FontFamily.nanumBarunpen,
+                            color: Colors.grey),
+                      )),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: value.userData.profiles
+                          .map(
+                            (path) => Padding(
+                              padding: const EdgeInsets.all(common_gap),
+                              child: InkWell(
+                                onTap: () {
+                                  print(path);
+                                  //_getProfile(0);
+                                },
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(14),
+                                  child: CachedNetworkImage(
+                                    imageUrl: "profiles/$path",
+                                    cacheManager: StorageCacheManager(),
+                                    width: screenAwareWidth(130, context),
+                                    height: screenAwareHeight(130, context),
+                                    fit: BoxFit.cover,
+                                    placeholder: (context, url) =>
+                                        const CircularProgressIndicator(),
+                                    errorWidget: (context, url, error) =>
+                                        const Icon(Icons.account_circle),
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        )
-                        .toList(),
-                  ),
-                  Text(
-                    "얼굴이 명확히 보이지 않는 사진의 경우, 사전 통보 없이 삭제될 수 있습니다.",
-                    style: TextStyle(color: Colors.redAccent, fontSize: 10),
-                  ),
-                  Container(
-                    height: screenAwareHeight(30, context),
-                    width: double.infinity,
-                    color: Colors.grey[200],
-                    child: Center(
-                        child: Text(
-                      '자기소개 등록',
-                      style: TextStyle(
-                          fontFamily: FontFamily.nanumBarunpen,
-                          color: Colors.grey),
-                    )),
-                  ),
-                  _selfIntroduction(),
-                  Text(
-                    "마가렛은 가치관 소개팅 앱으로 자기소개의 비중이 중요합니다. 매칭 과정에서 사진보다 우선해서 보여지는 정보로, 성실하게 적어주세요. 자신을 소개하거나 자신이 중요하게 생각하는 가치관에 대해 적어주시면 됩니다.",
-                    style: TextStyle(color: Colors.blueAccent),
-                  ),
-                  Container(
-                    height: screenAwareHeight(30, context),
-                    width: double.infinity,
-                    color: Colors.grey[200],
-                    child: Center(
-                        child: Text(
-                      '기본 정보 등록',
-                      style: TextStyle(
-                          fontFamily: FontFamily.nanumBarunpen,
-                          color: Colors.grey),
-                    )),
-                  ),
-                  SizedBox(
-                    height: screenAwareHeight(5, context),
-                  ),
-                  _buildNickname(),
-                  _buildGender(),
-                  _buildBirthYear(),
-                  _buildRegion(),
-                  _buildCareer(),
-                  _buildHeight(),
-                  _buildSmoke(),
-                  _buildDrink(),
-                  _buildReligion(),
-                  SizedBox(
-                    height: screenAwareHeight(common_gap, context),
-                  ),
-                ],
-              );
-            }),
+                          )
+                          .toList(),
+                    ),
+                    Text(
+                      "얼굴이 명확히 보이지 않는 사진의 경우, 사전 통보 없이 삭제될 수 있습니다.",
+                      style: TextStyle(color: Colors.redAccent, fontSize: 10),
+                    ),
+                    Container(
+                      height: screenAwareHeight(30, context),
+                      width: double.infinity,
+                      color: Colors.grey[200],
+                      child: Center(
+                          child: Text(
+                        '자기소개 등록',
+                        style: TextStyle(
+                            fontFamily: FontFamily.nanumBarunpen,
+                            color: Colors.grey),
+                      )),
+                    ),
+                    _selfIntroduction(),
+                    Text(
+                      "마가렛은 가치관 소개팅 앱으로 자기소개의 비중이 중요합니다. 매칭 과정에서 사진보다 우선해서 보여지는 정보로, 성실하게 적어주세요. 자신을 소개하거나 자신이 중요하게 생각하는 가치관에 대해 적어주시면 됩니다.",
+                      style: TextStyle(color: Colors.blueAccent),
+                    ),
+                    Container(
+                      height: screenAwareHeight(30, context),
+                      width: double.infinity,
+                      color: Colors.grey[200],
+                      child: Center(
+                          child: Text(
+                        '기본 정보 등록',
+                        style: TextStyle(
+                            fontFamily: FontFamily.nanumBarunpen,
+                            color: Colors.grey),
+                      )),
+                    ),
+                    SizedBox(
+                      height: screenAwareHeight(5, context),
+                    ),
+                    _buildNickname(),
+                    _buildGender(),
+                    _buildBirthYear(),
+                    _buildRegion(),
+                    _buildCareer(),
+                    _buildHeight(),
+                    _buildSmoke(),
+                    _buildDrink(),
+                    _buildReligion(),
+                    SizedBox(
+                      height: screenAwareHeight(common_gap, context),
+                    ),
+                  ],
+                );
+              }),
+            ),
           ),
         ),
       ),

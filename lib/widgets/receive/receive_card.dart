@@ -198,154 +198,157 @@ class ReceiveCard extends StatelessWidget {
 
             final question = snapshot.data.data;
 
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Icon(
-                  FontAwesomeIcons.featherAlt,
-                  color: Colors.purple,
-                  size: 30,
-                ),
-                SizedBox(height: 40),
-                Container(
-                  alignment: Alignment.centerLeft,
-                  child: Bubble(
-                    margin: BubbleEdges.only(top: 10),
-                    alignment: Alignment.topLeft,
-                    nip: BubbleNip.leftBottom,
-                    child: Text(
-                      question["question"],
-                      style: const TextStyle(
-                        fontFamily: FontFamily.miSaeng,
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    color: Colors.purple[50],
+            return GestureDetector(
+              onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Icon(
+                    FontAwesomeIcons.featherAlt,
+                    color: Colors.purple,
+                    size: 30,
                   ),
-                ),
-                SizedBox(height: 40),
-                Container(
-                  alignment: Alignment.centerRight,
-                  child: Bubble(
-                    elevation: 3,
-                    nip: BubbleNip.rightBottom,
-                    child: Text(
-                      question["choice"],
-                      style: const TextStyle(
-                        fontFamily: FontFamily.miSaeng,
-                        fontSize: 20,
+                  SizedBox(height: 40),
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    child: Bubble(
+                      margin: BubbleEdges.only(top: 10),
+                      alignment: Alignment.topLeft,
+                      nip: BubbleNip.leftBottom,
+                      child: Text(
+                        question["question"],
+                        style: const TextStyle(
+                          fontFamily: FontFamily.miSaeng,
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
+                      color: Colors.purple[50],
                     ),
-                    color:
-                        user.gender == "남성" ? Colors.blue[50] : Colors.pink[50],
                   ),
-                ),
-                SizedBox(height: 20),
-                Container(
-                  alignment: Alignment.centerRight,
-                  child: Bubble(
-                    elevation: 3,
-                    nip: BubbleNip.rightBottom,
-                    child: Text(
-                      question["answer"],
-                      style: const TextStyle(
-                        fontFamily: FontFamily.miSaeng,
-                        fontSize: 20,
+                  SizedBox(height: 40),
+                  Container(
+                    alignment: Alignment.centerRight,
+                    child: Bubble(
+                      elevation: 3,
+                      nip: BubbleNip.rightBottom,
+                      child: Text(
+                        question["choice"],
+                        style: const TextStyle(
+                          fontFamily: FontFamily.miSaeng,
+                          fontSize: 20,
+                        ),
                       ),
+                      color:
+                          user.gender == "남성" ? Colors.blue[50] : Colors.pink[50],
                     ),
-                    color:
-                        user.gender == "남성" ? Colors.blue[50] : Colors.pink[50],
                   ),
-                ),
-                SizedBox(height: 40),
-                _buildButton("채팅 연결하기", () async {
-                  await myUser.reference
-                      .collection("Chats")
-                      .document(user.userKey)
-                      .setData({
-                    "lastMessage": "",
-                    "lastDateTime": Timestamp.now(),
-                  });
-                  await user.reference
-                      .collection("Chats")
-                      .document(myUser.userKey)
-                      .setData({
-                    "lastMessage": "",
-                    "lastDateTime": Timestamp.now(),
-                  });
-
-                  final myQuestion = await myUser.reference
-                      .collection("TodayQuestions")
-                      .document(formattedDate)
-                      .get();
-                  final peerQuestion = await user.reference
-                      .collection("TodayQuestions")
-                      .document(formattedDate)
-                      .get();
-
-                  final chatKey =
-                      myUser.userKey.hashCode <= user.userKey.hashCode
-                          ? '${myUser.userKey}-${user.userKey}'
-                          : '${user.userKey}-${myUser.userKey}';
-
-                  final now = DateTime.now();
-                  final messages = <Message>[
-                    Message(
-                      idFrom: "bot",
-                      idTo: "",
-                      content: myQuestion.data["question"],
-                      timestamp: now.millisecondsSinceEpoch.toString(),
-                      type: MessageType.text,
-                      isRead: true,
+                  SizedBox(height: 20),
+                  Container(
+                    alignment: Alignment.centerRight,
+                    child: Bubble(
+                      elevation: 3,
+                      nip: BubbleNip.rightBottom,
+                      child: Text(
+                        question["answer"],
+                        style: const TextStyle(
+                          fontFamily: FontFamily.miSaeng,
+                          fontSize: 20,
+                        ),
+                      ),
+                      color:
+                          user.gender == "남성" ? Colors.blue[50] : Colors.pink[50],
                     ),
-                    Message(
-                      idFrom: myUser.userKey,
-                      idTo: "",
-                      content: myQuestion.data["answer"],
-                      timestamp: (now.millisecondsSinceEpoch + 1).toString(),
-                      type: MessageType.text,
-                      isRead: true,
-                    ),
-                    Message(
-                      idFrom: user.userKey,
-                      idTo: "",
-                      content: peerQuestion.data["answer"],
-                      timestamp: (now.millisecondsSinceEpoch + 2).toString(),
-                      type: MessageType.text,
-                      isRead: true,
-                    ),
-                    Message(
-                      idFrom: "bot",
-                      idTo: "",
-                      content: "채팅이 시작되었습니다",
-                      timestamp: (now.millisecondsSinceEpoch + 3).toString(),
-                      type: MessageType.text,
-                      isRead: true,
-                    ),
-                  ];
+                  ),
+                  SizedBox(height: 40),
+                  _buildButton("채팅 연결하기", () async {
+                    await myUser.reference
+                        .collection("Chats")
+                        .document(user.userKey)
+                        .setData({
+                      "lastMessage": "",
+                      "lastDateTime": Timestamp.now(),
+                    });
+                    await user.reference
+                        .collection("Chats")
+                        .document(myUser.userKey)
+                        .setData({
+                      "lastMessage": "",
+                      "lastDateTime": Timestamp.now(),
+                    });
 
-                  messages.forEach((message) async {
-                    await firestoreProvider.createMessage(chatKey, message);
-                  });
+                    final myQuestion = await myUser.reference
+                        .collection("TodayQuestions")
+                        .document(formattedDate)
+                        .get();
+                    final peerQuestion = await user.reference
+                        .collection("TodayQuestions")
+                        .document(formattedDate)
+                        .get();
 
-                  myUser.reference
-                      .collection("Receives")
-                      .document(user.userKey)
-                      .delete();
+                    final chatKey =
+                        myUser.userKey.hashCode <= user.userKey.hashCode
+                            ? '${myUser.userKey}-${user.userKey}'
+                            : '${user.userKey}-${myUser.userKey}';
 
-                  Navigator.pop(context);
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ChatDetailPage(
-                                chatKey: chatKey,
-                                myKey: myUser.userKey,
-                                peer: user,
-                              )));
-                }),
-              ],
+                    final now = DateTime.now();
+                    final messages = <Message>[
+                      Message(
+                        idFrom: "bot",
+                        idTo: "",
+                        content: myQuestion.data["question"],
+                        timestamp: now.millisecondsSinceEpoch.toString(),
+                        type: MessageType.text,
+                        isRead: true,
+                      ),
+                      Message(
+                        idFrom: myUser.userKey,
+                        idTo: "",
+                        content: myQuestion.data["answer"],
+                        timestamp: (now.millisecondsSinceEpoch + 1).toString(),
+                        type: MessageType.text,
+                        isRead: true,
+                      ),
+                      Message(
+                        idFrom: user.userKey,
+                        idTo: "",
+                        content: peerQuestion.data["answer"],
+                        timestamp: (now.millisecondsSinceEpoch + 2).toString(),
+                        type: MessageType.text,
+                        isRead: true,
+                      ),
+                      Message(
+                        idFrom: "bot",
+                        idTo: "",
+                        content: "채팅이 시작되었습니다",
+                        timestamp: (now.millisecondsSinceEpoch + 3).toString(),
+                        type: MessageType.text,
+                        isRead: true,
+                      ),
+                    ];
+
+                    messages.forEach((message) async {
+                      await firestoreProvider.createMessage(chatKey, message);
+                    });
+
+                    myUser.reference
+                        .collection("Receives")
+                        .document(user.userKey)
+                        .delete();
+
+                    Navigator.pop(context);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ChatDetailPage(
+                                  chatKey: chatKey,
+                                  myKey: myUser.userKey,
+                                  peer: user,
+                                )));
+                  }),
+                ],
+              ),
             );
           },
         ),

@@ -62,86 +62,89 @@ class _AnswerDialogState extends State<AnswerDialog> {
 
     return Form(
       key: _formKey,
-      child: Dialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8.0),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(common_gap),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              SizedBox(
-                height: screenAwareHeight(20, context),
-              ),
-              Text(
-                widget.peerQuestion,
-                style: TextStyle(fontFamily: FontFamily.jua, fontSize: 20),
-              ),
-              SizedBox(
-                height: screenAwareHeight(20, context),
-              ),
-              TextFormField(
-                validator: (value) {
-                  if (value.length < MIN_RANDOM_QNA_LENGTH)
-                    return '최소 $MIN_RANDOM_QNA_LENGTH자 이상 작성해주세요';
-                  else
-                    return null;
-                },
-                controller: _answerController,
-                style: TextStyle(color: Colors.black),
-                decoration: _buildInputDecoration('답변을 입력해주세요'),
-                maxLength: MAX_RANDOM_QNA_LENGTH,
-                maxLines: 4,
-              ),
-              FlatButton(
-                onPressed: () {
-                  if (_formKey.currentState.validate())
-                    _sendAnswer(myUserData.userData);
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(128.0),
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: <Color>[
-                        Colors.purple[400],
-                        pastel_purple,
+      child: GestureDetector(
+        onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+        child: Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(common_gap),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                SizedBox(
+                  height: screenAwareHeight(20, context),
+                ),
+                Text(
+                  widget.peerQuestion,
+                  style: TextStyle(fontFamily: FontFamily.jua, fontSize: 20),
+                ),
+                SizedBox(
+                  height: screenAwareHeight(20, context),
+                ),
+                TextFormField(
+                  validator: (value) {
+                    if (value.length < MIN_RANDOM_QNA_LENGTH)
+                      return '최소 $MIN_RANDOM_QNA_LENGTH자 이상 작성해주세요';
+                    else
+                      return null;
+                  },
+                  controller: _answerController,
+                  style: TextStyle(color: Colors.black),
+                  decoration: _buildInputDecoration('답변을 입력해주세요'),
+                  maxLength: MAX_RANDOM_QNA_LENGTH,
+                  maxLines: 4,
+                ),
+                FlatButton(
+                  onPressed: () {
+                    if (_formKey.currentState.validate())
+                      _sendAnswer(myUserData.userData);
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(128.0),
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: <Color>[
+                          Colors.purple[400],
+                          pastel_purple,
+                        ],
+                      ),
+                      boxShadow: [
+                        const BoxShadow(
+                          color: Colors.grey,
+                          blurRadius: 2.0,
+                          spreadRadius: 0.0,
+                          offset:
+                              Offset(3.0, 3.0), // shadow direction: bottom right
+                        ),
                       ],
                     ),
-                    boxShadow: [
-                      const BoxShadow(
-                        color: Colors.grey,
-                        blurRadius: 2.0,
-                        spreadRadius: 0.0,
-                        offset:
-                            Offset(3.0, 3.0), // shadow direction: bottom right
-                      ),
-                    ],
-                  ),
-                  width: screenAwareWidth(130, context),
-                  height: screenAwareHeight(40, context),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        '제출하기 ',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: FontFamily.jua,
-                            fontSize: 15),
-                      ),
-                      Icon(
-                        FontAwesomeIcons.pencilAlt,
-                        size: 17,
-                        color: Colors.white,
-                      ),
-                    ],
+                    width: screenAwareWidth(130, context),
+                    height: screenAwareHeight(40, context),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          '제출하기 ',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: FontFamily.jua,
+                              fontSize: 15),
+                        ),
+                        Icon(
+                          FontAwesomeIcons.pencilAlt,
+                          size: 17,
+                          color: Colors.white,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

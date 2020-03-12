@@ -18,35 +18,38 @@ class MyQuestions extends StatelessWidget {
     return Consumer<MyUserData>(builder: (context, myUserData, _) {
       return Scaffold(
         floatingActionButton: _buildFloatingActionButton(context, myUserData),
-        body: StreamBuilder<QuerySnapshot>(
-          stream: myUserData.userData.reference
-              .collection(MYQUESTIONS)
-              .limit(1)
-              .snapshots(),
-          builder: (context, snapshot) {
-            if (!snapshot.hasData || snapshot.data.documents.length == 0)
-              return EmptyMyQuestionsCard();
+        body: GestureDetector(
+          onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+          child: StreamBuilder<QuerySnapshot>(
+            stream: myUserData.userData.reference
+                .collection(MYQUESTIONS)
+                .limit(1)
+                .snapshots(),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData || snapshot.data.documents.length == 0)
+                return EmptyMyQuestionsCard();
 
-            final firstDocument =
-                snapshot.data.documents.first; // 첫번째 document 만 가져와서 화면에 띄울 것임
-            final peerKey = firstDocument.data['userKey'].toString();
+              final firstDocument =
+                  snapshot.data.documents.first; // 첫번째 document 만 가져와서 화면에 띄울 것임
+              final peerKey = firstDocument.data['userKey'].toString();
 
-            return StreamBuilder<User>(
-              stream: firestoreProvider.connectUser(peerKey),
-              builder: (context, snapshot) {
-                if (!snapshot.hasData) {
-                  // 상대 계정 삭제 등 invalid userKey 일 경우
-                  return InvalidCard();
-                }
-                return MyQuestionsCard(
-                  myQuestion: firstDocument.data['question'].toString(),
-                  peerAnswer: firstDocument.data['answer'].toString(),
-                  documentId: firstDocument.documentID,
-                  peer: snapshot.data,
-                );
-              },
-            );
-          },
+              return StreamBuilder<User>(
+                stream: firestoreProvider.connectUser(peerKey),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    // 상대 계정 삭제 등 invalid userKey 일 경우
+                    return InvalidCard();
+                  }
+                  return MyQuestionsCard(
+                    myQuestion: firstDocument.data['question'].toString(),
+                    peerAnswer: firstDocument.data['answer'].toString(),
+                    documentId: firstDocument.documentID,
+                    peer: snapshot.data,
+                  );
+                },
+              );
+            },
+          ),
         ),
       );
     });

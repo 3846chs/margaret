@@ -178,69 +178,72 @@ class _TodayQuestionState extends State<TodayQuestion>
       });
     }
 
-    return Stack(
-      children: <Widget>[
-        Center(
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(common_l_gap),
-                  child: _buildQuestion(question),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(common_gap),
-                  child: DropdownButtonFormField<String>(
-                    decoration: InputDecoration(hintText: "선택지 고르기"),
-                    value: _selected,
-                    items: choiceList
-                        .map((label) => DropdownMenuItem(
-                              child: Text(label),
-                              value: label,
-                            ))
-                        .toList(),
-                    onChanged: (value) {
-                      setState(() {
-                        _selected = value;
-                        _selectedIndex = choiceList.indexOf(value);
-                      });
-                    },
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+      child: Stack(
+        children: <Widget>[
+          Center(
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(common_l_gap),
+                    child: _buildQuestion(question),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(common_gap),
-                  child: _buildAnswer(),
-                ),
-                SizedBox(height: screenAwareHeight(90, context)),
-              ],
+                  Padding(
+                    padding: const EdgeInsets.all(common_gap),
+                    child: DropdownButtonFormField<String>(
+                      decoration: InputDecoration(hintText: "선택지 고르기"),
+                      value: _selected,
+                      items: choiceList
+                          .map((label) => DropdownMenuItem(
+                                child: Text(label),
+                                value: label,
+                              ))
+                          .toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          _selected = value;
+                          _selectedIndex = choiceList.indexOf(value);
+                        });
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(common_gap),
+                    child: _buildAnswer(),
+                  ),
+                  SizedBox(height: screenAwareHeight(90, context)),
+                ],
+              ),
             ),
           ),
-        ),
-        Positioned(
-          left: 0,
-          right: 0,
-          bottom: 0,
-          height: screenAwareHeight(50, context),
-          child: SizedBox(
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
             height: screenAwareHeight(50, context),
-            child: RaisedButton(
-              onPressed: () => _summit(myUser, question),
-              color: pastel_purple,
-              child: Container(
-                child: Text(
-                  '제 출 하 기',
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontFamily: FontFamily.jua,
+            child: SizedBox(
+              height: screenAwareHeight(50, context),
+              child: RaisedButton(
+                onPressed: () => _summit(myUser, question),
+                color: pastel_purple,
+                child: Container(
+                  child: Text(
+                    '제 출 하 기',
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontFamily: FontFamily.jua,
+                    ),
                   ),
                 ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
