@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:margaret/constants/colors.dart';
 import 'package:margaret/constants/firebase_keys.dart';
 import 'package:margaret/constants/font_names.dart';
 import 'package:margaret/constants/size.dart';
@@ -297,7 +298,7 @@ class MyQuestionsCard extends StatelessWidget {
 
   AlertDialog _buildChatDialog(BuildContext context, User myUser) {
     return AlertDialog(
-      title: Text('채팅 연결하기'),
+      title: Text('채팅으로 바로 연결됩니다'),
       actions: <Widget>[
         FlatButton(
           onPressed: () async {
@@ -358,7 +359,7 @@ class MyQuestionsCard extends StatelessWidget {
                 .document(documentId)
                 .delete();
 
-            Navigator.push(
+            Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                     builder: (context) => ChatDetailPage(
@@ -367,11 +368,14 @@ class MyQuestionsCard extends StatelessWidget {
                           peer: peer,
                         )));
           },
-          child: Text('채팅하기'),
+          child: Text(
+            '채팅하기',
+            style: TextStyle(color: Colors.blueAccent),
+          ),
         ),
         FlatButton(
           onPressed: () => Navigator.pop(context),
-          child: Text('취소하기'),
+          child: Text('취소하기', style: TextStyle(color: Colors.blueAccent)),
         ),
       ],
       shape: RoundedRectangleBorder(
