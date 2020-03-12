@@ -5,6 +5,7 @@ import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/pages/account_setting_page.dart';
 import 'package:margaret/pages/alarm_page.dart';
 import 'package:margaret/pages/chat/chat_page.dart';
+import 'package:margaret/pages/contact_page.dart';
 import 'package:margaret/pages/match/match_page.dart';
 import 'package:margaret/pages/qna/qna_page.dart';
 import 'package:margaret/pages/receive_page.dart';
@@ -138,6 +139,25 @@ class _HomeState extends State<Home> {
               child: UserAvatar(user: myUserData.userData),
             ),
             decoration: const BoxDecoration(color: Color(0xFFDCD3FF)),
+          ),
+          ListTile(
+            title: Text('고객센터/신고하기'),
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => ContactPage()));
+            },
+          ),
+          ListTile(
+            title: Text('불편/건의사항 제보'),
+            onTap: () async {
+              const url =
+                  'https://docs.google.com/forms/d/e/1FAIpQLScObz1uElne-WEyVNmrqEga00thfh1DbIHmkt7B32j56aiX_g/viewform';
+              if (await canLaunch(url)) {
+                await launch(url);
+              } else {
+                throw 'Could not launch $url';
+              }
+            },
           ),
           ListTile(
             title: Text('오늘의 질문 제보'),
