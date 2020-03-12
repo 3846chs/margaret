@@ -303,6 +303,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
                           }),
                     ),
                   ),
+                  SizedBox(width: screenAwareWidth(25, context)),
                 ],
               ),
             ),
