@@ -98,19 +98,19 @@ class _TempMyProfileState extends State<TempMyProfile> {
           children: <Widget>[
             Text(
               '내 프로필',
-              style:
-                  TextStyle(fontFamily: FontFamily.jua),
+              style: TextStyle(fontFamily: FontFamily.jua),
             ),
             Spacer(),
             Builder(builder: (BuildContext context) {
               return InkWell(
                 onTap: () {
                   if (nickname.length > MAX_NICKNAME_LENGTH) {
-                    simpleSnackbar(context, '닉네임 글자 수는 $MAX_NICKNAME_LENGTH자 이내로 정해주세요.');
+                    simpleSnackbar(
+                        context, '닉네임 글자 수는 $MAX_NICKNAME_LENGTH자 이내로 정해주세요.');
                     return;
-                  }
-                  else if(job.length > MAX_JOB_LENGTH){
-                    simpleSnackbar(context, '직업 글자 수는 $MAX_JOB_LENGTH자 이내로 정해주세요.');
+                  } else if (job.length > MAX_JOB_LENGTH) {
+                    simpleSnackbar(
+                        context, '직업 글자 수는 $MAX_JOB_LENGTH자 이내로 정해주세요.');
                     return;
                   }
                   _introductionController.clear();
@@ -132,8 +132,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
                 },
                 child: Text(
                   '완료',
-                  style: TextStyle(
-                      fontFamily: FontFamily.jua),
+                  style: TextStyle(fontFamily: FontFamily.jua),
                 ),
               );
             }),
@@ -312,40 +311,43 @@ class _TempMyProfileState extends State<TempMyProfile> {
   }
 
   _buildNicknameDialog(BuildContext context) {
-    return AlertDialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-      content: TextFormField(
-        controller: _nicknameController,
-        decoration: InputDecoration(hintText: '$MAX_NICKNAME_LENGTH자 이내'),
-        validator: (value) {
-          if (value.isEmpty) {
-            return '닉네임을 입력해주세요!';
-          } else if (value.length > MAX_NICKNAME_LENGTH) {
-            return '닉네임은 $MAX_NICKNAME_LENGTH자리 이내로 해주세요';
-          }
-          return null;
-        },
-      ),
-      actions: <Widget>[
-        MaterialButton(
-          child: Text('수정'),
-          onPressed: () {
-            // validator 확인해야함
-            Navigator.pop(context);
-            setState(() {
-              nickname = _nicknameController.text;
-            });
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+      child: AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        content: TextFormField(
+          controller: _nicknameController,
+          decoration: InputDecoration(hintText: '$MAX_NICKNAME_LENGTH자 이내'),
+          validator: (value) {
+            if (value.isEmpty) {
+              return '닉네임을 입력해주세요!';
+            } else if (value.length > MAX_NICKNAME_LENGTH) {
+              return '닉네임은 $MAX_NICKNAME_LENGTH자리 이내로 해주세요';
+            }
+            return null;
           },
         ),
-        MaterialButton(
-            child: Text('취소'),
+        actions: <Widget>[
+          MaterialButton(
+            child: Text('수정'),
             onPressed: () {
+              // validator 확인해야함
               Navigator.pop(context);
-              _nicknameController.text = nickname;
-            }),
-      ],
+              setState(() {
+                nickname = _nicknameController.text;
+              });
+            },
+          ),
+          MaterialButton(
+              child: Text('취소'),
+              onPressed: () {
+                Navigator.pop(context);
+                _nicknameController.text = nickname;
+              }),
+        ],
+      ),
     );
   }
 
@@ -610,32 +612,35 @@ class _TempMyProfileState extends State<TempMyProfile> {
     );
   }
 
-  AlertDialog _buildJobDialog(BuildContext context) {
-    return AlertDialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-      content: TextFormField(
-        controller: _jobController,
-      ),
-      actions: <Widget>[
-        MaterialButton(
-          child: Text('수정'),
-          onPressed: () {
-            // validator 확인해야함
-            Navigator.pop(context);
-            setState(() {
-              job = _jobController.text;
-            });
-          },
+  _buildJobDialog(BuildContext context) {
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+      child: AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8.0),
         ),
-        MaterialButton(
-            child: Text('취소'),
+        content: TextFormField(
+          controller: _jobController,
+        ),
+        actions: <Widget>[
+          MaterialButton(
+            child: Text('수정'),
             onPressed: () {
+              // validator 확인해야함
               Navigator.pop(context);
-              _jobController.text = job;
-            }),
-      ],
+              setState(() {
+                job = _jobController.text;
+              });
+            },
+          ),
+          MaterialButton(
+              child: Text('취소'),
+              onPressed: () {
+                Navigator.pop(context);
+                _jobController.text = job;
+              }),
+        ],
+      ),
     );
   }
 
@@ -1069,34 +1074,37 @@ class _TempMyProfileState extends State<TempMyProfile> {
     );
   }
 
-  AlertDialog _buildIntroductionDialog(BuildContext context) {
-    return AlertDialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-      content: TextFormField(
-        maxLength: 80,
-        maxLines: 6,
-        decoration: _buildInputDecoration('자기소개'),
-        controller: _introductionController,
-      ),
-      actions: <Widget>[
-        MaterialButton(
-          child: Text('수정'),
-          onPressed: () {
-            Navigator.pop(context);
-            setState(() {
-              introduction = _introductionController.text;
-            });
-          },
+  _buildIntroductionDialog(BuildContext context) {
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+      child: AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8.0),
         ),
-        MaterialButton(
-            child: Text('취소'),
+        content: TextFormField(
+          maxLength: 80,
+          maxLines: 6,
+          decoration: _buildInputDecoration('자기소개'),
+          controller: _introductionController,
+        ),
+        actions: <Widget>[
+          MaterialButton(
+            child: Text('수정'),
             onPressed: () {
               Navigator.pop(context);
-              _introductionController.text = introduction;
-            }),
-      ],
+              setState(() {
+                introduction = _introductionController.text;
+              });
+            },
+          ),
+          MaterialButton(
+              child: Text('취소'),
+              onPressed: () {
+                Navigator.pop(context);
+                _introductionController.text = introduction;
+              }),
+        ],
+      ),
     );
   }
 
