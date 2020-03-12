@@ -99,7 +99,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
             Text(
               '내 프로필',
               style:
-                  TextStyle(fontFamily: FontFamily.nanumBarunpen, fontSize: 17),
+                  TextStyle(fontFamily: FontFamily.jua),
             ),
             Spacer(),
             Builder(builder: (BuildContext context) {
@@ -133,7 +133,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
                 child: Text(
                   '완료',
                   style: TextStyle(
-                      fontFamily: FontFamily.nanumBarunpen, fontSize: 17),
+                      fontFamily: FontFamily.jua),
                 ),
               );
             }),

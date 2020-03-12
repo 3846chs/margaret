@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:margaret/constants/firebase_keys.dart';
+import 'package:margaret/constants/font_names.dart';
 import 'package:margaret/constants/size.dart';
 import 'package:margaret/data/message.dart';
 import 'package:margaret/data/provider/my_user_data.dart';
@@ -132,7 +133,10 @@ class _ChatDetailPageState extends State<ChatDetailPage>
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.peer.nickname),
+        title: Text(
+          widget.peer.nickname,
+          style: TextStyle(fontFamily: FontFamily.jua),
+        ),
         actions: <Widget>[
           IconButton(
             icon: Icon(_isNotificationEnabled
@@ -211,7 +215,8 @@ class _ChatDetailPageState extends State<ChatDetailPage>
           child: Padding(
             padding: const EdgeInsets.all(common_s_gap),
             child: ConstrainedBox(
-              constraints: BoxConstraints(maxHeight: screenAwareHeight(100, context)),
+              constraints:
+                  BoxConstraints(maxHeight: screenAwareHeight(100, context)),
               child: TextField(
                 controller: _messageController,
                 keyboardType: TextInputType.multiline,

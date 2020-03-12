@@ -31,8 +31,8 @@ class AlarmPage extends StatelessWidget {
                 child: Text(
                   '완료',
                   style: const TextStyle(
-                    fontFamily: FontFamily.nanumBarunpen,
-                    fontSize: 17,
+                    fontFamily: FontFamily.jua,
+                    fontSize: 19,
                   ),
                 ),
               ),

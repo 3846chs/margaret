@@ -16,7 +16,10 @@ class AccountSetting extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('계정 설정', style: TextStyle(fontFamily: FontFamily.jua),),
+        title: Text(
+          '계정 설정',
+          style: TextStyle(fontFamily: FontFamily.jua),
+        ),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -31,7 +34,7 @@ class AccountSetting extends StatelessWidget {
               },
               child: Text(
                 '로그아웃',
-                style: TextStyle(fontSize: 17),
+                style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
               ),
             ),
           ),
@@ -93,7 +96,7 @@ class AccountSetting extends StatelessWidget {
               },
               child: Text(
                 '회원 탈퇴',
-                style: TextStyle(fontSize: 17),
+                style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
               ),
             ),
           ),
