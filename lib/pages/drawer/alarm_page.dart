@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:margaret/constants/colors.dart';
 import 'package:margaret/constants/font_names.dart';
 import 'package:margaret/data/provider/alarm_data.dart';
 import 'package:provider/provider.dart';
