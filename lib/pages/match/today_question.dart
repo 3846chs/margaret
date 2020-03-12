@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:margaret/constants/balance.dart';
 import 'package:margaret/constants/colors.dart';
 import 'package:margaret/constants/firebase_keys.dart';
 import 'package:margaret/constants/font_names.dart';
@@ -61,8 +62,8 @@ class _TodayQuestionState extends State<TodayQuestion>
       return;
     }
 
-    if (answer.length < 10) {
-      simpleSnackbar(context, '답변이 너무 짧습니다');
+    if (answer.length < MIN_ANSWER_LENGTH) {
+      simpleSnackbar(context, '이유가 너무 짧아요. 최소 $MIN_ANSWER_LENGTH자 이상 작성해주세요!');
       return;
     }
 
@@ -180,8 +181,7 @@ class _TodayQuestionState extends State<TodayQuestion>
     return Stack(
       children: <Widget>[
         Center(
-          child: Padding(
-            padding: const EdgeInsets.all(common_gap),
+          child: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
@@ -192,7 +192,7 @@ class _TodayQuestionState extends State<TodayQuestion>
                 Padding(
                   padding: const EdgeInsets.all(common_gap),
                   child: DropdownButtonFormField<String>(
-                    decoration: InputDecoration(hintText: '답변을 선택하세요'),
+                    decoration: InputDecoration(hintText: "선택지 고르기"),
                     value: _selected,
                     items: choiceList
                         .map((label) => DropdownMenuItem(
@@ -256,7 +256,7 @@ class _TodayQuestionState extends State<TodayQuestion>
     return TextField(
       controller: _answerController,
       style: TextStyle(color: Colors.black),
-      decoration: _buildInputDecoration('선택한 이유'),
+      decoration: _buildInputDecoration("해당 선택지를 고른 이유를 자세하게 써주세요!"),
       maxLength: 80,
       maxLines: 4,
     );
