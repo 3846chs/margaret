@@ -62,8 +62,8 @@ class _TodayQuestionState extends State<TodayQuestion>
       return;
     }
 
-    if (answer.length < MIN_ANSWER_LENGTH) {
-      simpleSnackbar(context, '이유가 너무 짧아요. 최소 $MIN_ANSWER_LENGTH자 이상 작성해주세요!');
+    if (answer.length < MIN_TODAY_ANSWER_LENGTH) {
+      simpleSnackbar(context, '이유가 너무 짧아요. 최소 $MIN_TODAY_ANSWER_LENGTH자 이상 작성해주세요!');
       return;
     }
 
@@ -257,7 +257,7 @@ class _TodayQuestionState extends State<TodayQuestion>
       controller: _answerController,
       style: TextStyle(color: Colors.black),
       decoration: _buildInputDecoration("해당 선택지를 고른 이유를 자세하게 써주세요!"),
-      maxLength: 80,
+      maxLength: MAX_TODAY_ANSWER_LENGTH,
       maxLines: 4,
     );
   }

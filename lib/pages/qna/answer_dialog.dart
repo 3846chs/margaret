@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:margaret/constants/balance.dart';
+import 'package:margaret/constants/colors.dart';
 import 'package:margaret/constants/firebase_keys.dart';
 import 'package:margaret/constants/font_names.dart';
 import 'package:margaret/constants/size.dart';
@@ -81,16 +83,16 @@ class _AnswerDialogState extends State<AnswerDialog> {
               ),
               TextFormField(
                 validator: (value) {
-                  if (value.length < 10)
-                    return '최소 10자 이상 작성하셔야 합니다';
+                  if (value.length < MIN_RANDOM_QNA_LENGTH)
+                    return '최소 $MIN_RANDOM_QNA_LENGTH자 이상 작성해주세요';
                   else
                     return null;
                 },
                 controller: _answerController,
                 style: TextStyle(color: Colors.black),
                 decoration: _buildInputDecoration('답변을 입력해주세요'),
-                maxLength: 60,
-                maxLines: 5,
+                maxLength: MAX_RANDOM_QNA_LENGTH,
+                maxLines: 4,
               ),
               FlatButton(
                 onPressed: () {
@@ -104,11 +106,8 @@ class _AnswerDialogState extends State<AnswerDialog> {
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                       colors: <Color>[
-                        Colors.pink[100],
-                        Colors.purple[100],
-
-//                    pastel_purple,
-//                    pastel_purple,
+                        Colors.purple[400],
+                        pastel_purple,
                       ],
                     ),
                     boxShadow: [

@@ -8,7 +8,7 @@ import 'package:margaret/constants/font_names.dart';
 import 'package:margaret/constants/size.dart';
 import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/data/user.dart';
-import 'package:margaret/dialogs/answer_dialog.dart';
+import 'package:margaret/pages/qna/answer_dialog.dart';
 import 'package:margaret/firebase/storage_cache_manager.dart';
 import 'package:margaret/utils/adjust_size.dart';
 import 'package:margaret/utils/simple_snack_bar.dart';

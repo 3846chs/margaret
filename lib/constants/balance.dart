@@ -1,4 +1,7 @@
 const int MAX_NUM_MY_QUESTIONS = 5;
-const int MIN_ANSWER_LENGTH = 10;
+const int MIN_TODAY_ANSWER_LENGTH = 10;
+const int MAX_TODAY_ANSWER_LENGTH = 80;
+const int MIN_RANDOM_QNA_LENGTH = 10;
+const int MAX_RANDOM_QNA_LENGTH = 60;
 const int MAX_NICKNAME_LENGTH = 7;
 const int MAX_JOB_LENGTH = 7;

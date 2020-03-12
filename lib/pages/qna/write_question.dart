@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:margaret/constants/balance.dart';
 import 'package:margaret/constants/colors.dart';
 import 'package:margaret/constants/firebase_keys.dart';
 import 'package:margaret/constants/font_names.dart';
@@ -55,8 +56,8 @@ class _WriteQuestionState extends State<WriteQuestion> {
                     controller: _questionController,
                     style: TextStyle(color: Colors.black),
                     decoration: _buildInputDecoration('가치관 질문을 입력해주세요'),
-                    maxLength: 100,
-                    maxLines: 5),
+                    maxLength: MAX_RANDOM_QNA_LENGTH,
+                    maxLines: 4),
                 Container(
                   padding: EdgeInsets.all(8.0),
                   alignment: Alignment.centerLeft,
@@ -116,8 +117,10 @@ class _WriteQuestionState extends State<WriteQuestion> {
                   height: 50,
                   child: RaisedButton(
                     onPressed: () async {
-                      if (_questionController.text.length < 5) {
-                        simpleSnackbar(context, '질문이 너무 짧습니다.');
+                      if (_questionController.text.length <
+                          MIN_RANDOM_QNA_LENGTH) {
+                        simpleSnackbar(context,
+                            '질문을 최소 $MIN_RANDOM_QNA_LENGTH자 이상 등록해주세요');
                         return;
                       }
 
