@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:margaret/constants/firebase_keys.dart';
+import 'package:margaret/constants/font_names.dart';
 import 'package:margaret/constants/size.dart';
 import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/utils/adjust_size.dart';
@@ -15,7 +16,7 @@ class AccountSetting extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('계정 설정'),
+        title: Text('계정 설정', style: TextStyle(fontFamily: FontFamily.jua),),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,

@@ -18,7 +18,10 @@ class AlarmPage extends StatelessWidget {
 
         return Scaffold(
           appBar: AppBar(
-            title: Text('알림 설정'),
+            title: Text(
+              '알림 설정',
+              style: TextStyle(fontFamily: FontFamily.jua),
+            ),
             actions: <Widget>[
               FlatButton(
                 onPressed: () {

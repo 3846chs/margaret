@@ -8,7 +8,10 @@ class ContactPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('고객센터/신고하기'),
+        title: Text(
+          '고객센터/신고하기',
+          style: TextStyle(fontFamily: FontFamily.jua),
+        ),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
