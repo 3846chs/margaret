@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:margaret/constants/colors.dart';
 import 'package:margaret/constants/font_names.dart';
 import 'package:margaret/data/provider/alarm_data.dart';
 import 'package:provider/provider.dart';
 
 class AlarmPage extends StatelessWidget {
+  final activeTrackColor = Colors.purple[100];
+  final activeColor = Colors.purple[500];
+
   @override
   Widget build(BuildContext context) {
     return Consumer<AlarmData>(
@@ -63,11 +67,10 @@ class AlarmPage extends StatelessWidget {
             Expanded(
               child: Center(
                 child: Switch(
-                  value: alarmData.match,
-                  onChanged: (value) => alarmData.match = value,
-                  activeTrackColor: Colors.lightGreenAccent,
-                  activeColor: Colors.green,
-                ),
+                    value: alarmData.match,
+                    onChanged: (value) => alarmData.match = value,
+                    activeTrackColor: activeTrackColor,
+                    activeColor: activeColor),
               ),
             ),
           ],
@@ -88,11 +91,10 @@ class AlarmPage extends StatelessWidget {
             Expanded(
               child: Center(
                 child: Switch(
-                  value: alarmData.receive,
-                  onChanged: (value) => alarmData.receive = value,
-                  activeTrackColor: Colors.lightGreenAccent,
-                  activeColor: Colors.green,
-                ),
+                    value: alarmData.receive,
+                    onChanged: (value) => alarmData.receive = value,
+                    activeTrackColor: activeTrackColor,
+                    activeColor: activeColor),
               ),
             ),
           ],
@@ -113,11 +115,10 @@ class AlarmPage extends StatelessWidget {
             Expanded(
               child: Center(
                 child: Switch(
-                  value: alarmData.newChat,
-                  onChanged: (value) => alarmData.newChat = value,
-                  activeTrackColor: Colors.lightGreenAccent,
-                  activeColor: Colors.green,
-                ),
+                    value: alarmData.newChat,
+                    onChanged: (value) => alarmData.newChat = value,
+                    activeTrackColor: activeTrackColor,
+                    activeColor: activeColor),
               ),
             ),
           ],
@@ -138,11 +139,10 @@ class AlarmPage extends StatelessWidget {
             Expanded(
               child: Center(
                 child: Switch(
-                  value: alarmData.newTodayQuestion,
-                  onChanged: (value) => alarmData.newTodayQuestion = value,
-                  activeTrackColor: Colors.lightGreenAccent,
-                  activeColor: Colors.green,
-                ),
+                    value: alarmData.newTodayQuestion,
+                    onChanged: (value) => alarmData.newTodayQuestion = value,
+                    activeTrackColor: activeTrackColor,
+                    activeColor: activeColor),
               ),
             ),
           ],
@@ -163,11 +163,10 @@ class AlarmPage extends StatelessWidget {
             Expanded(
               child: Center(
                 child: Switch(
-                  value: alarmData.newPeerQuestion,
-                  onChanged: (value) => alarmData.newPeerQuestion = value,
-                  activeTrackColor: Colors.lightGreenAccent,
-                  activeColor: Colors.green,
-                ),
+                    value: alarmData.newPeerQuestion,
+                    onChanged: (value) => alarmData.newPeerQuestion = value,
+                    activeTrackColor: activeTrackColor,
+                    activeColor: activeColor),
               ),
             ),
           ],
@@ -188,11 +187,10 @@ class AlarmPage extends StatelessWidget {
             Expanded(
               child: Center(
                 child: Switch(
-                  value: alarmData.newMyQuestion,
-                  onChanged: (value) => alarmData.newMyQuestion = value,
-                  activeTrackColor: Colors.lightGreenAccent,
-                  activeColor: Colors.green,
-                ),
+                    value: alarmData.newMyQuestion,
+                    onChanged: (value) => alarmData.newMyQuestion = value,
+                    activeTrackColor: activeTrackColor,
+                    activeColor: activeColor),
               ),
             ),
           ],
