@@ -2,10 +2,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:margaret/constants/colors.dart';
 import 'package:margaret/constants/size.dart';
 import 'package:margaret/data/message.dart';
+import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/firebase/storage_cache_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:margaret/utils/adjust_size.dart';
+import 'package:provider/provider.dart';
 
 class ChatBubble extends StatefulWidget {
   final Message message;
@@ -25,36 +27,41 @@ class _ChatBubbleState extends State<ChatBubble>
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    return Consumer<MyUserData>(builder: (context, myUserData, _) {
+      if (widget.message.idFrom == "bot") {
+        return Center(
+          child: _buildBubble(Colors.grey[400]),
+        );
+      }
 
-    if (widget.message.idFrom == "bot") {
-      return Center(
-        child: _buildBubble(Colors.grey[400]),
-      );
-    }
+      if (widget.isSent) {
+        return Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: <Widget>[
+            const Spacer(),
+            _buildHeart(),
+            _buildTime(),
+            _buildBubble(myUserData.userData.gender == '남성'
+                ? Color(0xffc5a3ff)
+                : Color(0xffffaabb)),
+          ],
+        );
+      }
 
-    if (widget.isSent) {
+      if (!widget.message.isRead && ModalRoute.of(context).isCurrent)
+        widget.onRead(widget.message.timestamp);
+
       return Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
-          const Spacer(),
-          _buildHeart(),
+          _buildBubble(myUserData.userData.gender == '남성'
+              ? Color(0xffffaabb)
+              : Color(0xffc5a3ff)),
           _buildTime(),
-          _buildBubble(Color(0xffffaabb)),
+          const Spacer(),
         ],
       );
-    }
-
-    if (!widget.message.isRead && ModalRoute.of(context).isCurrent)
-      widget.onRead(widget.message.timestamp);
-
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: <Widget>[
-        _buildBubble(pastel_purple),
-        _buildTime(),
-        const Spacer(),
-      ],
-    );
+    });
   }
 
   Widget _buildHeart() {

@@ -38,6 +38,7 @@ class _WriteQuestionState extends State<WriteQuestion> {
           ),
         ),
         body: GestureDetector(
+          behavior: HitTestBehavior.translucent,
           onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
           child: Consumer<MyUserData>(builder: (context, myUserData, _) {
             return SafeArea(

@@ -65,8 +65,7 @@ class PeerQuestionsCard extends StatelessWidget {
 
                               // blocks 에 추가 (서로 blocks 에 추가) 구현해야 합니다
                               myUser.reference.updateData({
-                                "blocks":
-                                    FieldValue.arrayUnion([peer.userKey]),
+                                "blocks": FieldValue.arrayUnion([peer.userKey]),
                               });
                               peer.reference.updateData({
                                 "blocks":
@@ -243,8 +242,8 @@ class PeerQuestionsCard extends StatelessWidget {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: <Color>[
-                  Color(0xff4a89fd),
-                  Color(0xff17e1db),
+                  Color(0xfffd5c76),
+                  Color(0xffff8951),
                 ],
               ),
               boxShadow: [
@@ -262,6 +261,7 @@ class PeerQuestionsCard extends StatelessWidget {
                 const Icon(
                   FontAwesomeIcons.pencilAlt,
                   color: Colors.white,
+                  size: 18,
                 ),
                 Text(
                   "  답장하기",

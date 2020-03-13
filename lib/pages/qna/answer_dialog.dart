@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:margaret/constants/balance.dart';
-import 'package:margaret/constants/colors.dart';
 import 'package:margaret/constants/firebase_keys.dart';
 import 'package:margaret/constants/font_names.dart';
 import 'package:margaret/constants/size.dart';
@@ -108,8 +107,10 @@ class _AnswerDialogState extends State<AnswerDialog> {
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                         colors: <Color>[
-                          Colors.purple[400],
-                          pastel_purple,
+//                          Colors.purple[400],
+//                          pastel_purple,
+                          Color(0xfffd5c76),
+                          Color(0xffff8951),
                         ],
                       ),
                       boxShadow: [
@@ -117,8 +118,8 @@ class _AnswerDialogState extends State<AnswerDialog> {
                           color: Colors.grey,
                           blurRadius: 2.0,
                           spreadRadius: 0.0,
-                          offset:
-                              Offset(3.0, 3.0), // shadow direction: bottom right
+                          offset: Offset(
+                              3.0, 3.0), // shadow direction: bottom right
                         ),
                       ],
                     ),
@@ -127,17 +128,17 @@ class _AnswerDialogState extends State<AnswerDialog> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Text(
-                          '제출하기 ',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: FontFamily.jua,
-                              fontSize: 15),
-                        ),
                         Icon(
                           FontAwesomeIcons.pencilAlt,
                           size: 17,
                           color: Colors.white,
+                        ),
+                        Text(
+                          '  제출하기',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: FontFamily.jua,
+                              fontSize: 15),
                         ),
                       ],
                     ),
