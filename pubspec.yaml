@@ -95,10 +95,22 @@ flutter:
       fonts:
         - asset: assets/fonts/NanumBarunpenR.ttf
 
+    - family: CookieRun
+      fonts:
+        - asset: assets/fonts/CookieRun.ttf
+
+    - family: MapleStoryLight
+      fonts:
+        - asset: assets/fonts/MapleStoryLight.ttf
+
+    - family: HelloTwenty
+      fonts:
+        - asset: assets/fonts/HelloTwenty.ttf
 
     - family: SDMiSaeng
       fonts:
         - asset: assets/fonts/SDMiSaeng.ttf
+
     - family: BMJUA
       fonts:
         - asset: assets/fonts/BMJUA.ttf
@@ -106,6 +118,7 @@ flutter:
     - family: handlee
       fonts:
         - asset: assets/fonts/handlee.ttf
+
     - family: pacifico
       fonts:
         - asset: assets/fonts/pacifico.ttf
