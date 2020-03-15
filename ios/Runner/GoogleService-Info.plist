@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>1046778309577-7pk43fhi2v6mgjkcfd2tm3trbeet7cgd.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.1046778309577-7pk43fhi2v6mgjkcfd2tm3trbeet7cgd</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>1046778309577-3jsa9kk9a7vg8k18en2hbg7vr46dmff4.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyA4jIG66Dj2f6AKsS17-TaKtwgsImWiPtU</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1046778309577</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.margaret.margaret</string>
+	<key>PROJECT_ID</key>
+	<string>margaret-official</string>
+	<key>STORAGE_BUCKET</key>
+	<string>margaret-official.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1046778309577:ios:4a21891ce0492e919dd618</string>
+	<key>DATABASE_URL</key>
+	<string>https://margaret-official.firebaseio.com</string>
+</dict>
+</plist>
