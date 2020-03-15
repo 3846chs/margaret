@@ -19,6 +19,9 @@ import 'package:margaret/utils/adjust_size.dart';
 import 'package:margaret/utils/simple_snack_bar.dart';
 import 'package:provider/provider.dart';
 
+import '../constants/colors.dart';
+import '../constants/colors.dart';
+
 class TempMyProfile extends StatefulWidget {
   final User user;
 
@@ -318,6 +321,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
           borderRadius: BorderRadius.circular(8.0),
         ),
         content: TextFormField(
+          cursorColor: cursor_color,
           controller: _nicknameController,
           decoration: InputDecoration(hintText: '$MAX_NICKNAME_LENGTH자 이내'),
           validator: (value) {
@@ -620,6 +624,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
           borderRadius: BorderRadius.circular(8.0),
         ),
         content: TextFormField(
+          cursorColor: cursor_color,
           controller: _jobController,
         ),
         actions: <Widget>[
@@ -1082,6 +1087,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
           borderRadius: BorderRadius.circular(8.0),
         ),
         content: TextFormField(
+          cursorColor: cursor_color,
           maxLength: 80,
           maxLines: 6,
           decoration: _buildInputDecoration('자기소개'),

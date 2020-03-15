@@ -12,6 +12,10 @@ import 'package:margaret/utils/adjust_size.dart';
 import 'package:margaret/utils/simple_snack_bar.dart';
 import 'package:provider/provider.dart';
 
+import '../../utils/adjust_size.dart';
+import '../../utils/adjust_size.dart';
+import '../../utils/adjust_size.dart';
+
 class WriteQuestion extends StatefulWidget {
   @override
   _WriteQuestionState createState() => _WriteQuestionState();
@@ -37,85 +41,94 @@ class _WriteQuestionState extends State<WriteQuestion> {
             style: TextStyle(fontFamily: FontFamily.jua),
           ),
         ),
-        body: GestureDetector(
-          behavior: HitTestBehavior.translucent,
-          onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
-          child: Consumer<MyUserData>(builder: (context, myUserData, _) {
-            return SafeArea(
-                child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                Text(
-                  '오늘 남은 질문 횟수: ' +
-                      myUserData.userData.numMyQuestions.toString(),
-                  style: TextStyle(fontFamily: FontFamily.jua),
-                ),
-                SizedBox(
-                  height: screenAwareHeight(10, context),
-                ),
-                TextField(
-                    controller: _questionController,
-                    style: TextStyle(color: Colors.black),
-                    decoration: _buildInputDecoration('가치관 질문을 입력해주세요'),
-                    maxLength: MAX_RANDOM_QNA_LENGTH,
-                    maxLines: 4),
-                Container(
-                  padding: EdgeInsets.all(8.0),
-                  alignment: Alignment.centerLeft,
-                  height: screenAwareHeight(50, context),
-                  width: double.infinity,
-                  child: Text(
-                    '질문을 자유롭게 작성해서 가치관 질문을 보내주세요!\n아래의 카테고리별 예시 질문도 참고해보세요.',
-                    style: TextStyle(color: Colors.grey),
+        body: Consumer<MyUserData>(builder: (context, myUserData, _) {
+          return SafeArea(
+              child: Stack(
+            children: <Widget>[
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    '오늘 남은 질문 횟수: ' +
+                        myUserData.userData.numMyQuestions.toString(),
+                    style: TextStyle(
+                        fontFamily: FontFamily.jua,
+                        fontSize: screenAwareTextSize(14, context)),
                   ),
-                ),
-                GridView.count(
-                    crossAxisCount: 3,
-                    shrinkWrap: true,
-                    children: <Widget>[
-                      MyQuestionExample(
-                        questionController: _questionController,
-                        iconData: FontAwesomeIcons.phoneVolume,
-                        category: '연락/만남',
-                        examples: contactQuestions,
-                      ),
-                      MyQuestionExample(
-                        questionController: _questionController,
-                        iconData: FontAwesomeIcons.solidHeart,
-                        category: '연애관',
-                        examples: datingQuestions,
-                      ),
-                      MyQuestionExample(
-                        questionController: _questionController,
-                        iconData: FontAwesomeIcons.baby,
-                        category: '결혼관',
-                        examples: marriageQuestions,
-                      ),
-                      MyQuestionExample(
-                        questionController: _questionController,
-                        iconData: FontAwesomeIcons.grin,
-                        category: '성격/성향',
-                        examples: characterQuestions,
-                      ),
-                      MyQuestionExample(
-                        questionController: _questionController,
-                        iconData: FontAwesomeIcons.seedling,
-                        category: '취미',
-                        examples: hobbyQuestions,
-                      ),
-                      MyQuestionExample(
-                        questionController: _questionController,
-                        iconData: FontAwesomeIcons.venusMars,
-                        category: '19금',
-                        examples: sexQuestions,
-                      ),
-                    ]),
-                SizedBox(
-                  height: screenAwareHeight(20, context),
-                ),
-                SizedBox(
+                  SizedBox(
+                    height: screenAwareHeight(10, context),
+                  ),
+                  TextField(
+                      cursorColor: cursor_color,
+                      controller: _questionController,
+                      style: TextStyle(color: Colors.black),
+                      decoration: _buildInputDecoration('가치관 질문을 입력해주세요'),
+                      maxLength: MAX_RANDOM_QNA_LENGTH,
+                      maxLines: 4),
+                  Container(
+                    padding: EdgeInsets.all(8.0),
+                    alignment: Alignment.centerLeft,
+                    height: screenAwareHeight(50, context),
+                    width: double.infinity,
+                    child: Text(
+                      '질문을 자유롭게 작성해서 가치관 질문을 보내주세요!\n아래의 카테고리별 예시 질문도 참고해보세요.',
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                  ),
+                  GridView.count(
+                      crossAxisCount: 3,
+                      shrinkWrap: true,
+                      children: <Widget>[
+                        MyQuestionExample(
+                          questionController: _questionController,
+                          iconData: FontAwesomeIcons.phoneVolume,
+                          category: '연락/만남',
+                          examples: contactQuestions,
+                        ),
+                        MyQuestionExample(
+                          questionController: _questionController,
+                          iconData: FontAwesomeIcons.solidHeart,
+                          category: '연애관',
+                          examples: datingQuestions,
+                        ),
+                        MyQuestionExample(
+                          questionController: _questionController,
+                          iconData: FontAwesomeIcons.baby,
+                          category: '결혼관',
+                          examples: marriageQuestions,
+                        ),
+                        MyQuestionExample(
+                          questionController: _questionController,
+                          iconData: FontAwesomeIcons.grin,
+                          category: '성격/성향',
+                          examples: characterQuestions,
+                        ),
+                        MyQuestionExample(
+                          questionController: _questionController,
+                          iconData: FontAwesomeIcons.seedling,
+                          category: '취미',
+                          examples: hobbyQuestions,
+                        ),
+                        MyQuestionExample(
+                          questionController: _questionController,
+                          iconData: FontAwesomeIcons.venusMars,
+                          category: '19금',
+                          examples: sexQuestions,
+                        ),
+                      ]),
+                  SizedBox(
+                    height: screenAwareHeight(20, context),
+                  ),
+                ],
+              ),
+              Positioned(
+                left: 0,
+                right: 0,
+                bottom: 0,
+                height: screenAwareHeight(50, context),
+                child: SizedBox(
                   width: double.infinity,
-                  height: 50,
+                  height: screenAwareHeight(50, context),
                   child: RaisedButton(
                     onPressed: () async {
                       if (_questionController.text.length <
@@ -172,10 +185,10 @@ class _WriteQuestionState extends State<WriteQuestion> {
                     ),
                   ),
                 ),
-              ],
-            ));
-          }),
-        ));
+              ),
+            ],
+          ));
+        }));
   }
 
   InputDecoration _buildInputDecoration(String hint) {
@@ -255,13 +268,18 @@ class MyQuestionExample extends StatelessWidget {
             Spacer(
               flex: 2,
             ),
-            Icon(iconData),
+            Icon(
+              iconData,
+              size: screenAwareTextSize(15, context),
+            ),
             Spacer(
               flex: 1,
             ),
             Text(
               category,
-              style: TextStyle(fontFamily: FontFamily.jua),
+              style: TextStyle(
+                  fontFamily: FontFamily.jua,
+                  fontSize: screenAwareTextSize(10, context)),
             ),
             Spacer(
               flex: 2,
