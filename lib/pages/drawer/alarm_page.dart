@@ -9,6 +9,8 @@ class AlarmPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final alarmData = Provider.of<AlarmData>(context, listen: false);
+    alarmData.getData();
     return Consumer<AlarmData>(
       builder: (context, alarmData, _) {
         if (alarmData.status != AlarmDataStatus.exist) {
@@ -23,7 +25,7 @@ class AlarmPage extends StatelessWidget {
           appBar: AppBar(
             title: Text(
               '알림 설정',
-              style: TextStyle(fontFamily: FontFamily.jua),
+              style: const TextStyle(fontFamily: FontFamily.jua),
             ),
             actions: <Widget>[
               FlatButton(
@@ -66,10 +68,11 @@ class AlarmPage extends StatelessWidget {
             Expanded(
               child: Center(
                 child: Switch(
-                    value: alarmData.match,
-                    onChanged: (value) => alarmData.match = value,
-                    activeTrackColor: activeTrackColor,
-                    activeColor: activeColor),
+                  value: alarmData.match,
+                  onChanged: (value) => alarmData.match = value,
+                  activeTrackColor: activeTrackColor,
+                  activeColor: activeColor,
+                ),
               ),
             ),
           ],
@@ -90,10 +93,11 @@ class AlarmPage extends StatelessWidget {
             Expanded(
               child: Center(
                 child: Switch(
-                    value: alarmData.receive,
-                    onChanged: (value) => alarmData.receive = value,
-                    activeTrackColor: activeTrackColor,
-                    activeColor: activeColor),
+                  value: alarmData.receive,
+                  onChanged: (value) => alarmData.receive = value,
+                  activeTrackColor: activeTrackColor,
+                  activeColor: activeColor,
+                ),
               ),
             ),
           ],
@@ -114,10 +118,11 @@ class AlarmPage extends StatelessWidget {
             Expanded(
               child: Center(
                 child: Switch(
-                    value: alarmData.newChat,
-                    onChanged: (value) => alarmData.newChat = value,
-                    activeTrackColor: activeTrackColor,
-                    activeColor: activeColor),
+                  value: alarmData.newChat,
+                  onChanged: (value) => alarmData.newChat = value,
+                  activeTrackColor: activeTrackColor,
+                  activeColor: activeColor,
+                ),
               ),
             ),
           ],
@@ -138,10 +143,11 @@ class AlarmPage extends StatelessWidget {
             Expanded(
               child: Center(
                 child: Switch(
-                    value: alarmData.newTodayQuestion,
-                    onChanged: (value) => alarmData.newTodayQuestion = value,
-                    activeTrackColor: activeTrackColor,
-                    activeColor: activeColor),
+                  value: alarmData.newTodayQuestion,
+                  onChanged: (value) => alarmData.newTodayQuestion = value,
+                  activeTrackColor: activeTrackColor,
+                  activeColor: activeColor,
+                ),
               ),
             ),
           ],
@@ -162,10 +168,11 @@ class AlarmPage extends StatelessWidget {
             Expanded(
               child: Center(
                 child: Switch(
-                    value: alarmData.newPeerQuestion,
-                    onChanged: (value) => alarmData.newPeerQuestion = value,
-                    activeTrackColor: activeTrackColor,
-                    activeColor: activeColor),
+                  value: alarmData.newPeerQuestion,
+                  onChanged: (value) => alarmData.newPeerQuestion = value,
+                  activeTrackColor: activeTrackColor,
+                  activeColor: activeColor,
+                ),
               ),
             ),
           ],
@@ -186,10 +193,11 @@ class AlarmPage extends StatelessWidget {
             Expanded(
               child: Center(
                 child: Switch(
-                    value: alarmData.newMyQuestion,
-                    onChanged: (value) => alarmData.newMyQuestion = value,
-                    activeTrackColor: activeTrackColor,
-                    activeColor: activeColor),
+                  value: alarmData.newMyQuestion,
+                  onChanged: (value) => alarmData.newMyQuestion = value,
+                  activeTrackColor: activeTrackColor,
+                  activeColor: activeColor,
+                ),
               ),
             ),
           ],

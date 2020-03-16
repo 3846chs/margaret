@@ -63,6 +63,8 @@ class AlarmData extends ChangeNotifier {
   AlarmDataStatus get status => _status;
 
   Future<void> getData([DocumentReference userRef]) async {
+    _status = AlarmDataStatus.progress;
+
     if (userRef != null) _userRef = userRef;
 
     final snapshot = await _userRef.get();

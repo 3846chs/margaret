@@ -2,6 +2,11 @@ import 'dart:io';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
+
 import 'package:margaret/constants/balance.dart';
 import 'package:margaret/constants/colors.dart';
 import 'package:margaret/constants/firebase_keys.dart';
@@ -11,9 +16,9 @@ import 'package:margaret/constants/size.dart';
 import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/data/user.dart';
 import 'package:margaret/firebase/firestore_provider.dart';
-import 'package:margaret/firebase/storage_cache_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:margaret/firebase/storage_provider.dart';
 import 'package:margaret/utils/adjust_size.dart';
 import 'package:margaret/utils/simple_snack_bar.dart';
 import 'package:provider/provider.dart';
@@ -43,31 +48,27 @@ class _TempMyProfileState extends State<TempMyProfile> {
   String drink;
   String religion;
   String introduction;
-  List<File> _profiles;
+  List profiles;
 
-//  Future<void> _getProfile([int index]) async {
-//
-//    File image = await ImagePicker.pickImage(source: ImageSource.gallery);
-//
-//    if (image == null) return;
-//
-//    image = await ImageCropper.cropImage(
-//      sourcePath: image.path,
-//      aspectRatio: const CropAspectRatio(
-//        ratioX: 1.0,
-//        ratioY: 1.0,
-//      ),
-//    );
-//
-//    if (image != null) {
-//      setState(() {
-//        if (index == null)
-//          _profiles.add(image);
-//        else
-//          _profiles[index] = image;
-//      });
-//    }
-//  }
+  Future<void> _getProfile(int index) async {
+    File image = await ImagePicker.pickImage(source: ImageSource.gallery);
+
+    if (image == null) return;
+
+    image = await ImageCropper.cropImage(
+      sourcePath: image.path,
+      aspectRatio: const CropAspectRatio(
+        ratioX: 1.0,
+        ratioY: 1.0,
+      ),
+    );
+
+    if (image != null) {
+      setState(() {
+        profiles[index] = image;
+      });
+    }
+  }
 
   @override
   void initState() {
@@ -83,6 +84,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
     drink = widget.user.drink;
     religion = widget.user.religion;
     introduction = widget.user.introduction;
+    profiles = List.from(widget.user.profiles);
 
     _introductionController.text = widget.user.introduction;
     _nicknameController.text = widget.user.nickname;
@@ -105,41 +107,51 @@ class _TempMyProfileState extends State<TempMyProfile> {
               style: TextStyle(fontFamily: FontFamily.jua),
             ),
             Spacer(),
-            Builder(builder: (BuildContext context) {
-              return InkWell(
-                onTap: () {
-                  if (nickname.length > MAX_NICKNAME_LENGTH) {
-                    simpleSnackbar(
-                        context, '닉네임 글자 수는 $MAX_NICKNAME_LENGTH자 이내로 정해주세요.');
-                    return;
-                  } else if (job.length > MAX_JOB_LENGTH) {
-                    simpleSnackbar(
-                        context, '직업 글자 수는 $MAX_JOB_LENGTH자 이내로 정해주세요.');
-                    return;
-                  }
-                  _introductionController.clear();
-                  _nicknameController.clear();
-                  _jobController.clear();
+            Builder(
+              builder: (context) {
+                return InkWell(
+                  onTap: () async {
+                    if (nickname.length > MAX_NICKNAME_LENGTH) {
+                      simpleSnackbar(context,
+                          '닉네임 글자 수는 $MAX_NICKNAME_LENGTH자 이내로 정해주세요.');
+                      return;
+                    }
+                    if (job.length > MAX_JOB_LENGTH) {
+                      simpleSnackbar(
+                          context, '직업 글자 수는 $MAX_JOB_LENGTH자 이내로 정해주세요.');
+                      return;
+                    }
+                    _introductionController.clear();
+                    _nicknameController.clear();
+                    _jobController.clear();
 
-                  firestoreProvider.updateUser(widget.user.userKey, {
-                    UserKeys.KEY_NICKNAME: nickname,
-                    UserKeys.KEY_JOB: job,
-                    UserKeys.KEY_HEIGHT: height,
-                    UserKeys.KEY_REGION: region,
-                    UserKeys.KEY_SMOKE: smoke,
-                    UserKeys.KEY_DRINK: drink,
-                    UserKeys.KEY_RELIGION: religion,
-                    UserKeys.KEY_INTRODUCTION: introduction,
-                  });
+                    firestoreProvider.updateUser(widget.user.userKey, {
+                      UserKeys.KEY_NICKNAME: nickname,
+                      UserKeys.KEY_JOB: job,
+                      UserKeys.KEY_HEIGHT: height,
+                      UserKeys.KEY_REGION: region,
+                      UserKeys.KEY_SMOKE: smoke,
+                      UserKeys.KEY_DRINK: drink,
+                      UserKeys.KEY_RELIGION: religion,
+                      UserKeys.KEY_INTRODUCTION: introduction,
+                      UserKeys.KEY_PROFILES:
+                          await Future.wait(profiles.map((profile) async {
+                        if (profile is String) return profile;
+                        final url = await storageProvider.uploadImg(profile,
+                            'profiles/${DateTime.now().millisecondsSinceEpoch}_${widget.user.userKey}');
+                        return url.substring(9);
+                      })),
+                    });
 
-                  Navigator.pop(context);
-                },
-                child: Text(
-                  '완료',
-                  style: TextStyle(fontFamily: FontFamily.jua),
-                ),
-              );
-            }),
+                    Navigator.pop(context);
+                  },
+                  child: Text(
+                    '완료',
+                    style: const TextStyle(fontFamily: FontFamily.jua),
+                  ),
+                );
+              },
+            ),
           ],
         ),
       ),
@@ -167,28 +179,45 @@ class _TempMyProfileState extends State<TempMyProfile> {
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: value.userData.profiles
+                      children: profiles
                           .map(
                             (path) => Padding(
                               padding: const EdgeInsets.all(common_gap),
                               child: InkWell(
                                 onTap: () {
-                                  print(path);
-                                  //_getProfile(0);
+                                  _getProfile(profiles.indexOf(path));
                                 },
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(14),
-                                  child: CachedNetworkImage(
-                                    imageUrl: "profiles/$path",
-                                    cacheManager: StorageCacheManager(),
-                                    width: ScreenUtil().setWidth(130),
-                                    height: ScreenUtil().setWidth(130),
-                                    fit: BoxFit.cover,
-                                    placeholder: (context, url) =>
-                                        const CircularProgressIndicator(),
-                                    errorWidget: (context, url, error) =>
-                                        const Icon(Icons.account_circle),
-                                  ),
+
+                                  child: (path is String)
+                                      ? FutureBuilder<String>(
+                                          future: storageProvider
+                                              .getImageUri("profiles/$path"),
+                                          builder: (context, snapshot) {
+                                            if (snapshot.hasError)
+                                              return const Icon(
+                                                  Icons.account_circle);
+                                            if (!snapshot.hasData)
+                                              return const CircularProgressIndicator();
+                                            return Image.network(
+                                              snapshot.data,
+                                              width: screenAwareWidth(
+                                                  130, context),
+                                              height: screenAwareHeight(
+                                                  130, context),
+                                              fit: BoxFit.cover,
+                                            );
+                                          },
+                                        )
+                                      : Image.file(
+                                          path,
+                                          width: screenAwareWidth(130, context),
+                                          height:
+                                              screenAwareHeight(130, context),
+                                          fit: BoxFit.cover,
+                                        ),
+
                                 ),
                               ),
                             ),

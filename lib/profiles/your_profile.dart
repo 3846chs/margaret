@@ -1,10 +1,9 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:margaret/constants/colors.dart';
 import 'package:margaret/constants/font_names.dart';
 import 'package:margaret/constants/size.dart';
 import 'package:margaret/data/user.dart';
-import 'package:margaret/firebase/storage_cache_manager.dart';
+import 'package:margaret/firebase/storage_provider.dart';
 import 'package:margaret/profiles/your_profile_basic_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
@@ -141,16 +140,21 @@ class YourProfile extends StatelessWidget {
           itemBuilder: (BuildContext context, int index) {
             return ClipRRect(
               // 상대 프로필 이미지 사진
-              child: CachedNetworkImage(
-                imageUrl: "profiles/" + user.profiles[index].toString(),
-                cacheManager: StorageCacheManager(),
-                //width: MediaQuery.of(context).size.width,
-                //height: MediaQuery.of(context).size.height,
-                fit: BoxFit.cover,
-                placeholder: (context, url) =>
-                    const CircularProgressIndicator(),
-                errorWidget: (context, url, error) =>
-                    const Icon(Icons.account_circle),
+              child: FutureBuilder<String>(
+                future: storageProvider
+                    .getImageUri("profiles/" + user.profiles[index].toString()),
+                builder: (context, snapshot) {
+                  if (snapshot.hasError)
+                    return const Icon(Icons.account_circle);
+                  if (!snapshot.hasData)
+                    return const CircularProgressIndicator();
+                  return Image.network(
+                    snapshot.data,
+                    //width: MediaQuery.of(context).size.width,
+                    //height: MediaQuery.of(context).size.height,
+                    fit: BoxFit.cover,
+                  );
+                },
               ),
             );
           },
@@ -165,16 +169,20 @@ class YourProfile extends StatelessWidget {
         children: user.profiles
             .map((path) => ClipRRect(
                   // 상대 프로필 이미지 사진
-                  child: CachedNetworkImage(
-                    imageUrl: "profiles/$path",
-                    cacheManager: StorageCacheManager(),
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height,
-                    fit: BoxFit.cover,
-                    placeholder: (context, url) =>
-                        const CircularProgressIndicator(),
-                    errorWidget: (context, url, error) =>
-                        const Icon(Icons.account_circle),
+                  child: FutureBuilder<String>(
+                    future: storageProvider.getImageUri("profiles/$path"),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError)
+                        return const Icon(Icons.account_circle);
+                      if (!snapshot.hasData)
+                        return const CircularProgressIndicator();
+                      return Image.network(
+                        snapshot.data,
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height,
+                        fit: BoxFit.cover,
+                      );
+                    },
                   ),
                 ))
             .toList(),
@@ -205,7 +213,8 @@ class YourProfile extends StatelessWidget {
               child: Center(
                 child: Text(
                   user.introduction ?? '등록된 자기소개가 없습니다',
-                  style: const TextStyle(fontSize: 23, fontFamily: FontFamily.miSaeng),
+                  style: const TextStyle(
+                      fontSize: 23, fontFamily: FontFamily.miSaeng),
                 ),
               ),
             ),
