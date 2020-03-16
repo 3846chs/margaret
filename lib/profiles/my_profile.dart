@@ -1,8 +1,7 @@
 import 'dart:io';
-
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:image_cropper/image_cropper.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:margaret/constants/balance.dart';
 import 'package:margaret/constants/colors.dart';
 import 'package:margaret/constants/firebase_keys.dart';
@@ -18,9 +17,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:margaret/utils/adjust_size.dart';
 import 'package:margaret/utils/simple_snack_bar.dart';
 import 'package:provider/provider.dart';
-
-import '../constants/colors.dart';
-import '../constants/colors.dart';
 
 class TempMyProfile extends StatefulWidget {
   final User user;
@@ -95,6 +91,11 @@ class _TempMyProfileState extends State<TempMyProfile> {
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context,
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        allowFontScaling: true);
+
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -180,8 +181,8 @@ class _TempMyProfileState extends State<TempMyProfile> {
                                   child: CachedNetworkImage(
                                     imageUrl: "profiles/$path",
                                     cacheManager: StorageCacheManager(),
-                                    width: screenAwareWidth(130, context),
-                                    height: screenAwareHeight(130, context),
+                                    width: ScreenUtil().setWidth(130),
+                                    height: ScreenUtil().setWidth(130),
                                     fit: BoxFit.cover,
                                     placeholder: (context, url) =>
                                         const CircularProgressIndicator(),
@@ -196,7 +197,10 @@ class _TempMyProfileState extends State<TempMyProfile> {
                     ),
                     Text(
                       "얼굴이 명확히 보이지 않는 사진의 경우, 사전 통보 없이 삭제될 수 있습니다.",
-                      style: TextStyle(color: Colors.redAccent, fontSize: 10),
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.redAccent,
+                      ),
                     ),
                     Container(
                       height: screenAwareHeight(30, context),
@@ -211,9 +215,13 @@ class _TempMyProfileState extends State<TempMyProfile> {
                       )),
                     ),
                     _selfIntroduction(),
-                    Text(
+                    AutoSizeText(
                       "마가렛은 가치관 소개팅 앱으로 자기소개의 비중이 중요합니다. 매칭 과정에서 사진보다 우선해서 보여지는 정보로, 성실하게 적어주세요. 자신을 소개하거나 자신이 중요하게 생각하는 가치관에 대해 적어주시면 됩니다.",
-                      style: TextStyle(color: Colors.blueAccent),
+                      style: TextStyle(
+                        color: Colors.blueAccent,
+                        fontSize: ScreenUtil().setSp(15),
+                      ),
+                      maxLines: 4,
                     ),
                     Container(
                       height: screenAwareHeight(30, context),
