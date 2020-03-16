@@ -5,11 +5,26 @@ import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/data/user.dart';
 import 'package:margaret/firebase/firestore_provider.dart';
 import 'package:margaret/widgets/qna/empty_my_questions_card.dart';
-import 'package:margaret/widgets/qna/invalid_card.dart';
 import 'package:margaret/widgets/qna/my_questions_card.dart';
 import 'package:provider/provider.dart';
 
 class MyQuestions extends StatelessWidget {
+  final _firestore = Firestore.instance;
+
+  Future<DocumentSnapshot> _getFirstDocument(
+      List<DocumentSnapshot> documents) async {
+    for (final doc in documents) {
+      final userDocument = await _firestore
+          .collection(COLLECTION_USERS)
+          .document(doc.documentID)
+          .get();
+
+      if (userDocument != null && userDocument.exists) return doc;
+    }
+
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<MyUserData>(builder: (context, myUserData, _) {
@@ -19,28 +34,34 @@ class MyQuestions extends StatelessWidget {
           child: StreamBuilder<QuerySnapshot>(
             stream: myUserData.userData.reference
                 .collection(MYQUESTIONS)
-                .limit(1)
                 .snapshots(),
             builder: (context, snapshot) {
               if (!snapshot.hasData || snapshot.data.documents.length == 0)
                 return EmptyMyQuestionsCard();
 
-              final firstDocument = snapshot
-                  .data.documents.first; // 첫번째 document 만 가져와서 화면에 띄울 것임
-              final peerKey = firstDocument.data['userKey'].toString();
-
-              return StreamBuilder<User>(
-                stream: firestoreProvider.connectUser(peerKey),
+              return FutureBuilder<DocumentSnapshot>(
+                future: _getFirstDocument(snapshot.data.documents),
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
-                    // 상대 계정 삭제 등 invalid userKey 일 경우
-                    return InvalidCard();
+                    return const CircularProgressIndicator();
                   }
-                  return MyQuestionsCard(
-                    myQuestion: firstDocument.data['question'].toString(),
-                    peerAnswer: firstDocument.data['answer'].toString(),
-                    documentId: firstDocument.documentID,
-                    peer: snapshot.data,
+
+                  final firstDocument = snapshot.data;
+                  final peerKey = firstDocument.data['userKey'].toString();
+
+                  return StreamBuilder<User>(
+                    stream: firestoreProvider.connectUser(peerKey),
+                    builder: (context, snapshot) {
+                      if (!snapshot.hasData) {
+                        return const CircularProgressIndicator();
+                      }
+                      return MyQuestionsCard(
+                        myQuestion: firstDocument.data['question'].toString(),
+                        peerAnswer: firstDocument.data['answer'].toString(),
+                        documentId: firstDocument.documentID,
+                        peer: snapshot.data,
+                      );
+                    },
                   );
                 },
               );

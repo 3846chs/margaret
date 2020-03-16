@@ -1,8 +1,5 @@
 import 'dart:io';
 
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:image_cropper/image_cropper.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:margaret/constants/balance.dart';
 import 'package:margaret/constants/colors.dart';
 import 'package:margaret/constants/firebase_keys.dart';
@@ -12,9 +9,9 @@ import 'package:margaret/constants/size.dart';
 import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/data/user.dart';
 import 'package:margaret/firebase/firestore_provider.dart';
-import 'package:margaret/firebase/storage_cache_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:margaret/firebase/storage_provider.dart';
 import 'package:margaret/utils/adjust_size.dart';
 import 'package:margaret/utils/simple_snack_bar.dart';
 import 'package:provider/provider.dart';
@@ -174,16 +171,21 @@ class _TempMyProfileState extends State<TempMyProfile> {
                                 },
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(14),
-                                  child: CachedNetworkImage(
-                                    imageUrl: "profiles/$path",
-                                    cacheManager: StorageCacheManager(),
-                                    width: screenAwareWidth(130, context),
-                                    height: screenAwareHeight(130, context),
-                                    fit: BoxFit.cover,
-                                    placeholder: (context, url) =>
-                                        const CircularProgressIndicator(),
-                                    errorWidget: (context, url, error) =>
-                                        const Icon(Icons.account_circle),
+                                  child: FutureBuilder<String>(
+                                    future: storageProvider
+                                        .getImageUri("profiles/$path"),
+                                    builder: (context, snapshot) {
+                                      if (snapshot.hasError)
+                                        return const Icon(Icons.account_circle);
+                                      if (!snapshot.hasData)
+                                        return const CircularProgressIndicator();
+                                      return Image.network(
+                                        snapshot.data,
+                                        width: screenAwareWidth(130, context),
+                                        height: screenAwareHeight(130, context),
+                                        fit: BoxFit.cover,
+                                      );
+                                    },
                                   ),
                                 ),
                               ),

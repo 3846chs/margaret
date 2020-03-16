@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:margaret/constants/colors.dart';
@@ -7,7 +6,7 @@ import 'package:margaret/constants/font_names.dart';
 import 'package:margaret/constants/size.dart';
 import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/data/user.dart';
-import 'package:margaret/firebase/storage_cache_manager.dart';
+import 'package:margaret/firebase/storage_provider.dart';
 import 'package:margaret/pages/chat/chat_detail_page.dart';
 import 'package:margaret/profiles/your_profile_basic_info.dart';
 import 'package:flutter/material.dart';
@@ -54,16 +53,21 @@ class SelectedPerson extends StatelessWidget {
                         ),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(14),
-                          child: CachedNetworkImage(
-                            imageUrl: "profiles/$path",
-                            cacheManager: StorageCacheManager(),
-                            width: screenAwareWidth(150, context),
-                            height: screenAwareHeight(150, context),
-                            fit: BoxFit.cover,
-                            placeholder: (context, url) =>
-                                const CircularProgressIndicator(),
-                            errorWidget: (context, url, error) =>
-                                const Icon(Icons.account_circle),
+                          child: FutureBuilder<String>(
+                            future:
+                                storageProvider.getImageUri("profiles/$path"),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasError)
+                                return const Icon(Icons.account_circle);
+                              if (!snapshot.hasData)
+                                return const CircularProgressIndicator();
+                              return Image.network(
+                                snapshot.data,
+                                width: screenAwareWidth(150, context),
+                                height: screenAwareHeight(150, context),
+                                fit: BoxFit.cover,
+                              );
+                            },
                           ),
                         ),
                       ),
