@@ -16,7 +16,7 @@ class PeerQuestions extends StatelessWidget {
     for (final doc in documents) {
       final userDocument = await _firestore
           .collection(COLLECTION_USERS)
-          .document(doc.documentID)
+          .document(doc.data['userKey'].toString())
           .get();
 
       if (userDocument != null && userDocument.exists) return doc;
