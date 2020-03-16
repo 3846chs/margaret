@@ -1,4 +1,4 @@
-package com.margaret.margaret;
+package com.margaretcompany.margaret;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -30,9 +30,9 @@ public class MainActivity extends FlutterActivity {
     super.onCreate(savedInstanceState);
 
     String hashKey = getKeyHash(this);
-    
+
     if (hashKey != null && false) {
-      ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE); 
+      ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
       ClipData clip = ClipData.newPlainText("Key Hash", hashKey);
       clipboard.setPrimaryClip(clip);
     }

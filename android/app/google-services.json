@@ -15,6 +15,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "1046778309577-q5eob2pftt7596knr3qmnmasqmuvd49h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.margaret.margaret",
+            "certificate_hash": "8902b7fb3751c79036e5348ea5a1bea8e3e54336"
+          }
+        },
+        {
+          "client_id": "1046778309577-3jsa9kk9a7vg8k18en2hbg7vr46dmff4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.margaret.margaret",
+            "certificate_hash": "f720f10f63a5306c04f2df0d0ec0d0c3237fbf0b"
+          }
+        },
+        {
           "client_id": "1046778309577-6l452eq9unb1sb5a82ud60343jap0lf1.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -30,6 +46,49 @@
             {
               "client_id": "1046778309577-6l452eq9unb1sb5a82ud60343jap0lf1.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "1046778309577-7pk43fhi2v6mgjkcfd2tm3trbeet7cgd.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.margaret.margaret"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1046778309577:android:c2719907deac0ec09dd618",
+        "android_client_info": {
+          "package_name": "com.margaretcompany.margaret"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1046778309577-6l452eq9unb1sb5a82ud60343jap0lf1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNPWiyYOib6xbiaR5sfMzrZXfDPVGQ0yE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1046778309577-6l452eq9unb1sb5a82ud60343jap0lf1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1046778309577-7pk43fhi2v6mgjkcfd2tm3trbeet7cgd.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.margaret.margaret"
+              }
             }
           ]
         }

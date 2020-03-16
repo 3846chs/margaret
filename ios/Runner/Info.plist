@@ -71,7 +71,7 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>com.margaret.margaret</string>
+			<string>com.margaretcompany.margaret</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>kakaoabc7310615c3610bf6074fd3819e1328</string>
