@@ -1,10 +1,9 @@
 import 'dart:ui';
-import 'package:cached_network_image/cached_network_image.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:margaret/constants/colors.dart';
 import 'package:margaret/constants/firebase_keys.dart';
 import 'package:margaret/constants/font_names.dart';
 import 'package:margaret/constants/size.dart';
@@ -12,7 +11,7 @@ import 'package:margaret/data/message.dart';
 import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/data/user.dart';
 import 'package:margaret/firebase/firestore_provider.dart';
-import 'package:margaret/firebase/storage_cache_manager.dart';
+import 'package:margaret/firebase/storage_provider.dart';
 import 'package:margaret/pages/chat/chat_detail_page.dart';
 import 'package:margaret/utils/adjust_size.dart';
 import 'package:provider/provider.dart';
@@ -74,13 +73,16 @@ class MyQuestionsCard extends StatelessWidget {
                 child: ClipOval(
                   child: Stack(
                     children: <Widget>[
-                      CachedNetworkImage(
-                        imageUrl: "profiles/${peer.profiles[0]}",
-                        cacheManager: StorageCacheManager(),
-                        placeholder: (context, url) =>
-                            const CircularProgressIndicator(),
-                        errorWidget: (context, url, error) =>
-                            const Icon(Icons.account_circle),
+                      FutureBuilder<String>(
+                        future: storageProvider
+                            .getImageUri("profiles/${peer.profiles.first}"),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasError)
+                            return const Icon(Icons.account_circle);
+                          if (!snapshot.hasData)
+                            return const CircularProgressIndicator();
+                          return Image.network(snapshot.data);
+                        },
                       ),
                       BackdropFilter(
                         filter: ImageFilter.blur(sigmaX: 1.0, sigmaY: 1.0),
