@@ -14,3 +14,5 @@ const white = MaterialColor(0xFFFFFFFF, <int, Color>{
 });
 
 const pastel_purple = Color(0xffc5a3ff);
+
+const cursor_color = Colors.black54;

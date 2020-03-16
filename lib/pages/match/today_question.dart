@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:margaret/constants/balance.dart';
 import 'package:margaret/constants/colors.dart';
 import 'package:margaret/constants/firebase_keys.dart';
@@ -145,6 +146,11 @@ class _TodayQuestionState extends State<TodayQuestion>
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context,
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        allowFontScaling: true);
+
     final now = DateTime.now();
     final formatter = DateFormat('yyyy-MM-dd');
     final formattedDate = formatter.format(now);
@@ -251,7 +257,7 @@ class _TodayQuestionState extends State<TodayQuestion>
     return Text(
       question,
       textAlign: TextAlign.center,
-      style: TextStyle(fontFamily: 'BMJUA', fontSize: 20),
+      style: TextStyle(fontFamily: 'BMJUA', fontSize: ScreenUtil().setSp(20)),
     );
   }
 
