@@ -84,6 +84,7 @@ class MyUserData extends ChangeNotifier {
     _userStreamsubscription?.cancel();
     FirebaseUser firebaseUser = await _auth.currentUser();
     await firebaseUser.delete();
+    await _userData.reference.delete();
     _userData = null;
     notifyListeners();
   }

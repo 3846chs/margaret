@@ -57,8 +57,12 @@ class SelectedPerson extends StatelessWidget {
                             future:
                                 storageProvider.getImageUri("profiles/$path"),
                             builder: (context, snapshot) {
-                              if (snapshot.hasError)
-                                return const Icon(Icons.account_circle);
+                              if (snapshot.hasError) {
+                                return Icon(
+                                  Icons.account_circle,
+                                  size: screenAwareWidth(150, context),
+                                );
+                              }
                               if (!snapshot.hasData)
                                 return const CircularProgressIndicator();
                               return Image.network(

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:margaret/constants/size.dart';
 import 'package:margaret/data/user.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +22,11 @@ class UserAvatar extends StatelessWidget {
             future:
                 storageProvider.getImageUri("profiles/${user.profiles.first}"),
             builder: (context, snapshot) {
-              if (snapshot.hasError) return const Icon(Icons.account_circle);
+              if (snapshot.hasError)
+                return Icon(
+                  Icons.account_circle,
+                  size: min(width, height),
+                );
               if (!snapshot.hasData) return const CircularProgressIndicator();
               return Image.network(
                 snapshot.data,

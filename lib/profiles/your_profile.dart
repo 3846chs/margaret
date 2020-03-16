@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:margaret/constants/colors.dart';
 import 'package:margaret/constants/font_names.dart';
@@ -173,7 +175,9 @@ class YourProfile extends StatelessWidget {
                     future: storageProvider.getImageUri("profiles/$path"),
                     builder: (context, snapshot) {
                       if (snapshot.hasError)
-                        return const Icon(Icons.account_circle);
+                        return Icon(Icons.account_circle,
+                            size: min(MediaQuery.of(context).size.width,
+                                MediaQuery.of(context).size.height));
                       if (!snapshot.hasData)
                         return const CircularProgressIndicator();
                       return Image.network(
