@@ -9,6 +9,7 @@ import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/pages/auth/profile_input_page.dart';
 import 'package:margaret/utils/adjust_size.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/services.dart';
 
 class PhonenumAuth extends StatefulWidget {
   @override
@@ -30,7 +31,7 @@ class _PhonenumAuthState extends State<PhonenumAuth> {
       this.verificationId = verificationId;
       setState(() {
         print('Code sent to $phone');
-        status = "Enter the code sent to $phone";
+        status = "$phone로 인증코드를 보냈습니다! 나가지 말고 가만히 계시면 자동으로 코드를 입력해드릴게요!";
       });
     };
 
@@ -38,34 +39,36 @@ class _PhonenumAuthState extends State<PhonenumAuth> {
         (String verificationId) {
       this.verificationId = verificationId;
       setState(() {
-        status = "Auto retrieval time out";
+        status = "시간이 초과되었습니다. 다시 전화번호를 요청해주세요.";
       });
     };
     final PhoneVerificationFailed verificationFailed =
         (AuthException authException) {
       setState(() {
         status = '${authException.message}';
-
         print("Error message: " + status);
         if (authException.message.contains('not authorized'))
-          status = 'Something has gone wrong, please try later';
-        else if (authException.message.contains('Network'))
-          status = 'Please check your internet connection and try again';
-        else
-          status = 'Something has gone wrong, please try later';
+          status = '뭔가 문제가 생긴 것 같아요...앱을 종료하고 다시 시도해주세요';
+        else if (authException.message.contains('network')) {
+          status = '인터넷 연결상태를 다시 한번 확인하고 시도해주세요!';
+        } else if (authException.message.contains('blocked')) {
+          status =
+              '차단된 계정입니다. 자세한 사항은 margaret.information@gmail.com 에 문의해주세요.';
+        } else
+          status = '올바른 형식의 전화번호를 입력해주세요!';
       });
     };
 
     final PhoneVerificationCompleted verificationCompleted =
         (AuthCredential auth) {
       setState(() {
-        status = 'Auto retrieving verification code';
+        status = '보낸 인증코드를 자동 확인 중입니다...';
       });
 
       _auth.signInWithCredential(auth).then((AuthResult value) async {
         if (value.user != null) {
           setState(() {
-            status = 'Authentication successful';
+            status = '로그인 성공!';
           });
           final snapShot = await Firestore.instance
               .collection(COLLECTION_USERS)
@@ -90,7 +93,7 @@ class _PhonenumAuthState extends State<PhonenumAuth> {
         }
       }).catchError((error) {
         setState(() {
-          status = 'Something has gone wrong, please try later';
+          status = '뭔가 문제가 생긴 것 같아요...앱을 종료하고 다시 시도해주세요';
         });
       });
     };
@@ -113,11 +116,18 @@ class _PhonenumAuthState extends State<PhonenumAuth> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: SingleChildScrollView(
-        child: Column(
+      appBar: AppBar(
+        title: Text(
+          '전화번호 가입',
+          style: TextStyle(fontFamily: FontFamily.jua),
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(common_gap),
+        child: ListView(
+          shrinkWrap: true,
           children: <Widget>[
-            SizedBox(height: screenAwareHeight(150, context)),
+            SizedBox(height: screenAwareHeight(100, context)),
             Center(
               child: Text(
                 '마  가  렛',
@@ -128,7 +138,7 @@ class _PhonenumAuthState extends State<PhonenumAuth> {
                 ),
               ),
             ),
-            SizedBox(height: screenAwareHeight(100, context)),
+            SizedBox(height: screenAwareHeight(20, context)),
             Row(
               children: <Widget>[
                 Expanded(
@@ -143,8 +153,10 @@ class _PhonenumAuthState extends State<PhonenumAuth> {
                 ),
               ],
             ),
-            SizedBox(height: screenAwareHeight(common_gap, context)),
-            Text(status),
+            Text(
+              status,
+              style: TextStyle(color: pastel_purple),
+            ),
             SizedBox(height: screenAwareHeight(common_gap, context)),
             TextField(
               controller: _smsCodeController,
@@ -153,25 +165,33 @@ class _PhonenumAuthState extends State<PhonenumAuth> {
             ),
             FlatButton(
               onPressed: () async {
-                final authResult =
-                    await _signInWithPhoneNumber(_smsCodeController.text);
-                // profile_input_page 로 이동해야 함
-                final snapShot = await Firestore.instance
-                    .collection(COLLECTION_USERS)
-                    .document(authResult.user.uid)
-                    .get();
+                try {
+                  final authResult =
+                      await _signInWithPhoneNumber(_smsCodeController.text);
 
-                if (snapShot == null || !snapShot.exists) {
-                  // 해당 snapshot 이 존재하지 않을 때
-                  print('Not yet Registered - Profile Input Page');
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              ProfileInputPage(authResult: authResult)));
-                } else {
-                  Provider.of<MyUserData>(context, listen: false).update();
-                  Navigator.pop(context);
+                  final snapShot = await Firestore.instance
+                      .collection(COLLECTION_USERS)
+                      .document(authResult.user.uid)
+                      .get();
+
+                  if (snapShot == null || !snapShot.exists) {
+                    // 해당 snapshot 이 존재하지 않을 때
+                    // profile_input_page 로 이동해야 함
+                    print('Not yet Registered - Profile Input Page');
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                ProfileInputPage(authResult: authResult)));
+                  } else {
+                    Provider.of<MyUserData>(context, listen: false).update();
+                    Navigator.pop(context);
+                  }
+                } on PlatformException catch (exception) {
+                  print(exception.code);
+                  setState(() {
+                    status = '인증코드가 올바르지 않습니다!';
+                  });
                 }
               },
               child: Text(
