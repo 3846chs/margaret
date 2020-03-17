@@ -176,26 +176,9 @@ class SelectedPerson extends StatelessWidget {
           height: screenAwareHeight(20, context),
         ),
         InkWell(
-          onTap: () async {
-            // 먼저 상대방이 나한테 이미 호감(Receive)을 보냈는지 확인해야 함. 이미 나에게 호감 보냈다면 바로 채팅 이동
-            final doc = await myUser.reference
-                .collection("Receives")
-                .document(user.userKey)
-                .get();
-            if (doc != null && doc.exists) {
-              final chatKey = myUser.userKey.hashCode <= user.userKey.hashCode
-                  ? '${myUser.userKey}-${user.userKey}'
-                  : '${user.userKey}-${myUser.userKey}';
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => ChatDetailPage(
-                            chatKey: chatKey,
-                            myKey: myUser.userKey,
-                            peer: user,
-                          )));
-              return;
-            }
+          onTap: () {
+            // 상대방이 나한테 이미 호감(Receive)을 보냈을 경우, 바로 채팅으로 이동하지 않고, 서로의 호감탭에 저장한 다음에, 한 쪽이 호감탭에서 채팅을 시도해야 채팅 연결되게 변경
+
             // User A 가 User B 에게 호감을 보낼 경우, 보낸 시점(ex. 2020-03-07) 이 User B 에게 기록되며
             // User B 는 Receive 탭의 [오늘의 답변] 버튼에서 User A 의 해당 날짜 답변(2020-03-07 날의 답변)을 조회하여 볼 수 있음.
 
