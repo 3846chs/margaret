@@ -53,8 +53,8 @@ class MyUserData extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setPushToken(String token) {
-    userData.reference.updateData({
+  Future<void> setPushToken(String token) async {
+    await _userData.reference.updateData({
       UserKeys.KEY_PUSHTOKEN: token,
     });
   }
@@ -70,12 +70,12 @@ class MyUserData extends ChangeNotifier {
     });
   }
 
-  void signOutUser() {
-    setPushToken("");
-    _userData = null;
+  Future<void> signOutUser() async {
     _status = MyUserDataStatus.none;
     _userStreamsubscription?.cancel();
-    _auth.signOut();
+    await setPushToken("");
+    await _auth.signOut();
+    _userData = null;
     notifyListeners();
   }
 

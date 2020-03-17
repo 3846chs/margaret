@@ -267,6 +267,8 @@ export const sendNotification = functions
         const idFrom: string = doc.idFrom;
         const idTo: string = doc.idTo;
 
+        if (!idTo || idTo.length === 0) return null;
+
         // Get push token user to (receive)
         const snapshotTo = await admin
             .firestore()
