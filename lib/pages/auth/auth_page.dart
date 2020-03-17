@@ -1,13 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter_kakao_login/flutter_kakao_login.dart';
 import 'package:flutter_naver_login/flutter_naver_login.dart';
+import 'package:margaret/constants/colors.dart';
 import 'package:margaret/constants/firebase_keys.dart';
 import 'package:margaret/constants/font_names.dart';
 import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/pages/auth/email/email_auth.dart';
 import 'package:margaret/pages/auth/phonenum_auth.dart';
 import 'package:margaret/pages/auth/profile_input_page.dart';
+import 'package:margaret/pages/terms/general_terms.dart';
+import 'package:margaret/pages/terms/privacy_policy.dart';
 import 'package:margaret/utils/adjust_size.dart';
 import 'package:margaret/utils/simple_snack_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -75,6 +79,16 @@ class AuthPage extends StatelessWidget {
 //            ),
 //            SizedBox(height: screenAwareHeight(5.0, context)),
             LoginButton(
+              text: "전화번호  로그인",
+              icon: FontAwesomeIcons.phone,
+              color: Colors.pink[200],
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => PhonenumAuth()));
+              },
+            ),
+            SizedBox(height: screenAwareHeight(5.0, context)),
+            LoginButton(
               text: "Kakao  로그인",
               icon: IconData(75),
               color: Colors.yellow[700],
@@ -84,18 +98,59 @@ class AuthPage extends StatelessWidget {
             LoginButton(
               text: "Naver  로그인",
               icon: FontAwesomeIcons.facebookF,
-              color: Colors.green,
+              color: Color(0xff1ac800),
               onPressed: () => _signInNaver(context),
             ),
-            SizedBox(height: screenAwareHeight(5.0, context)),
-            LoginButton(
-              text: "전화번호  로그인",
-              icon: FontAwesomeIcons.phone,
-              color: Colors.blueAccent,
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => PhonenumAuth()));
-              },
+
+
+            Padding(
+              padding: const EdgeInsets.all(30),
+              child: Text.rich(
+                TextSpan(
+                  style: TextStyle(color: Colors.grey),
+                  children: <TextSpan>[
+                    TextSpan(
+                      text: '본인은 만 18세 이상이며, 로그인 할 경우 ',
+                    ),
+                    TextSpan(
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => PrivacyPolicy())),
+                        text: '개인정보처리방침',
+                        style: TextStyle(
+                          decoration: TextDecoration.underline,
+                        )),
+                    TextSpan(
+                      text: ' 및 ',
+                    ),
+                    TextSpan(
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => GeneralTerms())),
+                        text: '이용약관',
+                        style: TextStyle(
+                          decoration: TextDecoration.underline,
+                        )),
+                    TextSpan(
+                      text: '에 동의하는 것으로 간주합니다.',
+                    ),
+
+                    // can add more TextSpans here...
+                  ],
+                ),
+              ),
+            ),
+            Text(
+              '도움이 필요하다면 아래의 이메일로 문의해주세요!\n',
+              style: TextStyle(color: Colors.grey),
+            ),
+            Text(
+              'margaret.information@gmail.com',
+              style: TextStyle(color: Colors.grey),
             ),
 //            SizedBox(height: screenAwareHeight(5.0, context)),
 //            LoginButton(
