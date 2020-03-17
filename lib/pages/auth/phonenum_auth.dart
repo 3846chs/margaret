@@ -122,88 +122,92 @@ class _PhonenumAuthState extends State<PhonenumAuth> {
           style: TextStyle(fontFamily: FontFamily.jua),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(common_gap),
-        child: ListView(
-          shrinkWrap: true,
-          children: <Widget>[
-            SizedBox(height: screenAwareHeight(100, context)),
-            Center(
-              child: Text(
-                '마  가  렛',
-                style: const TextStyle(
-                  fontFamily: FontFamily.jua,
-                  fontSize: 50,
-                  color: pastel_purple,
-                ),
-              ),
-            ),
-            SizedBox(height: screenAwareHeight(20, context)),
-            Row(
-              children: <Widget>[
-                Expanded(
-                  child: TextField(
-                    controller: _phoneNumberController,
-                    decoration: getTextFieldDecor('전화번호 11자리'),
+      body: GestureDetector(
+        behavior: HitTestBehavior.translucent,
+        onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+        child: Padding(
+          padding: const EdgeInsets.all(common_gap),
+          child: ListView(
+            shrinkWrap: true,
+            children: <Widget>[
+              SizedBox(height: screenAwareHeight(100, context)),
+              Center(
+                child: Text(
+                  '마  가  렛',
+                  style: const TextStyle(
+                    fontFamily: FontFamily.jua,
+                    fontSize: 50,
+                    color: pastel_purple,
                   ),
                 ),
-                IconButton(
-                  icon: const Icon(Icons.send),
-                  onPressed: _sendCodeToPhoneNumber,
-                ),
-              ],
-            ),
-            Text(
-              status,
-              style: TextStyle(color: pastel_purple),
-            ),
-            SizedBox(height: screenAwareHeight(common_gap, context)),
-            TextField(
-              controller: _smsCodeController,
-              obscureText: true,
-              decoration: getTextFieldDecor('인증코드'),
-            ),
-            FlatButton(
-              onPressed: () async {
-                try {
-                  final authResult =
-                      await _signInWithPhoneNumber(_smsCodeController.text);
+              ),
+              SizedBox(height: screenAwareHeight(20, context)),
+              Row(
+                children: <Widget>[
+                  Expanded(
+                    child: TextField(
+                      controller: _phoneNumberController,
+                      decoration: getTextFieldDecor('전화번호 11자리'),
+                    ),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.send),
+                    onPressed: _sendCodeToPhoneNumber,
+                  ),
+                ],
+              ),
+              Text(
+                status,
+                style: TextStyle(color: pastel_purple),
+              ),
+              SizedBox(height: screenAwareHeight(common_gap, context)),
+              TextField(
+                controller: _smsCodeController,
+                obscureText: true,
+                decoration: getTextFieldDecor('인증코드'),
+              ),
+              FlatButton(
+                onPressed: () async {
+                  try {
+                    final authResult =
+                        await _signInWithPhoneNumber(_smsCodeController.text);
 
-                  final snapShot = await Firestore.instance
-                      .collection(COLLECTION_USERS)
-                      .document(authResult.user.uid)
-                      .get();
+                    final snapShot = await Firestore.instance
+                        .collection(COLLECTION_USERS)
+                        .document(authResult.user.uid)
+                        .get();
 
-                  if (snapShot == null || !snapShot.exists) {
-                    // 해당 snapshot 이 존재하지 않을 때
-                    // profile_input_page 로 이동해야 함
-                    print('Not yet Registered - Profile Input Page');
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                ProfileInputPage(authResult: authResult)));
-                  } else {
-                    Provider.of<MyUserData>(context, listen: false).update();
-                    Navigator.pop(context);
+                    if (snapShot == null || !snapShot.exists) {
+                      // 해당 snapshot 이 존재하지 않을 때
+                      // profile_input_page 로 이동해야 함
+                      print('Not yet Registered - Profile Input Page');
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  ProfileInputPage(authResult: authResult)));
+                    } else {
+                      Provider.of<MyUserData>(context, listen: false).update();
+                      Navigator.pop(context);
+                    }
+                  } on PlatformException catch (exception) {
+                    print(exception.code);
+                    setState(() {
+                      status = '인증코드가 올바르지 않습니다!';
+                    });
                   }
-                } on PlatformException catch (exception) {
-                  print(exception.code);
-                  setState(() {
-                    status = '인증코드가 올바르지 않습니다!';
-                  });
-                }
-              },
-              child: Text(
-                '다음',
-                style: const TextStyle(color: Colors.white),
+                },
+                child: Text(
+                  '다음',
+                  style: const TextStyle(color: Colors.white),
+                ),
+                color: pastel_purple,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(6),
+                ),
               ),
-              color: pastel_purple,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(6),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
