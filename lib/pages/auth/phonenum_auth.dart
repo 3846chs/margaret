@@ -31,7 +31,7 @@ class _PhonenumAuthState extends State<PhonenumAuth> {
       this.verificationId = verificationId;
       setState(() {
         print('Code sent to $phone');
-        status = "$phone로 인증코드를 보냈습니다! 나가지 말고 가만히 계시면 자동으로 코드를 입력해드릴게요!";
+        status = "$phone로 인증코드를 보냈습니다! 본인 휴대폰일 경우, 기다리시면 자동으로 코드를 입력해드릴게요!";
       });
     };
 
@@ -54,10 +54,12 @@ class _PhonenumAuthState extends State<PhonenumAuth> {
         } else if (authException.message.contains('blocked')) {
           status =
               '차단된 계정입니다. 자세한 사항은 margaret.information@gmail.com 에 문의해주세요.';
-        } else {
-          print(authException.message);
+        } else if (authException.message.contains('TOO_SHORT') ||
+            authException.message.contains('TOO_LONG') ||
+            authException.message.contains('Invalid format')) {
           status = '올바른 형식의 전화번호를 입력해주세요!';
-        }
+        } else
+          status = '예기치 못한 오류입니다! margaret.information@gmail.com 에 문의해주세요.';
       });
     };
 
@@ -148,6 +150,8 @@ class _PhonenumAuthState extends State<PhonenumAuth> {
                 children: <Widget>[
                   Expanded(
                     child: TextField(
+                      keyboardType: TextInputType.number,
+                      cursorColor: Colors.black54,
                       controller: _phoneNumberController,
                       decoration: getTextFieldDecor('전화번호 11자리'),
                     ),
@@ -165,7 +169,8 @@ class _PhonenumAuthState extends State<PhonenumAuth> {
               SizedBox(height: screenAwareHeight(common_gap, context)),
               TextField(
                 controller: _smsCodeController,
-                obscureText: true,
+                keyboardType: TextInputType.number,
+                cursorColor: Colors.black54,
                 decoration: getTextFieldDecor('인증코드'),
               ),
               FlatButton(
