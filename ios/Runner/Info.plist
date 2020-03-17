@@ -2,14 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>FirebaseAppDelegateProxyEnabled</key>
+    <key>FirebaseScreenReportingEnabled</key>
     <false/>
-    <key>CFBundleTypeRole</key>
-    <string>Editor</string>
-    <key>CFBundleURLSchemes</key>
-    <array>
-        <string>com.googleusercontent.apps.1046778309577-7pk43fhi2v6mgjkcfd2tm3trbeet7cgd</string>
-    </array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
@@ -26,10 +20,81 @@
 	<string>$(FLUTTER_BUILD_NAME)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleTypeRole</key>
+	<string>Editor</string>
+	<key>CFBundleURLSchemes</key>
+	<array>
+		<string>com.googleusercontent.apps.1046778309577-7pk43fhi2v6mgjkcfd2tm3trbeet7cgd</string>
+	</array>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.margaretcompany.margaret</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>kakaoabc7310615c3610bf6074fd3819e1328</string>
+				<string>naverHGHMMV7yUUUWaGHrhJhE</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.1046778309577-4culrght1vmkhhj8e38obu2nmd0n1vga</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>FirebaseAppDelegateProxyEnabled</key>
+	<false/>
+	<key>KAKAO_APP_KEY</key>
+	<string>abc7310615c3610bf6074fd3819e1328</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>naversearchapp</string>
+		<string>naversearchthirdlogin</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>naver.com</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+				<key>NSExceptionRequiresForwardSecrecy</key>
+				<false/>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+			</dict>
+			<key>naver.net</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+				<key>NSExceptionRequiresForwardSecrecy</key>
+				<false/>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+			</dict>
+		</dict>
+	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Used to demonstrate image picker plugin</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Used to demonstrate image picker plugin</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -49,74 +114,13 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>NSCameraUsageDescription</key>
-    <string>Used to demonstrate image picker plugin</string>
-    <key>NSPhotoLibraryUsageDescription</key>
-    <string>Used to demonstrate image picker plugin</string>
-	<key>KAKAO_APP_KEY</key>
-	<string>abc7310615c3610bf6074fd3819e1328</string>
-	<key>LSApplicationQueriesSchemes</key>
-	<array>
-		<string>kakaoabc7310615c3610bf6074fd3819e1328</string>
-		<string>kakaokompassauth</string>
-		<string>storykompassauth</string>
-		<string>kakaolink</string>
-		<string>storylink</string>
-		<string>naversearchapp</string>
-        <string>naversearchthirdlogin</string>
-	</array>
-	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>CFBundleURLName</key>
-			<string>com.margaretcompany.margaret</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>kakaoabc7310615c3610bf6074fd3819e1328</string>
-				<string>naverHGHMMV7yUUUWaGHrhJhE</string>
-			</array>
-		</dict>
-	</array>
-	<key>LSApplicationQueriesSchemes</key>
-    <array>
-        <string>naversearchapp</string>
-        <string>naversearchthirdlogin</string>
-    </array>
-    <key>kServiceAppUrlScheme</key>
-    <string>naverHGHMMV7yUUUWaGHrhJhE</string>
-    <key>kConsumerKey</key>
-    <string>HGHMMV7yUUUWaGHrhJhE</string>
-    <key>kConsumerSecret</key>
-    <string>5LRDeSDq1J</string>
-    <key>kServiceAppName</key>
-    <string>마가렛</string>
-    <key>NSAppTransportSecurity</key>
-    <dict>
-        <key>NSAllowsArbitraryLoads</key>
-       	<true/>
-       	<key>NSExceptionDomains</key>
-        <dict>
-            <key>naver.com</key>
-          	<dict>
-                <key>NSExceptionAllowsInsecureHTTPLoads</key>
-                <true/>
-                <key>NSExceptionRequiresForwardSecrecy</key>
-                <false/>
-                <key>NSIncludesSubdomains</key>
-                <true/>
-            </dict>
-            <key>naver.net</key>
-        	<dict>
-                <key>NSExceptionAllowsInsecureHTTPLoads</key>
-                <true/>
-                <key>NSExceptionRequiresForwardSecrecy</key>
-                <false/>
-                <key>NSIncludesSubdomains</key>
-                <true/>
-            </dict>
-        </dict>
-    </dict>
+	<key>kConsumerKey</key>
+	<string>HGHMMV7yUUUWaGHrhJhE</string>
+	<key>kConsumerSecret</key>
+	<string>5LRDeSDq1J</string>
+	<key>kServiceAppName</key>
+	<string>마가렛</string>
+	<key>kServiceAppUrlScheme</key>
+	<string>naverHGHMMV7yUUUWaGHrhJhE</string>
 </dict>
 </plist>

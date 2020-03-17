@@ -54,8 +54,10 @@ class _PhonenumAuthState extends State<PhonenumAuth> {
         } else if (authException.message.contains('blocked')) {
           status =
               '차단된 계정입니다. 자세한 사항은 margaret.information@gmail.com 에 문의해주세요.';
-        } else
+        } else {
+          print(authException.message);
           status = '올바른 형식의 전화번호를 입력해주세요!';
+        }
       });
     };
 
