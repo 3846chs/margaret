@@ -1,10 +1,7 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
 import 'package:margaret/constants/balance.dart';
-
 import 'package:margaret/constants/colors.dart';
 import 'package:margaret/constants/firebase_keys.dart';
 import 'package:margaret/constants/font_names.dart';
@@ -18,7 +15,6 @@ import 'package:margaret/utils/adjust_size.dart';
 import 'package:margaret/utils/simple_snack_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -183,10 +179,8 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                     padding: const EdgeInsets.all(common_s_gap),
                     child: Center(
                         child: Text(
-                      '사진 2개를 등록해주세요',
+                      '서로 다른 본인 사진 2개를 등록해주세요. 얼굴이 명확히 보이지 않는 사진은 통보 없이 삭제될 수 있습니다.',
                       style: TextStyle(
-                          fontSize: 15,
-                          fontFamily: FontFamily.nanumBarunpen,
                           color: _profiles.length == 2
                               ? Colors.grey
                               : Colors.redAccent),
@@ -346,6 +340,11 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                     ],
                   ),
                   SizedBox(height: screenAwareHeight(common_l_gap, context)),
+                  Text(
+                    '가입 후 성별은 수정이 불가합니다.',
+                    style: TextStyle(color: Colors.redAccent),
+                  ),
+                  SizedBox(height: screenAwareHeight(common_l_gap, context)),
                   Row(
                     children: <Widget>[
                       SizedBox(
@@ -424,6 +423,11 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                         width: screenAwareWidth(20, context),
                       ),
                     ],
+                  ),
+                  SizedBox(height: screenAwareHeight(common_l_gap, context)),
+                  Text(
+                    '가입 후 출생 연도는 수정이 불가합니다.',
+                    style: TextStyle(color: Colors.redAccent),
                   ),
                   SizedBox(height: screenAwareHeight(common_l_gap, context)),
                   Row(
@@ -909,15 +913,14 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                   SizedBox(
                     height: screenAwareHeight(20, context),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        "마가렛은 가치관 소개팅 앱으로 자기소개의 비중이 중요합니다.\n매칭 과정에서 사진보다 우선해서 보여지는 정보로, 성실하게 적어주세요.\n자신을 소개하거나 자신이 중요하게 생각하는 가치관에 대해 적어주시면 됩니다.\n가입 후 언제든지 수정할 수 있습니다.",
-                        style:
-                            TextStyle(color: Colors.blueAccent, fontSize: 10),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "자기소개는 매칭 과정에서 사진보다 우선해서 보이는 정보입니다. 자신을 소개하거나 추구하는 연애 또는 자신이 중요하게 생각하는 가치관에 대해 자유롭게 적어주시면 됩니다. 가입 후 언제든지 수정할 수 있으니 지금은 간단히 어떤 연애를 원하는지, 어떤 연애 상대를 찾고 있는지 적어볼까요?",
+                      style: TextStyle(
+                        color: Colors.blueAccent,
                       ),
-                    ],
+                    ),
                   ),
                   TextField(
                     maxLength: 100,
