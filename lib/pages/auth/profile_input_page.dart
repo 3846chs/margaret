@@ -256,7 +256,8 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                                       context: context,
                                       builder: (context) => Center(
                                         child: Container(
-                                            height: screenAwareHeight(600, context),
+                                            height:
+                                                screenAwareHeight(600, context),
                                             width:
                                                 screenAwareWidth(300, context),
                                             child:
@@ -473,7 +474,8 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                                       context: context,
                                       builder: (context) => Center(
                                         child: Container(
-                                            height: screenAwareHeight(600, context),
+                                            height:
+                                                screenAwareHeight(600, context),
                                             width:
                                                 screenAwareWidth(300, context),
                                             child: SimpleDialog(
@@ -550,7 +552,8 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                                       context: context,
                                       builder: (context) => Center(
                                         child: Container(
-                                            height: screenAwareHeight(600, context),
+                                            height:
+                                                screenAwareHeight(600, context),
                                             width:
                                                 screenAwareWidth(300, context),
                                             child: _buildJobDialog(context)),
@@ -620,7 +623,8 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                                       context: context,
                                       builder: (context) => Center(
                                         child: Container(
-                                            height: screenAwareHeight(600, context),
+                                            height:
+                                                screenAwareHeight(600, context),
                                             width:
                                                 screenAwareWidth(300, context),
                                             child: _buildHeightDialog(context)),
@@ -690,7 +694,8 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                                       context: context,
                                       builder: (context) => Center(
                                         child: Container(
-                                            height: screenAwareHeight(600, context),
+                                            height:
+                                                screenAwareHeight(600, context),
                                             width:
                                                 screenAwareWidth(300, context),
                                             child: SimpleDialog(
@@ -768,7 +773,8 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                                       context: context,
                                       builder: (context) => Center(
                                         child: Container(
-                                            height: screenAwareHeight(600, context),
+                                            height:
+                                                screenAwareHeight(600, context),
                                             width:
                                                 screenAwareWidth(300, context),
                                             child: SimpleDialog(
@@ -845,7 +851,8 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                                       context: context,
                                       builder: (context) => Center(
                                         child: Container(
-                                            height: screenAwareHeight(600, context),
+                                            height:
+                                                screenAwareHeight(600, context),
                                             width:
                                                 screenAwareWidth(300, context),
                                             child: SimpleDialog(
@@ -907,7 +914,8 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                     children: <Widget>[
                       Text(
                         "마가렛은 가치관 소개팅 앱으로 자기소개의 비중이 중요합니다.\n매칭 과정에서 사진보다 우선해서 보여지는 정보로, 성실하게 적어주세요.\n자신을 소개하거나 자신이 중요하게 생각하는 가치관에 대해 적어주시면 됩니다.\n가입 후 언제든지 수정할 수 있습니다.",
-                        style: TextStyle(color: Colors.blueAccent, fontSize: 10),
+                        style:
+                            TextStyle(color: Colors.blueAccent, fontSize: 10),
                       ),
                     ],
                   ),
@@ -925,14 +933,14 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                           : () {
                               if (_profiles.length < 2)
                                 simpleSnackbar(context, '사진을 2개 등록해주세요.');
-                              else if (nicknameInput.length > 6)
+                              else if (nicknameInput.length >
+                                  MAX_NICKNAME_LENGTH)
                                 simpleSnackbar(context,
                                     '닉네임 글자수는 최대 $MAX_NICKNAME_LENGTH자입니다.');
                               else if (nicknameInput ==
                                   '$MAX_NICKNAME_LENGTH자 이내')
                                 simpleSnackbar(context, '닉네임을 입력해주세요');
-                              else if (birthYearInput == '출생 연도를 입력해주세요' ||
-                                  birthYearInput.length != 4)
+                              else if (birthYearInput == '출생 연도를 입력해주세요')
                                 simpleSnackbar(context, '출생 연도 4자리를 입력해주세요');
                               else if (regionInput == '사는 지역을 입력해주세요')
                                 simpleSnackbar(context, '지역을 입력해주세요');
