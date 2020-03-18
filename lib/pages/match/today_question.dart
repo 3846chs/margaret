@@ -316,7 +316,7 @@ class _TodayQuestionState extends State<TodayQuestion>
                 doc.data['recentMatchTime'].toDate().year == now.year &&
                 doc.data['recentMatchTime'].toDate().month == now.month &&
                 doc.data['recentMatchTime'].toDate().day == now.day) &&
-            (doc.data['birthYear'] - ds.data['birthYear']).abs() <= 10 &&
+            (doc.data['birthYear'] - ds.data['birthYear']).abs() <= MAX_AGE_DIFFERENCE &&
             !blocks.contains(doc.documentID))
         .forEach((e) {
       ls.add(e.documentID);

@@ -170,7 +170,7 @@ class _WriteQuestionState extends State<WriteQuestion> {
                                 (doc.data['birthYear'] -
                                             myUserData.userData.birthYear)
                                         .abs() <=
-                                    10 &&
+                                    MAX_AGE_DIFFERENCE &&
                                 !blocks.contains(doc.documentID))
                             .take(30)
                             .forEach((ds) {
