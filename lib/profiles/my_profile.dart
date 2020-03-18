@@ -247,13 +247,12 @@ class _TempMyProfileState extends State<TempMyProfile> {
                       )),
                     ),
                     _selfIntroduction(),
-                    AutoSizeText(
-                      "마가렛은 가치관 소개팅 앱으로 자기소개의 비중이 중요합니다. 매칭 과정에서 사진보다 우선해서 보여지는 정보로, 성실하게 적어주세요. 자신을 소개하거나 자신이 중요하게 생각하는 가치관에 대해 적어주시면 됩니다.",
+                    Text(
+                      "자기소개를 성실하게 적을수록 매칭률이 올라갑니다. 아래를 참고해서 작성해주세요!\n - 중요하게 생각하는 가치관\n - 원하는 이상형\n - 하고 싶은 연애\n - 자신의 장점\n - 인생의 목표나 꿈\n - 가입하게 된 계기",
                       style: TextStyle(
                         color: Colors.blueAccent,
                         fontSize: ScreenUtil().setSp(15),
                       ),
-                      maxLines: 4,
                     ),
                     Container(
                       height: screenAwareHeight(30, context),
