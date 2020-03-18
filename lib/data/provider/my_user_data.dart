@@ -82,6 +82,7 @@ class MyUserData extends ChangeNotifier {
   Future<void> withdrawUser() async {
     _status = MyUserDataStatus.none;
     _userStreamsubscription?.cancel();
+    await setPushToken("");
     FirebaseUser firebaseUser = await _auth.currentUser();
     await firebaseUser.delete();
     await _userData.reference.delete();
