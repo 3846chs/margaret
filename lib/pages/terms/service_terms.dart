@@ -331,7 +331,7 @@ class GeneralTerms extends StatelessWidget {
 
 3. 고객센터 : margaret.information@gmail.com 
 
-본 약관은 2020년 03월 20일부터 적용됩니다.'''),
+본 약관은 2020년 03월 19일부터 적용됩니다.'''),
         ),
       ),
     );
