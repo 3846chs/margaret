@@ -81,7 +81,7 @@ class _TodayPeopleCardState extends State<TodayPeopleCard> {
             ),
             Text(
               widget.you.nickname,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: screenAwareTextSize(16, context)),
             ),
             Container(
                 alignment: Alignment(-0.8, 0),
@@ -191,14 +191,17 @@ class BuildIntroduction extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: screenAwareWidth(222, context),
-      height: screenAwareHeight(110, context),
+      height: screenAwareHeight(100, context),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15.0),
       ),
       child: Center(
         child: Text(
           '   ' + widget.you.introduction,
-          style: TextStyle(fontFamily: FontFamily.miSaeng, fontSize: 20),
+          style: TextStyle(
+              fontFamily: FontFamily.nanumBarunpen,
+              fontSize: screenAwareTextSize(11, context),
+              fontWeight: FontWeight.bold),
         ),
       ),
     );
@@ -242,7 +245,10 @@ class BuildTodayAnswer extends StatelessWidget {
       child: Center(
         child: Text(
           widget.you.answer,
-          style: TextStyle(fontFamily: FontFamily.miSaeng, fontSize: 20),
+          style: TextStyle(
+            fontFamily: FontFamily.miSaeng,
+            fontSize: screenAwareTextSize(18, context),
+          ),
         ),
       ),
     );

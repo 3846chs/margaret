@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:margaret/constants/colors.dart';
 import 'package:margaret/constants/firebase_keys.dart';
@@ -64,7 +65,9 @@ class MatchFinished extends StatelessWidget {
             Text(
               '내일 매칭을 기다려주세요',
               style: TextStyle(
-                  fontFamily: FontFamily.jua, fontSize: 20, color: Colors.black54),
+                  fontFamily: FontFamily.jua,
+                  fontSize: screenAwareTextSize(16, context),
+                  color: Colors.black54),
             ),
             SizedBox(
               height: screenAwareHeight(100, context),
@@ -76,8 +79,12 @@ class MatchFinished extends StatelessWidget {
             SizedBox(
               height: screenAwareHeight(100, context),
             ),
-            Text(
+            AutoSizeText(
               '매일 자정에 가치관을 묻는 질문이 업로드됩니다!',
+              style: TextStyle(
+                fontSize: screenAwareTextSize(13, context),
+              ),
+              maxLines: 1,
             ),
           ],
         ),

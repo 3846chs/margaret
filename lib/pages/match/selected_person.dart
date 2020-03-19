@@ -24,11 +24,9 @@ class SelectedPerson extends StatelessWidget {
     final myUser = Provider.of<MyUserData>(context, listen: false).userData;
 
     return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        SizedBox(
-          height: screenAwareHeight(20, context),
-        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: user.profiles
@@ -68,7 +66,7 @@ class SelectedPerson extends StatelessWidget {
                               return Image.network(
                                 snapshot.data,
                                 width: screenAwareWidth(150, context),
-                                height: screenAwareHeight(150, context),
+                                height: screenAwareWidth(150, context), // 정사각형 의도
                                 fit: BoxFit.cover,
                               );
                             },
@@ -245,6 +243,7 @@ class SelectedPerson extends StatelessWidget {
             ),
           ),
         ),
+        SizedBox(height: screenAwareHeight(30, context),),
       ],
     );
   }

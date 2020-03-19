@@ -238,9 +238,9 @@ class _TodayQuestionState extends State<TodayQuestion>
                 child: Container(
                   child: Text(
                     '제 출 하 기',
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: Colors.white,
-                      fontSize: 20,
+                      fontSize: screenAwareTextSize(16, context),
                       fontFamily: FontFamily.jua,
                     ),
                   ),
@@ -257,7 +257,7 @@ class _TodayQuestionState extends State<TodayQuestion>
     return Text(
       question,
       textAlign: TextAlign.center,
-      style: TextStyle(fontFamily: 'BMJUA', fontSize: ScreenUtil().setSp(20)),
+      style: TextStyle(fontFamily: 'BMJUA', fontSize: screenAwareTextSize(16, context)),
     );
   }
 
@@ -265,7 +265,7 @@ class _TodayQuestionState extends State<TodayQuestion>
     return TextField(
       cursorColor: cursor_color,
       controller: _answerController,
-      style: TextStyle(color: Colors.black),
+      style: TextStyle(color: Colors.black, fontSize: screenAwareTextSize(12, context)),
       decoration: _buildInputDecoration("해당 선택지를 고른 이유를 자세하게 써주세요!"),
       maxLength: MAX_TODAY_ANSWER_LENGTH,
       maxLines: 4,

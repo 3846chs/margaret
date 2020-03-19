@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/gestures.dart';
-//import 'package:flutter_kakao_login/flutter_kakao_login.dart';
-//import 'package:flutter_naver_login/flutter_naver_login.dart';
+import 'package:flutter_kakao_login/flutter_kakao_login.dart';
+import 'package:flutter_naver_login/flutter_naver_login.dart';
 import 'package:margaret/constants/colors.dart';
 import 'package:margaret/constants/firebase_keys.dart';
 import 'package:margaret/constants/font_names.dart';
@@ -28,7 +28,7 @@ class AuthPage extends StatelessWidget {
   final _cloudFunctions = CloudFunctions(region: "asia-northeast1");
 
   final _googleSignIn = GoogleSignIn();
-//  final _kakaoSignIn = FlutterKakaoLogin();
+  final _kakaoSignIn = FlutterKakaoLogin();
 
   @override
   Widget build(BuildContext context) {
@@ -55,18 +55,18 @@ class AuthPage extends StatelessWidget {
             SizedBox(height: screenAwareHeight(100, context)),
             Text(
               'Margaret',
-              style: const TextStyle(
+              style: TextStyle(
                 fontFamily: FontFamily.handlee,
-                fontSize: 50,
+                fontSize: screenAwareTextSize(40, context),
                 fontWeight: FontWeight.bold,
               ),
             ),
             Text(
               '                         True Love ',
-              style: const TextStyle(
+              style: TextStyle(
                 fontFamily: 'pacifico',
                 fontWeight: FontWeight.bold,
-                fontSize: 17,
+                fontSize: screenAwareTextSize(13, context),
                 color: Colors.pinkAccent,
               ),
             ),
@@ -87,20 +87,20 @@ class AuthPage extends StatelessWidget {
                     MaterialPageRoute(builder: (context) => PhonenumAuth()));
               },
             ),
-//            SizedBox(height: screenAwareHeight(5.0, context)),
-//            LoginButton(
-//              text: "Kakao  로그인",
-//              icon: IconData(75),
-//              color: Colors.yellow[700],
-//              onPressed: () => _signInKakao(context),
-//            ),
-//            SizedBox(height: screenAwareHeight(5.0, context)),
-//            LoginButton(
-//              text: "Naver  로그인",
-//              icon: FontAwesomeIcons.facebookF,
-//              color: Color(0xff1ac800),
-//              onPressed: () => _signInNaver(context),
-//            ),
+            SizedBox(height: screenAwareHeight(5.0, context)),
+            LoginButton(
+              text: "Kakao  로그인",
+              icon: IconData(75),
+              color: Colors.yellow[700],
+              onPressed: () => _signInKakao(context),
+            ),
+            SizedBox(height: screenAwareHeight(5.0, context)),
+            LoginButton(
+              text: "Naver  로그인",
+              icon: FontAwesomeIcons.facebookF,
+              color: Color(0xff1ac800),
+              onPressed: () => _signInNaver(context),
+            ),
 
 
             Padding(
@@ -153,15 +153,15 @@ class AuthPage extends StatelessWidget {
               style: TextStyle(color: Colors.grey),
             ),
             SizedBox(height: screenAwareHeight(5.0, context)),
-            LoginButton(
-              text: "E-mail  로그인",
-              icon: FontAwesomeIcons.solidEnvelope,
-              color: Colors.grey[300],
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => EmailAuth()));
-              },
-            ),
+//            LoginButton(
+//              text: "E-mail  로그인",
+//              icon: FontAwesomeIcons.solidEnvelope,
+//              color: Colors.grey[300],
+//              onPressed: () {
+//                Navigator.push(context,
+//                    MaterialPageRoute(builder: (context) => EmailAuth()));
+//              },
+//            ),
           ],
         ),
       ),
@@ -215,57 +215,57 @@ class AuthPage extends StatelessWidget {
     }
   }
 
-//  Future<void> _signInKakao(BuildContext context) async {
-//    try {
-//      final result = await _kakaoSignIn.logIn();
-//
-//      if (result.status == KakaoLoginStatus.error) {
-//        simpleSnackbar(context, result.errorMessage);
-//        return;
-//      }
-//
-//      if (result.status == KakaoLoginStatus.loggedIn) {
-//        final createTokenCallable =
-//            _cloudFunctions.getHttpsCallable(functionName: "createToken");
-//        final response = await createTokenCallable.call(<String, dynamic>{
-//          "id": "kakao:${result.account.userID}",
-//          "email": result.account.userEmail,
-//        });
-//
-//        final authResult = await _auth.signInWithCustomToken(
-//            token: response.data["firebaseToken"]);
-//        _postAuthResult(context, authResult);
-//      }
-//    } on PlatformException catch (exception) {
-//      print(exception.code);
-//      simpleSnackbar(context, exception.message);
-//    }
-//  }
-//
-//  Future<void> _signInNaver(BuildContext context) async {
-//    try {
-//      final result = await FlutterNaverLogin.logIn();
-//
-//      if (result.status == NaverLoginStatus.error) {
-//        simpleSnackbar(context, result.errorMessage);
-//        return;
-//      }
-//
-//      if (result.status == NaverLoginStatus.loggedIn) {
-//        final createTokenCallable =
-//            _cloudFunctions.getHttpsCallable(functionName: "createToken");
-//        final response = await createTokenCallable.call(<String, dynamic>{
-//          "id": "naver:${result.account.id}",
-//          "email": result.account.email,
-//        });
-//
-//        final authResult = await _auth.signInWithCustomToken(
-//            token: response.data["firebaseToken"]);
-//        _postAuthResult(context, authResult);
-//      }
-//    } on PlatformException catch (exception) {
-//      print(exception.code);
-//      simpleSnackbar(context, exception.message);
-//    }
-//  }
+  Future<void> _signInKakao(BuildContext context) async {
+    try {
+      final result = await _kakaoSignIn.logIn();
+
+      if (result.status == KakaoLoginStatus.error) {
+        simpleSnackbar(context, result.errorMessage);
+        return;
+      }
+
+      if (result.status == KakaoLoginStatus.loggedIn) {
+        final createTokenCallable =
+            _cloudFunctions.getHttpsCallable(functionName: "createToken");
+        final response = await createTokenCallable.call(<String, dynamic>{
+          "id": "kakao:${result.account.userID}",
+          "email": result.account.userEmail,
+        });
+
+        final authResult = await _auth.signInWithCustomToken(
+            token: response.data["firebaseToken"]);
+        _postAuthResult(context, authResult);
+      }
+    } on PlatformException catch (exception) {
+      print(exception.code);
+      simpleSnackbar(context, exception.message);
+    }
+  }
+
+  Future<void> _signInNaver(BuildContext context) async {
+    try {
+      final result = await FlutterNaverLogin.logIn();
+
+      if (result.status == NaverLoginStatus.error) {
+        simpleSnackbar(context, result.errorMessage);
+        return;
+      }
+
+      if (result.status == NaverLoginStatus.loggedIn) {
+        final createTokenCallable =
+            _cloudFunctions.getHttpsCallable(functionName: "createToken");
+        final response = await createTokenCallable.call(<String, dynamic>{
+          "id": "naver:${result.account.id}",
+          "email": result.account.email,
+        });
+
+        final authResult = await _auth.signInWithCustomToken(
+            token: response.data["firebaseToken"]);
+        _postAuthResult(context, authResult);
+      }
+    } on PlatformException catch (exception) {
+      print(exception.code);
+      simpleSnackbar(context, exception.message);
+    }
+  }
 }

@@ -78,6 +78,7 @@ class _HomeState extends State<Home> {
           Text(
             '마    가    렛',
             style: TextStyle(
+              fontSize: screenAwareTextSize(15, context),
               fontFamily: FontFamily.jua,
               color: Colors.purple[300],
             ),

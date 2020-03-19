@@ -218,7 +218,7 @@ class YourProfile extends StatelessWidget {
                 child: Text(
                   user.introduction ?? '등록된 자기소개가 없습니다',
                   style: const TextStyle(
-                      fontSize: 23, fontFamily: FontFamily.miSaeng),
+                      fontSize: 25, fontFamily: FontFamily.miSaeng),
                 ),
               ),
             ),

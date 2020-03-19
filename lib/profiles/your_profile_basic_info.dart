@@ -76,7 +76,7 @@ class _YourProfileBasicInfoState extends State<YourProfileBasicInfo> {
             child: Text(
               widget.title,
               style: TextStyle(
-                  fontSize: 15,
+                  fontSize: screenAwareTextSize(11, context),
                   fontFamily: FontFamily.nanumBarunpen,
                   fontWeight: FontWeight.bold),
             ),
@@ -88,7 +88,7 @@ class _YourProfileBasicInfoState extends State<YourProfileBasicInfo> {
             child: Text(
               content,
               style: TextStyle(
-                  fontSize: 15,
+                  fontSize: screenAwareTextSize(11, context),
                   fontFamily: FontFamily.nanumBarunpen,
                   fontWeight: FontWeight.bold),
             ),

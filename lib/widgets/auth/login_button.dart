@@ -77,9 +77,9 @@ class _LoginButtonState extends State<LoginButton> {
                     : Text(
                         widget.text,
                         textAlign: TextAlign.center,
-                        style: const TextStyle(
+                        style: TextStyle(
                           color: Colors.white,
-                          fontSize: 16.0,
+                          fontSize: screenAwareTextSize(12, context),
                           fontWeight: FontWeight.bold,
                         ),
                       ),
