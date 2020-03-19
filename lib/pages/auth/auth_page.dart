@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/gestures.dart';
-import 'package:flutter_kakao_login/flutter_kakao_login.dart';
+//import 'package:flutter_kakao_login/flutter_kakao_login.dart';
 import 'package:flutter_naver_login/flutter_naver_login.dart';
 import 'package:margaret/constants/colors.dart';
 import 'package:margaret/constants/firebase_keys.dart';
@@ -28,7 +28,7 @@ class AuthPage extends StatelessWidget {
   final _cloudFunctions = CloudFunctions(region: "asia-northeast1");
 
   final _googleSignIn = GoogleSignIn();
-  final _kakaoSignIn = FlutterKakaoLogin();
+//  final _kakaoSignIn = FlutterKakaoLogin();
 
   @override
   Widget build(BuildContext context) {
@@ -88,13 +88,13 @@ class AuthPage extends StatelessWidget {
               },
             ),
             SizedBox(height: screenAwareHeight(5.0, context)),
-            LoginButton(
-              text: "Kakao  로그인",
-              icon: IconData(75),
-              color: Colors.yellow[700],
-              onPressed: () => _signInKakao(context),
-            ),
-            SizedBox(height: screenAwareHeight(5.0, context)),
+//            LoginButton(
+//              text: "Kakao  로그인",
+//              icon: IconData(75),
+//              color: Colors.yellow[700],
+//              onPressed: () => _signInKakao(context),
+//            ),
+//            SizedBox(height: screenAwareHeight(5.0, context)),
             LoginButton(
               text: "Naver  로그인",
               icon: FontAwesomeIcons.facebookF,
@@ -215,32 +215,32 @@ class AuthPage extends StatelessWidget {
     }
   }
 
-  Future<void> _signInKakao(BuildContext context) async {
-    try {
-      final result = await _kakaoSignIn.logIn();
-
-      if (result.status == KakaoLoginStatus.error) {
-        simpleSnackbar(context, result.errorMessage);
-        return;
-      }
-
-      if (result.status == KakaoLoginStatus.loggedIn) {
-        final createTokenCallable =
-            _cloudFunctions.getHttpsCallable(functionName: "createToken");
-        final response = await createTokenCallable.call(<String, dynamic>{
-          "id": "kakao:${result.account.userID}",
-          "email": result.account.userEmail,
-        });
-
-        final authResult = await _auth.signInWithCustomToken(
-            token: response.data["firebaseToken"]);
-        _postAuthResult(context, authResult);
-      }
-    } on PlatformException catch (exception) {
-      print(exception.code);
-      simpleSnackbar(context, exception.message);
-    }
-  }
+//  Future<void> _signInKakao(BuildContext context) async {
+//    try {
+//      final result = await _kakaoSignIn.logIn();
+//
+//      if (result.status == KakaoLoginStatus.error) {
+//        simpleSnackbar(context, result.errorMessage);
+//        return;
+//      }
+//
+//      if (result.status == KakaoLoginStatus.loggedIn) {
+//        final createTokenCallable =
+//            _cloudFunctions.getHttpsCallable(functionName: "createToken");
+//        final response = await createTokenCallable.call(<String, dynamic>{
+//          "id": "kakao:${result.account.userID}",
+//          "email": result.account.userEmail,
+//        });
+//
+//        final authResult = await _auth.signInWithCustomToken(
+//            token: response.data["firebaseToken"]);
+//        _postAuthResult(context, authResult);
+//      }
+//    } on PlatformException catch (exception) {
+//      print(exception.code);
+//      simpleSnackbar(context, exception.message);
+//    }
+//  }
 
   Future<void> _signInNaver(BuildContext context) async {
     try {
