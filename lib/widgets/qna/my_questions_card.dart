@@ -35,6 +35,7 @@ class MyQuestionsCard extends StatelessWidget {
     final myUser = Provider.of<MyUserData>(context, listen: false).userData;
 
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -108,17 +109,17 @@ class MyQuestionsCard extends StatelessWidget {
               children: <Widget>[
                 Text(
                   peer.nickname,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontFamily: FontFamily.jua,
-                    fontSize: 20,
+                    fontSize: screenAwareTextSize(14, context),
                   ),
                 ),
                 SizedBox(height: screenAwareHeight(10, context)),
                 Text(
                   '${(DateTime.now().year - peer.birthYear + 1)}세 / ${peer.region}',
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontFamily: FontFamily.jua,
-                    fontSize: 20,
+                    fontSize: screenAwareTextSize(14, context),
                   ),
                 ),
               ],
@@ -141,7 +142,8 @@ class MyQuestionsCard extends StatelessWidget {
             child: Center(
               child: Text(
                 peer.introduction ?? '등록된 자기소개가 없습니다',
-                style: const TextStyle(
+                style: TextStyle(
+                  fontSize: screenAwareTextSize(11, context),
                   fontFamily: FontFamily.nanumBarunpen,
                   fontWeight: FontWeight.bold,
                 ),
@@ -165,15 +167,15 @@ class MyQuestionsCard extends StatelessWidget {
               child: Center(
                 child: Text(
                   myQuestion,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontFamily: FontFamily.miSaeng,
-                    fontSize: 25,
+                    fontSize: screenAwareTextSize(18, context),
                   ),
                 ),
               ),
             ),
             width: screenAwareWidth(270, context),
-            height: screenAwareHeight(130, context),
+            height: screenAwareHeight(110, context),
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
@@ -202,13 +204,13 @@ class MyQuestionsCard extends StatelessWidget {
                   peerAnswer,
                   style: TextStyle(
                     fontFamily: FontFamily.miSaeng,
-                    fontSize: 25,
+                    fontSize: screenAwareTextSize(18, context),
                   ),
                 ),
               ),
             ),
             width: screenAwareWidth(270, context),
-            height: screenAwareHeight(130, context),
+            height: screenAwareHeight(110, context),
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
@@ -249,11 +251,10 @@ class MyQuestionsCard extends StatelessWidget {
               ),
             ),
             SizedBox(
-              width: screenAwareWidth(50, context),
+              width: screenAwareWidth(30, context),
             ),
           ],
         ),
-        SizedBox(height: screenAwareHeight(20, context)),
         InkWell(
           onTap: () {
             showDialog(
@@ -285,15 +286,17 @@ class MyQuestionsCard extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                const Icon(
+                Icon(
                   FontAwesomeIcons.commentDots,
                   color: Colors.white,
+                  size: screenAwareTextSize(12, context),
                 ),
                 Text(
                   "  채팅하기",
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontFamily: FontFamily.jua,
                     color: Colors.white,
+                    fontSize: screenAwareTextSize(12, context),
                   ),
                 ),
               ],

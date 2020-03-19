@@ -65,13 +65,16 @@ class _WriteQuestionState extends State<WriteQuestion> {
                     SizedBox(
                       height: screenAwareHeight(10, context),
                     ),
-                    TextField(
-                        cursorColor: cursor_color,
-                        controller: _questionController,
-                        style: TextStyle(color: Colors.black),
-                        decoration: _buildInputDecoration('가치관 질문을 입력해주세요'),
-                        maxLength: MAX_RANDOM_QNA_LENGTH,
-                        maxLines: 4),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextField(
+                          cursorColor: cursor_color,
+                          controller: _questionController,
+                          style: TextStyle(color: Colors.black),
+                          decoration: _buildInputDecoration('가치관 질문을 입력해주세요'),
+                          maxLength: MAX_RANDOM_QNA_LENGTH,
+                          maxLines: 4),
+                    ),
                     Container(
                       padding: EdgeInsets.all(8.0),
                       alignment: Alignment.centerLeft,
@@ -187,7 +190,7 @@ class _WriteQuestionState extends State<WriteQuestion> {
                           '제 출 하 기',
                           style: TextStyle(
                               color: Colors.white,
-                              fontSize: screenAwareTextSize(18, context),
+                              fontSize: screenAwareTextSize(16, context),
                               fontFamily: FontFamily.jua),
                         ),
                       ),
@@ -279,7 +282,7 @@ class MyQuestionExample extends StatelessWidget {
             ),
             Icon(
               iconData,
-              size: screenAwareTextSize(15, context),
+              size: 20
             ),
             Spacer(
               flex: 1,
@@ -288,7 +291,7 @@ class MyQuestionExample extends StatelessWidget {
               category,
               style: TextStyle(
                   fontFamily: FontFamily.jua,
-                  fontSize: screenAwareTextSize(14, context)),
+                  fontSize: 17),
             ),
             Spacer(
               flex: 2,

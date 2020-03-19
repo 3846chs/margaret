@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:margaret/constants/colors.dart';
 import 'package:margaret/constants/firebase_keys.dart';
 import 'package:margaret/constants/font_names.dart';
 import 'package:margaret/constants/size.dart';
@@ -53,6 +54,7 @@ class AccountSetting extends StatelessWidget {
                             width: screenAwareWidth(100, context),
                             height: screenAwareHeight(140, context),
                             child: TextField(
+                              cursorColor: cursor_color,
                               maxLines: 6,
                               controller: _textEditingController,
                               decoration: _buildInputDecoration(

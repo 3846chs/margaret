@@ -31,7 +31,7 @@ class ContactPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: AutoSizeText(
-                "건전한 온라인 소개팅 시장을 만들겠습니다",
+                "건전한 온라인 소개팅 시장을 만들겠습니다!",
                 style:
                     TextStyle(fontFamily: FontFamily.mapleStory, fontSize: 20),
                 maxLines: 1,

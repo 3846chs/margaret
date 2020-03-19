@@ -136,7 +136,8 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                             child: _profiles.length < 1
                                 ? SizedBox(
                                     width: screenAwareWidth(150, context),
-                                    height: screenAwareHeight(150, context),
+                                    height: screenAwareWidth(
+                                        150, context), // 정사각형 의도
                                     child: RaisedButton(
                                       child: const Icon(Icons.add_a_photo),
                                       onPressed: _getProfile,
@@ -146,7 +147,8 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                                     onPressed: () => _getProfile(0),
                                     child: Image.file(
                                       _profiles[0],
-                                      height: screenAwareHeight(150, context),
+                                      height: screenAwareWidth(150, context),
+                                      // 정사각형 의도
                                       width: screenAwareWidth(150, context),
                                     ),
                                   ),
@@ -156,7 +158,8 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                             child: _profiles.length < 2
                                 ? SizedBox(
                                     width: screenAwareWidth(150, context),
-                                    height: screenAwareHeight(150, context),
+                                    height: screenAwareWidth(
+                                        150, context), // 정사각형 의도
                                     child: RaisedButton(
                                       child: const Icon(Icons.add_a_photo),
                                       onPressed: _getProfile,
@@ -166,8 +169,9 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                                     onPressed: () => _getProfile(1),
                                     child: Image.file(
                                       _profiles[1],
-                                      height: screenAwareHeight(150, context),
                                       width: screenAwareWidth(150, context),
+                                      height: screenAwareWidth(
+                                          150, context), // 정사각형 의도
                                     ),
                                   ),
                           ),
@@ -923,6 +927,7 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
                     ),
                   ),
                   TextField(
+                    cursorColor: cursor_color,
                     maxLength: 100,
                     maxLines: 5,
                     controller: _introductionController,
@@ -1065,6 +1070,7 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
   _buildNicknameDialog(BuildContext context) {
     return AlertDialog(
       content: TextFormField(
+        cursorColor: cursor_color,
         controller: _nicknameController,
         decoration: InputDecoration(hintText: '$MAX_NICKNAME_LENGTH자 이내'),
         validator: (value) {
@@ -1150,6 +1156,7 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
   _buildJobDialog(BuildContext context) {
     return AlertDialog(
       content: TextFormField(
+        cursorColor: cursor_color,
         controller: _jobController,
         decoration: InputDecoration(hintText: '직업을 입력해주세요'),
         validator: (value) {

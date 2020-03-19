@@ -136,7 +136,7 @@ class _ChatBubbleState extends State<ChatBubble>
           padding: const EdgeInsets.all(common_gap),
           child: Text(
             widget.message.content,
-            style: const TextStyle(color: Colors.white),
+            style: TextStyle(color: Colors.white, fontSize: screenAwareTextSize(11, context)),
           ),
         ),
       ),

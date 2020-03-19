@@ -29,6 +29,7 @@ class PeerQuestionsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final myUser = Provider.of<MyUserData>(context, listen: false).userData;
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -145,7 +146,9 @@ class PeerQuestionsCard extends StatelessWidget {
               children: <Widget>[
                 Text(
                   this.peer.nickname,
-                  style: TextStyle(fontFamily: FontFamily.jua, fontSize: 20),
+                  style: TextStyle(
+                      fontFamily: FontFamily.jua,
+                      fontSize: screenAwareTextSize(14, context)),
                 ),
                 SizedBox(
                   height: screenAwareHeight(10, context),
@@ -154,7 +157,9 @@ class PeerQuestionsCard extends StatelessWidget {
                   (DateTime.now().year - this.peer.birthYear + 1).toString() +
                       '세 / ' +
                       this.peer.region,
-                  style: TextStyle(fontFamily: FontFamily.jua, fontSize: 20),
+                  style: TextStyle(
+                      fontFamily: FontFamily.jua,
+                      fontSize: screenAwareTextSize(14, context)),
                 ),
               ],
             ),
@@ -178,6 +183,7 @@ class PeerQuestionsCard extends StatelessWidget {
               child: Text(
                 this.peer.introduction ?? '등록된 자기소개가 없습니다',
                 style: TextStyle(
+                    fontSize: screenAwareTextSize(11, context),
                     fontFamily: FontFamily.nanumBarunpen,
                     fontWeight: FontWeight.bold),
               ),
@@ -202,12 +208,12 @@ class PeerQuestionsCard extends StatelessWidget {
                 peerQuestion,
                 style: TextStyle(
                   fontFamily: FontFamily.miSaeng,
-                  fontSize: 25,
+                  fontSize: screenAwareTextSize(18, context),
                 ),
               )),
             ),
             width: screenAwareWidth(270, context),
-            height: screenAwareHeight(130, context),
+            height: screenAwareHeight(110, context),
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
@@ -231,7 +237,7 @@ class PeerQuestionsCard extends StatelessWidget {
                 Radius.circular(15),
               ),
             )),
-        SizedBox(height: screenAwareHeight(40, context)),
+        SizedBox(height: screenAwareHeight(20, context)),
         InkWell(
           onTap: () {
             showDialog(
@@ -267,14 +273,15 @@ class PeerQuestionsCard extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                const Icon(
+                Icon(
                   FontAwesomeIcons.pencilAlt,
                   color: Colors.white,
-                  size: 18,
+                  size: screenAwareTextSize(12, context),
                 ),
                 Text(
                   "  답장하기",
-                  style: const TextStyle(
+                  style: TextStyle(
+                    fontSize: screenAwareTextSize(12, context),
                     fontFamily: FontFamily.jua,
                     color: Colors.white,
                   ),

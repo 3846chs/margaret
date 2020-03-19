@@ -263,6 +263,7 @@ class _TodayQuestionState extends State<TodayQuestion>
 
   Widget _buildAnswer() {
     return TextField(
+      cursorColor: cursor_color,
       controller: _answerController,
       style: TextStyle(color: Colors.black),
       decoration: _buildInputDecoration("해당 선택지를 고른 이유를 자세하게 써주세요!"),

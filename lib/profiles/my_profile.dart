@@ -175,7 +175,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
                         '사진 등록',
                         style: TextStyle(
                             fontFamily: FontFamily.nanumBarunpen,
-                            color: Colors.grey),
+                            color: Colors.black54),
                       )),
                     ),
                     Row(
@@ -208,8 +208,8 @@ class _TempMyProfileState extends State<TempMyProfile> {
                                               snapshot.data,
                                               width: screenAwareWidth(
                                                   130, context),
-                                              height: screenAwareHeight(
-                                                  130, context),
+                                              height: screenAwareWidth(
+                                                  130, context), // 정사각형 의도
                                               fit: BoxFit.cover,
                                             );
                                           },
@@ -217,8 +217,8 @@ class _TempMyProfileState extends State<TempMyProfile> {
                                       : Image.file(
                                           path,
                                           width: screenAwareWidth(130, context),
-                                          height:
-                                              screenAwareHeight(130, context),
+                                          height: screenAwareWidth(
+                                              130, context), // 정사각형 의도
                                           fit: BoxFit.cover,
                                         ),
                                 ),
@@ -243,7 +243,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
                         '자기소개 등록',
                         style: TextStyle(
                             fontFamily: FontFamily.nanumBarunpen,
-                            color: Colors.grey),
+                            color: Colors.black54),
                       )),
                     ),
                     _selfIntroduction(),
@@ -263,7 +263,7 @@ class _TempMyProfileState extends State<TempMyProfile> {
                         '기본 정보 등록',
                         style: TextStyle(
                             fontFamily: FontFamily.nanumBarunpen,
-                            color: Colors.grey),
+                            color: Colors.black54),
                       )),
                     ),
                     SizedBox(
