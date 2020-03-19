@@ -6,6 +6,7 @@ import 'package:margaret/constants/firebase_keys.dart';
 import 'package:margaret/data/user.dart';
 import 'package:margaret/firebase/firestore_provider.dart';
 import 'package:flutter/foundation.dart';
+import 'package:margaret/firebase/storage_provider.dart';
 
 class MyUserData extends ChangeNotifier {
   StreamSubscription<User> _userStreamsubscription;
@@ -82,7 +83,8 @@ class MyUserData extends ChangeNotifier {
   Future<void> withdrawUser() async {
     _status = MyUserDataStatus.none;
     _userStreamsubscription?.cancel();
-    await setPushToken("");
+    _userData.profiles.forEach((profile) async =>
+        await storageProvider.deleteFile("profiles/$profile"));
     FirebaseUser firebaseUser = await _auth.currentUser();
     await firebaseUser.delete();
     await _userData.reference.delete();

@@ -112,7 +112,7 @@ class _ChatDetailPageState extends State<ChatDetailPage>
     );
 
     if (image != null) {
-      final url = await storageProvider.uploadImg(image,
+      final url = await storageProvider.uploadFile(image,
           'chats/${DateTime.now().millisecondsSinceEpoch}_${myUser.userKey}');
       _sendMessage(myUser, url, MessageType.image);
     }

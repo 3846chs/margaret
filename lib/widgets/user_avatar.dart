@@ -14,20 +14,27 @@ class UserAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (user != null) {
+    if (user != null && user.profiles.length > 0) {
       return CircleAvatar(
-        radius: 30.0,
+        radius: thumbnail_avatar_radius,
         child: ClipOval(
           child: FutureBuilder<String>(
             future:
-                storageProvider.getImageUri("profiles/${user.profiles.first}"),
+                storageProvider.getFileURL("profiles/${user.profiles.first}"),
             builder: (context, snapshot) {
-              if (snapshot.hasError)
-                return Icon(
-                  Icons.account_circle,
-                  size: min(width, height),
+              if (snapshot.hasError) {
+                return Center(
+                  child: Icon(
+                    Icons.account_circle,
+                    size: min(width, height),
+                  ),
                 );
-              if (!snapshot.hasData) return const CircularProgressIndicator();
+              }
+              if (!snapshot.hasData) {
+                return Center(
+                  child: const CircularProgressIndicator(),
+                );
+              }
               return Image.network(
                 snapshot.data,
                 width: width,
@@ -41,7 +48,12 @@ class UserAvatar extends StatelessWidget {
 
     return CircleAvatar(
       radius: thumbnail_avatar_radius,
-      backgroundColor: Colors.primaries[0],
+      child: ClipOval(
+        child: Icon(
+          Icons.account_circle,
+          size: min(width, height),
+        ),
+      ),
     );
   }
 }

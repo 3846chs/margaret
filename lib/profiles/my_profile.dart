@@ -1,12 +1,10 @@
 import 'dart:io';
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-
 import 'package:margaret/constants/balance.dart';
 import 'package:margaret/constants/colors.dart';
 import 'package:margaret/constants/firebase_keys.dart';
@@ -16,8 +14,6 @@ import 'package:margaret/constants/size.dart';
 import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/data/user.dart';
 import 'package:margaret/firebase/firestore_provider.dart';
-import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:margaret/firebase/storage_provider.dart';
 import 'package:margaret/utils/adjust_size.dart';
 import 'package:margaret/utils/simple_snack_bar.dart';
@@ -137,7 +133,9 @@ class _TempMyProfileState extends State<TempMyProfile> {
                       UserKeys.KEY_PROFILES:
                           await Future.wait(profiles.map((profile) async {
                         if (profile is String) return profile;
-                        final url = await storageProvider.uploadImg(profile,
+                        await storageProvider.deleteFile(
+                            "profiles/${widget.user.profiles[profiles.indexOf(profile)]}");
+                        final url = await storageProvider.uploadFile(profile,
                             'profiles/${DateTime.now().millisecondsSinceEpoch}_${widget.user.userKey}');
                         return url.substring(9);
                       })),
@@ -189,18 +187,18 @@ class _TempMyProfileState extends State<TempMyProfile> {
                                 },
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(14),
-
                                   child: (path is String)
                                       ? FutureBuilder<String>(
                                           future: storageProvider
-                                              .getImageUri("profiles/$path"),
+                                              .getFileURL("profiles/$path"),
                                           builder: (context, snapshot) {
                                             if (snapshot.hasError) {
-                                return Icon(
-                                  Icons.account_circle,
-                                  size: screenAwareWidth(130, context),
-                                );
-                              }
+                                              return Icon(
+                                                Icons.account_circle,
+                                                size: screenAwareWidth(
+                                                    130, context),
+                                              );
+                                            }
                                             if (!snapshot.hasData)
                                               return const CircularProgressIndicator();
                                             return Image.network(
@@ -220,7 +218,6 @@ class _TempMyProfileState extends State<TempMyProfile> {
                                               screenAwareHeight(130, context),
                                           fit: BoxFit.cover,
                                         ),
-
                                 ),
                               ),
                             ),

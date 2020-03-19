@@ -55,7 +55,7 @@ class SelectedPerson extends StatelessWidget {
                           borderRadius: BorderRadius.circular(14),
                           child: FutureBuilder<String>(
                             future:
-                                storageProvider.getImageUri("profiles/$path"),
+                                storageProvider.getFileURL("profiles/$path"),
                             builder: (context, snapshot) {
                               if (snapshot.hasError) {
                                 return Icon(

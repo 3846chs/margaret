@@ -75,12 +75,18 @@ class MyQuestionsCard extends StatelessWidget {
                     children: <Widget>[
                       FutureBuilder<String>(
                         future: storageProvider
-                            .getImageUri("profiles/${peer.profiles.first}"),
+                            .getFileURL("profiles/${peer.profiles.first}"),
                         builder: (context, snapshot) {
-                          if (snapshot.hasError)
-                            return const Icon(Icons.account_circle);
-                          if (!snapshot.hasData)
-                            return const CircularProgressIndicator();
+                          if (snapshot.hasError) {
+                            return Center(
+                              child: const Icon(Icons.account_circle),
+                            );
+                          }
+                          if (!snapshot.hasData) {
+                            return Center(
+                              child: const CircularProgressIndicator(),
+                            );
+                          }
                           return Image.network(snapshot.data);
                         },
                       ),
