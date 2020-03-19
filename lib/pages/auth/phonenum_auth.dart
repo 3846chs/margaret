@@ -22,6 +22,7 @@ class _PhonenumAuthState extends State<PhonenumAuth> {
   final _phoneNumberController = TextEditingController();
   String verificationId;
   String status = "";
+  bool _isButtonEnabled = true;
 
   Future<void> _sendCodeToPhoneNumber() async {
     final phone = "+82${_phoneNumberController.text.substring(1)}";
@@ -174,40 +175,52 @@ class _PhonenumAuthState extends State<PhonenumAuth> {
                 decoration: getTextFieldDecor('인증코드'),
               ),
               FlatButton(
-                onPressed: () async {
-                  try {
-                    final authResult =
-                        await _signInWithPhoneNumber(_smsCodeController.text);
+                onPressed: !_isButtonEnabled
+                    ? null
+                    : () async {
+                        try {
+                          setState(() {
+                            _isButtonEnabled = false;
+                          });
 
-                    final snapShot = await Firestore.instance
-                        .collection(COLLECTION_USERS)
-                        .document(authResult.user.uid)
-                        .get();
+                          final authResult = await _signInWithPhoneNumber(
+                              _smsCodeController.text);
 
-                    if (snapShot == null || !snapShot.exists) {
-                      // 해당 snapshot 이 존재하지 않을 때
-                      // profile_input_page 로 이동해야 함
-                      print('Not yet Registered - Profile Input Page');
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  ProfileInputPage(authResult: authResult)));
-                    } else {
-                      Provider.of<MyUserData>(context, listen: false).update();
-                      Navigator.pop(context);
-                    }
-                  } on PlatformException catch (exception) {
-                    print(exception.code);
-                    setState(() {
-                      status = '인증코드가 올바르지 않습니다!';
-                    });
-                  }
-                },
-                child: Text(
-                  '다음',
-                  style: const TextStyle(color: Colors.white),
-                ),
+                          final snapShot = await Firestore.instance
+                              .collection(COLLECTION_USERS)
+                              .document(authResult.user.uid)
+                              .get();
+
+                          if (snapShot == null || !snapShot.exists) {
+                            // 해당 snapshot 이 존재하지 않을 때
+                            // profile_input_page 로 이동해야 함
+                            print('Not yet Registered - Profile Input Page');
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ProfileInputPage(
+                                        authResult: authResult)));
+                          } else {
+                            Provider.of<MyUserData>(context, listen: false)
+                                .update();
+                            Navigator.pop(context);
+                          }
+                        } on PlatformException catch (exception) {
+                          print(exception.code);
+                          setState(() {
+                            status = '인증코드가 올바르지 않습니다!';
+                            _isButtonEnabled = true;
+                          });
+                        }
+                      },
+                child: _isButtonEnabled
+                    ? Text(
+                        '다음',
+                        style: const TextStyle(color: Colors.white),
+                      )
+                    : const CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation(Colors.black87),
+                      ),
                 color: pastel_purple,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(6),
