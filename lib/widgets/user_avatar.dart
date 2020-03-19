@@ -24,10 +24,7 @@ class UserAvatar extends StatelessWidget {
             builder: (context, snapshot) {
               if (snapshot.hasError) {
                 return Center(
-                  child: Icon(
-                    Icons.account_circle,
-                    size: min(width, height),
-                  ),
+                  child: const Icon(Icons.account_circle),
                 );
               }
               if (!snapshot.hasData) {

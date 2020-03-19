@@ -223,6 +223,14 @@ export const sendNewChatAlarm = functions
         return null;
     });
 
+export const deleteUser = functions
+    .region("asia-northeast1")
+    .https.onCall(async (data, context) => {
+        const id: string = data.id;
+        await admin.auth().deleteUser(id);
+        return {};
+    });
+
 export const createToken = functions
     .region("asia-northeast1")
     .https.onCall(async (data, context) => {
