@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/data/user.dart';
 import 'package:margaret/firebase/firestore_provider.dart';
+import 'package:margaret/pages/loading_page.dart';
+import 'package:margaret/widgets/receive/no_receive.dart';
 import 'package:margaret/widgets/receive/receive_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -29,7 +31,8 @@ class _ReceivePageState extends State<ReceivePage> {
               }
 
               final documents = snapshot.data.documents;
-
+              if (documents.length == 0)
+                return NoReceive();
               return ListView.separated(
                 itemCount: documents.length,
                 itemBuilder: (context, index) {

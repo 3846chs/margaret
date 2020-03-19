@@ -7,6 +7,7 @@ import 'package:margaret/pages/chat/chat_detail_page.dart';
 import 'package:margaret/profiles/your_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:margaret/widgets/chat/chat_card.dart';
+import 'package:margaret/widgets/chat/no_chat.dart';
 import 'package:provider/provider.dart';
 
 class ChatPage extends StatelessWidget {
@@ -33,6 +34,8 @@ class ChatPage extends StatelessWidget {
               }
 
               final chats = snapshot.data.documents;
+
+              if (chats.length == 0) return NoChat();
 
               return ListView.separated(
                 itemCount: chats.length,
