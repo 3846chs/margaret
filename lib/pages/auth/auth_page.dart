@@ -10,7 +10,7 @@ import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/pages/auth/email/email_auth.dart';
 import 'package:margaret/pages/auth/phonenum_auth.dart';
 import 'package:margaret/pages/auth/profile_input_page.dart';
-import 'package:margaret/pages/terms/general_terms.dart';
+import 'package:margaret/pages/terms/service_terms.dart';
 import 'package:margaret/pages/terms/privacy_policy.dart';
 import 'package:margaret/utils/adjust_size.dart';
 import 'package:margaret/utils/simple_snack_bar.dart';
