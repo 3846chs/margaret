@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:margaret/constants/font_names.dart';
+import 'package:margaret/utils/adjust_size.dart';
 
 class NoChat extends StatelessWidget {
   @override
@@ -9,11 +10,14 @@ class NoChat extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
         Text(
-          '받은 채팅이 없어요',
-          style: TextStyle(fontFamily: FontFamily.jua, fontSize: 20),
+          '아직 채팅이 없어요',
+          style: TextStyle(
+              fontFamily: FontFamily.jua,
+              fontSize: screenAwareTextSize(16, context)),
         ),
         SpinKitChasingDots(
           color: Colors.redAccent,
+          size: screenAwareTextSize(32, context),
         )
       ],
     );
