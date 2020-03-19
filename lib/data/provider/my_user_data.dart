@@ -2,10 +2,12 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:intl/intl.dart';
 import 'package:margaret/constants/firebase_keys.dart';
 import 'package:margaret/data/user.dart';
 import 'package:margaret/firebase/firestore_provider.dart';
 import 'package:flutter/foundation.dart';
+import 'package:margaret/firebase/storage_provider.dart';
 
 class MyUserData extends ChangeNotifier {
   StreamSubscription<User> _userStreamsubscription;
@@ -82,7 +84,21 @@ class MyUserData extends ChangeNotifier {
   Future<void> withdrawUser() async {
     _status = MyUserDataStatus.none;
     _userStreamsubscription?.cancel();
-    await setPushToken("");
+    _userData.profiles.forEach((profile) async {
+      if (profile != "deleted")
+        await storageProvider.deleteFile("profiles/$profile");
+    });
+
+    final now = DateTime.now();
+    final formatter = DateFormat('yyyy-MM-dd');
+
+    _firestore
+        .collection(TODAYQUESTIONS)
+        .document(formatter.format(now))
+        .updateData({
+      'unmatchedList': FieldValue.arrayRemove([_userData.userKey]),
+    });
+
     FirebaseUser firebaseUser = await _auth.currentUser();
     await firebaseUser.delete();
     await _userData.reference.delete();

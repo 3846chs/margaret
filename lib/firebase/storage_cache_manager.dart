@@ -23,7 +23,7 @@ class StorageCacheManager extends BaseCacheManager {
 
   static Future<FileFetcherResponse> _storageHttpGetter(String path,
       {Map<String, String> headers}) async {
-    final url = await storageProvider.getImageUri(path);
+    final url = await storageProvider.getFileURL(path);
     return HttpFileFetcherResponse(await http.get(url, headers: headers));
   }
 }

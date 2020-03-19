@@ -53,7 +53,7 @@ class _TodayPeopleCardState extends State<TodayPeopleCard> {
                   children: <Widget>[
                     FutureBuilder<String>(
                       future: storageProvider
-                          .getImageUri("profiles/${widget.you.profiles.first}"),
+                          .getFileURL("profiles/${widget.you.profiles.first}"),
                       builder: (context, snapshot) {
                         if (snapshot.hasError)
                           return const Icon(Icons.account_circle);

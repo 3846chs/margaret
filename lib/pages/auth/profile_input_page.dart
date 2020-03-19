@@ -1003,7 +1003,7 @@ class _ProfileInputPageState extends State<ProfileInputPage> {
       simpleSnackbar(context, 'Please try again later!');
     } else {
       final profiles = await Stream.fromIterable(_profiles)
-          .asyncMap((image) => storageProvider.uploadImg(image,
+          .asyncMap((image) => storageProvider.uploadFile(image,
               "profiles/${DateTime.now().millisecondsSinceEpoch}_${widget.authResult.user.uid}"))
           .toList();
       final user = User(

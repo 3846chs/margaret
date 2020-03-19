@@ -37,13 +37,6 @@ void registerNotification(MyUserData myUserData) async {
     return;
   });
 
-  await flutterLocalNotificationsPlugin.cancel(1);
-
-  if (prefsProvider.getTodayQuestionAlarm()) {
-    await flutterLocalNotificationsPlugin.showDailyAtTime(1, "밤 12시가 되었습니다!",
-        "오늘의 질문을 확인하려면 클릭하세요.", Time(), platformChannelSpecifics);
-  }
-
   firebaseMessaging.getToken().then((token) {
     print('token: $token');
     myUserData.setPushToken(token);
@@ -52,13 +45,20 @@ void registerNotification(MyUserData myUserData) async {
   });
 }
 
-void configLocalNotification() {
+void configLocalNotification() async {
   final initializationSettingsAndroid =
       AndroidInitializationSettings('app_icon');
   final initializationSettingsIOS = IOSInitializationSettings();
   final initializationSettings = InitializationSettings(
       initializationSettingsAndroid, initializationSettingsIOS);
   flutterLocalNotificationsPlugin.initialize(initializationSettings);
+
+  await flutterLocalNotificationsPlugin.cancel(1);
+
+  if (prefsProvider.getTodayQuestionAlarm()) {
+    flutterLocalNotificationsPlugin.showDailyAtTime(1, "밤 12시가 되었습니다!",
+        "오늘의 질문을 확인하려면 클릭하세요.", Time(), platformChannelSpecifics);
+  }
 }
 
 void showNotification(message) async {

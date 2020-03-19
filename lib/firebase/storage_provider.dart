@@ -5,17 +5,21 @@ import 'package:firebase_storage/firebase_storage.dart';
 class StorageProvider {
   final FirebaseStorage _firebaseStorage = FirebaseStorage();
 
-  Future<String> uploadImg(File image, String path) async {
-    final StorageReference storageReference =
-        _firebaseStorage.ref().child(path);
-    final StorageUploadTask uploadTask = storageReference.putFile(image);
-    await uploadTask.onComplete;
+  Future<void> deleteFile(String path) async {
+    final storageReference = _firebaseStorage.ref().child(path);
+    return storageReference.delete();
+  }
+
+  Future<String> uploadFile(File file, String path) async {
+    final storageReference = _firebaseStorage.ref().child(path);
+    await storageReference.putFile(file).onComplete;
     return path;
   }
 
-  Future<String> getImageUri(String path) async {
-    return (await _firebaseStorage.ref().child(path).getDownloadURL())
-        .toString();
+  Future<String> getFileURL(String path) async {
+    final storageReference = _firebaseStorage.ref().child(path);
+    String url = await storageReference.getDownloadURL();
+    return url;
   }
 }
 

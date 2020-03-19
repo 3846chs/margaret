@@ -144,7 +144,7 @@ class YourProfile extends StatelessWidget {
               // 상대 프로필 이미지 사진
               child: FutureBuilder<String>(
                 future: storageProvider
-                    .getImageUri("profiles/" + user.profiles[index].toString()),
+                    .getFileURL("profiles/" + user.profiles[index].toString()),
                 builder: (context, snapshot) {
                   if (snapshot.hasError)
                     return const Icon(Icons.account_circle);
@@ -172,7 +172,7 @@ class YourProfile extends StatelessWidget {
             .map((path) => ClipRRect(
                   // 상대 프로필 이미지 사진
                   child: FutureBuilder<String>(
-                    future: storageProvider.getImageUri("profiles/$path"),
+                    future: storageProvider.getFileURL("profiles/$path"),
                     builder: (context, snapshot) {
                       if (snapshot.hasError)
                         return Icon(Icons.account_circle,
