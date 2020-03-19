@@ -17,8 +17,9 @@ class StorageProvider {
   }
 
   Future<String> getFileURL(String path) async {
-    return (await _firebaseStorage.ref().child(path).getDownloadURL())
-        .toString();
+    final storageReference = _firebaseStorage.ref().child(path);
+    String url = await storageReference.getDownloadURL();
+    return url;
   }
 }
 
