@@ -146,8 +146,10 @@ class YourProfile extends StatelessWidget {
                 future: storageProvider
                     .getFileURL("profiles/" + user.profiles[index].toString()),
                 builder: (context, snapshot) {
-                  if (snapshot.hasError || !snapshot.hasData)
+                  if (snapshot.hasError)
                     return const Icon(Icons.account_circle);
+                  if (!snapshot.hasData)
+                    return const CircularProgressIndicator();
                   return Image.network(
                     snapshot.data,
                     //width: MediaQuery.of(context).size.width,
@@ -159,33 +161,6 @@ class YourProfile extends StatelessWidget {
             );
           },
         ),
-      ),
-    );
-  }
-
-  Widget buildContainer(BuildContext context) {
-    return Container(
-      child: Row(
-        children: user.profiles
-            .map((path) => ClipRRect(
-                  // 상대 프로필 이미지 사진
-                  child: FutureBuilder<String>(
-                    future: storageProvider.getFileURL("profiles/$path"),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasError || !snapshot.hasData)
-                        return Icon(Icons.account_circle,
-                            size: min(MediaQuery.of(context).size.width,
-                                MediaQuery.of(context).size.height));
-                      return Image.network(
-                        snapshot.data,
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height,
-                        fit: BoxFit.cover,
-                      );
-                    },
-                  ),
-                ))
-            .toList(),
       ),
     );
   }

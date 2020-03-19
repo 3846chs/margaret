@@ -78,11 +78,13 @@ class MyQuestionsCard extends StatelessWidget {
                         future: storageProvider
                             .getFileURL("profiles/${peer.profiles.first}"),
                         builder: (context, snapshot) {
-                          if (snapshot.hasError || !snapshot.hasData) {
+                          if (snapshot.hasError) {
                             return Center(
                               child: const Icon(Icons.account_circle),
                             );
                           }
+                          if (!snapshot.hasData)
+                            return const CircularProgressIndicator();
                           return Image.network(snapshot.data);
                         },
                       ),

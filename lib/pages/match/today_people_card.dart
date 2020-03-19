@@ -55,8 +55,10 @@ class _TodayPeopleCardState extends State<TodayPeopleCard> {
                       future: storageProvider
                           .getFileURL("profiles/${widget.you.profiles.first}"),
                       builder: (context, snapshot) {
-                        if (snapshot.hasError || !snapshot.hasData)
+                        if (snapshot.hasError)
                           return const Icon(Icons.account_circle);
+                        if (!snapshot.hasData)
+                          return const CircularProgressIndicator();
                         return Image.network(
                           snapshot.data,
                           fit: BoxFit.cover,
