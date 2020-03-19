@@ -133,8 +133,11 @@ class _TempMyProfileState extends State<TempMyProfile> {
                       UserKeys.KEY_PROFILES:
                           await Future.wait(profiles.map((profile) async {
                         if (profile is String) return profile;
-                        await storageProvider.deleteFile(
-                            "profiles/${widget.user.profiles[profiles.indexOf(profile)]}");
+                        final path =
+                            widget.user.profiles[profiles.indexOf(profile)];
+                        if (path != "deleted") {
+                          await storageProvider.deleteFile("profiles/$path");
+                        }
                         final url = await storageProvider.uploadFile(profile,
                             'profiles/${DateTime.now().millisecondsSinceEpoch}_${widget.user.userKey}');
                         return url.substring(9);
