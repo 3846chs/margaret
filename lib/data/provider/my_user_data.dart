@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
 import 'package:margaret/constants/firebase_keys.dart';
@@ -98,9 +99,11 @@ class MyUserData extends ChangeNotifier {
         .updateData({
       'unmatchedList': FieldValue.arrayRemove([_userData.userKey]),
     });
-
-    FirebaseUser firebaseUser = await _auth.currentUser();
-    await firebaseUser.delete();
+    final deleteUserCallable = CloudFunctions(region: "asia-northeast1")
+        .getHttpsCallable(functionName: "deleteUser");
+    await deleteUserCallable.call(<String, dynamic>{
+      "id": _userData.userKey,
+    });
     await _userData.reference.delete();
     _userData = null;
     notifyListeners();

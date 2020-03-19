@@ -146,10 +146,8 @@ class YourProfile extends StatelessWidget {
                 future: storageProvider
                     .getFileURL("profiles/" + user.profiles[index].toString()),
                 builder: (context, snapshot) {
-                  if (snapshot.hasError)
+                  if (snapshot.hasError || !snapshot.hasData)
                     return const Icon(Icons.account_circle);
-                  if (!snapshot.hasData)
-                    return const CircularProgressIndicator();
                   return Image.network(
                     snapshot.data,
                     //width: MediaQuery.of(context).size.width,
@@ -174,12 +172,10 @@ class YourProfile extends StatelessWidget {
                   child: FutureBuilder<String>(
                     future: storageProvider.getFileURL("profiles/$path"),
                     builder: (context, snapshot) {
-                      if (snapshot.hasError)
+                      if (snapshot.hasError || !snapshot.hasData)
                         return Icon(Icons.account_circle,
                             size: min(MediaQuery.of(context).size.width,
                                 MediaQuery.of(context).size.height));
-                      if (!snapshot.hasData)
-                        return const CircularProgressIndicator();
                       return Image.network(
                         snapshot.data,
                         width: MediaQuery.of(context).size.width,

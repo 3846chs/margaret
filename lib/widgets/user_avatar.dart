@@ -22,17 +22,9 @@ class UserAvatar extends StatelessWidget {
             future:
                 storageProvider.getFileURL("profiles/${user.profiles.first}"),
             builder: (context, snapshot) {
-              if (snapshot.hasError) {
+              if (snapshot.hasError || !snapshot.hasData) {
                 return Center(
-                  child: Icon(
-                    Icons.account_circle,
-                    size: min(width, height),
-                  ),
-                );
-              }
-              if (!snapshot.hasData) {
-                return Center(
-                  child: const CircularProgressIndicator(),
+                  child: const Icon(Icons.account_circle),
                 );
               }
               return Image.network(

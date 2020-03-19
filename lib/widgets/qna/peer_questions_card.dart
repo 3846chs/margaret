@@ -113,14 +113,9 @@ class PeerQuestionsCard extends StatelessWidget {
                         future: storageProvider
                             .getFileURL("profiles/${peer.profiles.first}"),
                         builder: (context, snapshot) {
-                          if (snapshot.hasError) {
+                          if (snapshot.hasError || !snapshot.hasData) {
                             return Center(
                               child: const Icon(Icons.account_circle),
-                            );
-                          }
-                          if (!snapshot.hasData) {
-                            return Center(
-                              child: const CircularProgressIndicator(),
                             );
                           }
                           return Image.network(snapshot.data);

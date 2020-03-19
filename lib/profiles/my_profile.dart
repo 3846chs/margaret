@@ -195,15 +195,14 @@ class _TempMyProfileState extends State<TempMyProfile> {
                                           future: storageProvider
                                               .getFileURL("profiles/$path"),
                                           builder: (context, snapshot) {
-                                            if (snapshot.hasError) {
+                                            if (snapshot.hasError ||
+                                                !snapshot.hasData) {
                                               return Icon(
                                                 Icons.account_circle,
                                                 size: screenAwareWidth(
                                                     130, context),
                                               );
                                             }
-                                            if (!snapshot.hasData)
-                                              return const CircularProgressIndicator();
                                             return Image.network(
                                               snapshot.data,
                                               width: screenAwareWidth(
