@@ -143,7 +143,9 @@ class ShowPeople extends StatelessWidget {
                             (userKey) => firestoreProvider.connectUser(userKey))
                         .toList()[itemIndex],
                     builder: (context, snapshot) {
-                      if (snapshot.data == null || !snapshot.hasData)
+                      if (snapshot.data == null)
+                        return LoadingPage();
+                      else if (!snapshot.hasData)
                         return InvalidUser();
                       else
                         return TodayPeopleCard(snapshot.data, itemIndex);
