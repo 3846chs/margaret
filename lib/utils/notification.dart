@@ -9,7 +9,7 @@ final firebaseMessaging = FirebaseMessaging();
 final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
 final androidPlatformChannelSpecifics = AndroidNotificationDetails(
-  'com.margaret.margaret',
+  'com.margaretcompany.margaret',
   'Margaret',
   'Margaret, Dating App',
 );
