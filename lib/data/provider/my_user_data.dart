@@ -9,6 +9,7 @@ import 'package:margaret/data/user.dart';
 import 'package:margaret/firebase/firestore_provider.dart';
 import 'package:flutter/foundation.dart';
 import 'package:margaret/firebase/storage_provider.dart';
+import 'package:margaret/utils/simple_snack_bar.dart';
 
 class MyUserData extends ChangeNotifier {
   StreamSubscription<User> _userStreamsubscription;
@@ -90,6 +91,12 @@ class MyUserData extends ChangeNotifier {
         await storageProvider.deleteFile("profiles/$profile");
     });
 
+    String _userGender = _userData.gender == '남성' ? 'boy' : 'girl';
+    _firestore
+        .collection(COLLECTION_STATISTICS)
+        .document('statistics')
+        .updateData({_userGender: FieldValue.increment(-1)});
+
     final now = DateTime.now();
     final formatter = DateFormat('yyyy-MM-dd');
 
@@ -107,6 +114,7 @@ class MyUserData extends ChangeNotifier {
     await _userData.reference.delete();
     _userData = null;
     notifyListeners();
+
   }
 }
 
