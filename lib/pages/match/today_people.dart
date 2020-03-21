@@ -6,6 +6,7 @@ import 'package:margaret/data/user.dart';
 import 'package:margaret/firebase/firestore_provider.dart';
 import 'package:margaret/firebase/transformer.dart';
 import 'package:margaret/pages/loading_page.dart';
+import 'package:margaret/pages/match/invalid_user.dart';
 import 'package:margaret/utils/adjust_size.dart';
 import 'package:margaret/pages/match/today_people_card.dart';
 import 'package:flutter/material.dart';
@@ -143,7 +144,7 @@ class ShowPeople extends StatelessWidget {
                         .toList()[itemIndex],
                     builder: (context, snapshot) {
                       if (snapshot.data == null || !snapshot.hasData)
-                        return CircularProgressIndicator();
+                        return InvalidUser();
                       else
                         return TodayPeopleCard(snapshot.data, itemIndex);
                     },

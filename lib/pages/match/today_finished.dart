@@ -8,6 +8,7 @@ import 'package:margaret/data/user.dart';
 import 'package:margaret/firebase/firestore_provider.dart';
 import 'package:margaret/firebase/transformer.dart';
 import 'package:margaret/pages/loading_page.dart';
+import 'package:margaret/pages/match/invalid_user.dart';
 import 'package:margaret/pages/match/selected_person.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -36,10 +37,10 @@ class TodayFinished extends StatelessWidget with Transformer {
               snapshot.data['finished'] == false) {
             String yourKey = snapshot.data['selectedPerson'];
             return StreamBuilder<User>(
-              stream: firestoreProvider.connectUser(yourKey),
+              stream: firestoreProvider.connectUser(yourKey), // 탈퇴한 계정의 경우 여기서 에러 발생
               builder: (context, snapshot) {
                 if (snapshot.data == null || !snapshot.hasData)
-                  return LoadingPage();
+                  return InvalidUser();
                 User you = snapshot.data;
                 return SelectedPerson(you);
               },

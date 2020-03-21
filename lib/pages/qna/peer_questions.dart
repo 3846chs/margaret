@@ -4,6 +4,7 @@ import 'package:margaret/constants/firebase_keys.dart';
 import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/data/user.dart';
 import 'package:margaret/firebase/firestore_provider.dart';
+import 'package:margaret/pages/loading_page.dart';
 import 'package:margaret/widgets/qna/empty_peer_questions_card.dart';
 import 'package:margaret/widgets/qna/peer_questions_card.dart';
 import 'package:provider/provider.dart';
@@ -19,7 +20,14 @@ class PeerQuestions extends StatelessWidget {
           .document(doc.data['userKey'].toString())
           .get();
 
-      if (userDocument != null && userDocument.exists) return doc;
+      if (userDocument != null && userDocument.exists)
+        return doc;
+      else {
+        // 상대가 invalid 한 경우 삭제
+        await _firestore.runTransaction((Transaction tx) async {
+          await tx.delete(doc.reference);
+        });
+      }
     }
 
     return null;
@@ -44,7 +52,7 @@ class PeerQuestions extends StatelessWidget {
                   future: _getFirstDocument(snapshot.data.documents),
                   builder: (context, snapshot) {
                     if (!snapshot.hasData) {
-                      return const CircularProgressIndicator();
+                      return LoadingPage();
                     }
 
                     final firstDocument = snapshot.data;
@@ -54,7 +62,7 @@ class PeerQuestions extends StatelessWidget {
                       stream: firestoreProvider.connectUser(peerKey),
                       builder: (context, snapshot) {
                         if (!snapshot.hasData) {
-                          return const CircularProgressIndicator();
+                          return LoadingPage();
                         }
                         return PeerQuestionsCard(
                           documentId: firstDocument.documentID,
