@@ -244,7 +244,7 @@ class BuildTodayAnswer extends StatelessWidget {
       ),
       child: Center(
         child: Text(
-          widget.you.answer,
+          '  ' + widget.you.answer,
           style: TextStyle(
             fontFamily: FontFamily.miSaeng,
             fontSize: screenAwareTextSize(18, context),
