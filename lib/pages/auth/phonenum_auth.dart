@@ -53,8 +53,7 @@ class _PhonenumAuthState extends State<PhonenumAuth> {
         else if (authException.message.contains('network')) {
           status = '인터넷 연결상태를 다시 한번 확인하고 시도해주세요!';
         } else if (authException.message.contains('blocked')) {
-          status =
-              '차단된 계정입니다. 자세한 사항은 고객센터에 문의해주세요.';
+          status = '인증번호를 너무 많이 요청하였거나 차단된 계정입니다. 나중에 다시 시도해주시거나 고객센터에 문의해주세요.';
         } else if (authException.message.contains('TOO_SHORT') ||
             authException.message.contains('TOO_LONG') ||
             authException.message.contains('Invalid format')) {

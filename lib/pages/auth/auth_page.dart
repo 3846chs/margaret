@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/gestures.dart';
 //import 'package:flutter_kakao_login/flutter_kakao_login.dart';
-import 'package:flutter_naver_login/flutter_naver_login.dart';
+//import 'package:flutter_naver_login/flutter_naver_login.dart';
 import 'package:margaret/constants/colors.dart';
 import 'package:margaret/constants/firebase_keys.dart';
 import 'package:margaret/constants/font_names.dart';
@@ -97,12 +97,12 @@ class AuthPage extends StatelessWidget {
 //              onPressed: () => _signInKakao(context),
 //            ),
 //            SizedBox(height: screenAwareHeight(5.0, context)),
-            LoginButton(
-              text: "Naver  로그인",
-              icon: FontAwesomeIcons.facebookF,
-              color: Color(0xff1ac800),
-              onPressed: () => _signInNaver(context),
-            ),
+//            LoginButton(
+//              text: "Naver  로그인",
+//              icon: FontAwesomeIcons.facebookF,
+//              color: Color(0xff1ac800),
+//              onPressed: () => _signInNaver(context),
+//            ),
 
             Padding(
               padding: const EdgeInsets.all(30),
@@ -243,30 +243,30 @@ class AuthPage extends StatelessWidget {
 //    }
 //  }
 
-  Future<void> _signInNaver(BuildContext context) async {
-    try {
-      final result = await FlutterNaverLogin.logIn();
-
-      if (result.status == NaverLoginStatus.error) {
-        simpleSnackbar(context, result.errorMessage);
-        return;
-      }
-
-      if (result.status == NaverLoginStatus.loggedIn) {
-        final createTokenCallable =
-            _cloudFunctions.getHttpsCallable(functionName: "createToken");
-        final response = await createTokenCallable.call(<String, dynamic>{
-          "id": "naver:${result.account.id}",
-          "email": result.account.email,
-        });
-
-        final authResult = await _auth.signInWithCustomToken(
-            token: response.data["firebaseToken"]);
-        _postAuthResult(context, authResult);
-      }
-    } on PlatformException catch (exception) {
-      print(exception.code);
-      simpleSnackbar(context, exception.message);
-    }
-  }
+//  Future<void> _signInNaver(BuildContext context) async {
+//    try {
+//      final result = await FlutterNaverLogin.logIn();
+//
+//      if (result.status == NaverLoginStatus.error) {
+//        simpleSnackbar(context, result.errorMessage);
+//        return;
+//      }
+//
+//      if (result.status == NaverLoginStatus.loggedIn) {
+//        final createTokenCallable =
+//            _cloudFunctions.getHttpsCallable(functionName: "createToken");
+//        final response = await createTokenCallable.call(<String, dynamic>{
+//          "id": "naver:${result.account.id}",
+//          "email": result.account.email,
+//        });
+//
+//        final authResult = await _auth.signInWithCustomToken(
+//            token: response.data["firebaseToken"]);
+//        _postAuthResult(context, authResult);
+//      }
+//    } on PlatformException catch (exception) {
+//      print(exception.code);
+//      simpleSnackbar(context, exception.message);
+//    }
+//  }
 }
