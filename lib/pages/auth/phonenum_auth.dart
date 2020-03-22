@@ -21,7 +21,7 @@ class _PhonenumAuthState extends State<PhonenumAuth> {
   final _smsCodeController = TextEditingController();
   final _phoneNumberController = TextEditingController();
   String verificationId;
-  String status = "";
+  String status = "전화번호는 본인인증용으로만 활용되며, 절대 타인에게 노출되지 않습니다.";
   bool _isButtonEnabled = true;
 
   Future<void> _sendCodeToPhoneNumber() async {
@@ -49,18 +49,18 @@ class _PhonenumAuthState extends State<PhonenumAuth> {
         status = '${authException.message}';
         print("Error message: " + status);
         if (authException.message.contains('not authorized'))
-          status = '뭔가 문제가 생긴 것 같아요...앱을 종료하고 다시 시도해주세요';
+          status = '뭔가 문제가 있는 것 같아요...고객센터에 문의해주세요!';
         else if (authException.message.contains('network')) {
           status = '인터넷 연결상태를 다시 한번 확인하고 시도해주세요!';
         } else if (authException.message.contains('blocked')) {
           status =
-              '차단된 계정입니다. 자세한 사항은 margaret.information@gmail.com 에 문의해주세요.';
+              '차단된 계정입니다. 자세한 사항은 고객센터에 문의해주세요.';
         } else if (authException.message.contains('TOO_SHORT') ||
             authException.message.contains('TOO_LONG') ||
             authException.message.contains('Invalid format')) {
           status = '올바른 형식의 전화번호를 입력해주세요!';
         } else
-          status = '예기치 못한 오류입니다! margaret.information@gmail.com 에 문의해주세요.';
+          status = '뭔가 문제가 있는 것 같아요...고객센터에 문의해주세요!';
       });
     };
 
@@ -93,12 +93,12 @@ class _PhonenumAuthState extends State<PhonenumAuth> {
           }
         } else {
           setState(() {
-            status = 'Invalid code/invalid authentication';
+            status = '인증 오류';
           });
         }
       }).catchError((error) {
         setState(() {
-          status = '뭔가 문제가 생긴 것 같아요...앱을 종료하고 다시 시도해주세요';
+          status = '뭔가 문제가 있는 것 같아요...고객센터에 문의해주세요!';
         });
       });
     };
@@ -154,7 +154,7 @@ class _PhonenumAuthState extends State<PhonenumAuth> {
                       keyboardType: TextInputType.number,
                       cursorColor: Colors.black54,
                       controller: _phoneNumberController,
-                      decoration: getTextFieldDecor('전화번호 11자리'),
+                      decoration: getTextFieldDecor('전화번호 11자리 ( - 없이)'),
                     ),
                   ),
                   IconButton(
