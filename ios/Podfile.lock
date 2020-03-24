@@ -375,7 +375,7 @@ PODS:
     - Flutter
   - path_provider_macos (0.0.1):
     - Flutter
-  - "permission_handler (4.4.0+hotfix.1)":
+  - "permission_handler (4.4.0+hotfix.2)":
     - Flutter
   - PromisesObjC (1.2.8)
   - Protobuf (3.11.4)
@@ -565,7 +565,7 @@ SPEC CHECKSUMS:
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   path_provider: fb74bd0465e96b594bb3b5088ee4a4e7bb1f2a9d
   path_provider_macos: f760a3c5b04357c380e2fddb6f9db6f3015897e0
-  permission_handler: aea60e5015e1ef439463be8f3ed643763649d2ce
+  permission_handler: d5d46b2ca93671e8dcf870b949e304c7ddb65ad0
   PromisesObjC: c119f3cd559f50b7ae681fa59dc1acd19173b7e6
   Protobuf: 176220c526ad8bd09ab1fb40a978eac3fef665f7
   shared_preferences: 430726339841afefe5142b9c1f50cb6bd7793e01
@@ -577,6 +577,6 @@ SPEC CHECKSUMS:
   url_launcher_macos: fd7894421cd39320dce5f292fc99ea9270b2a313
   url_launcher_web: e5527357f037c87560776e36436bf2b0288b965c
 
-PODFILE CHECKSUM: 3dbe063e9c90a5d7c9e4e76e70a821b9e2c1d271
+PODFILE CHECKSUM: e9b098bbc0dd5d1fd5d8576cd0e2c65db85f6acd
 
 COCOAPODS: 1.9.1
