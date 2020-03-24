@@ -1,6 +1,9 @@
+import 'package:apple_sign_in/apple_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
+import 'package:device_info/device_info.dart';
 import 'package:flutter/gestures.dart';
+
 //import 'package:flutter_kakao_login/flutter_kakao_login.dart';
 //import 'package:flutter_naver_login/flutter_naver_login.dart';
 import 'package:margaret/constants/colors.dart';
@@ -73,22 +76,22 @@ class AuthPage extends StatelessWidget {
               ),
             ),
             SizedBox(height: screenAwareHeight(90, context)),
-//            LoginButton(
-//              text: "Google  로그인",
-//              icon: FontAwesomeIcons.google,
-//              color: Colors.red[600],
-//              onPressed: () => _signInGoogle(context),
-//            ),
-//            SizedBox(height: screenAwareHeight(5.0, context)),
             LoginButton(
-              text: "전화번호  로그인",
-              icon: FontAwesomeIcons.phone,
-              color: Colors.pink[200],
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => PhonenumAuth()));
-              },
+              text: "Apple  로그인",
+              icon: FontAwesomeIcons.apple,
+              color: Colors.black87,
+              onPressed: () => _signInApple(context),
             ),
+            SizedBox(height: screenAwareHeight(5.0, context)),
+//            LoginButton(
+//              text: "전화번호  로그인",
+//              icon: FontAwesomeIcons.phone,
+//              color: Colors.pink[200],
+//              onPressed: () {
+//                Navigator.push(context,
+//                    MaterialPageRoute(builder: (context) => PhonenumAuth()));
+//              },
+//            ),
 
 //            LoginButton(
 //              text: "Kakao  로그인",
@@ -178,8 +181,6 @@ class AuthPage extends StatelessWidget {
       return;
     }
 
-    print("signed in " + user.displayName);
-
     final snapShot =
         await _firestore.collection(COLLECTION_USERS).document(user.uid).get();
 
@@ -195,26 +196,74 @@ class AuthPage extends StatelessWidget {
     }
   }
 
-  Future<void> _signInGoogle(BuildContext context) async {
-    try {
-      final googleUser = await _googleSignIn.signIn();
-      final googleAuth = await googleUser.authentication;
-      final credential = GoogleAuthProvider.getCredential(
-          idToken: googleAuth.idToken, accessToken: googleAuth.accessToken);
-      final authResult = await _auth.signInWithCredential(credential);
+  Future<void> _signInApple(BuildContext context) async {
+    await AppleSignIn.isAvailable();
 
-      _postAuthResult(context, authResult);
+    var iosInfo = await DeviceInfoPlugin().iosInfo;
+    var version = iosInfo.systemVersion;
+    if (!version.contains('13'))
+      simpleSnackbar(context, "iOS 13 이상부터 지원합니다. 업데이트 후 다운받아주세요.");
 
-//    if (authResult.additionalUserInfo.isNewUser) {
-//      print('new user');
-//    } else {
-//      print('old user');
-//    }
-    } on PlatformException catch (exception) {
-      print(exception.code);
-      simpleSnackbar(context, exception.message);
+    print(version);
+    final AuthorizationResult result =
+        await AppleSignIn.performRequests([AppleIdRequest()]);
+
+    print(result.status.toString());
+    switch (result.status) {
+      case AuthorizationStatus.authorized:
+        print("successfull sign in");
+        final AppleIdCredential appleIdCredential = result.credential;
+
+        OAuthProvider oAuthProvider =
+            new OAuthProvider(providerId: "apple.com");
+        final AuthCredential credential = oAuthProvider.getCredential(
+          idToken: String.fromCharCodes(appleIdCredential.identityToken),
+          accessToken:
+              String.fromCharCodes(appleIdCredential.authorizationCode),
+        );
+
+        final AuthResult authResult =
+            await _auth.signInWithCredential(credential);
+
+        _postAuthResult(context, authResult);
+//        FirebaseAuth.instance.currentUser().then((val) async {
+//          UserUpdateInfo updateUser = UserUpdateInfo();
+//          updateUser.displayName =
+//              "${appleIdCredential.fullName.givenName} ${appleIdCredential.fullName.familyName}";
+//          updateUser.photoUrl = "define a photo url here";
+//          await val.updateProfile(updateUser);
+//        });
+        break;
+      case AuthorizationStatus.error:
+        // do something
+        break;
+
+      case AuthorizationStatus.cancelled:
+        print('User cancelled');
+        break;
     }
   }
+
+//  Future<void> _signInGoogle(BuildContext context) async {
+//    try {
+//      final googleUser = await _googleSignIn.signIn();
+//      final googleAuth = await googleUser.authentication;
+//      final credential = GoogleAuthProvider.getCredential(
+//          idToken: googleAuth.idToken, accessToken: googleAuth.accessToken);
+//      final authResult = await _auth.signInWithCredential(credential);
+//
+//      _postAuthResult(context, authResult);
+//
+//      if (authResult.additionalUserInfo.isNewUser) {
+//        print('new user');
+//      } else {
+//        print('old user');
+//      }
+//    } on PlatformException catch (exception) {
+//      print(exception.code);
+//      simpleSnackbar(context, exception.message);
+//    }
+//  }
 
 //  Future<void> _signInKakao(BuildContext context) async {
 //    try {
