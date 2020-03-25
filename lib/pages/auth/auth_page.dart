@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:device_info/device_info.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
 
 //import 'package:flutter_kakao_login/flutter_kakao_login.dart';
 //import 'package:flutter_naver_login/flutter_naver_login.dart';
@@ -76,12 +77,17 @@ class AuthPage extends StatelessWidget {
               ),
             ),
             SizedBox(height: screenAwareHeight(90, context)),
-            LoginButton(
-              text: "Apple  로그인",
-              icon: FontAwesomeIcons.apple,
-              color: Colors.black87,
+            SignInButton(
+              Buttons.Apple,
+              text: "Sign up with Apple",
               onPressed: () => _signInApple(context),
             ),
+//            LoginButton(
+//              text: "Apple  로그인",
+//              icon: FontAwesomeIcons.apple,
+//              color: Colors.black87,
+//              onPressed: () => _signInApple(context),
+//            ),
             SizedBox(height: screenAwareHeight(5.0, context)),
 //            LoginButton(
 //              text: "전화번호  로그인",
@@ -197,8 +203,6 @@ class AuthPage extends StatelessWidget {
   }
 
   Future<void> _signInApple(BuildContext context) async {
-    await AppleSignIn.isAvailable();
-
     var iosInfo = await DeviceInfoPlugin().iosInfo;
     var version = iosInfo.systemVersion;
     if (!version.contains('13'))
