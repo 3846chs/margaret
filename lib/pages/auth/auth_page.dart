@@ -154,15 +154,15 @@ class AuthPage extends StatelessWidget {
               style: TextStyle(color: Colors.grey),
             ),
             SizedBox(height: screenAwareHeight(5.0, context)),
-//            LoginButton(
-//              text: "E-mail  로그인",
-//              icon: FontAwesomeIcons.solidEnvelope,
-//              color: Colors.grey[300],
-//              onPressed: () {
-//                Navigator.push(context,
-//                    MaterialPageRoute(builder: (context) => EmailAuth()));
-//              },
-//            ),
+            LoginButton(
+              text: "E-mail  로그인",
+              icon: FontAwesomeIcons.solidEnvelope,
+              color: Colors.grey[300],
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => EmailAuth()));
+              },
+            ),
           ],
         ),
       ),

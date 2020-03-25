@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:margaret/constants/colors.dart';
+import 'package:margaret/constants/firebase_keys.dart';
 import 'package:margaret/constants/font_names.dart';
 import 'package:margaret/constants/size.dart';
 import 'package:margaret/pages/auth/profile_input_page.dart';
@@ -18,6 +21,7 @@ class _EmailSignUpFormState extends State<EmailSignUpForm> {
   final _emailController = TextEditingController();
   final _pwController = TextEditingController();
   final _cpwController = TextEditingController();
+  bool _isButtonEnabled = true;
 
   @override
   void dispose() {
@@ -81,13 +85,24 @@ class _EmailSignUpFormState extends State<EmailSignUpForm> {
               ),
               SizedBox(height: screenAwareHeight(common_l_gap, context)),
               FlatButton(
-                onPressed: () {
-                  if (_formKey.currentState.validate()) _register();
-                },
-                child: Text(
-                  '다음',
-                  style: const TextStyle(color: Colors.white),
-                ),
+                onPressed: !_isButtonEnabled
+                    ? null
+                    : () {
+                        if (_formKey.currentState.validate()) {
+                          setState(() {
+                            _isButtonEnabled = false;
+                          });
+                          _register();
+                        }
+                      },
+                child: _isButtonEnabled
+                    ? Text(
+                        '다음',
+                        style: const TextStyle(color: Colors.white),
+                      )
+                    : const CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation(Colors.black87),
+                      ),
                 color: pastel_purple,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(6),
@@ -110,12 +125,36 @@ class _EmailSignUpFormState extends State<EmailSignUpForm> {
           MaterialPageRoute(
               builder: (context) => ProfileInputPage(authResult: authResult)));
     } on PlatformException catch (exception) {
+      if (exception.code == "ERROR_EMAIL_ALREADY_IN_USE") {
+        final snapShot = await Firestore.instance
+            .collection(COLLECTION_USERS)
+            .where(UserKeys.KEY_EMAIL, isEqualTo: _emailController.text)
+            .getDocuments();
+
+        if (snapShot == null || snapShot.documents?.length == 0) {
+          final deleteUserCallable = CloudFunctions(region: "asia-northeast1")
+              .getHttpsCallable(functionName: "deleteUser");
+          await deleteUserCallable.call(<String, dynamic>{
+            "email": _emailController.text,
+          });
+          final authResult = await FirebaseAuth.instance
+              .createUserWithEmailAndPassword(
+                  email: _emailController.text, password: _pwController.text);
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      ProfileInputPage(authResult: authResult)));
+          return;
+        }
+      }
       print(exception.code);
       simpleSnackbar(context, exception.message);
       setState(() {
         _emailController.clear();
         _pwController.clear();
         _cpwController.clear();
+        _isButtonEnabled = true;
       });
     }
   }
