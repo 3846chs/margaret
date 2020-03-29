@@ -226,7 +226,7 @@ export const sendNewChatAlarm = functions
 export const deleteUser = functions
     .region("asia-northeast1")
     .https.onCall(async (data, context) => {
-        const id: string = data.id;
+        const id: string = data.id ?? (await admin.auth().getUserByEmail(data.email)).uid;
         await admin.auth().deleteUser(id);
         return {};
     });
