@@ -9,6 +9,7 @@ import 'package:margaret/constants/firebase_keys.dart';
 import 'package:margaret/constants/font_names.dart';
 import 'package:margaret/constants/questions_example.dart';
 import 'package:margaret/data/provider/my_user_data.dart';
+import 'package:margaret/firebase/firestore_provider.dart';
 import 'package:margaret/utils/adjust_size.dart';
 import 'package:margaret/utils/simple_snack_bar.dart';
 import 'package:provider/provider.dart';
@@ -151,10 +152,17 @@ class _WriteQuestionState extends State<WriteQuestion> {
                         await myUserData.userData.reference.updateData(
                             {'numMyQuestions': FieldValue.increment(-1)});
 
+                        final now = DateTime.now();
+
                         String question = _questionController.text;
                         String myUserKey = myUserData.userData.userKey;
                         String timestamp =
-                            DateTime.now().millisecondsSinceEpoch.toString();
+                            now.millisecondsSinceEpoch.toString();
+
+                        firestoreProvider.updateUser(myUserKey, {
+                          UserKeys.KEY_RECENTMATCHTIME: now,
+                        }); // 활동 이력 업데이트
+
                         _questionController.clear();
                         Navigator.pop(context);
 
@@ -165,7 +173,7 @@ class _WriteQuestionState extends State<WriteQuestion> {
 
                         final myUser =
                             await myUserData.userData.reference.get();
-                        final List<String> blocks = myUser.data['blocks'] ?? [];
+                        final List blocks = myUser.data['blocks'] ?? [];
 
                         querySnapshot.documents
                             .where((doc) =>
@@ -175,7 +183,7 @@ class _WriteQuestionState extends State<WriteQuestion> {
                                         .abs() <=
                                     MAX_AGE_DIFFERENCE &&
                                 !blocks.contains(doc.documentID))
-                            .take(30)
+                            .take(MAX_RANDOM_QNA_PEOPLE)
                             .forEach((ds) {
                           ds.reference
                               .collection(PEERQUESTIONS)
@@ -280,18 +288,13 @@ class MyQuestionExample extends StatelessWidget {
             Spacer(
               flex: 2,
             ),
-            Icon(
-              iconData,
-              size: 20
-            ),
+            Icon(iconData, size: 20),
             Spacer(
               flex: 1,
             ),
             Text(
               category,
-              style: TextStyle(
-                  fontFamily: FontFamily.jua,
-                  fontSize: 17),
+              style: TextStyle(fontFamily: FontFamily.jua, fontSize: 17),
             ),
             Spacer(
               flex: 2,

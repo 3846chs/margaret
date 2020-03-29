@@ -173,6 +173,18 @@ class _HomeState extends State<Home> {
             },
           ),
           ListTile(
+            title: Text('마가렛 페이스북 페이지'),
+            onTap: () async {
+              const url =
+                  'https://www.facebook.com/마가렛-108371037480635/';
+              if (await canLaunch(url)) {
+                await launch(url);
+              } else {
+                throw 'Could not launch $url';
+              }
+            },
+          ),
+          ListTile(
             title: Text('알림 설정'),
             onTap: () {
               Navigator.push(context,

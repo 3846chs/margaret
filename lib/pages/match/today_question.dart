@@ -64,7 +64,8 @@ class _TodayQuestionState extends State<TodayQuestion>
     }
 
     if (answer.length < MIN_TODAY_ANSWER_LENGTH) {
-      simpleSnackbar(context, '이유가 너무 짧아요. 최소 $MIN_TODAY_ANSWER_LENGTH자 이상 작성해주세요!');
+      simpleSnackbar(
+          context, '이유가 너무 짧아요. 최소 $MIN_TODAY_ANSWER_LENGTH자 이상 작성해주세요!');
       return;
     }
 
@@ -92,7 +93,8 @@ class _TodayQuestionState extends State<TodayQuestion>
       return;
     } else {
       user.reference.updateData({
-        'recentMatchState': _selectedIndex + 1
+        UserKeys.KEY_RECENTMATCHTIME: now,
+        UserKeys.KEY_RECENTMATCHSTATE: _selectedIndex + 1
       }); // 1번 선택했으면 1 저장, 2번 선택했으면 2 저장
     }
 
@@ -257,7 +259,8 @@ class _TodayQuestionState extends State<TodayQuestion>
     return Text(
       question,
       textAlign: TextAlign.center,
-      style: TextStyle(fontFamily: 'BMJUA', fontSize: screenAwareTextSize(16, context)),
+      style: TextStyle(
+          fontFamily: 'BMJUA', fontSize: screenAwareTextSize(16, context)),
     );
   }
 
@@ -265,7 +268,8 @@ class _TodayQuestionState extends State<TodayQuestion>
     return TextField(
       cursorColor: cursor_color,
       controller: _answerController,
-      style: TextStyle(color: Colors.black, fontSize: screenAwareTextSize(12, context)),
+      style: TextStyle(
+          color: Colors.black, fontSize: screenAwareTextSize(12, context)),
       decoration: _buildInputDecoration("해당 선택지를 고른 이유를 자세하게 써주세요!"),
       maxLength: MAX_TODAY_ANSWER_LENGTH,
       maxLines: 4,
@@ -299,7 +303,8 @@ class _TodayQuestionState extends State<TodayQuestion>
     final ds =
         await _firestore.collection(COLLECTION_USERS).document(userKey).get();
 
-    final List<String> blocks = ds.data['blocks'] ?? [];
+    final List blocks = ds.data['blocks'] ?? [];
+    // blocks 필드가 존재하지만, 길이가 0 인 경우 오류 발생 (실제에선 벌어지지 않지만, 관리자가 수정할 경우이긴 한데 처리 필요)
 
     final querySnapshot = await _firestore
         .collection(COLLECTION_USERS)
@@ -317,7 +322,8 @@ class _TodayQuestionState extends State<TodayQuestion>
                 doc.data['recentMatchTime'].toDate().year == now.year &&
                 doc.data['recentMatchTime'].toDate().month == now.month &&
                 doc.data['recentMatchTime'].toDate().day == now.day) &&
-            (doc.data['birthYear'] - ds.data['birthYear']).abs() <= MAX_AGE_DIFFERENCE &&
+            (doc.data['birthYear'] - ds.data['birthYear']).abs() <=
+                MAX_AGE_DIFFERENCE &&
             !blocks.contains(doc.documentID))
         .forEach((e) {
       ls.add(e.documentID);

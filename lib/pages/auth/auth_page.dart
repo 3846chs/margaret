@@ -77,11 +77,11 @@ class AuthPage extends StatelessWidget {
               ),
             ),
             SizedBox(height: screenAwareHeight(90, context)),
-            SignInButton(
-              Buttons.Apple,
-              text: "Sign up with Apple",
-              onPressed: () => _signInApple(context),
-            ),
+//            SignInButton(
+//              Buttons.Apple,
+//              text: "Sign up with Apple",
+//              onPressed: () => _signInApple(context),
+//            ),
 //            LoginButton(
 //              text: "Apple  로그인",
 //              icon: FontAwesomeIcons.apple,
@@ -89,15 +89,15 @@ class AuthPage extends StatelessWidget {
 //              onPressed: () => _signInApple(context),
 //            ),
             SizedBox(height: screenAwareHeight(5.0, context)),
-//            LoginButton(
-//              text: "전화번호  로그인",
-//              icon: FontAwesomeIcons.phone,
-//              color: Colors.pink[200],
-//              onPressed: () {
-//                Navigator.push(context,
-//                    MaterialPageRoute(builder: (context) => PhonenumAuth()));
-//              },
-//            ),
+            LoginButton(
+              text: "전화번호  로그인",
+              icon: FontAwesomeIcons.phone,
+              color: Colors.pink[200],
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => PhonenumAuth()));
+              },
+            ),
 
 //            LoginButton(
 //              text: "Kakao  로그인",
@@ -163,15 +163,15 @@ class AuthPage extends StatelessWidget {
               style: TextStyle(color: Colors.grey),
             ),
             SizedBox(height: screenAwareHeight(5.0, context)),
-            LoginButton(
-              text: "E-mail  로그인",
-              icon: FontAwesomeIcons.solidEnvelope,
-              color: Colors.grey[300],
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => EmailAuth()));
-              },
-            ),
+//            LoginButton(
+//              text: "E-mail  로그인",
+//              icon: FontAwesomeIcons.solidEnvelope,
+//              color: Colors.grey[300],
+//              onPressed: () {
+//                Navigator.push(context,
+//                    MaterialPageRoute(builder: (context) => EmailAuth()));
+//              },
+//            ),
           ],
         ),
       ),

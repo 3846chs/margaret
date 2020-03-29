@@ -7,6 +7,7 @@ import 'package:margaret/constants/font_names.dart';
 import 'package:margaret/constants/size.dart';
 import 'package:margaret/data/provider/my_user_data.dart';
 import 'package:margaret/data/user.dart';
+import 'package:margaret/firebase/firestore_provider.dart';
 import 'package:margaret/utils/adjust_size.dart';
 import 'package:provider/provider.dart';
 
@@ -36,6 +37,7 @@ class _AnswerDialogState extends State<AnswerDialog> {
   }
 
   Future<void> _sendAnswer(User myUser) async {
+    final now = DateTime.now();
     await myUser.reference
         .collection(PEERQUESTIONS)
         .document(widget.documentId)
@@ -45,13 +47,18 @@ class _AnswerDialogState extends State<AnswerDialog> {
         .collection(COLLECTION_USERS)
         .document(widget.peerKey)
         .collection(MYQUESTIONS)
-        .document(DateTime.now().millisecondsSinceEpoch.toString())
+        .document(now.millisecondsSinceEpoch.toString())
         .setData({
       'question': widget.peerQuestion,
       'answer': _answerController.text,
       'userKey': myUser.userKey
     });
     // 내 답변 Peer 에게 전송
+
+    firestoreProvider.updateUser(myUser.userKey, {
+      UserKeys.KEY_RECENTMATCHTIME: now,
+    }); // 활동 이력 업데이트
+
     Navigator.pop(context);
   }
 

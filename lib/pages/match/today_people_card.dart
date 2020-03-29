@@ -81,7 +81,9 @@ class _TodayPeopleCardState extends State<TodayPeopleCard> {
             ),
             Text(
               widget.you.nickname,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: screenAwareTextSize(16, context)),
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: screenAwareTextSize(16, context)),
             ),
             Container(
                 alignment: Alignment(-0.8, 0),
@@ -143,13 +145,15 @@ class _TodayPeopleCardState extends State<TodayPeopleCard> {
                       elevation: 5,
                       child: Text('선택'),
                       onPressed: () {
+                        final now = DateTime.now();
                         Navigator.pop(context);
 
                         Firestore.instance
                             .collection(COLLECTION_USERS)
                             .document(value.userData.userKey)
                             .updateData({
-                          'recentMatchState':
+                          UserKeys.KEY_RECENTMATCHTIME: now,
+                          UserKeys.KEY_RECENTMATCHSTATE:
                               -value.userData.recentMatchState.value
                           // 음수로 변환
                         });

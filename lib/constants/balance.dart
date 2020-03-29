@@ -3,6 +3,7 @@ const int MIN_TODAY_ANSWER_LENGTH = 10;
 const int MAX_TODAY_ANSWER_LENGTH = 80;
 const int MIN_RANDOM_QNA_LENGTH = 10;
 const int MAX_RANDOM_QNA_LENGTH = 65;
+const int MAX_RANDOM_QNA_PEOPLE = 30;
 const int MAX_NICKNAME_LENGTH = 7;
 const int MAX_JOB_LENGTH = 7;
 const int MAX_AGE_DIFFERENCE = 15;
