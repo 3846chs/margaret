@@ -6,6 +6,7 @@ import 'package:margaret/pages/drawer/account_setting_page.dart';
 import 'package:margaret/pages/drawer/alarm_page.dart';
 import 'package:margaret/pages/chat/chat_page.dart';
 import 'package:margaret/pages/drawer/contact_page.dart';
+import 'package:margaret/pages/drawer/faq.dart';
 import 'package:margaret/pages/match/match_page.dart';
 import 'package:margaret/pages/qna/qna_page.dart';
 import 'package:margaret/pages/receive/receive_page.dart';
@@ -68,7 +69,9 @@ class _HomeState extends State<Home> {
           return InkWell(
             borderRadius: BorderRadius.circular(40.0),
             onTap: () => Scaffold.of(context).openDrawer(),
-            child: UserAvatar(user: myUserData.userData, width: screenAwareWidth(40, context)),
+            child: UserAvatar(
+                user: myUserData.userData,
+                width: screenAwareWidth(40, context)),
           );
         },
       ),
@@ -149,6 +152,13 @@ class _HomeState extends State<Home> {
             },
           ),
           ListTile(
+            title: Text('FAQ'),
+            onTap: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => FAQ()));
+            },
+          ),
+          ListTile(
             title: Text('불편/건의사항 제보'),
             onTap: () async {
               const url =
@@ -175,8 +185,7 @@ class _HomeState extends State<Home> {
           ListTile(
             title: Text('마가렛 페이스북 페이지'),
             onTap: () async {
-              const url =
-                  'https://www.facebook.com/마가렛-108371037480635/';
+              const url = 'https://www.facebook.com/마가렛-108371037480635/';
               if (await canLaunch(url)) {
                 await launch(url);
               } else {
