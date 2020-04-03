@@ -159,10 +159,10 @@ class _HomeState extends State<Home> {
             },
           ),
           ListTile(
-            title: Text('불편/건의사항 제보'),
+            title: Text('이벤트'),
             onTap: () async {
               const url =
-                  'https://docs.google.com/forms/d/e/1FAIpQLScObz1uElne-WEyVNmrqEga00thfh1DbIHmkt7B32j56aiX_g/viewform';
+                  'https://docs.google.com/forms/d/e/1FAIpQLSdaLFH94wZWsywhWhayGFRXohRTJPm_Yp1uLi3_iog9XlBNWA/viewform';
               if (await canLaunch(url)) {
                 await launch(url);
               } else {
@@ -171,7 +171,7 @@ class _HomeState extends State<Home> {
             },
           ),
           ListTile(
-            title: Text('오늘의 질문 제보'),
+            title: Text('오늘의 질문 / 불편사항 / 건의사항 제보'),
             onTap: () async {
               const url =
                   'https://docs.google.com/forms/d/e/1FAIpQLSfOH4Q7M6i5q0BMu4TGe-_P_XoDjfIvzNTTKYTsoxjr5ZRqCw/viewform';
@@ -183,9 +183,9 @@ class _HomeState extends State<Home> {
             },
           ),
           ListTile(
-            title: Text('마가렛 페이스북 페이지'),
+            title: Text('마가렛 인스타그램'),
             onTap: () async {
-              const url = 'https://www.facebook.com/마가렛-108371037480635/';
+              const url = 'https://www.instagram.com/margaret__truelove/';
               if (await canLaunch(url)) {
                 await launch(url);
               } else {
