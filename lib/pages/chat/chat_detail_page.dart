@@ -167,27 +167,48 @@ class _ChatDetailPageState extends State<ChatDetailPage>
   }
 
   AlertDialog _buildExitDialog(User myUser) {
+    bool _isButtonEnabled = true;
     return AlertDialog(
-      title: Text('해당 유저를 차단하고 채팅을 나가겠습니까?'),
+      title: Text('상대방을 차단하고 채팅을 나가겠습니까?'),
       actions: <Widget>[
         FlatButton(
-          onPressed: () {
-            myUser.reference.updateData({
-              "blocks": FieldValue.arrayUnion([widget.peer.userKey]),
-            });
-            widget.peer.reference.updateData({
-              "blocks": FieldValue.arrayUnion([myUser.userKey]),
-            });
-            myUser.reference
-                .collection("Chats")
-                .document(widget.peer.userKey)
-                .delete();
-            widget.peer.reference
-                .collection("Chats")
-                .document(myUser.userKey)
-                .delete();
-            Navigator.pop(context);
-            Navigator.pop(context);
+          onPressed: () async {
+            if (_isButtonEnabled) {
+              _isButtonEnabled = false; // 다중 클릭 방지
+              // PeerQuestions, MyQuestions 돌면서 해당 유저가 있으면 없애기. 상대방도 마찬가지로 처리
+
+              myUser.reference.updateData({
+                "blocks": FieldValue.arrayUnion([widget.peer.userKey]),
+              });
+              widget.peer.reference.updateData({
+                "blocks": FieldValue.arrayUnion([myUser.userKey]),
+              });
+              myUser.reference
+                  .collection("Chats")
+                  .document(widget.peer.userKey)
+                  .delete();
+//            widget.peer.reference
+//                .collection("Chats")
+//                .document(myUser.userKey)
+//                .delete();
+              // 상대 채팅방은 지우지 말고 "상대방이 대화방을 나갔습니다" 채팅봇 띄우기
+              final chatKey =
+                  myUser.userKey.hashCode <= widget.peer.userKey.hashCode
+                      ? '${myUser.userKey}-${widget.peer.userKey}'
+                      : '${widget.peer.userKey}-${myUser.userKey}';
+              Message leaveChatMessage = Message(
+                idFrom: "bot",
+                idTo: "",
+                content: "상대방이 대화방을 나갔습니다",
+                timestamp: DateTime.now().millisecondsSinceEpoch.toString(),
+                type: MessageType.text,
+                isRead: true,
+              );
+              await firestoreProvider.createMessage(chatKey, leaveChatMessage);
+
+              Navigator.pop(context);
+              Navigator.pop(context);
+            }
           },
           child: Text(
             '예(더 이상 해당 유저를 추천받지 않습니다)',
