@@ -6,4 +6,4 @@ const int MAX_RANDOM_QNA_LENGTH = 65;
 const int MAX_RANDOM_QNA_PEOPLE = 30;
 const int MAX_NICKNAME_LENGTH = 7;
 const int MAX_JOB_LENGTH = 7;
-const int MAX_AGE_DIFFERENCE = 15;
+const int MAX_AGE_DIFFERENCE = 8;
