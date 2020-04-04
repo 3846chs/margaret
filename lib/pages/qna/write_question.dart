@@ -120,12 +120,12 @@ class _WriteQuestionState extends State<WriteQuestion> {
                             category: '취미',
                             examples: hobbyQuestions,
                           ),
-                          MyQuestionExample(
-                            questionController: _questionController,
-                            iconData: FontAwesomeIcons.venusMars,
-                            category: '19금',
-                            examples: sexQuestions,
-                          ),
+//                          MyQuestionExample(
+//                            questionController: _questionController,
+//                            iconData: FontAwesomeIcons.venusMars,
+//                            category: '19금',
+//                            examples: sexQuestions,
+//                          ), // 초면에 19금 대화가 다소 당황스럽다는 의견이 접수되어 임시 삭제함
                         ]),
                     SizedBox(
                       height: screenAwareHeight(20, context),
