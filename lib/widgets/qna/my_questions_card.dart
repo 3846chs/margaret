@@ -418,21 +418,65 @@ class MyQuestionsCard extends StatelessWidget {
           ),
         ),
         FlatButton(
-          onPressed: () {
-            myUser.reference
-                .collection(MYQUESTIONS)
-                .document(documentId)
-                .delete();
-            print('삭제 완료');
+          onPressed: () async {
             Navigator.pop(context);
 
-            // blocks 에 추가 (서로 blocks 에 추가) 구현해야 합니다
             myUser.reference.updateData({
               "blocks": FieldValue.arrayUnion([peer.userKey]),
             });
             peer.reference.updateData({
               "blocks": FieldValue.arrayUnion([myUser.userKey]),
             });
+
+            (await myUser.reference
+                    .collection(PEERQUESTIONS)
+                    .where('userKey', isEqualTo: peer.userKey)
+                    .getDocuments())
+                .documents
+                .forEach((doc) {
+              myUser.reference
+                  .collection(PEERQUESTIONS)
+                  .document(doc.documentID)
+                  .delete();
+            }); // myUser 의 PeerQuestions 돌면서 삭제
+
+            (await myUser.reference
+                    .collection(MYQUESTIONS)
+                    .where('userKey', isEqualTo: peer.userKey)
+                    .getDocuments())
+                .documents
+                .forEach((doc) {
+              myUser.reference
+                  .collection(MYQUESTIONS)
+                  .document(doc.documentID)
+                  .delete();
+            }); // myUser 의 MyQuestions 돌면서 삭제
+
+            (await peer.reference
+                    .collection(PEERQUESTIONS)
+                    .where('userKey', isEqualTo: myUser.userKey)
+                    .getDocuments())
+                .documents
+                .forEach((doc) {
+              peer.reference
+                  .collection(PEERQUESTIONS)
+                  .document(doc.documentID)
+                  .delete();
+            }); // peer 의 PeerQuestions 돌면서 삭제
+
+            (await peer.reference
+                    .collection(MYQUESTIONS)
+                    .where('userKey', isEqualTo: myUser.userKey)
+                    .getDocuments())
+                .documents
+                .forEach((doc) {
+              peer.reference
+                  .collection(MYQUESTIONS)
+                  .document(doc.documentID)
+                  .delete();
+            }); // peer 의 MyQuestions 돌면서 삭제
+
+            print('차단 완료');
           },
           child: Text(
             '더 이상 추천받고 싶지 않아요(차단하기)',
