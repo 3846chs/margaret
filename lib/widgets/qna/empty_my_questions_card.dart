@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:margaret/constants/font_names.dart';
 import 'package:margaret/utils/adjust_size.dart';
@@ -7,23 +8,20 @@ import 'package:margaret/utils/adjust_size.dart';
 class EmptyMyQuestionsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Icon(
-            FontAwesomeIcons.frownOpen,
-            size: 100,
-          ),
-          SizedBox(
-            height: screenAwareHeight(30, context),
-          ),
-          Text(
-            '더 이상 답변이 없어요ㅠㅠ',
-            style: TextStyle(fontFamily: FontFamily.jua, fontSize: 20),
-          ),
-        ],
-      ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: <Widget>[
+        Text(
+          '더 이상 답변이 없어요',
+          style: TextStyle(
+              fontFamily: FontFamily.jua,
+              fontSize: screenAwareTextSize(16, context)),
+        ),
+        SpinKitChasingDots(
+          color: Colors.redAccent,
+          size: screenAwareTextSize(32, context),
+        )
+      ],
     );
   }
 }
