@@ -182,6 +182,8 @@ class ReceiveCard extends StatelessWidget {
   }
 
   AlertDialog _buildAnswerDialog(User myUser) {
+    bool _isButtonEnabled = true;
+
     return AlertDialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8.0),
@@ -240,8 +242,9 @@ class ReceiveCard extends StatelessWidget {
                           fontSize: 20,
                         ),
                       ),
-                      color:
-                          user.gender == "남성" ? Colors.blue[50] : Colors.pink[50],
+                      color: user.gender == "남성"
+                          ? Colors.blue[50]
+                          : Colors.pink[50],
                     ),
                   ),
                   SizedBox(height: 20),
@@ -257,95 +260,102 @@ class ReceiveCard extends StatelessWidget {
                           fontSize: 20,
                         ),
                       ),
-                      color:
-                          user.gender == "남성" ? Colors.blue[50] : Colors.pink[50],
+                      color: user.gender == "남성"
+                          ? Colors.blue[50]
+                          : Colors.pink[50],
                     ),
                   ),
                   SizedBox(height: 40),
                   _buildButton("채팅 연결하기", () async {
-                    await myUser.reference
-                        .collection("Chats")
-                        .document(user.userKey)
-                        .setData({
-                      "lastMessage": "",
-                      "lastDateTime": Timestamp.now(),
-                    });
-                    await user.reference
-                        .collection("Chats")
-                        .document(myUser.userKey)
-                        .setData({
-                      "lastMessage": "",
-                      "lastDateTime": Timestamp.now(),
-                    });
+                    if (_isButtonEnabled) {
+                      _isButtonEnabled = false; // 다중 클릭 방지
+                      await myUser.reference
+                          .collection("Chats")
+                          .document(user.userKey)
+                          .setData({
+                        "lastMessage": "",
+                        "lastDateTime": Timestamp.now(),
+                      });
+                      await user.reference
+                          .collection("Chats")
+                          .document(myUser.userKey)
+                          .setData({
+                        "lastMessage": "",
+                        "lastDateTime": Timestamp.now(),
+                      });
 
-                    final myQuestion = await myUser.reference
-                        .collection("TodayQuestions")
-                        .document(formattedDate)
-                        .get();
-                    final peerQuestion = await user.reference
-                        .collection("TodayQuestions")
-                        .document(formattedDate)
-                        .get();
+                      final myQuestion = await myUser.reference
+                          .collection("TodayQuestions")
+                          .document(formattedDate)
+                          .get();
+                      final peerQuestion = await user.reference
+                          .collection("TodayQuestions")
+                          .document(formattedDate)
+                          .get();
 
-                    final chatKey =
-                        myUser.userKey.hashCode <= user.userKey.hashCode
-                            ? '${myUser.userKey}-${user.userKey}'
-                            : '${user.userKey}-${myUser.userKey}';
+                      final chatKey =
+                          myUser.userKey.hashCode <= user.userKey.hashCode
+                              ? '${myUser.userKey}-${user.userKey}'
+                              : '${user.userKey}-${myUser.userKey}';
 
-                    final now = DateTime.now();
-                    final messages = <Message>[
-                      Message(
-                        idFrom: "bot",
-                        idTo: "",
-                        content: myQuestion.data["question"],
-                        timestamp: now.millisecondsSinceEpoch.toString(),
-                        type: MessageType.text,
-                        isRead: true,
-                      ),
-                      Message(
-                        idFrom: myUser.userKey,
-                        idTo: "",
-                        content: myQuestion.data["answer"],
-                        timestamp: (now.millisecondsSinceEpoch + 1).toString(),
-                        type: MessageType.text,
-                        isRead: true,
-                      ),
-                      Message(
-                        idFrom: user.userKey,
-                        idTo: "",
-                        content: peerQuestion.data["answer"],
-                        timestamp: (now.millisecondsSinceEpoch + 2).toString(),
-                        type: MessageType.text,
-                        isRead: true,
-                      ),
-                      Message(
-                        idFrom: "bot",
-                        idTo: "",
-                        content: "채팅이 시작되었습니다",
-                        timestamp: (now.millisecondsSinceEpoch + 3).toString(),
-                        type: MessageType.text,
-                        isRead: true,
-                      ),
-                    ];
+                      final now = DateTime.now();
+                      final messages = <Message>[
+                        Message(
+                          idFrom: "bot",
+                          idTo: "",
+                          content: myQuestion.data["question"],
+                          timestamp: now.millisecondsSinceEpoch.toString(),
+                          type: MessageType.text,
+                          isRead: true,
+                        ),
+                        Message(
+                          idFrom: myUser.userKey,
+                          idTo: "",
+                          content: myQuestion.data["answer"],
+                          timestamp:
+                              (now.millisecondsSinceEpoch + 1).toString(),
+                          type: MessageType.text,
+                          isRead: true,
+                        ),
+                        Message(
+                          idFrom: user.userKey,
+                          idTo: "",
+                          content: peerQuestion.data["answer"],
+                          timestamp:
+                              (now.millisecondsSinceEpoch + 2).toString(),
+                          type: MessageType.text,
+                          isRead: true,
+                        ),
+                        Message(
+                          idFrom: "bot",
+                          idTo: "",
+                          content: "채팅이 시작되었습니다",
+                          timestamp:
+                              (now.millisecondsSinceEpoch + 3).toString(),
+                          type: MessageType.text,
+                          isRead: true,
+                        ),
+                      ];
 
-                    messages.forEach((message) async {
-                      await firestoreProvider.createMessage(chatKey, message);
-                    });
+                      messages.forEach((message) async {
+                        await firestoreProvider.createMessage(chatKey, message);
+                      });
 
-                    myUser.reference
-                        .collection("Receives")
-                        .document(user.userKey)
-                        .delete();
+                      myUser.reference
+                          .collection("Receives")
+                          .document(user.userKey)
+                          .delete();
 
-                    Navigator.pop(context);
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ChatDetailPage(
-                                  chatKey: chatKey,
-                                  myKey: myUser.userKey,
-                                  peer: user,
-                                )));
+                      Navigator.pop(context);
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ChatDetailPage(
+                                    chatKey: chatKey,
+                                    myKey: myUser.userKey,
+                                    peer: user,
+                                  )));
+                    }
                   }),
                 ],
               ),
