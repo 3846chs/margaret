@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:margaret/constants/colors.dart';
 import 'package:margaret/constants/firebase_keys.dart';
 import 'package:margaret/constants/font_names.dart';
 import 'package:margaret/constants/size.dart';
@@ -239,6 +240,7 @@ class _ChatDetailPageState extends State<ChatDetailPage>
               constraints:
                   BoxConstraints(maxHeight: screenAwareHeight(100, context)),
               child: TextField(
+                cursorColor: cursor_color,
                 controller: _messageController,
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
