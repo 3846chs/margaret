@@ -43,6 +43,8 @@ class AccountSetting extends StatelessWidget {
             padding: const EdgeInsets.all(common_l_gap),
             child: GestureDetector(
               onTap: () {
+                bool _isButtonEnabled = true;
+
                 showDialog(
                     context: context,
                     builder: (context) => AlertDialog(
@@ -64,18 +66,24 @@ class AccountSetting extends StatelessWidget {
                           actions: <Widget>[
                             FlatButton(
                               onPressed: () async {
-                                Firestore.instance
-                                    .collection(COLLECTION_STATISTICS)
-                                    .document('statistics')
-                                    .updateData({
-                                  'reasons': FieldValue.arrayUnion(
-                                      [_textEditingController.text])
-                                });
-                                _textEditingController.clear();
-                                Navigator.popUntil(
-                                    context, ModalRoute.withName('/'));
-                                await this.myUserData.withdrawUser();
-                                print('회원탈퇴');
+                                if (_isButtonEnabled) {
+                                  _isButtonEnabled = false;
+                                  Firestore.instance
+                                      .collection(COLLECTION_STATISTICS)
+                                      .document('statistics')
+                                      .updateData({
+                                    'reasons': FieldValue.arrayUnion(
+                                        [_textEditingController.text])
+                                  });
+                                  _textEditingController.clear();
+
+                                  await this.myUserData.withdrawUser();
+                                  // 회원탈퇴 도중 유저가 앱 강제종료를 할 경우, DB가 정상적으로 삭제되지 않는 현상 발견
+                                  // 먼저 회원 DB를 삭제한 후에 Navigator pop 해야 UX적으로 유저가 도중 강제종료하는 일이 없을 것임
+                                  Navigator.popUntil(
+                                      context, ModalRoute.withName('/'));
+                                  print('회원탈퇴');
+                                }
                               },
                               child: Text(
                                 '탈퇴하기',
