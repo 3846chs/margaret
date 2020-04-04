@@ -97,6 +97,7 @@ class _ChatDetailPageState extends State<ChatDetailPage>
           .collection("Chats")
           .document(myUser.userKey)
           .updateData(newMessageData);
+      // 이미 차단하고 나간 상대에게 채팅 시도 시, 여기서 오류 (출시 버전에서는 관계 없는 것으로 보임)
       _scrollController.animateTo(0.0,
           duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
     }
@@ -176,7 +177,7 @@ class _ChatDetailPageState extends State<ChatDetailPage>
           onPressed: () async {
             if (_isButtonEnabled) {
               _isButtonEnabled = false; // 다중 클릭 방지
-              // PeerQuestions, MyQuestions 돌면서 해당 유저가 있으면 없애기. 상대방도 마찬가지로 처리
+              Navigator.pop(context);
 
               myUser.reference.updateData({
                 "blocks": FieldValue.arrayUnion([widget.peer.userKey]),
@@ -184,6 +185,58 @@ class _ChatDetailPageState extends State<ChatDetailPage>
               widget.peer.reference.updateData({
                 "blocks": FieldValue.arrayUnion([myUser.userKey]),
               });
+
+              // Receives 돌면서 해당 유저가 있으면 없애기. 상대방도 마찬가지로 처리 -> 아직 안 함
+
+              // PeerQuestions, MyQuestions 돌면서 해당 유저가 있으면 없애기. 상대방도 마찬가지로 처리
+              (await myUser.reference
+                      .collection(PEERQUESTIONS)
+                      .where('userKey', isEqualTo: widget.peer.userKey)
+                      .getDocuments())
+                  .documents
+                  .forEach((doc) {
+                myUser.reference
+                    .collection(PEERQUESTIONS)
+                    .document(doc.documentID)
+                    .delete();
+              }); // myUser 의 PeerQuestions 돌면서 삭제
+
+              (await myUser.reference
+                      .collection(MYQUESTIONS)
+                      .where('userKey', isEqualTo: widget.peer.userKey)
+                      .getDocuments())
+                  .documents
+                  .forEach((doc) {
+                myUser.reference
+                    .collection(MYQUESTIONS)
+                    .document(doc.documentID)
+                    .delete();
+              }); // myUser 의 MyQuestions 돌면서 삭제
+
+              (await widget.peer.reference
+                      .collection(PEERQUESTIONS)
+                      .where('userKey', isEqualTo: myUser.userKey)
+                      .getDocuments())
+                  .documents
+                  .forEach((doc) {
+                widget.peer.reference
+                    .collection(PEERQUESTIONS)
+                    .document(doc.documentID)
+                    .delete();
+              }); // peer 의 PeerQuestions 돌면서 삭제
+
+              (await widget.peer.reference
+                      .collection(MYQUESTIONS)
+                      .where('userKey', isEqualTo: myUser.userKey)
+                      .getDocuments())
+                  .documents
+                  .forEach((doc) {
+                widget.peer.reference
+                    .collection(MYQUESTIONS)
+                    .document(doc.documentID)
+                    .delete();
+              }); // peer 의 MyQuestions 돌면서 삭제
+
               myUser.reference
                   .collection("Chats")
                   .document(widget.peer.userKey)
@@ -207,7 +260,6 @@ class _ChatDetailPageState extends State<ChatDetailPage>
               );
               await firestoreProvider.createMessage(chatKey, leaveChatMessage);
 
-              Navigator.pop(context);
               Navigator.pop(context);
             }
           },
